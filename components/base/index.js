@@ -1,6 +1,6 @@
 var fs = require('fs')
 var path = require('path')
-var common = require('./text.json')
+var common = require('./lang.json')
 
 // initialize translation utility with given language file
 // obj -> str
@@ -30,8 +30,8 @@ function i18n (source) {
 
 // check if an URL is on the the current domain
 // str -> bool
-exports.currentDomain = currentDomain
-function currentDomain (url) {
+exports.isSameDomain = isSameDomain
+function isSameDomain (url) {
   var external = /^[\w-]+:\/{2,}\[?[\w.:-]+\]?(?::[0-9]*)?/
 
   try {
@@ -81,4 +81,39 @@ function filetype (url) {
     case 'pdf': return 'document'
     default: return null
   }
+// get viewport height
+// () -> num
+exports.vh = vh
+function vh () {
+  return Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+}
+
+// get viewport width
+// () -> num
+exports.vw = vw
+function vw () {
+  return Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+}
+
+// compose class name based on supplied conditions
+// (str|obj, obj?) -> str
+exports.className = className
+function className (root, classes) {
+  if (typeof root === 'object') {
+    classes = root
+    root = ''
+  }
+
+  return Object.keys(classes).reduce((str, key) => {
+    if (!classes[key]) return str
+    return str + ' ' + key
+  }, root).trim()
+}
+
+// detect if meta key was pressed on event
+// obj -> bool
+exports.metaKey = metaKey
+function metaKey (e) {
+  if (e.button && e.button !== 0) return true
+  return e.ctrlKey || e.metaKey || e.altKey || e.shiftKey
 }

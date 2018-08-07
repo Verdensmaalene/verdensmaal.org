@@ -1,7 +1,7 @@
 var html = require('choo/html')
 var {i18n} = require('../base')
 
-var text = i18n(require('../base/text.json'))
+var text = i18n()
 
 module.exports = error
 

@@ -1,8 +1,9 @@
 var html = require('choo/html')
 var error = require('./error')
 var {i18n} = require('../base')
+var Header = require('../header')
 
-var text = i18n(require('../base/text.json'))
+var text = i18n()
 
 var DEFAULT_TITLE = text`SITE_TITLE`
 
@@ -30,8 +31,16 @@ function createView (view, meta) {
 
     return html`
       <body class="View">
+        ${state.cache(Header, 'header').render(links(), state.href, state.params.goal)}
         ${children}
       </body>
     `
   }
+}
+
+function links () {
+  return [{
+    href: '/',
+    title: text`The 17 Goals`
+  }]
 }

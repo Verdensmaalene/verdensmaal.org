@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var assert = require('assert')
-var {i18n, currentDomain, filetype} = require('../base')
+var {i18n, isSameDomain, filetype} = require('../base')
 
 var text = i18n()
 
@@ -11,7 +11,7 @@ function link (opts = {}) {
   assert(opts.href, 'link: href string is required')
 
   opts.file = opts.file ? opts.file : filetype(opts.href)
-  opts.external = opts.external ? opts.external : !currentDomain(opts.href)
+  opts.external = opts.external ? opts.external : !isSameDomain(opts.href)
 
   var attrs = { href: opts.href }
   if (opts.external) attrs.target = '_blank'

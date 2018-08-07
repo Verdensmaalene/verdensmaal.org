@@ -1,6 +1,11 @@
 {
-  "SITE_TITLE": "Hello world",
+  "SITE_TITLE": "Verdensmålene",
   "SITE_DESCRIPTION": "example…",
   "Read more": "Read more",
-  "Download image": "Download image"
+  "Download image": "Download image",
+  "The 17 Goals": "The 17 Goals",
+  "Show menu": "Show menu",
+  "Menu": "Menu",
+  "Hide menu": "Hide menu",
+  "Close": "Close"
 }

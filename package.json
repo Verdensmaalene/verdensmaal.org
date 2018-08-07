@@ -29,17 +29,18 @@
   "homepage": "https://github.com/codeandconspire/dk.globalgoals.org#readme",
   "dependencies": {
     "choo": "^6.13.0",
+    "choo-service-worker": "^2.4.0",
     "dedent": "^0.7.0",
     "dotenv": "^6.0.0",
     "hstream": "^1.2.0",
+    "intune": "^1.0.0",
     "jalla": "^0.3.5",
     "koa-route": "^3.2.0",
-    "nanolru": "^1.0.0",
+    "nanoraf": "^3.1.0",
     "normalize.css": "^8.0.0"
   },
   "devDependencies": {
     "choo-devtools": "^2.5.1",
-    "choo-service-worker": "^2.4.0",
     "dependency-check": "^3.2.0",
     "standard": "^11.0.1"
   }
