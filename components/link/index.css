@@ -1,0 +1,14 @@
+/* @define Figure */
+
+@import "../base";
+
+.Figure {
+  margin: 0;
+  position: relative;
+}
+
+.Figure-caption {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+}

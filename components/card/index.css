@@ -1,0 +1,21 @@
+/* @define Card */
+
+@import "../base";
+@import "../figure";
+@import "../link";
+
+.Card {
+  display: flex;
+  flex-direction: column;
+  max-width: 450px
+}
+
+.Card-body {
+  flex-grow: 1;
+  padding: 1rem;
+}
+
+.Card--bg {
+  color: #fff;
+  background: #000;
+}

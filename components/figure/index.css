@@ -1,0 +1,20 @@
+/* @define Figure */
+
+@import "../base";
+
+.Figure {
+  margin: 0;
+  position: relative;
+}
+
+.Figure-caption {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.Figure-item {
+  display: block;
+  width: 100%;
+  height: auto;
+}

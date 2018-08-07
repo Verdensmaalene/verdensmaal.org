@@ -27,3 +27,58 @@ function i18n (source) {
     return value
   }
 }
+
+// check if an URL is on the the current domain
+// str -> bool
+exports.currentDomain = currentDomain
+function currentDomain (url) {
+  var external = /^[\w-]+:\/{2,}\[?[\w.:-]+\]?(?::[0-9]*)?/
+
+  try {
+    var result = external.test(url) && new window.URL(url)
+    return !result || (result.hostname === window.location.hostname)
+  } catch (err) {
+    return true
+  }
+}
+
+// returns a general file type from an url
+// str -> str
+exports.filetype = filetype
+function filetype (url) {
+  if (!url) return null
+  var type = url.toLowerCase().match(/[^.]+$/)
+
+  if (!type) return null
+
+  switch (type[0]) {
+    case 'png':
+    case 'jpg':
+    case 'jpeg':
+    case 'gif':
+    case 'tiff':
+    case 'bmp':
+    case 'svg':
+    case 'webp': return 'image'
+    case 'mp4':
+    case 'webm':
+    case 'mov':
+    case 'avi':
+    case 'mkv':
+    case 'mpg':
+    case 'wmv': return 'video'
+    case 'mp3':
+    case 'wma':
+    case 'flac':
+    case 'wav': return 'audio'
+    case 'tar':
+    case 'zip': return 'zip'
+    case 'key':
+    case 'ppt':
+    case 'doc':
+    case 'docx':
+    case 'txt':
+    case 'pdf': return 'document'
+    default: return null
+  }
+}

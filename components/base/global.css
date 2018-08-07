@@ -21,6 +21,11 @@
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 
+  /* For use with "theme" utilities */
+
+  --current-background: var(--default-background-color);
+  --current-color: var(--default-color);
+
   /* Brand colors */
 
   --color-gray: 241, 241, 241;

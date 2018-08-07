@@ -1,6 +1,7 @@
 var html = require('choo/html')
 var view = require('../components/view')
 var {i18n} = require('../components/base')
+var card = require('../components/card')
 
 var text = i18n()
 
@@ -9,7 +10,50 @@ module.exports = view(home, meta)
 function home (state, emit) {
   return html`
     <main class="View-container">
-      <h2 class="u-hiddenVisually">${text`SITE_TITLE`}</h2>  
+      ${card({
+    title: 'external',
+    body: 'text',
+    link: {
+      href: 'https://google.com/'
+    },
+    figure: {
+      src: 'https://ik.imagekit.io/ryozgj42m/tr:w-1234,q-75,pr-true/efe6be9fdac92063e7672df6e6baf0b040c0eeb8_dayofthegirl.jpg'
+    }
+  })}
+
+  ${card({
+    title: 'news article',
+    body: 'text',
+    date: 'date example… 123',
+    link: {
+      href: 'http://localhost:8080/test'
+    },
+    figure: {
+      src: 'https://ik.imagekit.io/ryozgj42m/tr:w-1234,q-75,pr-true/efe6be9fdac92063e7672df6e6baf0b040c0eeb8_dayofthegirl.jpg'
+    }
+  })}
+
+  ${card({
+    title: 'internal',
+    body: 'text',
+    link: {
+      href: 'http://localhost:8080/test'
+    },
+    figure: {
+      src: 'https://ik.imagekit.io/ryozgj42m/tr:w-1234,q-75,pr-true/efe6be9fdac92063e7672df6e6baf0b040c0eeb8_dayofthegirl.jpg'
+    }
+  })}
+
+  ${card({
+    title: 'file download',
+    body: 'text',
+    link: {
+      href: 'https://ik.imagekit.io/ryozgj42m/tr:w-1234,q-75,pr-true/efe6be9fdac92063e7672df6e6baf0b040c0eeb8_dayofthegirl.jpg'
+    },
+    figure: {
+      src: 'https://ik.imagekit.io/ryozgj42m/tr:w-1234,q-75,pr-true/efe6be9fdac92063e7672df6e6baf0b040c0eeb8_dayofthegirl.jpg'
+    }
+  })}
     </main>
   `
 }
