@@ -2,22 +2,15 @@
 
 @import "../base/global";
 
-:root {
-  --Header-height: 78px;
-  --Header-height-md: 117px;
-  --Header-height-lg: 128px;
-  --Header-fill-y: 40px;
-  --Header-content-y: 20px;
-  --Header-logo-z: 1.25;
-  --Header-list-z: 1.2;
-}
-
 /**
  * Root element is left behind (at top of page) to fill upp space
  */
 
 .Header {
-  height: var(--Header-height);
+  --height: 78px;
+  --displace: 40px;
+
+  height: var(--height);
   contain: size layout style;
   position: relative;
   z-index: 10;
@@ -34,11 +27,11 @@
  */
 
 .Header-bar {
+  width: 100%;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 10;
-  width: 100%;
   user-select: none;
 }
 
@@ -52,17 +45,17 @@
  */
 
 .Header-fill {
+  width: 100%;
+  height: calc(78px + var(--displace)); /* 1 */
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: calc(78px + var(--Header-fill-y)); /* 1 */
-  width: 100%;
-  margin-top: calc(var(--Header-fill-y) * -1); /* 1 */
 
   background: rgba(255, 255, 255, 0.985);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.07);
   transform-origin: top center;
+  transform: translateY(calc((-1 * var(--displace)) * var(--offset, 0)));
+  will-change: transform;
 }
 
 @supports (-webkit-backdrop-filter: blur(1px)) {
@@ -72,17 +65,24 @@
   }
 }
 
-/**
- * Some wrappers
- */
-
 .Header-content {
+  display: flex;
+  padding: 0 16px;
+  align-items: center;
   position: relative;
   z-index: 1;
-  padding: 15px 0 0;
+  transform: translateY(calc((var(--displace, 1) / 2) * (1 - var(--offset, 0))));
+  will-change: transform;
+}
+
+@media (min-width: 500px) {
+  .Header-content {
+    padding: 0 24px;
+  }
 }
 
 .Header-list {
+  list-style: none;
   transform-origin: center right;
 }
 
@@ -91,36 +91,36 @@
  */
 
 .Header-logo {
-  position: relative;
-  z-index: 1;
   display: inline-block;
-  vertical-align: top;
   height: 45px;
   width: 162px;
-  padding: 16px 10px;
-  margin-left: -11px;
-  margin-top: -15px;
+  padding: 16px 10px 16px 0;
+  margin-right: auto;
+  position: relative;
+  vertical-align: top;
+  z-index: 1;
   box-sizing: content-box;
   transform-origin: center left;
+  transform: scale(calc(1 + (0.25 * (1 - var(--offset)))));
 }
 
 /**
  * Increase dimensions wider viewports
  */
 
-@media (--viewport-md) {
+@media (min-width: 900px) {
   .Header {
-    height: var(--Header-height-md);
+    --height: 117px;
   }
 }
 
-@media (--viewport-lg) {
+@media (min-width: 900px) {
   .Header {
-    height: var(--Header-height-lg);
+    --height: 128px;
   }
 
   .Header-fill {
-    height: calc(88px + var(--Header-fill-y));
+    height: calc(88px + var(--displace));
   }
 
   .Header-logo {
@@ -130,32 +130,30 @@
 
   .Header-list,
   .Header-back {
-    margin-top: 5px;
+    margin: 5px 0 0;
   }
 }
 
 /**
- * Button. Used for:
- * - The toggle that opens the vertical navigation
- * - The links
- * - The back button
+ * Button
  */
 
 .Header-button {
-  position: relative;
+  display: inline-block;
   height: 48px;
   padding: 0 16px;
+
+  position: relative;
   z-index: 1;
-  display: inline-block;
-  border-radius: 1px;
+
   line-height: 49px;
-  font-family: var(--font-family-heading);
   font-weight: bold;
-  word-spacing: var(--word-spacing-heading);
   font-size: 24px;
-  text-transform: uppercase;
+  font-family: var(--heading-font-family);
+  word-spacing: var(--heading-word-spacing);
+  border-radius: 1px;
   white-space: nowrap;
-  -webkit-touch-callout: none;
+  text-transform: uppercase;
   transition: background-color 180ms var(--ease-out);
 }
 
@@ -163,7 +161,7 @@
  * Took this a bit too far, but it looks better than a simple semi-black overlay
  */
 
-.Header-button:hover { background: var(--color-hover-dark); }
+.Header-button:hover { background: rgba(var(--color-gray-light), 0.6); }
 .Header--1:not(.is-following) .Header-button:hover { background: color(var(--color-goal-1-shaded) alpha(10%)); }
 .Header--2:not(.is-following) .Header-button:hover { background: color(var(--color-goal-2-shaded) alpha(10%)); }
 .Header--3:not(.is-following) .Header-button:hover { background: color(var(--color-goal-3-shaded) alpha(10%)); }
@@ -182,17 +180,13 @@
 .Header--16:not(.is-following) .Header-button:hover { background: color(var(--color-goal-16-shaded) alpha(10%)); }
 .Header--17:not(.is-following) .Header-button:hover { background: color(var(--color-goal-17-shaded) alpha(10%)); }
 
-.Header:matches(.is-open, :target) .Header-button:hover {
-  background: var(--color-hover-light);
+.Header.is-open .Header-button:hover,
+.Header:target .Header-button:hover {
+  background: rgba(var(--color-gray-light), 0.05);
 }
 
 .Header-button.is-current {
-  color: var(--color-interactive);
-  transition: background-color 180ms var(--ease-out);
-}
-
-.Header-button:hover.is-current {
-  color: var(--color-interactive-dark);
+  color: rgb(var(--color-link));
 }
 
 /**
@@ -200,30 +194,32 @@
  */
 
 .Header-button--toggle {
-  position: absolute;
-  right: -14px;
+  display: flex;
+  align-items: center;
   padding-right: 13px;
+  position: absolute;
+  right: 8px;
   top: 15px;
-  width: 92px;
   text-align: right;
 }
 
-.Header-button--close {
-  display: none;
-  width: 94px;
+@media (min-width: 500px) {
+  .Header-button--toggle {
+    right: 16px;
+  }
 }
 
 .Header-burger {
-  position: absolute;
-  top: 32px;
-  right: 46px;
   width: 18px;
   height: 14px;
+  margin-right: 0.3em;
+  position: relative;
   transition: transform 250ms var(--ease-out);
   will-change: transform;
 }
 
-.Header-burger:matches(::before, ::after),
+.Header-burger::before,
+.Header-burger::after,
 .Header-beanPatty {
   content: "";
   position: absolute;
@@ -251,27 +247,23 @@
   transform-origin: center center;
 }
 
-.Header:matches(.is-open, :target) .Header-button--toggle {
-  display: none;
-}
-
-.Header:matches(.is-open, :target) .Header-button--close {
-  display: block;
-}
-
-.Header:matches(.is-open, :target) .Header-burger {
+.Header.is-open .Header-burger,
+.Header:target .Header-burger {
   transform: translateX(-5px);
 }
 
-.Header:matches(.is-open, :target) .Header-burger::before {
+.Header.is-open .Header-burger::before,
+.Header:target .Header-burger::before {
   transform: rotate(-45deg) translate(1px, -1px) scaleX(1.49);
 }
 
-.Header:matches(.is-open, :target) .Header-burger::after {
+.Header.is-open .Header-burger::after,
+.Header:target .Header-burger::after {
   transform: rotate(45deg) translate(2px, 0px) scaleX(1.74);
 }
 
-.Header:matches(.is-open, :target) .Header-beanPatty {
+.Header.is-open .Header-beanPatty,
+.Header:target .Header-beanPatty {
   transform: scaleX(0);
   opacity: 0;
 }
@@ -405,7 +397,7 @@
   right: 7.5px;
 }
 
-@media (--viewport-lg) {
+@media (min-width: 1200px) {
   .Header-external {
     display: none;
   }
@@ -416,47 +408,19 @@
 }
 
 /**
- * Language picker
- */
-
-.Header-button--lang {
-  padding-right: 16px;
-}
-
-.Header-langIcon {
-  position: relative;
-  top: -23px;
-  width: 50px;
-  height: 39px;
-}
-
-@media (--viewport-lg) {
-  .Header-langIcon {
-    height: 19px;
-    width: 24px;
-    top: -17px;
-  }
-
-  .Header-button--lang .Header-arrow {
-    display: none;
-  }
-}
-
-/**
  * Tweak the global focus states a little bit
  */
 
-:root[data-focus-source="key"] :matches(.Header-logo, .Header-button):focus {
+:root[data-focus-source="key"] .Header-logo:focus,
+:root[data-focus-source="key"] .Header-button:focus {
   box-shadow: inset 0 0 0 2px currentColor;
 }
-
-/* -------------------------------------------------------------------------- */
 
 /**
  * Narrow viewports with vertical navigation
  */
 
-@media (--viewport-lg-max) {
+@media (max-width: 900px) {
   .Header-list,
   .Header-button--back {
     transform: none !important;
@@ -472,41 +436,44 @@
     opacity: 0;
     transition: 300ms 100ms var(--ease-out);
     transition-property: transform, opacity;
-    transform: translateY(var(--Header-fill-y));
   }
 
   /**
    * The fill is used as background for the full page navigation
    */
 
-  .Header:matches(.is-open, :target) .Header-bar {
+  .Header.is-open .Header-bar,
+  .Header:target .Header-bar {
     position: fixed;
     color: #fff;
   }
 
-  .Header:matches(.is-open, :target) .Header-fill {
+  .Header.is-open .Header-fill,
+  .Header:target .Header-fill {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     margin: 0;
-    background: var(--color-gray-dark);
+    background: rgb(var(--color-gray-dark));
     transform: none !important;
   }
 
-  .Header:matches(.is-open, :target) .Header-nav {
+  .Header.is-open .Header-nav,
+  .Header:target .Header-nav {
     visibility: visible;
     width: 100%;
     height: calc(100vh - 15px);
     opacity: 1;
-    transform: translateY(0);
+    /* transform: translateY(0); */
   }
 
   .Header-list {
+    padding: 0;
     position: absolute;
     top: 23%;
-    left: 4px;
+    left: 16px;
   }
 
   /**
@@ -516,7 +483,6 @@
   .Header-button--link {
     height: auto;
     padding: 2px 43px 0 16px;
-    margin: 0 0 0 -10px;
     color: inherit;
     font-size: 32px;
     line-height: 48px;
@@ -567,10 +533,11 @@
   .Header-button--link.is-current,
   .Header-button--link.is-current:hover {
     color: inherit;
+    background: rgba(var(--color-gray-light), 0.05);
   }
 }
 
-@media (--viewport-lg-max) and (min-height: 580px) {
+@media (max-width: 900px) and (min-height: 600px) {
   .Header-button--link {
     font-size: 48px;
     line-height: 76px;
@@ -618,27 +585,21 @@
   }
 }
 
-/* -------------------------------------------------------------------------- */
-
 /**
  * Horizontal navigation
  */
 
-@media (--viewport-lg) {
+@media (min-width: 900px) {
   .Header-button--toggle,
   .Header-burger {
-    display: none !important;
+    display: none;
   }
 
   .Header-nav {
-    position: absolute;
-    top: 15px;
-    right: 0;
-    width: 100%;
+    flex: 1 0 auto;
   }
 
   .Header-list {
-    margin-right: -16px;
     float: right;
   }
 
@@ -647,8 +608,6 @@
     margin-left: 12px;
   }
 }
-
-/* -------------------------------------------------------------------------- */
 
 /**
  * On goal page
@@ -739,60 +698,40 @@
   display: inline-block;
 }
 
-/* -------------------------------------------------------------------------- */
-
 /**
  * Default to expanded header on wider viewports
  */
 
-@media (--viewport-md) {
-  .Header-fill {
-    transform: translateY(var(--Header-fill-y));
-    will-change: transform;
-  }
-
-  .Header-logo {
-    transform: scale(var(--Header-logo-z));
-    /* will-change: transform; */
-  }
-
-  .Header-content {
-    transform: translateY(var(--Header-content-y));
-    /* will-change: transform; */
-  }
-}
-
-@media (--viewport-md-max) {
+@media (max-width: 900px) {
   .Header :matches(.Header-fill, .Header-logo, .Header-content, .Header-list) {
-    transform: none !important;
+    /* transform: none !important; */
     will-change: unset;
   }
 }
 
-@media (--viewport-xl) {
+@media (min-width: 1300px) {
   .Header-list,
   .Header-button--back {
-    transform: scale(var(--Header-list-z));
     /* will-change: transform; */
   }
 }
 
-@media (--viewport-xl-max) {
+@media (max-width: 1300px) {
   .Header-list {
-    transform: none !important;
+    /* transform: none !important; */
     will-change: unset;
   }
 }
 
-@media (--viewport-lg-max) {
+@media (max-width: 1300px) {
   .Header--goalPage :matches(.Header-fill, .Header-logo, .Header-content, .Header-list) {
-    transform: none !important;
+    /* transform: none !important; */
     will-change: unset;
   }
 }
 
 .Header--goalPage.is-following :matches(.Header-fill, .Header-logo, .Header-content, .Header-list) {
-  transform: none !important;
+  /* transform: none !important; */
   will-change: unset;
 }
 
@@ -837,7 +776,7 @@
   visibility: visible;
 }
 
-@media (--viewport-lg-max) {
+@media (max-width: 1300px) {
   .Header-tooltip {
     display: none;
   }

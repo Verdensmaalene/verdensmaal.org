@@ -81,6 +81,8 @@ function filetype (url) {
     case 'pdf': return 'document'
     default: return null
   }
+}
+
 // get viewport height
 // () -> num
 exports.vh = vh
