@@ -1,0 +1,46 @@
+{
+  "name": "dk.globalgoals.org",
+  "version": "0.0.1",
+  "description": "The Official Website for The United Nation's Global Goals in Denmark",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard && dependency-check package.json",
+    "start": "node server.js"
+  },
+  "documentify": {
+    "transform": [
+      [
+        "./lib/document.js",
+        {
+          "order": "end"
+        }
+      ]
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeandconspire/dk.globalgoals.org.git"
+  },
+  "author": "code and conspire",
+  "license": "CC-BY",
+  "bugs": {
+    "url": "https://github.com/codeandconspire/dk.globalgoals.org/issues"
+  },
+  "homepage": "https://github.com/codeandconspire/dk.globalgoals.org#readme",
+  "dependencies": {
+    "choo": "^6.13.0",
+    "dedent": "^0.7.0",
+    "dotenv": "^6.0.0",
+    "hstream": "^1.2.0",
+    "jalla": "^0.3.5",
+    "koa-route": "^3.2.0",
+    "nanolru": "^1.0.0",
+    "normalize.css": "^8.0.0"
+  },
+  "devDependencies": {
+    "choo-devtools": "^2.5.1",
+    "choo-service-worker": "^2.4.0",
+    "dependency-check": "^3.2.0",
+    "standard": "^11.0.1"
+  }
+}

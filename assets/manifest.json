@@ -1,0 +1,8 @@
+{
+  "name": "To-do",
+  "short_name": "todo",
+  "start_url": "/",
+  "display": "minimal-ui",
+  "background_color": "#fff",
+  "theme_color": "#fff"
+}
