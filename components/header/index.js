@@ -43,8 +43,8 @@ module.exports = class Header extends Component {
     var onscroll = nanoraf(() => {
       var scroll = window.scrollY
       var range = Math.min(Math.max(scroll - SCROLL_MIN, 0), SCROLL_MAX)
-      this.local.offset = (range / 150).toFixed(3)
-      this.element.style.setProperty('--offset', this.local.offset)
+      this.local.scroll = (range / 150).toFixed(3)
+      this.element.style.setProperty('--scroll', this.local.scroll)
     })
 
     onscroll()
@@ -66,7 +66,7 @@ module.exports = class Header extends Component {
     }
 
     return html`
-      <header class="${className('Header', {[`Header--${theme}`]: theme, 'is-open': isOpen})}" style="--offset: ${this.local.offset}" id="${id}">
+      <header class="${className('Header', {[`Header--${theme}`]: theme, 'is-open': isOpen})}" style="--scroll: ${this.local.scroll}" id="${id}">
         <div class="Header-bar">
           <div class="Header-fill"></div>
           <div class="Header-content">
