@@ -87,6 +87,29 @@ textarea,
 }
 
 /**
+ * Reset a few styles
+ */
+
+ h1,
+ h2,
+ h3,
+ h4,
+ h5,
+ h6,
+ p,
+ ul,
+ ol,
+ blockquote,
+ iframe,
+ figure {
+   font: inherit;
+   margin: 0;
+   border: 0;
+   list-style: none;
+   padding: 0;
+ }
+
+/**
  * Clean out browser button styles
  */
 

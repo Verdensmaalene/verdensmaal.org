@@ -24,7 +24,7 @@ function home (state, emit) {
   ${card({
     title: 'news article',
     body: 'text',
-    date: 'date example… 123',
+    date: new Date(),
     link: {
       href: 'http://localhost:8080/test'
     },

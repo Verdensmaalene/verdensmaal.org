@@ -9,8 +9,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  max-width: 450px;
+  width: 100%;
 
+  max-width: 450px;
   margin: 20px;
   float: left;
 }
@@ -18,16 +19,71 @@
 .Card-content {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  padding: 1rem;
+  flex: 1 0 auto;
+  align-items: flex-start;
+  padding-bottom: 20px;
 }
+
+@media (min-width: 1000px) {
+  .Card-content {
+    padding-bottom: 17px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Card-content {
+    padding-bottom: 10px;
+  }
+}
+
+.Card--bg .Card-content {
+  padding: 20px 20px 30px;
+}
+
+@media (min-width: 400px) {
+  .Card--bg .Card-content {
+    padding: 28px 32px 32px;
+    min-height: 260px;
+  }
+}
+
+/**
+ * 1. Get a z-index to put ontop of hover shading
+ */
 
 .Card-body {
   flex-grow: 1;
+  position: relative; /* 1 */
+  width: 100%;
+}
+
+.Card-meta {
+  display: block;
+  margin: -6px 0 14px;
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 14px;
+  font-style: normal;
 }
 
 .Card-footer {
   flex-grow: 0;
+  width: 100%;
+}
+
+.Card--bg .Card-footer {
+  margin: 4px 0 -23px;
+}
+
+@media (min-width: 400px) {
+  .Card--bg .Card-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 5px;
+    margin: 34px 0 -26px;
+  }
+}
+
+.Card--dark .Card-footer {
+  border-top-color: rgba(255, 255, 255, 0.2);
 }
 
 .Card--bg {

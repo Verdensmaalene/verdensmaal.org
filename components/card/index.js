@@ -1,13 +1,16 @@
 var html = require('choo/html')
 var figure = require('../figure')
-var { filetype, luma } = require('../base')
+var { filetype, luma, i18n } = require('../base')
 var link = require('../link')
+
+var text = i18n()
 
 module.exports = card
 card.loading = loading
 
 function card (opts = {}, content) {
-  var date = opts.date ? html`<span class="Card-date">${opts.date}</h1>` : null
+  var date = opts.date && new Date(opts.date)
+  var datetime = date ? JSON.stringify(date).replace(/"/g, '') : false
   var file = (opts.link && filetype(opts.link.href))
 
   // file downloads and news articles are transparent/white
@@ -20,7 +23,7 @@ function card (opts = {}, content) {
     if (bg) opts.link.inherit = true
   }
 
-  var attrs = { class: 'Card' }
+  var attrs = { class: 'Card u-printHidden' }
   if (opts.link) attrs.class += ' u-hoverTrigger'
   if (bg && luma(bg) < 185) attrs.class += ' Card--dark'
   if (bg) attrs.class += ' Card--bg'
@@ -32,7 +35,11 @@ function card (opts = {}, content) {
 
       <div class="Card-content ${bg ? 'u-hoverTriggerTarget' : ''}">
         <div class="Card-body">
-          ${date}
+          ${date ? html`
+            <time class="Card-meta" datetime="${datetime}">
+              ${text`Published on ${text(`MONTH_${date.getMonth()}`)} ${date.getDate()}, ${date.getFullYear()}`}
+            </time>
+          ` : null}
           <h1>${opts.title}</h1>
           <p>${opts.body}</p>
           ${content}
