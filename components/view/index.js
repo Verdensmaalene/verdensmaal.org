@@ -31,7 +31,7 @@ function createView (view, meta) {
 
     return html`
       <body class="View">
-        ${state.cache(Header, 'header').render(links(), state.href.replace(/^$/, '/'), state.params.goal)}
+        ${state.cache(Header, 'header').render(links(), state.href, state.params.goal)}
         ${children}
       </body>
     `

@@ -55,7 +55,7 @@ module.exports = class Header extends Component {
   }
 
   createElement (links, href, goal = null) {
-    this.local.href = href
+    this.local.href = href.replace(/\/$/, '')
 
     var {id, isOpen} = this.local
     var theme = goal ? goal === 7 ? 'white' : 'black' : null
@@ -70,7 +70,6 @@ module.exports = class Header extends Component {
         <div class="Header-bar">
           <div class="Header-fill"></div>
           <div class="Header-content">
-
             ${goal ? html`
               <a class="Header-button Header-button--back" onclick=${onback} href="/">
                 ${text`Back to Goals`}
@@ -82,19 +81,17 @@ module.exports = class Header extends Component {
                 ${logo.horizontal()}
               </a>
             `}
-
             <a class="${className('Header-button Header-button--toggle js-toggle', {'Header-button--close': isOpen})}" href="#${isOpen ? '' : id}" draggable="false" onclick=${toggle} role="button" aria-controls="${id}-navigation" aria-expanded="${isOpen ? 'true' : 'false'}">
               <div class="${className('Header-burger', {'Header-burger--cross': isOpen})}"><div class="Header-beanPatty"></div></div>
               <span class="Header-toggleText"><span class="u-hiddenVisually">${isOpen ? text`Hide menu` : text`Show menu`}</span> ${isOpen ? text`Close` : text`Menu`}</span>
             </a>
-
             <nav class="Header-nav" id="${id}-navigation">
               <ul class="Header-list">
                 ${links.map((item) => typeof item === 'function' ? html`
                   <li class="Header-item">${item()}</li>
                 ` : html`
                   <li class="Header-item">
-                    <a class="${className('Header-button Header-button--link', {'is-current': item.href === href, 'Header-button--external': item.external})}" target="${item.external ? '_blank' : '_self'}" rel="${item.external ? 'noopener noreferrer' : ''}" href="${item.href}">
+                    <a class="${className('Header-button Header-button--link', {'is-current': item.href.replace(/\/$/, '') === href, 'Header-button--external': item.external})}" target="${item.external ? '_blank' : '_self'}" rel="${item.external ? 'noopener noreferrer' : ''}" href="${item.href}">
                       ${item.title}
                       ${item.external ? html`
                         <div>
