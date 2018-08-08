@@ -8,44 +8,41 @@ var text = i18n()
 module.exports = card
 card.loading = loading
 
-function card (opts = {}, content) {
-  var date = opts.date && new Date(opts.date)
-  var datetime = date ? JSON.stringify(date).replace(/"/g, '') : false
-  var file = (opts.link && filetype(opts.link.href))
+function card (props = {}) {
+  var file = (props.link && filetype(props.link.href))
 
   // file downloads and news articles are transparent/white
-  var bg = !date && !file
-  if (bg) bg = (opts.color ? opts.color : '#1a1a1a')
+  var bg = !props.date && !file
+  if (bg) bg = (props.color ? props.color : '#1a1a1a')
 
-  if (opts.link) {
-    opts.link.block = true
-    if (bg) opts.link.silent = true
-    if (bg) opts.link.inherit = true
+  if (props.link) {
+    props.link.block = true
+    if (bg) props.link.silent = true
+    if (bg) props.link.inherit = true
   }
 
   var attrs = { class: 'Card u-printHidden' }
-  if (opts.link && bg) attrs.class += ' Card--interactive'
+  if (props.link && bg) attrs.class += ' Card--interactive'
   if (bg && luma(bg) < 185) attrs.class += ' Card--dark'
   if (bg) attrs.class += ' Card--bg'
   if (bg) attrs.style = `background-color: ${bg}`
 
   return html`
     <article ${attrs}>
-      ${figure(opts.figure)}
+      ${figure(props.figure)}
       <div class="Card-content ${bg ? 'u-hoverTriggerTarget' : ''}">
         <div class="Card-body">
-          ${date ? html`
-            <time class="Card-meta" datetime="${datetime}">
-              ${text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`}
+          ${props.date && props.date.text ? html`
+            <time class="Card-meta" datetime="${JSON.stringify(props.date.datetime).replace(/"/g, '')}">
+              ${props.date.text}
             </time>
           ` : null}
-          <h1 class="Card-title">${opts.title}</h1>
-          <p class="Card-text">${snippet(opts.body)}</p>
-          ${content}
+          <h1 class="Card-title">${props.title}</h1>
+          <p class="Card-text">${snippet(props.body)}</p>
         </div>
-        ${opts.link ? html`
+        ${props.link ? html`
           <div class="Card-footer">
-            ${link(opts.link)}
+            ${link(props.link)}
           </div>
         ` : null}
       </div>
@@ -53,13 +50,13 @@ function card (opts = {}, content) {
   `
 }
 
-function loading (opts = {}) {
+function loading (props = {}) {
   return html`
     <article class="Card">
       ${figure.loading()}
       <div class="Card-body">
-        <h1>LOADING</h1>
-        <p>LOADING</p>
+        <h1>${text`LOADING_TEXT_MEDIUM`}</h1>
+        <p>${text`LOADING_TEXT_LONG`}</p>
         ${link.loading()}
       </div>
     </article>

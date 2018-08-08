@@ -16,13 +16,18 @@ function home (state, emit) {
         body: 'In 2015, world leaders agreed to 17 goals for a better world by 2030. These goals have the power to end poverty, fight inequality and stop climate change. Guided by the goals, it is now up to all of us, governments, businesses, civil society and the general public to work together to build a better future for everyone.'
       })}
 
-      <div style="display: flex; flex-wrap: wrap;">
+      <div style="display: flex; flex-wrap: wrap; margin: 0 -24px;">
         ${Array(6).fill().map(() => html`
           <div style="flex: 0 0 33.333%; border: 24px solid transparent;">
             ${card({
               title: 'Lorem Ipsum Dolor sit amet',
               body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae arcu arcu. Praesent eu nulla nec leo bibendum viverra. Quisque tincidunt lacinia tincidunt. Vestibulum tempor non velit ac consectetur.',
-              date: Math.random() > 0.5 ? new Date() : null,
+              date: Math.random() > 0.5 ? (function (date) {
+                return {
+                  datetime: date,
+                  text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
+                }
+              }(new Date())) : null,
               color: Math.random() > 0.5 ? '#' + Array(6).fill().map(() => '0123456789ABCDEF'[Math.floor(Math.random() * 16)]).join('') : null,
               link: {
                 href: (Math.random() > 0.5 ? 'http://foo.com' : '') + '/bar' + (Math.random() > 0.5 ? '.jpg' : '')
