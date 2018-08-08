@@ -36,6 +36,7 @@ function home (state, emit) {
   ${card({
     title: 'internal',
     body: 'text',
+    color: '#ff3a21',
     link: {
       href: 'http://localhost:8080/test'
     },

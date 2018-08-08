@@ -1,6 +1,7 @@
 {
   "SITE_TITLE": "Verdensmålene",
   "SITE_DESCRIPTION": "example…",
+<<<<<<< HEAD
   "Read more": "Læs mere",
   "Download image": "Hent billede",
   "The 17 Goals": "De 17 mål",
@@ -12,3 +13,11 @@
   "There is no page at this address. Try finding your way using the menu or from": "Der er ingen side på denne adresse. Prøv at finde din vej ved hjælp af menuen eller fra",
   "the homepage": "hjemmesiden"
 }
+=======
+  "Read more": "Read more",
+  "Download image": "Download image",
+  "Oops": "Oops",
+  "There is no page at this address. Try finding your way using the menu or from": "There is no page at this address. Try finding your way using the menu or from",
+  "the homepage": "the homepage"
+}
+>>>>>>> Finalize card logic

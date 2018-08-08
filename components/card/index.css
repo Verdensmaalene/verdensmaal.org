@@ -5,17 +5,40 @@
 @import "../link";
 
 .Card {
+  --color-link-hover-block: 0, 0, 0;
+  position: relative;
   display: flex;
   flex-direction: column;
-  max-width: 450px
+  max-width: 450px;
+
+  margin: 20px;
+  float: left;
 }
 
-.Card-body {
+.Card-content {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   padding: 1rem;
 }
 
+.Card-body {
+  flex-grow: 1;
+}
+
+.Card-footer {
+  flex-grow: 0;
+}
+
 .Card--bg {
+  background: rgb(var(--color-gray));
+}
+
+.Card--dark {
+  --color-link-hover-block: 255, 255, 255;
   color: #fff;
-  background: #000;
+}
+
+.Card--bg .Card-content {
+  padding: 1rem;
 }

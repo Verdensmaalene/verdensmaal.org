@@ -1,14 +1,169 @@
-/* @define Figure */
+/* @define Link */
 
 @import "../base";
 
-.Figure {
-  margin: 0;
+.Link {
+  display: inline-block;
+  margin: 3px 0 -23px -14px;
+  padding: 0 16px 0 14px;
+  line-height: 52px;
+  font-size: 24px;
+  color: rgb(var(--color-link));
+  text-transform: uppercase;
+  font-family: var(--heading-font-family);
+  font-weight: bold;
+  white-space: nowrap;
+  word-spacing: var(--heading-word-spacing);
+  user-select: none;
+  transition: 140ms var(--ease-out);
+  transition-property: background-color, color;
+}
+
+@media (min-width: 500px) {
+  .Link {
+    padding: 0 16px 0 14px;
+    margin: 8px 0 0 -14px;
+  }
+}
+
+.Link-icon {
+ display: inline-block;
+}
+
+.Link-text {
+  display: flex;
+  align-items: center;
   position: relative;
 }
 
-.Figure-caption {
+.Link--block::after {
+  content: "";
+  width: 100%;
   position: absolute;
-  top: 0.5rem;
-  left: 0.5rem;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
 }
+
+.Link:not(.Link--silent):hover {
+  background: rgba(var(--color-link-hover-block, 0, 0, 0), 0.04);
+  color: rgb(var(--color-link-shaded));
+}
+
+.Link--inherit,
+.Link--inherit:hover {
+  color: inherit;
+}
+
+/* .Link-arrow {
+  border-style: solid;
+  width: 10px;
+  height: 10px;
+  margin-left: 5px;
+  border-width: 1px 1px 0 0;
+  transform: rotate(45deg);
+  transition: transform 180ms cubic-bezier(0, 0, .2, 1);
+}
+
+.Link:hover .Link-arrow {
+  transform: rotate(45deg) translate(2px, -2px);
+}
+
+.Link-download {
+  display: block;
+  margin-left: 8px;
+  height: 18px;
+  position: relative;
+  top: -1px;
+  right: -2px;
+}
+
+.Link-downloadArrow {
+  transform: translateY(1px);
+  transition: transform 180ms cubic-bezier(0, 0, .2, 1);
+}
+
+.Link:hover .Link-downloadArrow {
+  transform: translateY(2px);
+} */
+
+/**
+ * 1. Fix text rendering jumping in Safari on hover
+ */
+
+/* .Link-external {
+  display: block;
+  margin-left: 11px;
+  height: 15px;
+  width: 15px;
+  overflow: visible !important;
+}
+
+.Link-externalArrow {
+  will-change: transform;
+  transition: transform 180ms cubic-bezier(0, 0, .2, 1);
+}
+
+.Link:hover .Link-externalArrow {
+  transform: translate(2px, -2px);
+} */
+
+/**
+ * Tweak the global focus states a little bit
+ */
+
+/* :root[data-focus-source="key"] .Link:focus {
+  box-shadow: none;
+  outline: 0;
+}
+
+:root[data-focus-source="key"] .Link:focus .LinkText::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  box-sizing: content-box;
+  padding: 0 20px 0 14px;
+  position: absolute;
+  top: 0;
+  left: -14px;
+  box-shadow: 0 0 0 2px currentColor;
+  border-radius: 2px;
+}
+
+.Link--fill .Link {
+  padding: 0;
+  width: 100%;
+  margin: 4px 0 -23px;
+}
+
+@media (min-width: 400px) {
+  .Link--fill .Link {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 5px;
+    margin: 34px 0 -26px;
+  }
+}
+
+.Link--light .Link {
+  border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+.Link--fill .Link,
+.Link--fill .Link:hover,
+:root.has-js .Link--fill:hover .Link {
+  color: #fff;
+}
+
+:root.has-js .Link--linked:not(.is-loading):hover .Link-content::before {
+  opacity: 1;
+}
+
+.Link--light .Link-content,
+.Link--light .Link-meta,
+.Link--light .Link,
+.Link--light .Link:hover,
+:root.has-js .Link--light:hover .Link {
+  color: rgba(0, 0, 0, 0.9);
+} */
