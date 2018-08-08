@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var figure = require('../figure')
-var { filetype, luma, i18n } = require('../base')
+var {filetype, luma, i18n} = require('../base')
 var link = require('../link')
 
 var text = i18n()
@@ -32,7 +32,6 @@ function card (opts = {}, content) {
   return html`
     <section ${attrs}>
       ${figure(opts.figure)}
-
       <div class="Card-content ${bg ? 'u-hoverTriggerTarget' : ''}">
         <div class="Card-body">
           ${date ? html`
@@ -57,8 +56,7 @@ function card (opts = {}, content) {
 function loading (opts = {}) {
   return html`
     <section class="Card">
-    ${figure.loading()}
-
+      ${figure.loading()}
       <div class="Card-body">
         <h1>LOADING</h1>
         <p>LOADING</p>
