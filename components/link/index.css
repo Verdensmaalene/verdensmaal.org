@@ -5,7 +5,7 @@
 .Link {
   display: inline-block;
   line-height: 52px;
-  font-size: 24px;
+  font-size: 1.5rem;
   color: rgb(var(--color-link));
   text-transform: uppercase;
   font-family: var(--heading-font-family);
