@@ -23,21 +23,15 @@ function link (opts = {}) {
   if (opts.inherit) attrs.class += ' Link--inherit'
 
   return html`
-    <p>
-      <a ${attrs}>
-        <span class="Link-text">${label(opts)}</span>
-        ${icon(opts)}
-      </a>
-    </p>
+    <a ${attrs}>
+      <span class="Link-text">${label(opts)}</span>
+      ${icon(opts)}
+    </a>
   `
 }
 
 function loading (opts = {}) {
-  return html`
-    <p>
-      <span>LOADING</span>
-    </p>
-  `
+  return html`<span>LOADING</span>`
 }
 
 function label (opts) {

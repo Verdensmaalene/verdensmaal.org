@@ -15,51 +15,25 @@ function home (state, emit) {
         title: 'De 17 mål',
         body: 'In 2015, world leaders agreed to 17 goals for a better world by 2030. These goals have the power to end poverty, fight inequality and stop climate change. Guided by the goals, it is now up to all of us, governments, businesses, civil society and the general public to work together to build a better future for everyone.'
       })}
-      ${card({
-    title: 'external',
-    body: 'text',
-    link: {
-      href: 'https://google.com/'
-    },
-    figure: {
-      src: 'https://ik.imagekit.io/ryozgj42m/tr:w-1234,q-75,pr-true/efe6be9fdac92063e7672df6e6baf0b040c0eeb8_dayofthegirl.jpg'
-    }
-  })}
 
-  ${card({
-    title: 'news article',
-    body: 'text',
-    date: new Date(),
-    link: {
-      href: 'http://localhost:8080/test'
-    },
-    figure: {
-      src: 'https://ik.imagekit.io/ryozgj42m/tr:w-1234,q-75,pr-true/efe6be9fdac92063e7672df6e6baf0b040c0eeb8_dayofthegirl.jpg'
-    }
-  })}
-
-  ${card({
-    title: 'internal',
-    body: 'text',
-    color: '#ff3a21',
-    link: {
-      href: 'http://localhost:8080/test'
-    },
-    figure: {
-      src: 'https://ik.imagekit.io/ryozgj42m/tr:w-1234,q-75,pr-true/efe6be9fdac92063e7672df6e6baf0b040c0eeb8_dayofthegirl.jpg'
-    }
-  })}
-
-  ${card({
-    title: 'file download',
-    body: 'text',
-    link: {
-      href: 'https://ik.imagekit.io/ryozgj42m/tr:w-1234,q-75,pr-true/efe6be9fdac92063e7672df6e6baf0b040c0eeb8_dayofthegirl.jpg'
-    },
-    figure: {
-      src: 'https://ik.imagekit.io/ryozgj42m/tr:w-1234,q-75,pr-true/efe6be9fdac92063e7672df6e6baf0b040c0eeb8_dayofthegirl.jpg'
-    }
-  })}
+      <div style="display: flex; flex-wrap: wrap;">
+        ${Array(6).fill().map(() => html`
+          <div style="flex: 0 0 33.333%; border: 24px solid transparent;">
+            ${card({
+              title: 'Lorem Ipsum Dolor sit amet',
+              body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae arcu arcu. Praesent eu nulla nec leo bibendum viverra. Quisque tincidunt lacinia tincidunt. Vestibulum tempor non velit ac consectetur.',
+              date: Math.random() > 0.5 ? new Date() : null,
+              color: Math.random() > 0.5 ? '#' + Array(6).fill().map(() => '0123456789ABCDEF'[Math.floor(Math.random() * 16)]).join('') : null,
+              link: {
+                href: (Math.random() > 0.5 ? 'http://foo.com' : '') + '/bar' + (Math.random() > 0.5 ? '.jpg' : '')
+              },
+              figure: {
+                src: 'https://ik.imagekit.io/ryozgj42m/tr:w-1234,q-75,pr-true/efe6be9fdac92063e7672df6e6baf0b040c0eeb8_dayofthegirl.jpg'
+              }
+            })}
+          </div>
+        `)}
+      </div>
     </main>
   `
 }

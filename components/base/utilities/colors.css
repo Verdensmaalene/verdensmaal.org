@@ -3,31 +3,6 @@
 @import "../global";
 
 /**
- * Hover background trigger
- */
-
-.u-hoverTrigger {
-  position: relative;
-}
-
-.u-hoverTriggerTarget::before {
-  content: "";
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.09);
-  opacity: 0;
-  transition: opacity 180ms var(--ease-out);
-}
-
-.u-hoverTrigger:hover .u-hoverTriggerTarget::before {
-  opacity: 1;
-}
-
-/**
  * Alters the custom properties:
  * --current-background
  * --current-color

@@ -24,13 +24,13 @@ function card (opts = {}, content) {
   }
 
   var attrs = { class: 'Card u-printHidden' }
-  if (opts.link) attrs.class += ' u-hoverTrigger'
+  if (opts.link && bg) attrs.class += ' Card--interactive'
   if (bg && luma(bg) < 185) attrs.class += ' Card--dark'
   if (bg) attrs.class += ' Card--bg'
   if (bg) attrs.style = `background-color: ${bg}`
 
   return html`
-    <section ${attrs}>
+    <article ${attrs}>
       ${figure(opts.figure)}
       <div class="Card-content ${bg ? 'u-hoverTriggerTarget' : ''}">
         <div class="Card-body">
@@ -39,8 +39,8 @@ function card (opts = {}, content) {
               ${text`Published on ${text(`MONTH_${date.getMonth()}`)} ${date.getDate()}, ${date.getFullYear()}`}
             </time>
           ` : null}
-          <h1>${opts.title}</h1>
-          <p>${opts.body}</p>
+          <h1 class="Card-title">${opts.title}</h1>
+          <p class="Card-text">${snippet(opts.body)}</p>
           ${content}
         </div>
         ${opts.link ? html`
@@ -49,19 +49,29 @@ function card (opts = {}, content) {
           </div>
         ` : null}
       </div>
-    </section>
+    </article>
   `
 }
 
 function loading (opts = {}) {
   return html`
-    <section class="Card">
+    <article class="Card">
       ${figure.loading()}
       <div class="Card-body">
         <h1>LOADING</h1>
         <p>LOADING</p>
         ${link.loading()}
       </div>
-    </section>
+    </article>
   `
+}
+
+// cut off text at max length
+// str -> HTMLElement
+function snippet (str) {
+  if (str.length < 170) return str
+  var words = str.split(' ')
+  var snipped = ''
+  while (snipped.length < 170) snipped += ' ' + words.shift()
+  return [snipped, ' ', html`<span class="u-textNowrap">${words[0]}…</span>`]
 }

@@ -17,6 +17,7 @@
   margin: 0;
   font-size: 4rem;
   line-height: .95;
+  font-weight: bold;
   text-transform: uppercase;
   font-family: var(--heading-font-family);
   line-height: var(--heading-line-height);

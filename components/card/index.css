@@ -6,14 +6,27 @@
 
 .Card {
   --color-link-hover-block: 0, 0, 0;
-  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
+}
 
-  max-width: 450px;
-  margin: 20px;
-  float: left;
+.Card--interactive .Card-content::before {
+  content: "";
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.09);
+  transition: opacity 180ms var(--ease-out);
+}
+
+.Card--interactive:hover .Card-content::before {
+  opacity: 1;
 }
 
 .Card-content {
@@ -59,10 +72,36 @@
 
 .Card-meta {
   display: block;
-  margin: -6px 0 14px;
+  margin: 6px 0 14px;
   color: rgba(0, 0, 0, 0.54);
   font-size: 14px;
   font-style: normal;
+}
+
+.Card-title {
+  font-size: 1.5rem;
+  line-height: 1.15;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
+}
+
+.Card:not(.Card--bg) .Card-title:first-child {
+  margin-top: 1rem;
+}
+
+@media (min-width: 900px) {
+  .Card-title {
+    font-size: 2rem;
+    line-height: 1.05;
+  }
+}
+
+.Card-text {
+  font-size: 1rem;
+  margin-top: 1.3em;
 }
 
 .Card-footer {
@@ -71,14 +110,14 @@
 }
 
 .Card--bg .Card-footer {
-  margin: 4px 0 -23px;
+  margin: 4px 0 0;
 }
 
 @media (min-width: 400px) {
   .Card--bg .Card-footer {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     padding-top: 5px;
-    margin: 34px 0 -26px;
+    margin: 34px 0 0;
   }
 }
 
@@ -96,5 +135,5 @@
 }
 
 .Card--bg .Card-content {
-  padding: 1rem;
+  padding: 1rem 1rem 0;
 }

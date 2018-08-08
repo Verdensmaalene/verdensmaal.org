@@ -4,8 +4,6 @@
 
 .Link {
   display: inline-block;
-  margin: 3px 0 -23px -14px;
-  padding: 0 16px 0 14px;
   line-height: 52px;
   font-size: 24px;
   color: rgb(var(--color-link));
@@ -19,15 +17,20 @@
   transition-property: background-color, color;
 }
 
+.Link:not(.Link--silent) {
+  margin: 3px 0 -23px -14px;
+  padding: 0 16px 0 14px;
+}
+
 @media (min-width: 500px) {
-  .Link {
+  .Link:not(.Link--silent) {
     padding: 0 16px 0 14px;
     margin: 8px 0 0 -14px;
   }
 }
 
 .Link-icon {
- display: inline-block;
+  display: inline-block;
 }
 
 .Link-text {
