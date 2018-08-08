@@ -1,7 +1,8 @@
 var html = require('choo/html')
+var card = require('../components/card')
 var view = require('../components/view')
 var {i18n} = require('../components/base')
-var card = require('../components/card')
+var intro = require('../components/intro')
 
 var text = i18n()
 
@@ -10,6 +11,10 @@ module.exports = view(home, meta)
 function home (state, emit) {
   return html`
     <main class="View-container">
+      ${intro({
+        title: 'De 17 mål',
+        body: 'In 2015, world leaders agreed to 17 goals for a better world by 2030. These goals have the power to end poverty, fight inequality and stop climate change. Guided by the goals, it is now up to all of us, governments, businesses, civil society and the general public to work together to build a better future for everyone.'
+      })}
       ${card({
     title: 'external',
     body: 'text',

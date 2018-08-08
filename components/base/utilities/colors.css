@@ -1,32 +1,6 @@
 /* @define utilities */
 
-/**
- * Display utilities
- */
-
-.u-hidden {
-  display: none !important;
-}
-
-.u-hiddenVisually {
-  border: 0 !important;
-  clip: rect(1px, 1px, 1px, 1px) !important;
-  height: 1px !important;
-  overflow: hidden !important;
-  padding: 0 !important;
-  position: absolute !important;
-  width: 1px !important;
-}
-
-@media print {
-  .u-printHidden {
-    display: none !important;
-  }
-}
-
-.u-rtl {
-  direction: rtl !important;
-}
+@import "../global";
 
 /**
  * Hover background trigger
@@ -54,11 +28,17 @@
 }
 
 /**
- * Color utilities
  * Alters the custom properties:
  * --current-background
  * --current-color
  */
+
+.u-bgGrayLight { --current-background: rgb(var(--color-gray-light)) !important; }
+.u-colorGrayLight { --current-color: rgb(var(--color-gray-light)) !important; }
+.u-bgGray { --current-background: rgb(var(--color-gray)) !important; }
+.u-colorGray { --current-color: rgb(var(--color-gray)) !important; }
+.u-bgGrayDark { --current-background: rgb(var(--color-gray-dark)) !important; }
+.u-colorGrayDark { --current-color: rgb(var(--color-gray-dark)) !important; }
 
 .u-bg1 { --current-background: rgb(var(--color-goal-1)) !important; }
 .u-bg1shaded { --current-background: rgb(var(--color-goal-1-shaded)) !important; }

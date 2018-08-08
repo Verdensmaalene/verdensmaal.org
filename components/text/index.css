@@ -1,0 +1,213 @@
+/* @define Text */
+
+@import "../base/global";
+
+.Text {
+  color: rgb(var(--current-color));
+  font-family: var(--default-font-family);
+  line-height: 1.5;
+  font-size: 1rem;
+  max-width: 39em;
+}
+
+.Text:first-child {
+  margin-top: 0;
+}
+
+.Text:last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * Block elements
+ */
+
+.Text p,
+.Text ul,
+.Text ol {
+  margin: 0;
+}
+
+.Text p:not(:first-child),
+.Text ul:not(:first-child),
+.Text ol:not(:first-child) {
+  margin-top: 1.3em;
+}
+
+.Text p:not(:last-child),
+.Text ul:not(:last-child),
+.Text ol:not(:last-child) {
+  margin-bottom: 1.3em;
+}
+
+.Text img,
+.Text pre {
+  margin: 0;
+}
+
+.Text img:not(:first-child),
+.Text pre:not(:first-child) {
+  margin-top: 1.5em;
+}
+
+.Text img:not(:last-child),
+.Text pre:not(:last-child) {
+  margin-bottom: 1.5em;
+}
+
+.Text img {
+  height: auto;
+  max-width: 100%;
+  background: rgb(var(--color-gray-light));
+}
+
+.Text ul {
+  list-style-type: none;
+}
+
+.Text ol {
+  list-style-type: decimal;
+  padding-left: 22px;
+}
+
+.Text ul li {
+  padding-left: 23px;
+  position: relative;
+}
+
+.Text ol li {
+  padding-left: 8px;
+}
+
+.Text ul li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+}
+
+.Text li + li {
+  padding-top: 16px;
+}
+
+.Text pre {
+  font-size: 12px;
+  overflow: auto;
+  background: rgb(var(--color-gray-light));
+  padding: 1em;
+  text-align: left;
+}
+
+/**
+ * Headings
+ */
+
+.Text h1,
+.Text h2,
+.Text h3,
+.Text h4,
+.Text h5,
+.Text h6 {
+  margin: 0;
+}
+
+.Text h1:not(:first-child),
+.Text h2:not(:first-child),
+.Text h3:not(:first-child),
+.Text h4:not(:first-child),
+.Text h5:not(:first-child),
+.Text h6:not(:first-child) {
+  margin-top: 1em;
+}
+
+.Text h1,
+.Text h2,
+.Text h3,
+.Text h4 {
+  margin: 0 0 -0.25em;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
+}
+
+.Text h1 {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.Text h2 {
+  font-size: 2rem;
+  line-height: 1.05;
+}
+
+.Text h3,
+.Text h4 {
+  font-size: 1.5rem;
+  line-height: 1.15;
+  margin-bottom: -0.625em;
+}
+
+.Text h5,
+.Text h6 {
+  margin: 1.3em 0;
+  font-weight: bold;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.Text h1 a,
+.Text h2 a,
+.Text h3 a,
+.Text h4 a {
+  background: rgb(var(--color-link));
+  color: rgb(var(--current-background));
+  padding: 0.15em 0.18em 0.08em;
+  margin: 0;
+  white-space: nowrap;
+  font-weight: normal;
+  transition: background-color 140ms var(--ease-out);
+}
+
+:root[data-focus-source="key"] .Text h1 a:focus,
+:root[data-focus-source="key"] .Text h2 a:focus,
+:root[data-focus-source="key"] .Text h3 a:focus,
+:root[data-focus-source="key"] .Text h4 a:focus {
+  outline: 3px solid black;
+  outline-offset: -1px;
+}
+
+.Text h1 a:hover,
+.Text h2 a:hover,
+.Text h3 a:hover,
+.Text h4 a:hover {
+  background: rgb(var(--color-link-shaded));
+  color: #fff;
+}
+
+@media (min-width: 1200px) {
+  .Text h1:not(:first-child),
+  .Text h2:not(:first-child),
+  .Text h3:not(:first-child),
+  .Text h4:not(:first-child) {
+    margin-top: 4.5rem;
+  }
+
+  .Text h1 {
+    font-size: 4.5rem;
+  }
+
+  .Text h2 {
+    font-size: 3rem;
+  }
+
+  .Text h3 {
+    font-size: 2rem;
+    line-height: 1.05;
+  }
+
+  .Text h4 {
+    font-size: 1.5rem;
+    line-height: 1.05;
+  }
+}

@@ -11,6 +11,12 @@
   "Oops": "Ups",
   "There is no page at this address. Try finding your way using the menu or from": "Der er ingen side på denne adresse. Prøv at finde din vej ved hjælp af menuen eller fra",
   "the homepage": "hjemmesiden",
+  "We apologize, an error has occured on our site. It may be temporary and you could": "Vi undskylder, der er opstået en fejl på vores hjemmeside. Det kan være midlertidigt, og du kunne",
+  "try again": "prøv igen",
+  "or go back to": "eller gå tilbage til",
+  "LOADING_TEXT_SHORT": "Indlæser",
+  "LOADING_TEXT_MEDIUM": "Indholdet indlæses",
+  "LOADING_TEXT_LONG": "Denne del af hjemmesiden hentes fra internettet. Hvis det tager for lang tid - sørg for at du er tilsluttet internettet.",
   "MONTH_7": "MONTH_7",
   "Published on %s %s, %s": "Published on %s %s, %s"
 }

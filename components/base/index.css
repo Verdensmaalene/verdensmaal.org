@@ -1,6 +1,11 @@
 @import "normalize.css";
 @import "./global";
-@import "./utilities";
+@import "./utilities/colors";
+@import "./utilities/display";
+@import "./utilities/loading";
+@import "./utilities/size";
+@import "./utilities/space";
+@import "./utilities/text";
 
 /**
  * Font declaration

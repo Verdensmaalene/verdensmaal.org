@@ -1,0 +1,44 @@
+/* @define Intro */
+
+@import "../base/global";
+
+.Intro {
+
+}
+
+.Intro::before {
+  content: "";
+  height: 10vh;
+  display: block;
+  max-height: 60px;
+}
+
+.Intro-title {
+  margin: 0;
+  font-size: 4rem;
+  line-height: .95;
+  text-transform: uppercase;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
+}
+
+.Intro-body {
+  margin: 0;
+  max-width: 39em;
+}
+
+@media (min-width: 900px) {
+  .Intro::before {
+    max-height: none;
+    min-height: 3rem;
+  }
+
+  .Intro-title {
+    font-size: 6rem;
+  }
+
+  .Intro-body {
+    font-size: 1.1875rem;
+  }
+}
