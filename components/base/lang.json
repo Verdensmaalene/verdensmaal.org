@@ -17,6 +17,17 @@
   "LOADING_TEXT_SHORT": "Indlæser",
   "LOADING_TEXT_MEDIUM": "Indholdet indlæses",
   "LOADING_TEXT_LONG": "Denne del af hjemmesiden hentes fra internettet. Hvis det tager for lang tid - sørg for at du er tilsluttet internettet.",
-  "MONTH_7": "MONTH_7",
-  "Published on %s %s, %s": "Published on %s %s, %s"
+  "MONTH_0": "januar",
+  "MONTH_1": "februar",
+  "MONTH_2": "mars",
+  "MONTH_3": "april",
+  "MONTH_4": "maj",
+  "MONTH_5": "juni",
+  "MONTH_6": "juli",
+  "MONTH_7": "august",
+  "MONTH_8": "september",
+  "MONTH_9": "oktober",
+  "MONTH_10": "november",
+  "MONTH_11": "december",
+  "Published on %s %s, %s": "Udgivet den %s %s, %s"
 }

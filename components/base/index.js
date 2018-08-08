@@ -24,7 +24,9 @@ function i18n (source) {
       }
     }
 
-    return value
+    return value.split('%s').reduce(function (result, str, index) {
+      return result + str + (parts[index] || '')
+    }, '')
   }
 }
 

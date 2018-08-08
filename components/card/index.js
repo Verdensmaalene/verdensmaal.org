@@ -36,7 +36,7 @@ function card (opts = {}, content) {
         <div class="Card-body">
           ${date ? html`
             <time class="Card-meta" datetime="${datetime}">
-              ${text`Published on ${text(`MONTH_${date.getMonth()}`)} ${date.getDate()}, ${date.getFullYear()}`}
+              ${text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`}
             </time>
           ` : null}
           <h1 class="Card-title">${opts.title}</h1>
