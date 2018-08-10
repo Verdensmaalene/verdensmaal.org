@@ -1,0 +1,40 @@
+/* @define Goal */
+
+@import "../base/global";
+
+.Goal {
+  display: flex;
+  width: 100%;
+  position: relative;
+  background-color: rgba(var(--color-gray-light), 0.6);
+  transition: background-color 150ms var(--ease-out);
+}
+
+.Goal:hover {
+  background-color: rgba(var(--color-gray-light), 1);
+}
+
+.Goal::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+}
+
+.Goal--square::before {
+  /* TODO: only apply in grid when supports `display: grid` */
+  padding-top: 100%;
+}
+
+.Goal--landscape::before {
+  /* TODO: only apply in grid when supports `display: grid` */
+  padding-top: calc(100% / 3 * 2 + var(--gutter, 0px));
+}
+
+.Goal--portrait::before {
+  /* TODO: only apply in grid when supports `display: grid` */
+  padding-top: calc(150% + var(--gutter, 0px) * 2);
+}
+
+.Goal.is-loading {
+}

@@ -1,6 +1,6 @@
 /* @define Card */
 
-@import "../base";
+@import "../base/global";
 @import "../figure";
 @import "../link";
 

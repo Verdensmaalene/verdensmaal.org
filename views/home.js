@@ -1,22 +1,37 @@
 var html = require('choo/html')
 var card = require('../components/card')
 var view = require('../components/view')
+var logo = require('../components/logo')
 var {i18n} = require('../components/base')
 var intro = require('../components/intro')
+var GoalGrid = require('../components/goal-grid')
+var center = require('../components/goal-grid/slots/center')
 
 var text = i18n()
 
 module.exports = view(home, meta)
 
 function home (state, emit) {
+  var goals = Array(17).fill().map((value, i) => ({isLoading: true, number: i + 1}))
+  var grid = state.cache(GoalGrid, 'homepage-goalgrid')
+
   return html`
     <main class="View-container">
       ${intro({
         title: 'De 17 mål',
         body: 'In 2015, world leaders agreed to 17 goals for a better world by 2030. These goals have the power to end poverty, fight inequality and stop climate change. Guided by the goals, it is now up to all of us, governments, businesses, civil society and the general public to work together to build a better future for everyone.'
       })}
-
-      <div style="display: flex; flex-wrap: wrap; margin: 0 -24px;">
+      <section class="u-spaceT4">
+        ${grid.render(goals, state.ui.gridLayout, function (slot) {
+          switch (slot) {
+            case 'square': return center(logo.vertical(), slot)
+            case 'large': return center('large', slot)
+            case 'small': return center('small', slot)
+            default: return null
+          }
+        })}
+      </section>
+      <section style="display: flex; flex-wrap: wrap; margin: 0 -24px;">
         ${Array(6).fill().map(() => html`
           <div style="flex: 0 0 33.333%; border: 24px solid transparent;">
             ${card({
@@ -38,7 +53,7 @@ function home (state, emit) {
             })}
           </div>
         `)}
-      </div>
+      </section>
     </main>
   `
 }

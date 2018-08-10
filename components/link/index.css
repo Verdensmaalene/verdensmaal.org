@@ -1,6 +1,6 @@
 /* @define Link */
 
-@import "../base";
+@import "../base/global";
 
 .Link {
   display: inline-block;

@@ -1,0 +1,37 @@
+/* GoalGrid */
+
+@import "../../../base/global";
+
+.GoalGrid-slot--center {
+  --current-color: var(---default-color);
+  width: 100%;
+  position: relative;
+  text-align: center;
+  background: rgba(var(--color-gray-light), 0.6);
+}
+
+.GoalGrid-slot--center .GoalGrid-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.GoalGrid-slot--center.GoalGrid-slot--square {
+  padding: 18%;
+}
+
+.GoalGrid-slot--center.GoalGrid-slot--small .GoalGrid-container {
+  position: absolute;
+  left: calc(100% / 3 * 0.18);
+  right: calc(100% / 3 * 0.18);
+  top: 18%;
+  bottom: 18%;
+}
+
+.GoalGrid-slot--center.GoalGrid-slot--large .GoalGrid-container {
+  position: absolute;
+  left: calc(100% / 3 * 0.18);
+  right: calc(100% / 3 * 0.18);
+  top: calc(100% / 2 * 0.18);
+  bottom: calc(100% / 2 * 0.18);
+}

@@ -1,0 +1,366 @@
+/* @define GoalGrid */
+
+@import "../base/global";
+@import "../text";
+
+.GoalGrid {
+  --gutter: 10px;
+  margin: calc((var(--gutter, 10px) / 2) * -1);
+  user-select: none;
+  contain: style layout paint;
+}
+
+@media print {
+  .GoalGrid {
+    display: none;
+  }
+}
+
+.GoalGrid-item {
+  display: block;
+  float: left;
+  width: 50%;
+  border: solid calc(var(--gutter, 10px) / 2) transparent;
+  position: relative;
+  transform: scale(1);
+  transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.GoalGrid-item--large,
+.GoalGrid-item--small {
+  display: none;
+}
+
+.GoalGrid-item--small::before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  padding-top: calc((100% / 3) - 6px);
+}
+
+@media (min-width: 500px) {
+  .GoalGrid-item {
+    width: calc(100% / 3);
+  }
+}
+
+@media (min-width: 700px) {
+  .GoalGrid-item {
+    width: 25%;
+  }
+
+  .GoalGrid--layout .GoalGrid-item--square {
+    display: none;
+  }
+
+  .GoalGrid--layout .GoalGrid-item--small {
+    display: flex;
+    width: 75%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .GoalGrid-item {
+    width: calc(100% / 6);
+  }
+
+  /**
+   * 1. Fix for incorrect pixel rounding (Edge)
+   */
+
+  .GoalGrid-item--6,
+  .GoalGrid-item--12,
+  .GoalGrid-item--logo {
+    margin-right: -1px; /* 1 */
+  }
+}
+
+@supports (display: grid) {
+  @media (min-width: 900px) {
+    :root.has-js .GoalGrid--layout .GoalGrid-animation {
+      display: block;
+      overflow: hidden;
+    }
+
+    .GoalGrid--layout {
+      margin: 0;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(6, 1fr);
+      grid-gap: var(--gutter, 10px);
+    }
+
+    .GoalGrid--layout .GoalGrid-item {
+      float: none;
+      width: auto;
+      border: 0;
+    }
+
+    .GoalGrid--layout .GoalGrid-item--large {
+      display: flex;
+    }
+
+    .GoalGrid-item--small::before {
+      content: none;
+    }
+
+    /**
+     * Layouts
+     */
+
+    /* 1. */
+
+    .GoalGrid--layout1 .GoalGrid-item--1 { grid-area: 1 / 1 / 3 / 4; }
+    .GoalGrid--layout1 .GoalGrid-item--6 { grid-area: 2 / 5 / 5 / 7; }
+    .GoalGrid--layout1 .GoalGrid-item--small { grid-area: 6 / 4 / 7 / 7; }
+    .GoalGrid--layout1 .GoalGrid-item--large { grid-area: 4 / 1 / 6 / 4; }
+
+    /* 2. */
+
+    .GoalGrid--layout2 .GoalGrid-item--3 { grid-area: 1 / 3 / 3 / 6; }
+    .GoalGrid--layout2 .GoalGrid-item--8 { grid-area: 3 / 1 / 6 / 3; }
+    .GoalGrid--layout2 .GoalGrid-item--small { grid-area: 6 / 4 / 7 / 7; }
+    .GoalGrid--layout2 .GoalGrid-item--large { grid-area: 3 / 4 / 5 / 7; }
+
+    /* 3. */
+
+    .GoalGrid--layout3 .GoalGrid-item--17 { grid-area: 5 / 4 / 7 / 7; }
+    .GoalGrid--layout3 .GoalGrid-item--7 { grid-area: 2 / 1 / 5 / 3; }
+    .GoalGrid--layout3 .GoalGrid-item--small { grid-area: 6 / 1 / 6 / 4; }
+    .GoalGrid--layout3 .GoalGrid-item--large { grid-area: 2 / 4 / 4 / 7; }
+
+    /* 4. */
+
+    .GoalGrid--layout4 .GoalGrid-item--13 { grid-area: 7 / 3 / 5 / 6; }
+    .GoalGrid--layout4 .GoalGrid-item--2 { grid-area: 1 / 2 / 4 / 4; }
+    .GoalGrid--layout4 .GoalGrid-item--small { grid-area: 4 / 4 / 5 / 7; }
+    .GoalGrid--layout4 .GoalGrid-item--large { grid-area: 1 / 4 / 3 / 7; }
+
+    /* 5. */
+
+    .GoalGrid--layout5 .GoalGrid-item--9 { grid-area: 2 / 3 / 4 / 6; }
+    .GoalGrid--layout5 .GoalGrid-item--16 { grid-area: 4 / 5 / 7 / 7; }
+    .GoalGrid--layout5 .GoalGrid-item--small { grid-area: 6 / 1 / 6 / 4; }
+    .GoalGrid--layout5 .GoalGrid-item--large { grid-area: 4 / 1 / 6 / 4; }
+
+    /* 6. */
+
+    .GoalGrid--layout6 .GoalGrid-item--10 { grid-area: 2 / 4 / 4 / 7; }
+    .GoalGrid--layout6 .GoalGrid-item--11 { grid-area: 3 / 1 / 6 / 3; }
+    .GoalGrid--layout6 .GoalGrid-item--small { grid-area: 6 / 1 / 7 / 4; }
+    .GoalGrid--layout6 .GoalGrid-item--large { grid-area: 4 / 4 / 6 / 7; }
+
+    /* 7. */
+
+    .GoalGrid--layout7 .GoalGrid-item--1 { grid-area: 1 / 1 / 3 / 4; }
+    .GoalGrid--layout7 .GoalGrid-item--12 { grid-area: 3 / 5 / 6 / 7; }
+    .GoalGrid--layout7 .GoalGrid-item--small { grid-area: 6 / 1 / 6 / 4; }
+    .GoalGrid--layout7 .GoalGrid-item--large { grid-area: 4 / 1 / 6 / 4; }
+
+    /* 8. */
+
+    .GoalGrid--layout8 .GoalGrid-item--15 { grid-area: 5 / 3 / 7 / 6; }
+    .GoalGrid--layout8 .GoalGrid-item--5 { grid-area: 1 / 5 / 4 / 7; }
+    .GoalGrid--layout8 .GoalGrid-item--small { grid-area: 2 / 1 / 3 / 4; }
+    .GoalGrid--layout8 .GoalGrid-item--large { grid-area: 3 / 1 / 5 / 4; }
+
+    /* 9. */
+
+    .GoalGrid--layout9 .GoalGrid-item--14 { grid-area: 5 / 4 / 7 / 7; }
+    .GoalGrid--layout9 .GoalGrid-item--4 { grid-area: 1 / 4 / 4 / 6; }
+    .GoalGrid--layout9 .GoalGrid-item--small { grid-area: 2 / 1 / 3 / 4; }
+    .GoalGrid--layout9 .GoalGrid-item--large { grid-area: 5 / 1 / 7 / 4; }
+  }
+}
+
+.GoalGrid-bg::before {
+  content: "";
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 180ms var(--ease-out);
+}
+
+.GoalGrid-item--1 .GoalGrid-bg::before { background: var(--color-goal-1-shaded); }
+.GoalGrid-item--2 .GoalGrid-bg::before { background: var(--color-goal-2-shaded); }
+.GoalGrid-item--3 .GoalGrid-bg::before { background: var(--color-goal-3-shaded); }
+.GoalGrid-item--4 .GoalGrid-bg::before { background: var(--color-goal-4-shaded); }
+.GoalGrid-item--5 .GoalGrid-bg::before { background: var(--color-goal-5-shaded); }
+.GoalGrid-item--6 .GoalGrid-bg::before { background: var(--color-goal-6-shaded); }
+.GoalGrid-item--7 .GoalGrid-bg::before { background: var(--color-goal-7-shaded); }
+.GoalGrid-item--8 .GoalGrid-bg::before { background: var(--color-goal-8-shaded); }
+.GoalGrid-item--9 .GoalGrid-bg::before { background: var(--color-goal-9-shaded); }
+.GoalGrid-item--10 .GoalGrid-bg::before { background: var(--color-goal-10-shaded); }
+.GoalGrid-item--11 .GoalGrid-bg::before { background: var(--color-goal-11-shaded); }
+.GoalGrid-item--12 .GoalGrid-bg::before { background: var(--color-goal-12-shaded); }
+.GoalGrid-item--13 .GoalGrid-bg::before { background: var(--color-goal-13-shaded); }
+.GoalGrid-item--14 .GoalGrid-bg::before { background: var(--color-goal-14-shaded); }
+.GoalGrid-item--15 .GoalGrid-bg::before { background: var(--color-goal-15-shaded); }
+.GoalGrid-item--16 .GoalGrid-bg::before { background: var(--color-goal-16-shaded); }
+.GoalGrid-item--17 .GoalGrid-bg::before { background: var(--color-goal-17-shaded); }
+
+.GoalGrid-item--1 .GoalGrid-button { color: var(--color-goal-1); }
+.GoalGrid-item--2 .GoalGrid-button { color: var(--color-goal-2); }
+.GoalGrid-item--3 .GoalGrid-button { color: var(--color-goal-3); }
+.GoalGrid-item--4 .GoalGrid-button { color: var(--color-goal-4); }
+.GoalGrid-item--5 .GoalGrid-button { color: var(--color-goal-5); }
+.GoalGrid-item--6 .GoalGrid-button { color: var(--color-goal-6); }
+.GoalGrid-item--7 .GoalGrid-button { color: var(--color-goal-7); }
+.GoalGrid-item--8 .GoalGrid-button { color: var(--color-goal-8); }
+.GoalGrid-item--9 .GoalGrid-button { color: var(--color-goal-9); }
+.GoalGrid-item--10 .GoalGrid-button { color: var(--color-goal-10); }
+.GoalGrid-item--11 .GoalGrid-button { color: var(--color-goal-11); }
+.GoalGrid-item--12 .GoalGrid-button { color: var(--color-goal-12); }
+.GoalGrid-item--13 .GoalGrid-button { color: var(--color-goal-13); }
+.GoalGrid-item--14 .GoalGrid-button { color: var(--color-goal-14); }
+.GoalGrid-item--15 .GoalGrid-button { color: var(--color-goal-15); }
+.GoalGrid-item--16 .GoalGrid-button { color: var(--color-goal-16); }
+.GoalGrid-item--17 .GoalGrid-button { color: var(--color-goal-17); }
+
+.GoalGrid-item--1:hover .GoalGrid-button { color: color(var(--color-goal-1) lightness(-10)); }
+.GoalGrid-item--2:hover .GoalGrid-button { color: color(var(--color-goal-2) lightness(-10)); }
+.GoalGrid-item--3:hover .GoalGrid-button { color: color(var(--color-goal-3) lightness(-10)); }
+.GoalGrid-item--4:hover .GoalGrid-button { color: color(var(--color-goal-4) lightness(-10)); }
+.GoalGrid-item--5:hover .GoalGrid-button { color: color(var(--color-goal-5) lightness(-10)); }
+.GoalGrid-item--6:hover .GoalGrid-button { color: color(var(--color-goal-6) lightness(-10)); }
+.GoalGrid-item--7:hover .GoalGrid-button { color: color(var(--color-goal-7) lightness(-10)); }
+.GoalGrid-item--8:hover .GoalGrid-button { color: color(var(--color-goal-8) lightness(-10)); }
+.GoalGrid-item--9:hover .GoalGrid-button { color: color(var(--color-goal-9) lightness(-10)); }
+.GoalGrid-item--10:hover .GoalGrid-button { color: color(var(--color-goal-10) lightness(-10)); }
+.GoalGrid-item--11:hover .GoalGrid-button { color: color(var(--color-goal-11) lightness(-10)); }
+.GoalGrid-item--12:hover .GoalGrid-button { color: color(var(--color-goal-12) lightness(-10)); }
+.GoalGrid-item--13:hover .GoalGrid-button { color: color(var(--color-goal-13) lightness(-10)); }
+.GoalGrid-item--14:hover .GoalGrid-button { color: color(var(--color-goal-14) lightness(-10)); }
+.GoalGrid-item--15:hover .GoalGrid-button { color: color(var(--color-goal-15) lightness(-10)); }
+.GoalGrid-item--16:hover .GoalGrid-button { color: color(var(--color-goal-16) lightness(-10)); }
+.GoalGrid-item--17:hover .GoalGrid-button { color: color(var(--color-goal-17) lightness(-10)); }
+
+.GoalGrid-item:hover .GoalGrid-bg::before {
+  opacity: 0.13;
+}
+
+.GoalGrid-iconGlyph {
+  transition: transform 180ms var(--ease-out);
+  will-change: transform;
+}
+
+.GoalGrid-item:hover .GoalGrid-iconGlyph {
+  transform: scale(1.08);
+}
+
+.GoalGrid-item.is-pressed .GoalGrid-iconGlyph {
+  transform: scale(1);
+}
+
+/**
+ * 1. Hardcoded in JavaScript, see link.js
+ */
+
+.GoalGrid-item.is-pressed {
+  transform: scale(0.97); /* 1 */
+}
+
+:root[data-focus-source="key"] .GoalGrid-item:focus {
+  box-shadow: none;
+}
+
+:root[data-focus-source="key"] .GoalGrid-item:focus .GoalGrid-bg {
+  box-shadow: none;
+  outline: 3px solid #000;
+  outline-offset: -3px;
+}
+
+.GoalGrid-item.is-pressed::before {
+  opacity: 0;
+  transition: opacity 100ms var(--ease-out);
+}
+
+.GoalGrid-bg {
+  position: relative;
+  padding-top: 100%;
+}
+
+.GoalGrid-content {
+  --current-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: 100ms var(--ease-out);
+  transition-property: opacity, transform;
+}
+
+.GoalGrid-item.is-loading .GoalGrid-content {
+  opacity: 0;
+  transform: scale(0.92);
+  will-change: transform;
+}
+
+/**
+ * Item themes
+ */
+
+.GoalGrid-icon {
+  height: 92%;
+  width: 100%;
+  margin-top: 8%;
+  will-change: transform;
+}
+
+.GoalGrid-logo {
+  --current-color: var(---default-color);
+  width: 64%;
+  height: 64%;
+  position: absolute;
+  top: 18%;
+  left: 18%;
+}
+
+.GoalGrid-bg {
+  position: relative;
+  z-index: 0;
+  background: var(--color-gray-light);
+}
+
+.GoalGrid-item--light .GoalGrid-desc {
+  color: black;
+}
+
+.GoalGrid-button {
+  font-family: var(--font-family-heading);
+  font-weight: bold;
+  line-height: 1.1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  word-spacing: var(--word-spacing-heading);
+  background: #fff;
+  color: rgb(var(--current-color));
+  font-size: 24px;
+  padding: 16px 20px 14px;
+  margin: 30px 0 0 32px;
+  min-width: 130px;
+  display: inline-block;
+  text-align: center;
+  transition: color 180ms var(--ease-out);
+}
+
+/**
+ * CSS Grid Layout
+ */
+
+.GoalGrid-animation {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+}
+

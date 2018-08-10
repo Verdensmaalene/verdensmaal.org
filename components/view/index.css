@@ -1,6 +1,6 @@
 /* @define View */
 
-@import "../base";
+@import "../base/global";
 
 .View {
   display: grid;
