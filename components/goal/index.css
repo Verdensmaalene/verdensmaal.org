@@ -22,7 +22,6 @@
 }
 
 .Goal--square::before {
-  /* TODO: only apply in grid when supports `display: grid` */
   padding-top: 100%;
 }
 
