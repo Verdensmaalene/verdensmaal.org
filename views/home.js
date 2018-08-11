@@ -19,7 +19,7 @@ function home (state, emit) {
     <main class="View-container">
       ${intro({
         title: 'De 17 mål',
-        body: 'In 2015, world leaders agreed to 17 goals for a better world by 2030. These goals have the power to end poverty, fight inequality and stop climate change. Guided by the goals, it is now up to all of us, governments, businesses, civil society and the general public to work together to build a better future for everyone.'
+        body: 'Velkommen til et digitalt læringssite om FN\'s verdensmål for bæredygtig udvikling. Som underviser og elev på ungdomsuddannelserne kan du her finde viden om de 17 nye verdensmål, baggrundsinformation om verdens udviklingstilstand og tendenser, samt konkrete øvelser til netop dit fag.'
       })}
       <section class="u-spaceT4">
         ${grid.render(goals, state.ui.gridLayout, function (slot) {

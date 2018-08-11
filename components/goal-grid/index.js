@@ -62,6 +62,8 @@ module.exports = class GoalGrid extends Component {
       </div>
     `
 
+    // create grid child cell
+    // (obj, num) -> HTMLElement
     function child (props, num) {
       var id = `goalgrid-${num}-${props.format}`
       return html`
