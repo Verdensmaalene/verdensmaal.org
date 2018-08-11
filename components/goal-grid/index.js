@@ -1,7 +1,6 @@
 var html = require('choo/html')
 var Component = require('choo/component')
 var Goal = require('../goal')
-var logo = require('../logo')
 
 var TOTAL_GOALS = 17
 var LAYOUTS = [ // [<landscape>, <portrait>]
@@ -36,29 +35,40 @@ module.exports = class GoalGrid extends Component {
     this.local.layout = layout
     this.local.goals = goals.slice()
 
+    var cache = this.cache
+
     var cells = []
     for (let i = 0; i < TOTAL_GOALS; i++) {
       let num = i + 1
       let pair = LAYOUTS[layout - 1]
-      let props = Object.assign({
-        format: pair.includes(num) ? ['landscape', 'portrait'][pair.indexOf(num)] : 'square'
-      }, goals.find((goal) => goal.number === num))
-      cells.push(props)
+      let goal = goals.find((goal) => goal.number === num)
+      let format = pair.includes(num) ? ['landscape', 'portrait'][pair.indexOf(num)] : 'square'
+      let props = Object.assign({format: format}, goal)
+      cells.push(child(props, i + 1))
+      if (format !== 'square') {
+        // augument a square goal for each landscape/portrait
+        cells.push(child(Object.assign({}, props, {format: 'square'}), i + 1))
+      }
     }
 
     return html`
       <div class="GoalGrid ${layout ? 'GoalGrid--layout GoalGrid--layout' + layout : ''}" id="${this.local.id}">
-        ${cells.map((props, index) => html`
-          <a class="GoalGrid-item GoalGrid-item--${index + 1}" href="${props.href}">
-            ${this.cache(Goal, `goalgrid-${index + 1}`, index + 1).render(props)}
-          </a>
-        `)}
-        ${['large', 'small', 'square'].map((size) => html`
-          <div class="GoalGrid-item Goal-Grid-item--slot GoalGrid-item--${size}">
-            ${slot(size)}
+        ${cells}
+        ${['large', 'small', 'square'].map((type) => html`
+          <div class="GoalGrid-item GoalGrid-item--slot GoalGrid-item--${type}">
+            ${slot(type)}
           </div>
         `)}
       </div>
     `
+
+    function child (props, num) {
+      var id = `goalgrid-${num}-${props.format}`
+      return html`
+        <a class="GoalGrid-item GoalGrid-item--${num} GoalGrid-item--${props.format}" href="${props.href}">
+          ${cache(Goal, id, num).render(props)}
+        </a>
+      `
+    }
   }
 }

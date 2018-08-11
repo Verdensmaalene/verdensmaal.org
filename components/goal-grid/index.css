@@ -26,6 +26,11 @@
   transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
+.GoalGrid-item--portrait,
+.GoalGrid-item--landscape {
+  display: none;
+}
+
 .GoalGrid-item--large,
 .GoalGrid-item--small {
   display: none;
@@ -50,7 +55,7 @@
     width: 25%;
   }
 
-  .GoalGrid--layout .GoalGrid-item--square {
+  .GoalGrid--layout .GoalGrid-item--slot.GoalGrid-item--square {
     display: none;
   }
 
@@ -106,12 +111,19 @@
       content: none;
     }
 
+    .GoalGrid-item--portrait,
+    .GoalGrid-item--landscape {
+      display: block;
+    }
+
     /**
      * Layouts
      */
 
     /* 1. */
 
+    .GoalGrid--layout1 .GoalGrid-item--1.GoalGrid-item--square,
+    .GoalGrid--layout1 .GoalGrid-item--6.GoalGrid-item--square { display: none; }
     .GoalGrid--layout1 .GoalGrid-item--1 { grid-area: 1 / 1 / 3 / 4; }
     .GoalGrid--layout1 .GoalGrid-item--6 { grid-area: 2 / 5 / 5 / 7; }
     .GoalGrid--layout1 .GoalGrid-item--small { grid-area: 6 / 4 / 7 / 7; }
@@ -119,6 +131,8 @@
 
     /* 2. */
 
+    .GoalGrid--layout2 .GoalGrid-item--3.GoalGrid-item--square,
+    .GoalGrid--layout2 .GoalGrid-item--8.GoalGrid-item--square { display: none; }
     .GoalGrid--layout2 .GoalGrid-item--3 { grid-area: 1 / 3 / 3 / 6; }
     .GoalGrid--layout2 .GoalGrid-item--8 { grid-area: 3 / 1 / 6 / 3; }
     .GoalGrid--layout2 .GoalGrid-item--small { grid-area: 6 / 4 / 7 / 7; }
@@ -126,6 +140,8 @@
 
     /* 3. */
 
+    .GoalGrid--layout3 .GoalGrid-item--17.GoalGrid-item--square,
+    .GoalGrid--layout3 .GoalGrid-item--7.GoalGrid-item--square { display: none; }
     .GoalGrid--layout3 .GoalGrid-item--17 { grid-area: 5 / 4 / 7 / 7; }
     .GoalGrid--layout3 .GoalGrid-item--7 { grid-area: 2 / 1 / 5 / 3; }
     .GoalGrid--layout3 .GoalGrid-item--small { grid-area: 6 / 1 / 6 / 4; }
@@ -133,6 +149,8 @@
 
     /* 4. */
 
+    .GoalGrid--layout4 .GoalGrid-item--13.GoalGrid-item--square,
+    .GoalGrid--layout4 .GoalGrid-item--2.GoalGrid-item--square { display: none; }
     .GoalGrid--layout4 .GoalGrid-item--13 { grid-area: 7 / 3 / 5 / 6; }
     .GoalGrid--layout4 .GoalGrid-item--2 { grid-area: 1 / 2 / 4 / 4; }
     .GoalGrid--layout4 .GoalGrid-item--small { grid-area: 4 / 4 / 5 / 7; }
@@ -140,6 +158,8 @@
 
     /* 5. */
 
+    .GoalGrid--layout5 .GoalGrid-item--9.GoalGrid-item--square,
+    .GoalGrid--layout5 .GoalGrid-item--16.GoalGrid-item--square { display: none; }
     .GoalGrid--layout5 .GoalGrid-item--9 { grid-area: 2 / 3 / 4 / 6; }
     .GoalGrid--layout5 .GoalGrid-item--16 { grid-area: 4 / 5 / 7 / 7; }
     .GoalGrid--layout5 .GoalGrid-item--small { grid-area: 6 / 1 / 6 / 4; }
@@ -147,6 +167,8 @@
 
     /* 6. */
 
+    .GoalGrid--layout6 .GoalGrid-item--10.GoalGrid-item--square,
+    .GoalGrid--layout6 .GoalGrid-item--11.GoalGrid-item--square { display: none; }
     .GoalGrid--layout6 .GoalGrid-item--10 { grid-area: 2 / 4 / 4 / 7; }
     .GoalGrid--layout6 .GoalGrid-item--11 { grid-area: 3 / 1 / 6 / 3; }
     .GoalGrid--layout6 .GoalGrid-item--small { grid-area: 6 / 1 / 7 / 4; }
@@ -154,6 +176,8 @@
 
     /* 7. */
 
+    .GoalGrid--layout7 .GoalGrid-item--1.GoalGrid-item--square,
+    .GoalGrid--layout7 .GoalGrid-item--12.GoalGrid-item--square { display: none; }
     .GoalGrid--layout7 .GoalGrid-item--1 { grid-area: 1 / 1 / 3 / 4; }
     .GoalGrid--layout7 .GoalGrid-item--12 { grid-area: 3 / 5 / 6 / 7; }
     .GoalGrid--layout7 .GoalGrid-item--small { grid-area: 6 / 1 / 6 / 4; }
@@ -161,6 +185,8 @@
 
     /* 8. */
 
+    .GoalGrid--layout8 .GoalGrid-item--15.GoalGrid-item--square,
+    .GoalGrid--layout8 .GoalGrid-item--5.GoalGrid-item--square { display: none; }
     .GoalGrid--layout8 .GoalGrid-item--15 { grid-area: 5 / 3 / 7 / 6; }
     .GoalGrid--layout8 .GoalGrid-item--5 { grid-area: 1 / 5 / 4 / 7; }
     .GoalGrid--layout8 .GoalGrid-item--small { grid-area: 2 / 1 / 3 / 4; }
@@ -168,6 +194,8 @@
 
     /* 9. */
 
+    .GoalGrid--layout9 .GoalGrid-item--14.GoalGrid-item--square,
+    .GoalGrid--layout9 .GoalGrid-item--4.GoalGrid-item--square { display: none; }
     .GoalGrid--layout9 .GoalGrid-item--14 { grid-area: 5 / 4 / 7 / 7; }
     .GoalGrid--layout9 .GoalGrid-item--4 { grid-area: 1 / 4 / 4 / 6; }
     .GoalGrid--layout9 .GoalGrid-item--small { grid-area: 2 / 1 / 3 / 4; }

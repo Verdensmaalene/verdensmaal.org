@@ -27,13 +27,11 @@
 }
 
 .Goal--landscape::before {
-  /* TODO: only apply in grid when supports `display: grid` */
-  padding-top: calc(100% / 3 * 2 + var(--gutter, 0px));
+  padding-top: calc(((100% - var(--gutter, 0px) * 2) / 3) * 2 + var(--gutter, 0px));
 }
 
 .Goal--portrait::before {
-  /* TODO: only apply in grid when supports `display: grid` */
-  padding-top: calc(150% + var(--gutter, 0px) * 2);
+  padding-top: calc((150% - var(--gutter, 0px)) + var(--gutter, 0px) * 2);
 }
 
 .Goal.is-loading {
