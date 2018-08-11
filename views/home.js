@@ -1,4 +1,6 @@
 var html = require('choo/html')
+var {Predicates} = require('prismic-javascript')
+var {asText} = require('prismic-richtext')
 var card = require('../components/card')
 var view = require('../components/view')
 var logo = require('../components/logo')
@@ -12,9 +14,6 @@ var text = i18n()
 module.exports = view(home, meta)
 
 function home (state, emit) {
-  var goals = Array(17).fill().map((value, i) => ({isLoading: true, number: i + 1}))
-  var grid = state.cache(GoalGrid, 'homepage-goalgrid')
-
   return html`
     <main class="View-container">
       ${intro({
@@ -22,14 +21,7 @@ function home (state, emit) {
         body: 'Velkommen til et digitalt læringssite om FN\'s verdensmål for bæredygtig udvikling. Som underviser og elev på ungdomsuddannelserne kan du her finde viden om de 17 nye verdensmål, baggrundsinformation om verdens udviklingstilstand og tendenser, samt konkrete øvelser til netop dit fag.'
       })}
       <section class="u-spaceT4">
-        ${grid.render(goals, state.ui.gridLayout, function (slot) {
-          switch (slot) {
-            case 'square': return center(logo.vertical(), slot)
-            case 'large': return center('large', slot)
-            case 'small': return center('small', slot)
-            default: return null
-          }
-        })}
+        ${state.docs.get(Predicates.at('document.type', 'goal'), onresponse)}
       </section>
       <section style="display: flex; flex-wrap: wrap; margin: 0 -24px;">
         ${Array(6).fill().map(() => html`
@@ -56,6 +48,35 @@ function home (state, emit) {
       </section>
     </main>
   `
+
+  // handle goal query response
+  // (null|Error, obj?) -> HTMLElement
+  function onresponse (err, response) {
+    if (err) return null
+
+    var goals
+    if (response) {
+      goals = response.results.map((doc) => ({
+        number: doc.data.number,
+        title: asText(doc.data.title),
+        description: asText(doc.data.description)
+      }))
+    } else {
+      goals = Array(17).fill().map((value, i) => {
+        return {isLoading: true, number: i + 1}
+      })
+    }
+
+    var grid = state.cache(GoalGrid, 'homepage-goalgrid')
+    return grid.render(goals, state.ui.gridLayout, function (slot) {
+      switch (slot) {
+        case 'square': return center(logo.vertical(), slot)
+        case 'large': return center('large', slot)
+        case 'small': return center('small', slot)
+        default: return null
+      }
+    })
+  }
 }
 
 function meta (state) {
