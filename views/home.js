@@ -1,5 +1,4 @@
 var html = require('choo/html')
-var {Predicates} = require('prismic-javascript')
 var {asText} = require('prismic-richtext')
 var card = require('../components/card')
 var view = require('../components/view')
