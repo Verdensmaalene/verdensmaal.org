@@ -10,19 +10,16 @@ var GoalGrid = require('../components/goal-grid')
 var center = require('../components/goal-grid/slots/center')
 
 var text = i18n()
+var opts = {
+  fetchLinks: ['goal.title', 'goal.number', 'goal.description']
+}
 
 module.exports = view(home, meta)
 
 function home (state, emit) {
   return html`
     <main class="View-container">
-      ${intro({
-        title: 'De 17 mål',
-        body: 'Velkommen til et digitalt læringssite om FN\'s verdensmål for bæredygtig udvikling. Som underviser og elev på ungdomsuddannelserne kan du her finde viden om de 17 nye verdensmål, baggrundsinformation om verdens udviklingstilstand og tendenser, samt konkrete øvelser til netop dit fag.'
-      })}
-      <section class="u-spaceT4">
-        ${state.docs.get(Predicates.at('document.type', 'goal'), onresponse)}
-      </section>
+      ${state.docs.getSingle('homepage', opts, render)}
       <section style="display: flex; flex-wrap: wrap; margin: 0 -24px;">
         ${Array(6).fill().map(() => html`
           <div style="flex: 0 0 33.333%; border: 24px solid transparent;">
@@ -51,31 +48,47 @@ function home (state, emit) {
 
   // handle goal query response
   // (null|Error, obj?) -> HTMLElement
-  function onresponse (err, response) {
+  function render (err, doc) {
     if (err) return null
 
-    var goals
-    if (response) {
-      goals = response.results.map((doc) => ({
-        number: doc.data.number,
-        title: asText(doc.data.title),
-        description: asText(doc.data.description)
+    var goals, title, description
+    if (doc) {
+      title = asText(doc.data.title)
+      description = asText(doc.data.description)
+      goals = doc.data.goals.map(({link}) => ({
+        number: link.data.number,
+        title: asText(link.data.title),
+        description: asText(link.data.description),
+        href: `/${link.data.number}-${link.uid}`
       }))
     } else {
+      title = html`<span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`
+      description = html`<span class="u-loading">${text`LOADING_TEXT_LONG`}</span>`
       goals = Array(17).fill().map((value, i) => {
-        return {isLoading: true, number: i + 1}
+        return {isLoading: true, number: i + 1, href: `/${i + 1}`}
       })
     }
 
     var grid = state.cache(GoalGrid, 'homepage-goalgrid')
-    return grid.render(goals, state.ui.gridLayout, function (slot) {
-      switch (slot) {
-        case 'square': return center(logo.vertical(), slot)
-        case 'large': return center('large', slot)
-        case 'small': return center('small', slot)
-        default: return null
-      }
-    })
+    return html`
+      <div>
+        ${intro({title: title, body: description})}
+        <section class="u-spaceT4">
+          ${grid.render(goals, state.ui.gridLayout, slot)}
+        </section>
+      </div>
+    `
+  }
+}
+
+// render slot by type
+// str -> HTMLElement
+function slot (type) {
+  switch (type) {
+    case 'square': return center(logo.vertical(), type)
+    case 'large': return center('large', type)
+    case 'small': return center('small', type)
+    default: return null
   }
 }
 

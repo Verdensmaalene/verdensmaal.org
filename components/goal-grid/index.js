@@ -65,12 +65,16 @@ module.exports = class GoalGrid extends Component {
     // create grid child cell
     // (obj, num) -> HTMLElement
     function child (props, num) {
-      var id = `goalgrid-${num}-${props.format}`
-      return html`
-        <a class="GoalGrid-item GoalGrid-item--${num} GoalGrid-item--${props.format}" href="${props.href}">
-          ${cache(Goal, id, num).render(props)}
-        </a>
-      `
+      var goal = cache(Goal, `goalgrid-${num}-${props.format}`, num)
+      var className = `GoalGrid-item GoalGrid-item--${num} GoalGrid-item--${props.format}`
+      if (props.href) {
+        return html`
+          <a class="${className}" href="${props.href}">
+            ${goal.render(props)}
+          </a>
+        `
+      }
+      return html`<div class="${className}">${goal.render(props)}</div>`
     }
   }
 }

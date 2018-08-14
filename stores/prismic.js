@@ -15,12 +15,12 @@ function prismicStore (opts) {
   return function (state, emitter) {
     var init = Prismic.getApi(opts.repository, opts)
 
-    if (typeof window === 'undefined') {
+    if (typeof window === 'undefined' && state.prefetch) {
       cache.clear()
-    } else if (state.docs) {
+    } else if (typeof window !== 'undefined' && state.docs) {
       assert(typeof state.docs === 'object', 'choo-prismic: state.docs should be type object')
       var cachekeys = Object.keys(state.docs)
-      for (var i = 0, len = cachekeys.lenght; i < len; i++) {
+      for (var i = 0, len = cachekeys.length; i < len; i++) {
         cache.set(cachekeys[i], state.docs[cachekeys[i]])
       }
     }
@@ -40,7 +40,7 @@ function prismicStore (opts) {
       var key = Array.isArray(predicates) ? predicates.join(',') : predicates
       var optkeys = Object.keys(opts).sort()
       for (var i = 0, len = optkeys.length; i < len; i++) {
-        key += (',' + optkeys[i] + '=' + JSON.stringify(opts[key]))
+        key += (',' + optkeys[i] + '=' + JSON.stringify(opts[optkeys[i]]))
       }
       var cached = cache.get(key)
 
@@ -61,6 +61,7 @@ function prismicStore (opts) {
         emitter.emit('render')
       })
 
+      if (state.prefetch) state.prefetch.push(request)
       emitter.emit('prismic:request', request)
       cache.set(key, request)
 
@@ -130,6 +131,6 @@ function first (callback) {
   return function (err, response) {
     if (err) return callback(err)
     if (!response) return callback(null)
-    return callback(null, response.result[0])
+    return callback(null, response.results[0])
   }
 }
