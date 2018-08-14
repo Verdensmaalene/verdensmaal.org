@@ -245,11 +245,19 @@ module.exports = class Link extends Component {
 
     return html`
       <div class="${classes}" id="${this.local.id}">
-        ${!props.blank ? html`
-          <div class="Goal-cell">
-            ${icon(props.number, props.iconText)}
-          </div>
-        ` : null}
+        <div class="Goal-container">
+          ${!props.blank ? html`
+            <div class="Goal-cell">
+              ${icon(props.number, props.iconText)}
+            </div>
+            ` : null}
+          ${!props.blank && format !== 'square' ? html`
+            <div class="Goal-content">
+              <p class="Goal-description">${props.description}</p>
+              <span class="Goal-button"><span class="Goal-mask">${text`Explore goal`}</span></button>
+            </div>
+          ` : null}
+        </div>
       </div>
     `
   }

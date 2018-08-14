@@ -94,6 +94,30 @@
 .Goal--17::after { --current-background: rgba(var(--color-goal-17-shaded), 0.13); }
 
 /**
+ * Inner container
+ */
+
+.Goal-container {
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.Goal--square .Goal-container {
+  padding: 8%;
+}
+
+.Goal--landscape .Goal-container {
+  padding: calc(((100% - var(--gutter, 0px) * 2) / 3) * 0.08);
+}
+
+.Goal--portrait .Goal-container {
+  padding: calc(((100% - var(--gutter, 0px)) / 2) * 0.08);
+}
+
+/**
  * Multi purpose goal square cell
  */
 
@@ -108,26 +132,27 @@
   display: block;
   width: 0;
   height: 0;
-  padding-top: 92%;
+  padding-top: 100%;
+  /* padding-top: 92%; */
 }
 
 .Goal--square .Goal-cell {
   width: 100%;
-  padding-top: 8%;
+  /* padding-top: 8%; */
 }
 
 .Goal--landscape .Goal-cell {
   width: calc((100% - var(--gutter, 0px) * 2) / 3);
-  padding-top: calc(((100% - var(--gutter, 0px) * 2) / 3) * 0.08);
+  /* padding-top: calc(((100% - var(--gutter, 0px) * 2) / 3) * 0.08); */
 }
 
 .Goal--portrait .Goal-cell {
   width: calc((100% - var(--gutter, 0px)) / 2);
-  padding-top: calc(((100% - var(--gutter, 0px)) / 2) * 0.08);
+  /* padding-top: calc(((100% - var(--gutter, 0px)) / 2) * 0.08); */
 }
 
 /**
- * Goal icons
+ * Goal icon
  */
 
 .Goal-icon {
@@ -135,9 +160,15 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  width: 100%;
+  width: 116%;
+  margin: 0 -8%;
   user-select: none;
   white-space: nowrap;
+}
+
+.Goal--landscape .Goal-icon,
+.Goal--portrait .Goal-icon {
+  margin: 0 0 0 -8%;
 }
 
 @media print {
@@ -174,4 +205,34 @@
   width: 80%;
   margin-left: 10%;
   margin-top: -4%;
+}
+
+/**
+ * Content
+ */
+
+.Goal-content {
+
+}
+
+.Goal--landscape .Goal-content {
+  display: flex;
+}
+
+.Goal-description {
+  flex: 1 1 auto;
+}
+
+.Goal-button {
+  display: inline-block;
+  padding: 1rem;
+  color: var(--current-background);
+  font-size: 1.2rem;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: #fff;
 }
