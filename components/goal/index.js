@@ -3,18 +3,19 @@ var Component = require('choo/component')
 // var Hero = require('../hero')
 // var backgrounds = require('../hero/backgrounds')
 var {vw, vh, className, i18n} = require('../base')
+var {icon} = require('./icons')
 
 var text = i18n()
 
 var PRESS_SCALE_FACTOR = 0.97 // Hardcoded in CSS, see ./index.css
 
 module.exports = class Link extends Component {
-  constructor (id, state, emit, number) {
+  constructor (id, state, emit) {
     super(id)
     this.local = state.components[id] = {
       id: id,
-      number: number,
-      isLoading: false,
+      blank: false,
+      format: 'square',
       inTransition: false,
       isInitialized: false
     }
@@ -23,7 +24,7 @@ module.exports = class Link extends Component {
   update (props = {}) {
     if (this.local.inTransition) return false
     if (props.format !== this.local.format) return true
-    if (!props.isLoading && !this.local.isInitialized) return true
+    if (!props.blank && !this.local.isInitialized) return true
     return false
   }
 
@@ -234,12 +235,21 @@ module.exports = class Link extends Component {
   }
 
   createElement (props = {}) {
-    this.local.isLoading = props.isLoading
+    this.local.blank = props.blank
     var format = this.local.format = props.format || 'square'
+    var classes = className(`Goal Goal--${format}`, {
+      [`Goal--${props.number}`]: !props.blank,
+      'Goal--light': props.number === 7,
+      'Goal--blank': props.blank
+    })
 
     return html`
-      <div class="${className(`Goal Goal--${this.local.number} Goal--${format}`, {'Goal--light': this.local.number === 7, 'is-loading': props.isLoading})}" id="${this.local.id}">
-
+      <div class="${classes}" id="${this.local.id}">
+        ${!props.blank ? html`
+          <div class="Goal-cell">
+            ${icon(props.number, props.iconText)}
+          </div>
+        ` : null}
       </div>
     `
   }

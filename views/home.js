@@ -10,7 +10,12 @@ var center = require('../components/goal-grid/slots/center')
 
 var text = i18n()
 var opts = {
-  fetchLinks: ['goal.title', 'goal.number', 'goal.description']
+  fetchLinks: [
+    'goal.title',
+    'goal.number',
+    'goal.description',
+    'goal.icon_text'
+  ]
 }
 
 module.exports = view(home, meta)
@@ -58,14 +63,13 @@ function home (state, emit) {
         number: link.data.number,
         title: asText(link.data.title),
         description: asText(link.data.description),
+        iconText: asText(link.data.icon_text),
         href: `/${link.data.number}-${link.uid}`
       }))
     } else {
       title = html`<span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`
       description = html`<span class="u-loading">${text`LOADING_TEXT_LONG`}</span>`
-      goals = Array(17).fill().map((value, i) => {
-        return {isLoading: true, number: i + 1, href: `/${i + 1}`}
-      })
+      goals = []
     }
 
     var grid = state.cache(GoalGrid, 'homepage-goalgrid')

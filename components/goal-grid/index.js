@@ -43,7 +43,7 @@ module.exports = class GoalGrid extends Component {
       let pair = LAYOUTS[layout - 1]
       let goal = goals.find((goal) => goal.number === num)
       let format = pair.includes(num) ? ['landscape', 'portrait'][pair.indexOf(num)] : 'square'
-      let props = Object.assign({format: format}, goal)
+      let props = Object.assign({format: format, blank: !goal}, goal)
       cells.push(child(props, i + 1))
       if (format !== 'square') {
         // augument a square goal for each landscape/portrait
@@ -65,7 +65,7 @@ module.exports = class GoalGrid extends Component {
     // create grid child cell
     // (obj, num) -> HTMLElement
     function child (props, num) {
-      var goal = cache(Goal, `goalgrid-${num}-${props.format}`, num)
+      var goal = cache(Goal, `goalgrid-${num}-${props.format}`)
       var className = `GoalGrid-item GoalGrid-item--${num} GoalGrid-item--${props.format}`
       if (props.href) {
         return html`

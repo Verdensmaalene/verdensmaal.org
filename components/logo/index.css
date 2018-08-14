@@ -14,23 +14,23 @@
   width: 100%;
 }
 
-.Logo-slice:nth-child(1) { color: var(--color-goal-1); }
-.Logo-slice:nth-child(2) { color: var(--color-goal-2); }
-.Logo-slice:nth-child(3) { color: var(--color-goal-3); }
-.Logo-slice:nth-child(4) { color: var(--color-goal-4); }
-.Logo-slice:nth-child(5) { color: var(--color-goal-5); }
-.Logo-slice:nth-child(6) { color: var(--color-goal-6); }
-.Logo-slice:nth-child(7) { color: var(--color-goal-7); }
-.Logo-slice:nth-child(8) { color: var(--color-goal-8); }
-.Logo-slice:nth-child(9) { color: var(--color-goal-9); }
-.Logo-slice:nth-child(10) { color: var(--color-goal-10); }
-.Logo-slice:nth-child(11) { color: var(--color-goal-11); }
-.Logo-slice:nth-child(12) { color: var(--color-goal-12); }
-.Logo-slice:nth-child(13) { color: var(--color-goal-13); }
-.Logo-slice:nth-child(14) { color: var(--color-goal-14); }
-.Logo-slice:nth-child(15) { color: var(--color-goal-15); }
-.Logo-slice:nth-child(16) { color: var(--color-goal-16); }
-.Logo-slice:nth-child(17) { color: var(--color-goal-17); }
+.Logo-slice:nth-child(1) { color: rgb(var(--color-goal-1)); }
+.Logo-slice:nth-child(2) { color: rgb(var(--color-goal-2)); }
+.Logo-slice:nth-child(3) { color: rgb(var(--color-goal-3)); }
+.Logo-slice:nth-child(4) { color: rgb(var(--color-goal-4)); }
+.Logo-slice:nth-child(5) { color: rgb(var(--color-goal-5)); }
+.Logo-slice:nth-child(6) { color: rgb(var(--color-goal-6)); }
+.Logo-slice:nth-child(7) { color: rgb(var(--color-goal-7)); }
+.Logo-slice:nth-child(8) { color: rgb(var(--color-goal-8)); }
+.Logo-slice:nth-child(9) { color: rgb(var(--color-goal-9)); }
+.Logo-slice:nth-child(10) { color: rgb(var(--color-goal-10)); }
+.Logo-slice:nth-child(11) { color: rgb(var(--color-goal-11)); }
+.Logo-slice:nth-child(12) { color: rgb(var(--color-goal-12)); }
+.Logo-slice:nth-child(13) { color: rgb(var(--color-goal-13)); }
+.Logo-slice:nth-child(14) { color: rgb(var(--color-goal-14)); }
+.Logo-slice:nth-child(15) { color: rgb(var(--color-goal-15)); }
+.Logo-slice:nth-child(16) { color: rgb(var(--color-goal-16)); }
+.Logo-slice:nth-child(17) { color: rgb(var(--color-goal-17)); }
 
 .Logo-text {
   display: block;

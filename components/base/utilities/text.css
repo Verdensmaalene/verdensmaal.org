@@ -33,3 +33,7 @@
   line-height: var(--heading-line-height) !important;
   word-spacing: var(--heading-word-spacing) !important;
 }
+
+.u-rtl {
+  direction: rtl !important;
+}
