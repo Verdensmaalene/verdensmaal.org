@@ -5,7 +5,7 @@ var Component = require('choo/component')
 var {vw, vh, className, i18n} = require('../base')
 var {icon} = require('./icons')
 
-var text = i18n()
+var text = i18n(require('./lang.json'))
 
 var PRESS_SCALE_FACTOR = 0.97 // Hardcoded in CSS, see ./index.css
 
@@ -254,7 +254,7 @@ module.exports = class Link extends Component {
           ${!props.blank && format !== 'square' ? html`
             <div class="Goal-content">
               <p class="Goal-description">${props.description}</p>
-              <span class="Goal-button"><span class="Goal-mask">${text`Explore goal`}</span></button>
+              <span class="Goal-button">${text`Explore goal`}</button>
             </div>
           ` : null}
         </div>

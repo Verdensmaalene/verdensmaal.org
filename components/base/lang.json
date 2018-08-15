@@ -1,13 +1,7 @@
 {
   "SITE_TITLE": "Verdensmålene",
   "SITE_DESCRIPTION": "example…",
-  "Read more": "Læs mere",
-  "Download image": "Hent billede",
   "The 17 Goals": "De 17 mål",
-  "Show menu": "Vis menuen",
-  "Menu": "Menu",
-  "Hide menu": "Skjul menu",
-  "Close": "Tæt",
   "Oops": "Ups",
   "There is no page at this address. Try finding your way using the menu or from": "Der er ingen side på denne adresse. Prøv at finde din vej ved hjælp af menuen eller fra",
   "the homepage": "hjemmesiden",
@@ -29,7 +23,5 @@
   "MONTH_9": "oktober",
   "MONTH_10": "november",
   "MONTH_11": "december",
-  "Published on %s %s, %s": "Udgivet den %s %s, %s",
-  "View Goal": "View Goal",
-  "Explore goal": "Explore goal"
+  "Published on %s %s, %s": "Udgivet den %s %s, %s"
 }
