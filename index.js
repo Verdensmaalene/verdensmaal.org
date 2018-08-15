@@ -14,12 +14,27 @@ app.use(require('./stores/meta'))
 app.use(require('./stores/ui'))
 
 app.route('/', require('./views/home'))
-app.route('/404', require('./views/404'))
+app.route('/*', wildcard)
 
 try {
   module.exports = app.mount('body')
 } catch (err) {
   if (typeof window !== 'undefined') {
     document.documentElement.classList.remove('has-js')
+  }
+}
+
+// custom routing middleware for catching goal page
+// (obj, fn) -> HTMLElement
+function wildcard (state, emit) {
+  var view
+  var isGoalPage = /^(\d{1,2})-(.+)$/.test(state.params.wildcard)
+  if (isGoalPage) view = require('./views/goal')
+  else view = require('./views/page')
+  try {
+    return view(state, emit)
+  } catch (err) {
+    view = require('./views/404')
+    return view(state, emit)
   }
 }

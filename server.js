@@ -32,6 +32,15 @@ app.use(route.get('/', function (ctx, next) {
   ctx.state.ui.gridLayout = layout
 }))
 
+// redirect goal shorthand url to complete slug
+app.use(route.get('/:num(\\d{1,2})', async function (ctx, num) {
+  var api = await Prismic.api(REPOSITORY, {req: ctx.req})
+  var response = await api.query(Prismic.Predicates.at('my.goal.number', +num))
+  var doc = response.results[0]
+  ctx.assert(doc, 404, 'Page not found')
+  ctx.redirect(`/${num}-${doc.uid}`)
+}))
+
 // add webhook for psismic updates
 app.use(route.post('/prismic-hook', compose([body(), async function (ctx) {
   var secret = ctx.request.body && ctx.request.body.secret

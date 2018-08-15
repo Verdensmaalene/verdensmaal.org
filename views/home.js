@@ -53,7 +53,7 @@ function home (state, emit) {
   // handle goal query response
   // (null|Error, obj?) -> HTMLElement
   function render (err, doc) {
-    if (err) return null
+    if (err) throw err
 
     var goals, title, description
     if (doc) {

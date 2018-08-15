@@ -28,12 +28,8 @@ function prismicStore (opts) {
     // query prismic endpoint with given predicate(s)
     // (str|arr, obj?, fn) -> any
     function get (predicates, opts, callback) {
-      if (typeof opts === 'function') {
-        callback = opts
-        opts = {}
-      } else {
-        opts = opts || {}
-      }
+      callback = typeof opts === 'function' ? opts : callback
+      opts = typeof opts === 'function' ? {} : opts
 
       assert(typeof callback === 'function', 'choo-prismic: callback should be type function')
 
@@ -73,6 +69,8 @@ function prismicStore (opts) {
     function getByUID (type, uid, opts, callback) {
       assert(typeof type === 'string', 'choo-prismic: type should be type string')
       assert(typeof uid === 'string', 'choo-prismic: uid should be type string')
+      callback = typeof opts === 'function' ? opts : callback
+      opts = typeof opts === 'function' ? {} : opts
       var path = 'my.' + type + '.uid'
       return get(Prismic.Predicates.at(path, uid), opts, first(callback))
     }
@@ -81,6 +79,8 @@ function prismicStore (opts) {
     // (str, obj?, callback)
     function getByID (id, opts, callback) {
       assert(typeof id === 'string', 'choo-prismic: id should be type string')
+      callback = typeof opts === 'function' ? opts : callback
+      opts = typeof opts === 'function' ? {} : opts
       return get(Prismic.Predicates.at('document.id', id), opts, first(callback))
     }
 
@@ -88,6 +88,8 @@ function prismicStore (opts) {
     // (arr, obj?, fn) -> any
     function getByIDs (ids, opts, callback) {
       assert(Array.isArray(ids), 'choo-prismic: ids should be type array')
+      callback = typeof opts === 'function' ? opts : callback
+      opts = typeof opts === 'function' ? {} : opts
       return get(Prismic.Predicates.in('document.id', ids), opts, callback)
     }
 
@@ -95,6 +97,8 @@ function prismicStore (opts) {
     // (str, obj?, fn) -> any
     function getSingle (type, opts, callback) {
       assert(typeof type === 'string', 'choo-prismic: type should be type string')
+      callback = typeof opts === 'function' ? opts : callback
+      opts = typeof opts === 'function' ? {} : opts
       return get(Prismic.Predicates.at('document.type', type), opts, first(callback))
     }
 
@@ -131,6 +135,11 @@ function first (callback) {
   return function (err, response) {
     if (err) return callback(err)
     if (!response) return callback(null)
+    if (!response.results && response.status) {
+      err = new Error('An error occured')
+      err.status = response.status
+      return callback(err)
+    }
     return callback(null, response.results[0])
   }
 }
