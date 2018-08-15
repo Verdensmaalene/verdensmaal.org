@@ -16,7 +16,7 @@ var LAYOUTS = [ // [<landscape>, <portrait>]
 ]
 
 module.exports = class GoalGrid extends Component {
-  constructor (id, state, emit, slots) {
+  constructor (id, state, emit) {
     super(id)
     this.cache = state.cache
     this.local = state.components[id] = {
@@ -28,12 +28,12 @@ module.exports = class GoalGrid extends Component {
   update (goals = [], layout) {
     if (this.local.inTransition) return false
     if (this.local.layout !== layout) return true
-    return this.local.goals.length !== goals.length
+    return this.local.goals !== goals.map((goal) => goal.number).join()
   }
 
   createElement (goals = [], layout = null, slot = Function.prototype) {
     this.local.layout = layout
-    this.local.goals = goals.slice()
+    this.local.goals = goals.map((goal) => goal.number).join()
 
     var cache = this.cache
 
@@ -66,15 +66,11 @@ module.exports = class GoalGrid extends Component {
     // (obj, num) -> HTMLElement
     function child (props, num) {
       var goal = cache(Goal, `goalgrid-${num}-${props.format}`)
-      var className = `GoalGrid-item GoalGrid-item--${num} GoalGrid-item--${props.format}`
-      if (props.href) {
-        return html`
-          <a class="${className}" href="${props.href}">
-            ${goal.render(props)}
-          </a>
-        `
-      }
-      return html`<div class="${className}">${goal.render(props)}</div>`
+      return html`
+        <a class="GoalGrid-item GoalGrid-item--${num} GoalGrid-item--${props.format}" href="${props.href}">
+          ${goal.render(props)}
+        </a>
+      `
     }
   }
 }

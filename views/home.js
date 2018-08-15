@@ -70,6 +70,7 @@ function home (state, emit) {
       title = html`<span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`
       description = html`<span class="u-loading">${text`LOADING_TEXT_LONG`}</span>`
       goals = []
+      for (let i = 0; i < 17; i++) goals.push({href: `/${i + 1}`, blank: true})
     }
 
     var grid = state.cache(GoalGrid, 'homepage-goalgrid')
