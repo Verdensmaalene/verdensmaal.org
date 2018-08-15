@@ -3,7 +3,7 @@ var Component = require('choo/component')
 // var Hero = require('../hero')
 // var backgrounds = require('../hero/backgrounds')
 var {vw, vh, className, i18n} = require('../base')
-var {icon} = require('./icons')
+var icon = require('./icon')
 
 var text = i18n(require('./lang.json'))
 

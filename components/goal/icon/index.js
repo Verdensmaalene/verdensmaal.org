@@ -32,10 +32,21 @@ var LANG_MULTIPLIERS = {
   'ar-eg': 1
 }
 
-exports.icon = icon
-exports.label = label
-exports.glyph = glyph
-exports.loading = loading
+module.exports = icon
+module.exports.label = label
+module.exports.glyph = glyph
+module.exports.loading = loading
+
+// render complete icon, label + glyph
+// (num, str, str?) -> HTMLElement
+function icon (num, title, lang = 'en') {
+  return html`
+    <div class="Goal-icon Goal-icon--${num}">
+      ${draw(num, title, lang)}
+      <div class="Goal-glyph">${icons[num - 1]()}</div>
+    </div>
+  `
+}
 
 // render icon loading state
 // (num, str?) -> HTMLElement
@@ -76,17 +87,6 @@ function label (num, title, lang = 'en') {
 function glyph (num) {
   return html`
     <div class="Goal-icon Goal-icon--${num}">
-      <div class="Goal-glyph">${icons[num - 1]()}</div>
-    </div>
-  `
-}
-
-// render complete icon, label + glyph
-// (num, str, str?) -> HTMLElement
-function icon (num, title, lang = 'en') {
-  return html`
-    <div class="Goal-icon Goal-icon--${num}">
-      ${draw(num, title, lang)}
       <div class="Goal-glyph">${icons[num - 1]()}</div>
     </div>
   `
