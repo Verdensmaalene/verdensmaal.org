@@ -5,3 +5,15 @@
 .View {
   display: grid;
 }
+
+.View-header {
+  position: relative;
+  z-index: 1;
+}
+
+.View-header--stuck {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

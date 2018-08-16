@@ -30,9 +30,23 @@ function createView (view, meta) {
       })
     }
 
+    var opts = {}
+    if (state.params.wildcard) {
+      let [, goal] = state.params.wildcard.match(/^(\d{1,2})-.+$/)
+      if (goal) {
+        opts.theme = +goal === 7 ? 'black' : 'white'
+        opts.static = true
+        if (state.referrer === '') {
+          opts.back = {text: text`Back to Goals`, href: '/'}
+        }
+      }
+    }
+
     return html`
       <body class="View">
-        ${state.cache(Header, 'header').render(links(), state.href, state.params.goal)}
+        <div class="View-header ${opts.static ? 'View-header--stuck' : ''}">
+          ${state.cache(Header, 'header').render(links(), state.href, opts)}
+        </div>
         ${children}
       </body>
     `

@@ -10,10 +10,19 @@
   --height: 78px;
   --displace: 40px;
 
+  width: 100%;
   height: var(--height);
   contain: size layout style;
   position: relative;
   z-index: 10;
+}
+
+.Header--static {
+  display: flex;
+}
+
+.Header--white {
+  --current-color: #fff;
 }
 
 @media print {
@@ -35,7 +44,14 @@
   user-select: none;
 }
 
-:root.has-js .Header-bar {
+.Header--static .Header-bar {
+  flex: 1 0 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+:root.has-js .Header:not(.Header--static) .Header-bar {
   position: fixed;
 }
 
@@ -45,16 +61,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  background: rgba(255, 255, 255, 0.985);
+  background-color: rgba(255, 255, 255, 0.985);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.07);
-}
-
-@media (min-width: 900px) {
-  .Header-fill {
-    transform-origin: top center;
-    transform: translateY(calc((-1 * var(--displace)) * var(--scroll, 0)));
-    will-change: transform;
-  }
 }
 
 @supports (-webkit-backdrop-filter: blur(1px)) {
@@ -64,7 +72,22 @@
   }
 }
 
+.Header--black .Header-fill,
+.Header--white .Header-fill {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+@media (min-width: 900px) {
+  .Header:not(.Header--static) .Header-fill {
+    transform-origin: top center;
+    transform: translateY(calc((-1 * var(--displace)) * var(--scroll, 0)));
+    will-change: transform;
+  }
+}
+
 .Header-content {
+  flex: 1 0 100%;
   display: flex;
   padding: 0 16px;
   align-items: center;
@@ -79,15 +102,23 @@
 }
 
 @media (min-width: 900px) {
-  .Header-content {
+  .Header:not(.Header--static) .Header-content {
     transform: translateY(calc((var(--displace, 1) / 2) * (1 - var(--scroll, 0))));
     will-change: transform;
   }
 }
 
+.Header-nav {
+  flex: 1 0 auto;
+}
+
 .Header-list {
   list-style: none;
+}
+
+.Header:not(.Header--static) .Header-list {
   transform-origin: center right;
+  transform: scale(calc(1.2 - (0.2 * var(--scroll, 0))));
 }
 
 /**
@@ -107,7 +138,7 @@
 }
 
 @media (min-width: 900px) {
-  .Header-logo {
+  .Header:not(.Header--static) .Header-logo {
     transform-origin: center left;
     transform: scale(calc(1 + (0.25 * (1 - var(--scroll)))));
   }
@@ -128,18 +159,18 @@
     --height: 128px;
   }
 
-  .Header-fill {
-    /* height: calc(88px + var(--displace)); */
-  }
-
   .Header-logo {
     height: 54px;
     width: 195px;
   }
 
-  .Header-list,
-  .Header-back {
-    margin: 5px 0 0;
+  /**
+   * 1. Compensate for Header-list transform offset
+   */
+
+  .Header:not(.Header--static) .Header-list,
+  .Header:not(.Header--static) .Header-back {
+    margin-top: 5px; /* 1 */
   }
 }
 
@@ -149,13 +180,13 @@
 
 .Header-button {
   display: inline-block;
-  height: 48px;
+  height: 2em;
   padding: 0 16px;
 
   position: relative;
   z-index: 1;
 
-  line-height: 49px;
+  line-height: 2.05em;
   font-weight: bold;
   font-size: 1.5rem;
   font-family: var(--heading-font-family);
@@ -166,28 +197,15 @@
   transition: background-color 180ms var(--ease-out);
 }
 
-/**
- * Took this a bit too far, but it looks better than a simple semi-black overlay
- */
+.Header--static .Header-button {
+  font-size: 1.8rem;
+}
 
 .Header-button:hover { background: rgba(var(--color-gray-light), 0.6); }
-.Header--1:not(.is-following) .Header-button:hover { background: color(var(--color-goal-1-shaded) alpha(10%)); }
-.Header--2:not(.is-following) .Header-button:hover { background: color(var(--color-goal-2-shaded) alpha(10%)); }
-.Header--3:not(.is-following) .Header-button:hover { background: color(var(--color-goal-3-shaded) alpha(10%)); }
-.Header--4:not(.is-following) .Header-button:hover { background: color(var(--color-goal-4-shaded) alpha(10%)); }
-.Header--5:not(.is-following) .Header-button:hover { background: color(var(--color-goal-5-shaded) alpha(10%)); }
-.Header--6:not(.is-following) .Header-button:hover { background: color(var(--color-goal-6-shaded) alpha(10%)); }
-.Header--7:not(.is-following) .Header-button:hover { background: color(var(--color-goal-7-shaded) alpha(10%)); }
-.Header--8:not(.is-following) .Header-button:hover { background: color(var(--color-goal-8-shaded) alpha(10%)); }
-.Header--9:not(.is-following) .Header-button:hover { background: color(var(--color-goal-9-shaded) alpha(10%)); }
-.Header--10:not(.is-following) .Header-button:hover { background: color(var(--color-goal-10-shaded) alpha(10%)); }
-.Header--11:not(.is-following) .Header-button:hover { background: color(var(--color-goal-11-shaded) alpha(10%)); }
-.Header--12:not(.is-following) .Header-button:hover { background: color(var(--color-goal-12-shaded) alpha(10%)); }
-.Header--13:not(.is-following) .Header-button:hover { background: color(var(--color-goal-13-shaded) alpha(10%)); }
-.Header--14:not(.is-following) .Header-button:hover { background: color(var(--color-goal-14-shaded) alpha(10%)); }
-.Header--15:not(.is-following) .Header-button:hover { background: color(var(--color-goal-15-shaded) alpha(10%)); }
-.Header--16:not(.is-following) .Header-button:hover { background: color(var(--color-goal-16-shaded) alpha(10%)); }
-.Header--17:not(.is-following) .Header-button:hover { background: color(var(--color-goal-17-shaded) alpha(10%)); }
+.Header--white .Header-button:hover { background: rgba(0, 0, 0, 0.08); }
+.Header--black .Header-button:hover { background: rgba(0, 0, 0, 0.08); }
+.Header-button--back { background: rgba(0, 0, 0, 0.12); }
+.Header-button.Header-button--back:hover { background: rgba(0, 0, 0, 0.16); }
 
 .Header.is-open .Header-button:hover,
 .Header:target .Header-button:hover {
@@ -278,69 +296,6 @@
 }
 
 /**
- * Back button
- */
-
-.Header-button--back {
-  display: none;
-  position: absolute;
-  top: 15px;
-  left: -12px;
-  transform-origin: top left;
-}
-
-/**
- * Again, taking it a bit to far
- */
-
-.Header-button--back { background: rgba(0, 0, 0, 0.15); }
-.Header--1 .Header-button--back { background: color(var(--color-goal-1-shaded) alpha(35%)); }
-.Header--2 .Header-button--back { background: color(var(--color-goal-2-shaded) alpha(35%)); }
-.Header--3 .Header-button--back { background: color(var(--color-goal-3-shaded) alpha(35%)); }
-.Header--4 .Header-button--back { background: color(var(--color-goal-4-shaded) alpha(35%)); }
-.Header--5 .Header-button--back { background: color(var(--color-goal-5-shaded) alpha(35%)); }
-.Header--6 .Header-button--back { background: color(var(--color-goal-6-shaded) alpha(35%)); }
-.Header--7 .Header-button--back { background: color(var(--color-goal-7-shaded) alpha(35%)); }
-.Header--8 .Header-button--back { background: color(var(--color-goal-8-shaded) alpha(35%)); }
-.Header--9 .Header-button--back { background: color(var(--color-goal-9-shaded) alpha(35%)); }
-.Header--10 .Header-button--back { background: color(var(--color-goal-10-shaded) alpha(35%)); }
-.Header--11 .Header-button--back { background: color(var(--color-goal-11-shaded) alpha(35%)); }
-.Header--12 .Header-button--back { background: color(var(--color-goal-12-shaded) alpha(35%)); }
-.Header--13 .Header-button--back { background: color(var(--color-goal-13-shaded) alpha(35%)); }
-.Header--14 .Header-button--back { background: color(var(--color-goal-14-shaded) alpha(35%)); }
-.Header--15 .Header-button--back { background: color(var(--color-goal-15-shaded) alpha(35%)); }
-.Header--16 .Header-button--back { background: color(var(--color-goal-16-shaded) alpha(35%)); }
-.Header--17 .Header-button--back { background: color(var(--color-goal-17-shaded) alpha(35%)); }
-
-.Header-button--back:hover { background: rgba(0, 0, 0, 0.19); }
-.Header--1:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-1-shaded) alpha(50%)); }
-.Header--2:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-2-shaded) alpha(50%)); }
-.Header--3:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-3-shaded) alpha(50%)); }
-.Header--4:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-4-shaded) alpha(50%)); }
-.Header--5:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-5-shaded) alpha(50%)); }
-.Header--6:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-6-shaded) alpha(50%)); }
-.Header--7:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-7-shaded) alpha(50%)); }
-.Header--8:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-8-shaded) alpha(50%)); }
-.Header--9:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-9-shaded) alpha(50%)); }
-.Header--10:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-10-shaded) alpha(50%)); }
-.Header--11:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-11-shaded) alpha(50%)); }
-.Header--12:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-12-shaded) alpha(50%)); }
-.Header--13:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-13-shaded) alpha(50%)); }
-.Header--14:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-14-shaded) alpha(50%)); }
-.Header--15:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-15-shaded) alpha(50%)); }
-.Header--16:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-16-shaded) alpha(50%)); }
-.Header--17:not(.is-following) .Header-button--back:hover { background: color(var(--color-goal-17-shaded) alpha(50%)); }
-
-/**
- * 1. Replaces the logo when the header is marked as within history
- */
-
-.Header:matches(.is-open, :target) .Header-button--back,
-.Header.is-inHistory:not(.is-open):not(:target) .Header-logo {
-  display: none; /* 1 */
-}
-
-/**
  * The arrows for the links and back button
  */
 
@@ -359,14 +314,14 @@
   width: 10px;
   height: 10px;
   border-width: 1px 1px 0 0;
-  top: 19px;
+  top: 50%;
   left: 16px;
-  transform: rotate(-135deg);
+  transform: translateY(-50%) rotate(-135deg);
   transition: left 140ms var(--ease-out), right 140ms var(--ease-out);
 }
 
 .Header-button--link .Header-arrow {
-  transform: rotate(45deg);
+  transform: translateY(-50%) rotate(45deg);
   left: auto;
   right: 15px;
 }
@@ -581,12 +536,6 @@
     height: 21px;
     top: 29px;
     right: 17px;
-  }
-
-  .Header-langIcon {
-    top: -23px;
-    height: 39px;
-    width: 50px;
   }
 
   .Header-button--external:hover .Header-external {

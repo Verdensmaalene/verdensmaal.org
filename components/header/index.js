@@ -32,8 +32,11 @@ module.exports = class Header extends Component {
     return this.element.offsetHeight
   }
 
-  update (links, href, goal) {
-    return href !== this.local.href
+  update (links, href, opts) {
+    if (href !== this.local.href) return true
+    return Object.keys(opts).reduce((shouldUpdate, key) => {
+      return shouldUpdate || opts[key] !== this.local.opts[key]
+    }, false)
   }
 
   load (el) {
@@ -54,11 +57,11 @@ module.exports = class Header extends Component {
     this.unload = () => window.removeEventListener('scroll', onscroll)
   }
 
-  createElement (links, href, goal = null) {
+  createElement (links, href, opts = {}) {
+    this.local.opts = opts
     this.local.href = href.replace(/\/$/, '')
 
     var {id, isOpen} = this.local
-    var theme = goal ? goal === 7 ? 'white' : 'black' : null
 
     var toggle = (event) => {
       this.toggle()
@@ -66,13 +69,13 @@ module.exports = class Header extends Component {
     }
 
     return html`
-      <header class="${className('Header', {[`Header--${theme}`]: theme, 'is-open': isOpen})}" style="--scroll: ${this.local.scroll}" id="${id}">
+      <header class="${className('Header', {[`Header--${opts.theme}`]: opts.theme, 'Header--static': opts.static, 'is-open': isOpen})}" style="--scroll: ${this.local.scroll}" id="${id}">
         <div class="Header-bar">
           <div class="Header-fill"></div>
           <div class="Header-content">
-            ${goal ? html`
-              <a class="Header-button Header-button--back" onclick=${onback} href="/">
-                ${text`Back to Goals`}
+            ${opts.back ? html`
+              <a class="Header-button Header-button--back" onclick=${onback} href="${opts.back.href}">
+                ${opts.back.text}
                 <div class="Header-arrow"></div>
               </a>
             ` : html`

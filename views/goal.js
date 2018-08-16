@@ -9,7 +9,7 @@ var text = i18n()
 module.exports = view(goal, meta)
 
 function goal (state, emit) {
-  var [, uid] = state.params.wildcard.match(/^\d{1,2}-(.+)$/)
+  var [, num, uid] = state.params.wildcard.match(/^(\d{1,2})-(.+)$/)
 
   return html`
     <main class="View-container">
@@ -21,15 +21,15 @@ function goal (state, emit) {
     if (err) throw err
 
     var goal = state.cache(Goal, state.params.wildcard)
-    if (!doc) return goal.render({format: 'landscape', blank: true})
+    return goal.render({format: 'fullscreen', number: +num})
+    if (!doc) return goal.render({format: 'fullscreen', number: +num})
 
     return goal.render({
-      format: 'landscape',
+      format: 'fullscreen',
       number: doc.data.number,
       title: asText(doc.data.title),
       description: asText(doc.data.description),
-      iconText: asText(doc.data.icon_text),
-      href: `/${doc.data.number}-${doc.uid}`
+      iconText: asText(doc.data.icon_text)
     })
   }
 }

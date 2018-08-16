@@ -10,6 +10,7 @@ if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
 
 app.use(require('choo-service-worker')('/sw.js'))
 app.use(require('./stores/prismic')({repository: REPOSITORY, req: app.state.req}))
+app.use(require('./stores/navigation'))
 app.use(require('./stores/meta'))
 app.use(require('./stores/ssr'))
 app.use(require('./stores/ui'))

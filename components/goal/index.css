@@ -54,6 +54,11 @@
   --space: calc(((100% - var(--gutter, 0px)) / 2) * 0.08);
 }
 
+.Goal--fullscreen {
+  width: 100vw;
+  height: 100vh;
+}
+
 .Goal::after {
   content: "";
   width: 100%;
@@ -65,6 +70,10 @@
   opacity: 0;
   background: var(--current-background);
   transition: opacity 180ms var(--ease-out);
+}
+
+.Goal--fullscreen::after {
+  content: none;
 }
 
 .Goal:hover::after {

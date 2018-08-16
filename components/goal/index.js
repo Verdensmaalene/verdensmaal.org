@@ -246,15 +246,20 @@ module.exports = class Link extends Component {
     return html`
       <div class="${classes}" id="${this.local.id}">
         <div class="Goal-container">
-          ${!props.blank ? html`
+          ${!props.blank && format !== 'fullscreen' ? html`
             <div class="Goal-cell">
               ${icon(props.number, props.iconText)}
             </div>
-            ` : null}
-          ${!props.blank && format !== 'square' ? html`
+          ` : null}
+          ${props.number && props.iconText && format === 'fullscreen' ? html`
+            <div class="Goal-label">
+              ${icon.label(props.number, props.iconText)}
+            </div>
+          ` : null}
+          ${!props.blank && ['landscape', 'portrait'].includes(format) ? html`
             <div class="Goal-content">
               <p class="Goal-description">${props.description}</p>
-              <span class="Goal-button">${text`Explore goal`}</button>
+              <span class="Goal-button">${text`Explore goal`}</span>
             </div>
           ` : null}
         </div>
