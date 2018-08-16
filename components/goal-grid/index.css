@@ -214,77 +214,6 @@
   transition: opacity 180ms var(--ease-out);
 }
 
-.GoalGrid-item--1 .GoalGrid-bg::before { background: var(--color-goal-1-shaded); }
-.GoalGrid-item--2 .GoalGrid-bg::before { background: var(--color-goal-2-shaded); }
-.GoalGrid-item--3 .GoalGrid-bg::before { background: var(--color-goal-3-shaded); }
-.GoalGrid-item--4 .GoalGrid-bg::before { background: var(--color-goal-4-shaded); }
-.GoalGrid-item--5 .GoalGrid-bg::before { background: var(--color-goal-5-shaded); }
-.GoalGrid-item--6 .GoalGrid-bg::before { background: var(--color-goal-6-shaded); }
-.GoalGrid-item--7 .GoalGrid-bg::before { background: var(--color-goal-7-shaded); }
-.GoalGrid-item--8 .GoalGrid-bg::before { background: var(--color-goal-8-shaded); }
-.GoalGrid-item--9 .GoalGrid-bg::before { background: var(--color-goal-9-shaded); }
-.GoalGrid-item--10 .GoalGrid-bg::before { background: var(--color-goal-10-shaded); }
-.GoalGrid-item--11 .GoalGrid-bg::before { background: var(--color-goal-11-shaded); }
-.GoalGrid-item--12 .GoalGrid-bg::before { background: var(--color-goal-12-shaded); }
-.GoalGrid-item--13 .GoalGrid-bg::before { background: var(--color-goal-13-shaded); }
-.GoalGrid-item--14 .GoalGrid-bg::before { background: var(--color-goal-14-shaded); }
-.GoalGrid-item--15 .GoalGrid-bg::before { background: var(--color-goal-15-shaded); }
-.GoalGrid-item--16 .GoalGrid-bg::before { background: var(--color-goal-16-shaded); }
-.GoalGrid-item--17 .GoalGrid-bg::before { background: var(--color-goal-17-shaded); }
-
-.GoalGrid-item--1 .GoalGrid-button { color: var(--color-goal-1); }
-.GoalGrid-item--2 .GoalGrid-button { color: var(--color-goal-2); }
-.GoalGrid-item--3 .GoalGrid-button { color: var(--color-goal-3); }
-.GoalGrid-item--4 .GoalGrid-button { color: var(--color-goal-4); }
-.GoalGrid-item--5 .GoalGrid-button { color: var(--color-goal-5); }
-.GoalGrid-item--6 .GoalGrid-button { color: var(--color-goal-6); }
-.GoalGrid-item--7 .GoalGrid-button { color: var(--color-goal-7); }
-.GoalGrid-item--8 .GoalGrid-button { color: var(--color-goal-8); }
-.GoalGrid-item--9 .GoalGrid-button { color: var(--color-goal-9); }
-.GoalGrid-item--10 .GoalGrid-button { color: var(--color-goal-10); }
-.GoalGrid-item--11 .GoalGrid-button { color: var(--color-goal-11); }
-.GoalGrid-item--12 .GoalGrid-button { color: var(--color-goal-12); }
-.GoalGrid-item--13 .GoalGrid-button { color: var(--color-goal-13); }
-.GoalGrid-item--14 .GoalGrid-button { color: var(--color-goal-14); }
-.GoalGrid-item--15 .GoalGrid-button { color: var(--color-goal-15); }
-.GoalGrid-item--16 .GoalGrid-button { color: var(--color-goal-16); }
-.GoalGrid-item--17 .GoalGrid-button { color: var(--color-goal-17); }
-
-.GoalGrid-item--1:hover .GoalGrid-button { color: color(var(--color-goal-1) lightness(-10)); }
-.GoalGrid-item--2:hover .GoalGrid-button { color: color(var(--color-goal-2) lightness(-10)); }
-.GoalGrid-item--3:hover .GoalGrid-button { color: color(var(--color-goal-3) lightness(-10)); }
-.GoalGrid-item--4:hover .GoalGrid-button { color: color(var(--color-goal-4) lightness(-10)); }
-.GoalGrid-item--5:hover .GoalGrid-button { color: color(var(--color-goal-5) lightness(-10)); }
-.GoalGrid-item--6:hover .GoalGrid-button { color: color(var(--color-goal-6) lightness(-10)); }
-.GoalGrid-item--7:hover .GoalGrid-button { color: color(var(--color-goal-7) lightness(-10)); }
-.GoalGrid-item--8:hover .GoalGrid-button { color: color(var(--color-goal-8) lightness(-10)); }
-.GoalGrid-item--9:hover .GoalGrid-button { color: color(var(--color-goal-9) lightness(-10)); }
-.GoalGrid-item--10:hover .GoalGrid-button { color: color(var(--color-goal-10) lightness(-10)); }
-.GoalGrid-item--11:hover .GoalGrid-button { color: color(var(--color-goal-11) lightness(-10)); }
-.GoalGrid-item--12:hover .GoalGrid-button { color: color(var(--color-goal-12) lightness(-10)); }
-.GoalGrid-item--13:hover .GoalGrid-button { color: color(var(--color-goal-13) lightness(-10)); }
-.GoalGrid-item--14:hover .GoalGrid-button { color: color(var(--color-goal-14) lightness(-10)); }
-.GoalGrid-item--15:hover .GoalGrid-button { color: color(var(--color-goal-15) lightness(-10)); }
-.GoalGrid-item--16:hover .GoalGrid-button { color: color(var(--color-goal-16) lightness(-10)); }
-.GoalGrid-item--17:hover .GoalGrid-button { color: color(var(--color-goal-17) lightness(-10)); }
-
-.GoalGrid-item:hover .GoalGrid-bg::before {
-  opacity: 0.13;
-}
-
-.GoalGrid-iconGlyph {
-  transition: transform 180ms var(--ease-out);
-  will-change: transform;
-}
-
-.GoalGrid-item:hover .GoalGrid-iconGlyph {
-  transform: scale(1.08);
-}
-
-.GoalGrid-item.is-pressed .GoalGrid-iconGlyph {
-  transform: scale(1);
-}
-
 /**
  * 1. Hardcoded in JavaScript, see link.js
  */
@@ -308,87 +237,73 @@
   transition: opacity 100ms var(--ease-out);
 }
 
-.GoalGrid-bg {
-  position: relative;
-  padding-top: 100%;
-}
-
-.GoalGrid-content {
-  --current-color: #fff;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transition: 100ms var(--ease-out);
-  transition-property: opacity, transform;
-}
-
-.GoalGrid-item.is-loading .GoalGrid-content {
-  opacity: 0;
-  transform: scale(0.92);
-  will-change: transform;
-}
-
 /**
- * Item themes
+ * Content
  */
 
-.GoalGrid-icon {
-  height: 92%;
-  width: 100%;
-  margin-top: 8%;
-  will-change: transform;
+.GoalGrid-content {
+  display: flex;
+  align-items: flex-start;
 }
 
-.GoalGrid-logo {
-  --current-color: var(---default-color);
-  width: 64%;
-  height: 64%;
-  position: absolute;
-  top: 18%;
-  left: 18%;
+.GoalGrid-item--portrait .GoalGrid-content {
+  flex-direction: column;
 }
 
-.GoalGrid-bg {
-  position: relative;
-  z-index: 0;
-  background: var(--color-gray-light);
+.GoalGrid-item--landscape .GoalGrid-content {
+  align-items: flex-end;
+  justify-content: space-between;
 }
 
-.GoalGrid-item--light .GoalGrid-desc {
-  color: black;
+.GoalGrid-description {
+  padding-right: 2em;
+}
+
+.GoalGrid-item--portrait .GoalGrid-description {
+  max-width: 19em;
+}
+
+.GoalGrid-item--landscape .GoalGrid-description {
+  max-width: 24em;
+}
+
+@media (min-width: 1200px) {
+  .GoalGrid-description {
+    font-size: 1.2rem;
+  }
 }
 
 .GoalGrid-button {
-  font-family: var(--font-family-heading);
+  display: inline-block;
+  padding: 0.65em 1em 0.55em;
+  margin-top: var(--space);
+  color: transparent;
+  font-size: 1.5rem;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
   font-weight: bold;
-  line-height: 1.1;
   text-transform: uppercase;
   white-space: nowrap;
-  word-spacing: var(--word-spacing-heading);
   background: #fff;
-  color: rgb(var(--current-color));
-  font-size: 24px;
-  padding: 16px 20px 14px;
-  margin: 30px 0 0 32px;
-  min-width: 130px;
-  display: inline-block;
-  text-align: center;
-  transition: color 180ms var(--ease-out);
+  text-shadow: 0 0 var(--current-background);
 }
 
-/**
- * CSS Grid Layout
- */
-
-.GoalGrid-animation {
-  display: none;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: -1;
-}
+.GoalGrid-item--1:hover .GoalGrid-button { color: rgba(var(--color-goal-1-shaded), 0.13); }
+.GoalGrid-item--2:hover .GoalGrid-button { color: rgba(var(--color-goal-2-shaded), 0.13); }
+.GoalGrid-item--3:hover .GoalGrid-button { color: rgba(var(--color-goal-3-shaded), 0.13); }
+.GoalGrid-item--4:hover .GoalGrid-button { color: rgba(var(--color-goal-4-shaded), 0.13); }
+.GoalGrid-item--5:hover .GoalGrid-button { color: rgba(var(--color-goal-5-shaded), 0.13); }
+.GoalGrid-item--6:hover .GoalGrid-button { color: rgba(var(--color-goal-6-shaded), 0.13); }
+.GoalGrid-item--7:hover .GoalGrid-button { color: rgba(var(--color-goal-7-shaded), 0.13); }
+.GoalGrid-item--8:hover .GoalGrid-button { color: rgba(var(--color-goal-8-shaded), 0.13); }
+.GoalGrid-item--9:hover .GoalGrid-button { color: rgba(var(--color-goal-9-shaded), 0.13); }
+.GoalGrid-item--10:hover .GoalGrid-button { color: rgba(var(--color-goal-10-shaded), 0.13); }
+.GoalGrid-item--11:hover .GoalGrid-button { color: rgba(var(--color-goal-11-shaded), 0.13); }
+.GoalGrid-item--12:hover .GoalGrid-button { color: rgba(var(--color-goal-12-shaded), 0.13); }
+.GoalGrid-item--13:hover .GoalGrid-button { color: rgba(var(--color-goal-13-shaded), 0.13); }
+.GoalGrid-item--14:hover .GoalGrid-button { color: rgba(var(--color-goal-14-shaded), 0.13); }
+.GoalGrid-item--15:hover .GoalGrid-button { color: rgba(var(--color-goal-15-shaded), 0.13); }
+.GoalGrid-item--16:hover .GoalGrid-button { color: rgba(var(--color-goal-16-shaded), 0.13); }
+.GoalGrid-item--17:hover .GoalGrid-button { color: rgba(var(--color-goal-17-shaded), 0.13); }
 

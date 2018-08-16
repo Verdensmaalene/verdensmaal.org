@@ -12,9 +12,9 @@ var text = i18n()
 var opts = {
   fetchLinks: [
     'goal.title',
+    'goal.label',
     'goal.number',
-    'goal.description',
-    'goal.icon_text'
+    'goal.description'
   ]
 }
 
@@ -63,9 +63,8 @@ function home (state, emit) {
       description = asText(doc.data.description)
       goals = doc.data.goals.map(({link}) => ({
         number: link.data.number,
-        title: asText(link.data.title),
+        label: asText(link.data.label),
         description: asText(link.data.description),
-        iconText: asText(link.data.icon_text),
         href: `/${link.data.number}-${link.uid}`
       }))
     } else {

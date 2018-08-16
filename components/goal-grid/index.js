@@ -1,6 +1,9 @@
 var html = require('choo/html')
 var Component = require('choo/component')
 var Goal = require('../goal')
+var {i18n} = require('../base')
+
+var text = i18n(require('./lang.json'))
 
 var TOTAL_GOALS = 17
 var LAYOUTS = [ // [<landscape>, <portrait>]
@@ -67,8 +70,13 @@ module.exports = class GoalGrid extends Component {
     function child (props, num) {
       var goal = cache(Goal, `goalgrid-${num}-${props.format}`)
       return html`
-        <a class="GoalGrid-item GoalGrid-item--${num} GoalGrid-item--${props.format}" href="${props.href}">
-          ${goal.render(props)}
+        <a class="GoalGrid-item GoalGrid-item--${num} GoalGrid-item--${props.format}" href="${props.href}" title="${props.label ? props.label.replace(/\n/, ' ') : ''}">
+          ${goal.render(props, !props.blank && props.format !== 'square' ? html`
+            <div class="GoalGrid-content">
+              <p class="GoalGrid-description">${props.description}</p>
+              <span class="GoalGrid-button">${text`Explore goal`}</span>
+            </div>
+          ` : null)}
         </a>
       `
     }

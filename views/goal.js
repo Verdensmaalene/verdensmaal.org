@@ -23,13 +23,17 @@ function goal (state, emit) {
     var goal = state.cache(Goal, state.params.wildcard)
     if (!doc) return goal.render({format: 'fullscreen', number: +num})
 
-    return goal.render({
+    var props = {
       format: 'fullscreen',
       number: doc.data.number,
-      title: asText(doc.data.title),
-      description: asText(doc.data.description),
-      iconText: asText(doc.data.icon_text)
-    })
+      label: asText(doc.data.label)
+    }
+
+    return goal.render(props, html`
+      <div class="Text">
+        <p><strong>${asText(doc.data.description)}</strong></p>
+      </div>
+    `)
   }
 }
 

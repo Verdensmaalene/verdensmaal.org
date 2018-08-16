@@ -234,7 +234,7 @@ module.exports = class Link extends Component {
     }
   }
 
-  createElement (props = {}) {
+  createElement (props = {}, children = null) {
     this.local.blank = props.blank
     var format = this.local.format = props.format || 'square'
     var classes = className(`Goal Goal--${format}`, {
@@ -248,18 +248,17 @@ module.exports = class Link extends Component {
         <div class="Goal-container">
           ${!props.blank && format !== 'fullscreen' ? html`
             <div class="Goal-cell">
-              ${icon(props.number, props.iconText)}
+              ${icon(props.number, props.label)}
             </div>
           ` : null}
-          ${props.number && props.iconText && format === 'fullscreen' ? html`
+          ${props.number && props.label && format === 'fullscreen' ? html`
             <div class="Goal-label">
-              ${icon.label(props.number, props.iconText)}
+              ${icon.label(props.number, props.label)}
             </div>
           ` : null}
-          ${!props.blank && ['landscape', 'portrait'].includes(format) ? html`
-            <div class="Goal-content">
-              <p class="Goal-description">${props.description}</p>
-              <span class="Goal-button">${text`Explore goal`}</span>
+          ${props.number && props.label && children ? html`
+            <div class="Goal-content" style="--offset: ${icon.offset(props.number, props.label)}">
+              ${children}
             </div>
           ` : null}
         </div>

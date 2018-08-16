@@ -36,10 +36,11 @@ module.exports = icon
 module.exports.label = label
 module.exports.glyph = glyph
 module.exports.loading = loading
+module.exports.offset = offset
 
 // render complete icon, label + glyph
 // (num, str, str?) -> HTMLElement
-function icon (num, title, lang = 'en') {
+function icon (num, title, lang) {
   return html`
     <div class="Goal-icon Goal-icon--${num}">
       ${draw(num, title, lang)}
@@ -50,7 +51,7 @@ function icon (num, title, lang = 'en') {
 
 // render icon loading state
 // (num, str?) -> HTMLElement
-function loading (num, lang = 'en') {
+function loading (num, lang) {
   var height = 48
   var digitPos = 30
 
@@ -74,7 +75,7 @@ function loading (num, lang = 'en') {
 
 // render text (num + title) section of icon
 // (num, str, str?) -> HTMLElement
-function label (num, title, lang = 'en') {
+function label (num, title, lang) {
   return html`
     <div class="Goal-icon Goal-icon--${num}">
       ${draw(num, title, lang)}
@@ -94,22 +95,17 @@ function glyph (num) {
 
 // construct text section as svg element
 // (num, str, str) -> HTMLElement
-function draw (number, text, lang) {
+function draw (number, text, lang = 'en') {
   var lines = text.split('\n')
-  var doubleDigit = (number > 9)
   var isArabic = AR_LANGREG.test(lang)
   var multiplier = LANG_MULTIPLIERS[lang] || 1
   var height = lines.length === 1 ? 48 : (lines.length * 24)
-  var longLine = lines.find(line => line.length > (multiplier * 14))
   var longerLine = lines.find(line => line.length > (multiplier * 17))
 
   // Deduct 5% on long lines for extra measure
   if (longerLine) multiplier -= 0.05
 
-  var textPos = 57
-  textPos -= longLine ? 4 : 0
-  textPos -= longerLine ? 6 : 0
-  textPos += doubleDigit ? 5 : 0
+  var textPos = 57 + offset(number, text, lang)
   if (isArabic) textPos = 200 - textPos
 
   var digitPos = 30
@@ -137,9 +133,28 @@ function draw (number, text, lang) {
   `
 }
 
+// get label offset
+// (num, str, str?) -> str
+function offset (number, text, lang = 'en') {
+  var lines = text.split('\n')
+  var doubleDigit = (number > 9)
+  var multiplier = LANG_MULTIPLIERS[lang] || 1
+  var longLine = lines.find((line) => line.length > (multiplier * 14))
+  var longerLine = lines.find((line) => line.length > (multiplier * 17))
+
+  // Deduct 5% on long lines for extra measure
+  if (longerLine) multiplier -= 0.05
+
+  var offset = 0
+  offset -= longLine ? 4 : 0
+  offset -= longerLine ? 6 : 0
+  offset += doubleDigit ? 5 : 0
+  return offset
+}
+
 // calculate line style properties
 // (str, str) -> obj
-function lineStyles (line, lang) {
+function lineStyles (line, lang = 'en') {
   var wordSpacing = '1.5'
   var letterSpacing = '0.5'
   var multiplier = LANG_MULTIPLIERS[lang] || 1
@@ -156,7 +171,7 @@ function lineStyles (line, lang) {
 
 // translate number
 // (num|str, str) -> num|str
-function translate (num, lang) {
+function translate (num, lang = 'en') {
   if (!AR_LANGREG.test(lang)) return num
   return ('' + num).split('').map((num) => AR_NUMBERS[+num]).join('')
 }
