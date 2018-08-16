@@ -23,11 +23,7 @@ function createView (view, meta) {
       // if (state.throw) throw err
       err.status = err.status || 500
       children = error(err)
-      emit('meta', {
-        description: '',
-        'og:image': '/share.png',
-        title: `${text`Oops`} | ${DEFAULT_TITLE}`
-      })
+      emit('meta', {title: `${text`Oops`} | ${DEFAULT_TITLE}`})
     }
 
     var opts = {}

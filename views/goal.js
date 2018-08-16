@@ -38,14 +38,14 @@ function goal (state, emit) {
 }
 
 function meta (state) {
-  var [, num, uid] = state.params.wildcard.match(/^(\d{1,2})-(.+)$/)
+  var [, uid] = state.params.wildcard.match(/^\d{1,2}-(.+)$/)
   return state.docs.getByUID('goal', uid, function (err, doc) {
     if (err) throw err
     if (!doc) return {title: text`Loading`}
     return {
       title: asText(doc.data.title),
       description: asText(doc.data.description),
-      'og:image': `/${num}.png`
+      'og:image': doc.data.social_image.url
     }
   })
 }

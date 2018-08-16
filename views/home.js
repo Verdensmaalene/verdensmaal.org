@@ -98,9 +98,13 @@ function slot (type) {
 }
 
 function meta (state) {
-  return {
-    'og:image': '/share.png',
-    title: text`SITE_TITLE`,
-    description: text`SITE_DESCRIPTION`
-  }
+  return state.docs.getSingle('website', function (err, doc) {
+    if (err) throw err
+    if (!doc) return {}
+    return {
+      title: asText(doc.data.name),
+      description: asText(doc.data.description),
+      'og:image': doc.data.default_social_image.url
+    }
+  })
 }
