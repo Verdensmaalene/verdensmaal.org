@@ -25,9 +25,8 @@ app.use(route.get('/robots.txt', function (ctx, next) {
 // randomize layout
 app.use(route.get('/', function (ctx, next) {
   if (!ctx.accepts('html')) return next()
-  var layout
-  var prev = parseInt(ctx.query.layout, 10)
-  while (layout === prev) layout = Math.ceil(Math.random() * 7)
+  var layout = parseInt(ctx.query.layout, 10)
+  if (!layout) layout = Math.ceil(Math.random() * 7)
   ctx.state.ui = ctx.state.ui || {}
   ctx.state.ui.gridLayout = layout
 }))
