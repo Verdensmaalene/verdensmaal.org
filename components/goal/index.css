@@ -286,6 +286,18 @@
   }
 }
 
+@media (min-width: 1600px) and (min-height: 600px) {
+  .Goal--fullscreen .Goal-container {
+    width: 1200px;
+  }
+
+  .Goal--fullscreen .Goal-content {
+    width: calc(100% - (280px + (var(--offset, 0) * 6.2px)));
+    left: calc(280px + (var(--offset, 0) * 6.2px));
+  }
+}
+
+
 .Goal--1.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-1-shaded)); }
 .Goal--2.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-2-shaded)); }
 .Goal--3.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-3-shaded)); }

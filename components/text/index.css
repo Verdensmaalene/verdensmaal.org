@@ -7,7 +7,7 @@
   font-family: var(--default-font-family);
   line-height: 1.5;
   font-size: 1rem;
-  max-width: 39em;
+  max-width: 38em;
 }
 
 .Text:first-child {
