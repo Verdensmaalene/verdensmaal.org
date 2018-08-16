@@ -21,7 +21,6 @@ function goal (state, emit) {
     if (err) throw err
 
     var goal = state.cache(Goal, state.params.wildcard)
-    return goal.render({format: 'fullscreen', number: +num})
     if (!doc) return goal.render({format: 'fullscreen', number: +num})
 
     return goal.render({

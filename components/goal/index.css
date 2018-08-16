@@ -54,11 +54,6 @@
   --space: calc(((100% - var(--gutter, 0px)) / 2) * 0.08);
 }
 
-.Goal--fullscreen {
-  width: 100vw;
-  height: 100vh;
-}
-
 .Goal::after {
   content: "";
   width: 100%;
@@ -286,3 +281,49 @@
 .Goal--15:hover .Goal-button { color: rgba(var(--color-goal-15-shaded), 0.13); }
 .Goal--16:hover .Goal-button { color: rgba(var(--color-goal-16-shaded), 0.13); }
 .Goal--17:hover .Goal-button { color: rgba(var(--color-goal-17-shaded), 0.13); }
+
+/**
+ * Fullscreen
+ */
+
+.Goal--fullscreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  min-height: 27rem;
+  /* padding-top: var(--Hero-padding);
+  margin-top: calc(var(--Hero-padding) * -1); */
+  overflow: hidden;
+}
+
+.Goal--fullscreen .Goal-container {
+  flex: 0 0 auto;
+  padding: 0;
+  width: 84%;
+  max-width: 45rem;
+}
+
+.Goal--fullscreen .Goal-number {
+
+}
+
+.Goal--1.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-1-shaded)); }
+.Goal--2.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-2-shaded)); }
+.Goal--3.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-3-shaded)); }
+.Goal--4.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-4-shaded)); }
+.Goal--5.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-5-shaded)); }
+.Goal--6.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-6-shaded)); }
+.Goal--7.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-7-shaded)); }
+.Goal--8.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-8-shaded)); }
+.Goal--9.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-9-shaded)); }
+.Goal--10.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-10-shaded)); }
+.Goal--11.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-11-shaded)); }
+.Goal--12.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-12-shaded)); }
+.Goal--13.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-13-shaded)); }
+.Goal--14.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-14-shaded)); }
+.Goal--15.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-15-shaded)); }
+.Goal--16.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-16-shaded)); }
+.Goal--17.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-17-shaded)); }

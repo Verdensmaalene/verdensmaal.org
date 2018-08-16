@@ -36,12 +36,24 @@
   font-family: var(--default-font-family);
   background: rgb(var(--default-background));
   color: rgb(var(--default-color));
-  font-size: var(--default-font-size);
+  font-size: 100%;
   line-height: var(--default-line-height);
   -webkit-tap-highlight-color: transparent;
   -webkit-font-smoothing: antialiased; /* 4 */
   -moz-osx-font-smoothing: grayscale; /* 4 */
   text-rendering: geometricPrecision; /* 5 */
+}
+
+@media (min-width: 1500px) {
+  :root {
+    font-size: 130%;
+  }
+}
+
+@media (min-width: 1800px) {
+  :root {
+    font-size: 150%;
+  }
 }
 
 *,
