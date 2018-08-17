@@ -25,26 +25,26 @@ function home (state, emit) {
     <main class="View-main">
       ${state.docs.getSingle('homepage', opts, render)}
       <div class="View-section">
-        <section style="display: flex; flex-wrap: wrap; margin: 0 -24px;">
+        <section class="Grid">
           ${Array(6).fill().map(() => html`
-            <div style="flex: 0 0 33.333%; border: 24px solid transparent;">
+            <div class="Grid-cell u-md-size1of2 u-lg-size1of3">
               ${card({
-                title: 'Lorem Ipsum Dolor sit amet',
-                body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae arcu arcu. Praesent eu nulla nec leo bibendum viverra. Quisque tincidunt lacinia tincidunt. Vestibulum tempor non velit ac consectetur.',
-                date: Math.random() > 0.5 ? (function (date) {
-                  return {
-                    datetime: date,
-                    text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
-                  }
-                }(new Date())) : null,
-                color: Math.random() > 0.5 ? '#' + Array(6).fill().map(() => '0123456789ABCDEF'[Math.floor(Math.random() * 16)]).join('') : null,
-                link: {
-                  href: (Math.random() > 0.5 ? 'http://foo.com' : '') + '/bar' + (Math.random() > 0.5 ? '.jpg' : '')
-                },
-                figure: {
-                  src: 'https://ik.imagekit.io/ryozgj42m/tr:w-1234,q-75,pr-true/efe6be9fdac92063e7672df6e6baf0b040c0eeb8_dayofthegirl.jpg'
-                }
-              })}
+    title: 'Lorem Ipsum Dolor sit amet',
+    body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae arcu arcu. Praesent eu nulla nec leo bibendum viverra. Quisque tincidunt lacinia tincidunt. Vestibulum tempor non velit ac consectetur.',
+    date: Math.random() > 0.5 ? (function (date) {
+      return {
+        datetime: date,
+        text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
+      }
+    }(new Date())) : null,
+    color: Math.random() > 0.5 ? '#' + Array(6).fill().map(() => '0123456789ABCDEF'[Math.floor(Math.random() * 16)]).join('') : null,
+    link: {
+      href: (Math.random() > 0.5 ? 'http://foo.com' : '') + '/bar' + (Math.random() > 0.5 ? '.jpg' : '')
+    },
+    figure: {
+      src: 'https://ik.imagekit.io/ryozgj42m/tr:w-1234,q-75,pr-true/efe6be9fdac92063e7672df6e6baf0b040c0eeb8_dayofthegirl.jpg'
+    }
+  })}
             </div>
           `)}
         </section>

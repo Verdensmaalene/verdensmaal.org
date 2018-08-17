@@ -1,0 +1,44 @@
+/* @define Grid */
+
+@import "../base/global";
+
+.Grid {
+  --gutter: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% + var(--gutter, 1.5rem));
+  margin: 0 calc(var(--gutter, 1.5rem) * -0.5) calc(var(--gutter, 1.5rem) * -1);
+}
+
+.Grid-cell {
+  display: flex;
+  flex-basis: 100%;
+  min-width: 0;
+  padding: 0 calc(var(--gutter) * 0.5);
+  margin-bottom: var(--gutter);
+}
+
+@media (mix-width: 600px) {
+  .Grid {
+    --gutter: 2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Grid {
+    --gutter: 2.8rem;
+  }
+}
+
+.Grid-cell--appear {
+  opacity: 0;
+  transform: translateY(100px);
+  animation: Grid-cell--appear 600ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes Grid-cell--appear {
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
