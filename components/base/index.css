@@ -6,6 +6,7 @@
 @import "./utilities/size";
 @import "./utilities/space";
 @import "./utilities/text";
+@import "./utilities/transitions";
 
 /**
  * Font declaration

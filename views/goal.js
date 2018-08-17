@@ -30,7 +30,7 @@ function goal (state, emit) {
     }
 
     return goal.render(props, html`
-      <div class="Text">
+      <div class="Text u-slideUp">
         <p><strong>${asText(doc.data.description)}</strong></p>
       </div>
     `)
