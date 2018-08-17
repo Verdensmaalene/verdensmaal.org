@@ -24,8 +24,8 @@ function home (state, emit) {
   return html`
     <main class="View-main">
       ${state.docs.getSingle('homepage', opts, render)}
-      <div class="View-section">
-        <section class="Grid">
+      <div class="View-md-section">
+        <section class="Grid Grid--carousel">
           ${Array(6).fill().map(() => html`
             <div class="Grid-cell u-md-size1of2 u-lg-size1of3">
               ${card({

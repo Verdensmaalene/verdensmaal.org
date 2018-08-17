@@ -12,10 +12,37 @@
 
 .Grid-cell {
   display: flex;
-  flex-basis: 100%;
+  flex: 0 0 100%;
   min-width: 0;
   padding: 0 calc(var(--gutter) * 0.5);
   margin-bottom: var(--gutter);
+}
+
+@media (max-width: 599px) {
+  .Grid--carousel {
+    width: 100%;
+    margin: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    -webkit-scroll-snap-type: mandatory;
+    scroll-snap-type: x mandatory;
+    -webkit-scroll-snap-points-x: repeat(100%);
+    scroll-snap-points-x: repeat(100%);
+  }
+
+  .Grid--carousel .Grid-cell {
+    flex-basis: calc(100% - (1.125rem * 2));
+    padding-left: 1.125rem;
+    padding-right: 0;
+    scroll-snap-align: start;
+  }
+
+  .Grid--carousel .Grid-cell:last-child {
+    flex-basis: calc(100% - 1.125rem);
+    padding-right: 1.125rem;
+  }
 }
 
 @media (mix-width: 600px) {

@@ -28,16 +28,19 @@
 .View-section {
   width: 100%;
   margin: 0 auto;
-  padding-left: 1.2rem;
-  padding-right: 1.2rem;
-  padding-left: calc(1.2rem + constant(safe-area-inset-right));
-  padding-right: calc(1.2rem + constant(safe-area-inset-right));
-  padding-left: calc(1.2rem + env(safe-area-inset-right));
-  padding-right: calc(1.2rem + env(safe-area-inset-right));
+  padding-left: 1.125rem;
+  padding-right: 1.125rem;
+  padding-left: calc(1.125rem + constant(safe-area-inset-right));
+  padding-right: calc(1.125rem + constant(safe-area-inset-right));
+  padding-left: calc(1.125rem + env(safe-area-inset-right));
+  padding-right: calc(1.125rem + env(safe-area-inset-right));
 }
 
-@media (min-width: 400px) {
-  .View-section {
+@media (min-width: 600px) {
+  .View-section,
+  .View-md-section {
+    width: 100%;
+    margin: 0 auto;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     padding-left: calc(1.5rem + constant(safe-area-inset-right));
@@ -48,7 +51,8 @@
 }
 
 @media (min-width: 1000px) {
-  .View-section {
+  .View-section,
+  .View-md-section {
     padding-left: 2rem;
     padding-right: 2rem;
     padding-left: calc(2rem + constant(safe-area-inset-right));
@@ -59,7 +63,8 @@
 }
 
 @media (min-width: 1200px) {
-  .View-section {
+  .View-section,
+  .View-md-section {
     padding-left: 3rem;
     padding-right: 3rem;
     padding-left: calc(3rem + constant(safe-area-inset-right));
