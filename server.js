@@ -26,7 +26,7 @@ app.use(route.get('/robots.txt', function (ctx, next) {
 app.use(route.get('/', function (ctx, next) {
   if (!ctx.accepts('html')) return next()
   var layout = parseInt(ctx.query.layout, 10)
-  if (!layout) layout = Math.ceil(Math.random() * 7)
+  if (!layout) layout = Math.ceil(Math.random() * 9)
   ctx.state.ui = ctx.state.ui || {}
   ctx.state.ui.gridLayout = layout
 }))
@@ -55,7 +55,6 @@ app.use(route.post('/prismic-hook', compose([body(), async function (ctx) {
 // set cache headers
 app.use(function (ctx, next) {
   if (!ctx.accepts('html')) return next()
-
   var previewCookie = ctx.cookies.get(Prismic.previewCookie)
   if (previewCookie) {
     ctx.state.ref = previewCookie
@@ -63,13 +62,11 @@ app.use(function (ctx, next) {
   } else {
     ctx.state.ref = null
   }
-
   var allowCache = process.env.NODE_ENV !== 'development'
   if (!previewCookie && allowCache && ctx.path !== '/prismic-preview') {
     ctx.set('Cache-Control', `s-maxage=${60 * 60 * 24 * 7}, max-age=${60}`)
   }
-
-  return next()
+  next()
 })
 
 // set preview cookie

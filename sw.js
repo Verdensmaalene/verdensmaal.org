@@ -23,37 +23,53 @@ self.addEventListener('activate', function onactivate (event) {
 self.addEventListener('fetch', function onfetch (event) {
   var req = event.request
   var url = new self.URL(req.url)
+  var isSameOrigin = self.location.origin === url.origin
   var isHTML = req.headers.get('accept').includes('text/html')
 
-  event.respondWith(
-    caches.open(CACHE_KEY).then(cache => {
-      return cache.match(req).then(cached => {
-        var isLocal = self.location.origin === url.origin
+  if (url.pathname === '/' && !/layout=/.test(url.search)) {
+    let layout = Math.ceil(Math.random() * 9)
+    let query = `${url.search ? '&' : '?'}layout=${layout}`
+    url = new self.URL(url.href + query)
+    req = new self.Request(url.href, {
+      body: req.body,
+      method: req.method,
+      headers: req.heders,
+      referrer: req.referrer,
+      credentials: 'include'
+    })
+  }
 
+  event.respondWith(
+    caches.open(CACHE_KEY).then(function (cache) {
+      return cache.match(req).then(function (cached) {
         // bypass cache for certain types
-        if ((isHTML && isLocal) || IS_DEVELOPMENT) {
-          return update(cache, cached)
+        if ((isHTML && isSameOrigin) || IS_DEVELOPMENT) {
+          return update(cache, req, cached)
         }
 
         // bypass cache for tracking scripts
         if (TRACKING_REGEX.test(url.href)) return self.fetch(req)
 
         // use cached response
-        return cached || update(cache)
+        return cached || update(cache, req)
       })
     })
   )
 
   // fetch request and update cache
-  // (Cache, Response?) -> any
-  function update (cache, fallback) {
+  // (Cache, Request, Response?) -> Response|Promise
+  function update (cache, req, fallback) {
     if (req.cache === 'only-if-cached' && req.mode !== 'same-origin') {
       return fallback
     }
 
-    return self.fetch(req).then(response => {
-      if (!response.ok && fallback) return fallback
-      cache.put(req, response.clone())
+    return self.fetch(req).then(function (response) {
+      if (!response.ok) {
+        if (req !== event.request) return update(cache, event.request, fallback)
+        if (fallback) return fallback
+      } else {
+        cache.put(req, response.clone())
+      }
       return response
     })
   }
@@ -62,8 +78,8 @@ self.addEventListener('fetch', function onfetch (event) {
 // clear application cache
 // () -> Promise
 function clear () {
-  return caches.keys().then(keys => {
-    return Promise.all(keys.map(key => caches.delete(key)))
+  return caches.keys().then(function (keys) {
+    return Promise.all(keys.map((key) => caches.delete(key)))
   })
 }
 
