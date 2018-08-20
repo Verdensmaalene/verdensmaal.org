@@ -1,0 +1,127 @@
+/* @define Background13 */
+
+.Background13 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Background13-eye {
+  display: none;
+  width: 90%;
+  max-height: 90%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(var(--color-goal-13-shaded));
+}
+
+@media (min-width: 900px) {
+  .Background13-eye {
+    display: block;
+  }
+}
+
+.Background13--small .Background13-eye {
+  display: none;
+}
+
+.Background13-eyeLid {
+  display: none;
+  width: 90%;
+  max-height: 47%;
+  position: absolute;
+  left: calc(50% - 0px);
+  top: 50%;
+  transform: translate(-50%, -11px);
+}
+
+@media (min-width: 900px) {
+  .Background13-eyeLid {
+    display: block;
+  }
+}
+
+.Background13--small .Background13-eyeLid {
+  display: none;
+}
+
+.Background13-eyeLidLine {
+  stroke-dasharray: 1328;
+  stroke-dashoffset: 1328;
+}
+
+.Background13-eyeLidLine.is-visible {
+  animation: Hero-eyeLid--fill 1000ms cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
+}
+
+@keyframes Hero-eyeLid--fill {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.Background13-globe {
+  width: 140%;
+  max-width: 600px;
+  margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: Hero-globe--appear 1400ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.Background13--small .Background13-globe {
+  width: 94%;
+  left: 100%;
+  top: 0;
+}
+
+@media (min-width: 900px) {
+  .Background13:not(.Background13--small) .Background13-globe {
+    width: 38%;
+    max-height: 70%;
+    max-width: none;
+    animation: Hero-globe--appear 600ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  }
+
+  :root.has-js .Background13:not(.Background13--small) .Background13-globe {
+    animation: none;
+  }
+
+  :root.has-js .Background13:not(.Background13--small) .Background13-globe.is-visible {
+    animation: Hero-globe--appear 800ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  }
+}
+
+@keyframes Hero-globe--appear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.Background13-globeShape {
+  transform-origin: 50% 50%;
+  animation: Hero-globeShape--spin 75000ms linear infinite;
+}
+
+@keyframes Hero-globeShape--spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

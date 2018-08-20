@@ -17,6 +17,26 @@
       ]
     ]
   },
+  "browserify": {
+    "transform": [
+      [
+        "sheetify",
+        {
+          "use": [
+            [
+              "sheetify-postcss",
+              {
+                "plugins": [
+                  "autoprefixer",
+                  "postcss-clean"
+                ]
+              }
+            ]
+          ]
+        }
+      ]
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codeandconspire/dk.globalgoals.org.git"
@@ -28,6 +48,7 @@
   },
   "homepage": "https://github.com/codeandconspire/dk.globalgoals.org#readme",
   "dependencies": {
+    "autoprefixer": "^9.1.1",
     "choo": "^6.13.0",
     "choo-service-worker": "^2.4.0",
     "dedent": "^0.7.0",
@@ -40,8 +61,12 @@
     "koa-route": "^3.2.0",
     "nanoraf": "^3.1.0",
     "normalize.css": "^8.0.0",
+    "postcss-clean": "^1.1.0",
     "prismic-javascript": "^1.5.0",
-    "prismic-richtext": "^0.4.2"
+    "prismic-richtext": "^0.4.2",
+    "sheetify": "^7.3.3",
+    "sheetify-postcss": "^1.2.0",
+    "split-require": "^3.1.1"
   },
   "devDependencies": {
     "choo-devtools": "^2.5.1",

@@ -279,7 +279,6 @@
   }
 }
 
-
 .Goal--1.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-1-shaded)); }
 .Goal--2.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-2-shaded)); }
 .Goal--3.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-3-shaded)); }

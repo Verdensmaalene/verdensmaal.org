@@ -1,11 +1,7 @@
 var html = require('choo/html')
 var Component = require('choo/component')
-// var Hero = require('../hero')
-// var backgrounds = require('../hero/backgrounds')
-var {vw, vh, className, i18n} = require('../base')
+var {vw, vh, className} = require('../base')
 var icon = require('./icon')
-
-var text = i18n(require('./lang.json'))
 
 var PRESS_SCALE_FACTOR = 0.97 // Hardcoded in CSS, see ./index.css
 

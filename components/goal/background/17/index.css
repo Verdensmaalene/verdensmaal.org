@@ -1,0 +1,96 @@
+/* @define Background17 */
+
+.Background17 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Background17-web {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Background17-thread {
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-dashoffset: 1440;
+  stroke-dasharray: 1440;
+  stroke-width: 2px;
+  animation: Background17-thread--draw 1200ms linear forwards;
+}
+
+.Background17--small .Background17-thread {
+  stroke-width: 3px;
+}
+
+.Background17-thread--reverse {
+  stroke-dashoffset: -1440;
+  stroke-dasharray: -1440;
+}
+
+.Background17-thread:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.Background17-thread:nth-child(2) {
+  animation-delay: 1000ms;
+}
+
+.Background17-thread:nth-child(3) {
+  animation-delay: 2000ms;
+}
+
+.Background17-thread:nth-child(4) {
+  animation-delay: 3000ms;
+}
+
+.Background17-thread:nth-child(5) {
+  animation-delay: 4000ms;
+}
+
+.Background17-thread:nth-child(6) {
+  animation-delay: 5000ms;
+}
+
+.Background17-thread:nth-child(7) {
+  animation-delay: 6000ms;
+}
+
+@keyframes Background17-thread--draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.Background17-node {
+  opacity: 0;
+  animation: Background17-node--appear 200ms ease-in forwards;
+}
+
+.Background17-node:nth-child(1) {
+  animation-delay: 2200ms;
+}
+
+.Background17-node:nth-child(2) {
+  animation-delay: 3000ms;
+}
+
+.Background17-node:nth-child(3) {
+  animation-delay: 3400ms;
+}
+
+.Background17-node:nth-child(4) {
+  animation-delay: 4300ms;
+}
+
+@keyframes Background17-node--appear {
+  to {
+    opacity: 1;
+  }
+}

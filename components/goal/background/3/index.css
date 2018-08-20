@@ -1,0 +1,66 @@
+/* @define Background3 */
+
+.Background3 {
+}
+
+.Background3-lifeline {
+  width: calc(100% + 6px);
+  height: auto;
+  margin: 0 -3px;
+  position: absolute;
+  left: 0;
+  bottom: 8vh;
+}
+
+.Background3--small .Background3-lifeline {
+  bottom: 28%;
+}
+
+.Background3-lifeline--wide {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .Background3-lifeline {
+    display: none;
+  }
+
+  .Background3-lifeline--wide {
+    display: block;
+  }
+}
+
+:root.has-js .Background3-lifepath {
+  visibility: hidden;
+}
+
+:root.has-js .Background3-lifepath.in-transition {
+  visibility: visible;
+}
+
+.Background3-lifepath.in-transition {
+  stroke-dasharray: 1800;
+  stroke-dashoffset: 1800;
+  animation-name: Background3-lifepath--draw;
+  animation-duration: 2800ms;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.Background3-lifepath.in-reverse {
+  stroke-dashoffset: 3600;
+  animation-duration: 2400ms;
+  animation-name: Background3-lifepath--undraw;
+}
+
+@keyframes Background3-lifepath--undraw {
+  to {
+    stroke-dashoffset: 1800;
+  }
+}
+
+@keyframes Background3-lifepath--draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

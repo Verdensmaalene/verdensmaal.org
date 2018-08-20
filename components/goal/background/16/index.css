@@ -1,0 +1,329 @@
+/* @define Background16 */
+
+.Background16 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Background16-container {
+  height: 100%;
+  width: calc(100% - (24px * 2));
+  max-width: calc(1280px + (48px * 2));
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 100%);
+  animation: Background16--appear 1000ms 100ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes Background16--appear {
+  to {
+    transform: translate(-50%, 0%);
+  }
+}
+
+@media (min-width: 1000px) {
+  .Background16-container {
+    width: calc(100% - (32px * 2));
+  }
+}
+
+@media (min-width: 1200px) {
+  .Background16-container {
+    width: calc(100% - (48px * 2));
+  }
+}
+
+.Background16-institution {
+  height: 16%;
+  max-height: 190px;
+  width: auto;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 100%);
+  animation: Background16-institution--appear 1000ms 400ms cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+@keyframes Background16-institution--appear {
+  to {
+    transform: translate(-50%, 0%);
+  }
+}
+
+.Background16--small .Background16-institution {
+  display: none;
+}
+
+.Background16-building {
+  display: none;
+  height: 10%;
+  max-height: 90px;
+  position: absolute;
+  bottom: 0;
+  transform: translateY(100%);
+  animation: Background16-building--appear 1200ms 400ms cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+@keyframes Background16-building--appear {
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.Background16-building--left {
+  left: 0;
+}
+
+.Background16-building--right {
+  right: 0;
+}
+
+.Background16--small .Background16-building--left {
+  display: none;
+}
+
+.Background16--small .Background16-building--right {
+  height: 60%;
+  right: -10%;
+  max-height: 110px;
+}
+
+@media (min-width: 900px) {
+  .Background16-building {
+    display: block;
+  }
+}
+
+.Background16-person {
+  display: none;
+  height: 5%;
+  max-height: 43px;
+  width: auto;
+  position: absolute;
+  bottom: 0;
+  transform: translateY(100%);
+  animation: Background16-person--appear 600ms 700ms cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+@media (min-width: 900px) {
+  .Background16-person {
+    display: block;
+  }
+}
+
+.Background16-person--judge {
+  right: 87px;
+  height: 8%;
+  max-height: 47px;
+  animation-delay: 900ms;
+}
+
+.Background16-person--citizen:nth-child(1) {
+  left: 90px;
+  height: 4.5%;
+}
+
+.Background16-person--citizen:nth-child(2) {
+  left: 120px;
+  height: 5.25%;
+}
+
+.Background16-person--citizen:nth-child(3) {
+  left: 151px;
+  height: 4.4%;
+  animation-delay: 1000ms;
+}
+
+.Background16-person--citizen:nth-child(4) {
+  display: none;
+  left: 230px;
+}
+
+.Background16-person--citizen:nth-child(5) {
+  display: none;
+  height: 2.4%;
+  left: 260px;
+}
+
+.Background16-person--citizen:nth-child(6) {
+  display: none;
+  right: 260px;
+}
+
+.Background16-person--citizen:nth-child(7) {
+  display: none;
+  right: 230px;
+}
+
+.Background16-person--citizen:nth-child(8) {
+  right: 151px;
+  height: 4%;
+}
+
+.Background16-person--citizen:nth-child(9) {
+  right: 125px;
+  height: 4%;
+}
+
+@media (min-width: 1200px) {
+  .Background16-person--citizen:nth-child(4),
+  .Background16-person--citizen:nth-child(5),
+  .Background16-person--citizen:nth-child(6),
+  .Background16-person--citizen:nth-child(7) {
+    display: block;
+  }
+}
+
+.Background16--small .Background16-person {
+  display: none;
+}
+
+.Background16--small .Background16-person--citizen:nth-child(8) {
+  height: 8%;
+  right: 20%;
+  display: block;
+}
+
+.Background16--small .Background16-person--citizen:nth-child(9) {
+  height: 8%;
+  right: 30%;
+  display: block;
+}
+
+.Background16--small .Background16-person--judge {
+  display: none;
+}
+
+@keyframes Background16-person--appear {
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.Background16-sky {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform: translateY(100%);
+  animation: Background16-sky--appear 1000ms 200ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes Background16-sky--appear {
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.Background16-cloud {
+  position: absolute;
+  color: #fff;
+  opacity: 0.1;
+  animation: Background16-cloud--appear 1200ms 200ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes Background16-cloud--appear {
+  0% {
+    transform: translateY(200%) translateY(50px);
+  }
+
+  25% {
+    transform: translateY(200%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.Background16-cloud--small {
+  width: 9%;
+}
+
+.Background16-cloud--medium {
+  width: 15%;
+}
+
+.Background16-cloud--large {
+  width: 24%;
+}
+
+@media (min-width: 900px) {
+  .Background16-cloud--small {
+    width: 3%;
+  }
+
+  .Background16-cloud--medium {
+    width: 5%;
+  }
+
+  .Background16-cloud--large {
+    width: 8%;
+  }
+}
+
+.Background16-cloud--light {
+  opacity: 0.275;
+  visibility: hidden;
+}
+
+@media (min-width: 900px) {
+  .Background16-cloud--light {
+    visibility: visible;
+  }
+}
+
+.Background16-cloud--dark {
+  opacity: 0.4;
+  color: rgb(var(--color-goal-16-shaded));
+}
+
+.Background16-cloud:nth-child(1) {
+  top: 70%;
+  left: -2.5%;
+}
+
+.Background16-cloud:nth-child(2) {
+  top: 25%;
+  left: 5.55%;
+}
+
+.Background16-cloud:nth-child(3) {
+  top: 50%;
+  left: 10%;
+}
+
+.Background16-cloud:nth-child(4) {
+  top: 60%;
+  left: 22%;
+}
+
+.Background16-cloud:nth-child(5) {
+  top: 30%;
+  left: 32%;
+}
+
+.Background16-cloud:nth-child(6) {
+  top: 18%;
+  right: 20%;
+}
+
+.Background16-cloud:nth-child(7) {
+  top: 35%;
+  right: 12%;
+}
+
+.Background16-cloud:nth-child(8) {
+  top: 50%;
+  right: 14%;
+}
+
+.Background16-cloud:nth-child(9) {
+  top: 70%;
+  right: -1.5%;
+}

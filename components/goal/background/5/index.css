@@ -1,0 +1,113 @@
+/* @define Background5 */
+
+.Background5 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Background5-people {
+  width: 100%;
+  height: 100%;
+  max-width: 610px;
+  max-height: 22%;
+  padding: 0 30px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+}
+
+.Background5-person {
+  height: 100%;
+  width: auto;
+  fill: #fff;
+  opacity: 0;
+  transform: translateY(100%);
+  will-change: opacity, transform;
+  animation: Background5-person--appear 1000ms 50ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.Background5-person:nth-child(1) { animation-delay: 280ms; }
+.Background5-person:nth-child(2) { animation-delay: 160ms; }
+.Background5-person:nth-child(3) { animation-delay: 260ms; }
+.Background5-person:nth-child(4) { animation-delay: 180ms; }
+.Background5-person:nth-child(5) { animation-delay: 300ms; }
+
+@keyframes Background5-person--appear {
+  from {
+    opacity: 1;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+.Background5-person:nth-child(1),
+.Background5-person:nth-child(5) {
+  display: none;
+  height: 55%;
+}
+
+.Background5-person:nth-child(2),
+.Background5-person:nth-child(4) {
+  height: 74%;
+}
+
+@media (min-width: 400px) {
+  .Background5-person:nth-child(1),
+  .Background5-person:nth-child(5) {
+    display: block;
+  }
+}
+
+.Background5-figure {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1;
+}
+
+.Background5-grower {
+  fill: #fff;
+  transform: scale(0.6);
+  animation: Background5-grower--growing 700ms 1000ms var(--ease) forwards, Background5-grower--renderFix 10ms 100ms var(--ease) forwards;
+}
+
+@keyframes Background5-grower--renderFix {
+  to {
+    transform-origin: bottom center;
+  }
+}
+
+@keyframes Background5-grower--growing {
+  to {
+    transform: scale(1);
+  }
+}
+
+.Background5-person:nth-child(1) .Background5-grower { animation-delay: 1200ms, 100ms; }
+.Background5-person:nth-child(2) .Background5-grower { animation-delay: 2700ms, 100ms; }
+.Background5-person:nth-child(3) .Background5-grower { animation-delay: 2400ms, 100ms; }
+.Background5-person:nth-child(4) .Background5-grower { animation-delay: 1800ms, 100ms; }
+.Background5-person:nth-child(5) .Background5-grower { animation-delay: 3000ms, 100ms; }
+
+.Background5--small .Background5-person {
+  display: none;
+}
+
+.Background5--small .Background5-person:nth-child(3) {
+  display: block;
+}
+
+.Background5--small .Background5-people {
+  bottom: 41%;
+  max-height: 23%;
+}

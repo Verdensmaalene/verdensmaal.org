@@ -1,0 +1,137 @@
+/* @define Background8 */
+
+.Background8 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Background8-bars {
+  width: 400px;
+  position: absolute;
+  right: 48px;
+  bottom: 0;
+}
+
+.Background8--small .Background8-bars {
+  display: none;
+}
+
+@media (max-width: 1150px) {
+  .Background8-bars {
+    display: none;
+  }
+}
+
+.Background8-bar {
+  opacity: 0;
+  transform: translateY(100%);
+  animation: Background8-bar--appear 325ms 250ms ease-out forwards;
+  fill: #fff;
+}
+
+.Background8-bar--dark {
+  fill: rgb(var(--color-goal-8-shaded));
+}
+
+@keyframes Background8-bar--appear {
+  from {
+    opacity: 1;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+.Background8-bar--light:nth-child(1) {
+  animation-delay: 300ms;
+}
+
+.Background8-bar--light:nth-child(2) {
+  animation-delay: 375ms;
+}
+
+.Background8-bar--light:nth-child(3) {
+  animation-delay: 450ms;
+}
+
+.Background8-bar--light:nth-child(4) {
+  animation-delay: 525ms;
+}
+
+.Background8-bar--light:nth-child(5) {
+  animation-delay: 600ms;
+}
+
+.Background8-bar--light:nth-child(6) {
+  animation-delay: 675ms;
+}
+
+.Background8-bar--dark:nth-child(1) {
+  animation-delay: 600ms;
+}
+
+.Background8-bar--dark:nth-child(2) {
+  animation-delay: 675ms;
+}
+
+.Background8-bar--dark:nth-child(3) {
+  animation-delay: 750ms;
+}
+
+.Background8-bar--dark:nth-child(4) {
+  animation-delay: 825ms;
+}
+
+.Background8-bar--dark:nth-child(5) {
+  animation-delay: 900ms;
+}
+
+.Background8-curves {
+  width: 100%;
+  max-width: 627px;
+  height: auto;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.Background8-curve {
+  fill: #fff;
+  transform: scaleY(0);
+  transform-origin: 0 100%;
+  animation: Background8-curve--appear 350ms 100ms ease-out forwards;
+  will-change: transform;
+}
+
+.Background8-curve--dark {
+  fill: rgb(var(--color-goal-8-shaded));
+}
+
+@keyframes Background8-curve--appear {
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.Background8-curve:nth-child(1) {
+  animation-delay: 200ms;
+}
+
+.Background8-curve:nth-child(2) {
+  animation-delay: 900ms;
+}
+
+.Background8-curve:nth-child(3) {
+  animation-delay: 850ms;
+}
+
+.Background8-curve:nth-child(4) {
+  animation-delay: 450ms;
+  animation-duration: 600ms;
+}

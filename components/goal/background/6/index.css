@@ -1,0 +1,66 @@
+/* @define Background6 */
+
+.Background6 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Background6-drop {
+  position: absolute;
+  bottom: 100%;
+  color: #fff;
+  animation: Background6-drop--falling 2600ms linear infinite;
+}
+
+@keyframes Background6-drop--falling {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(100vh) translateY(100%);
+  }
+}
+
+.Background6-symbol {
+  display: block;
+  width: 100%;
+}
+
+.Background6-drop--sm {
+  width: 18px;
+  opacity: 0.6;
+}
+
+.Background6-drop--sm {
+  animation-duration: 3000ms;
+}
+
+.Background6-drop--md {
+  width: 24px;
+}
+
+.Background6-drop--lg {
+  width: 30px;
+  color: var(--color-goal-6-shaded);
+  opacity: 0.6;
+}
+
+.Background6-drop--lg {
+  animation-duration: 2200ms;
+}
+
+.Background6--small .Background6-drop--sm {
+  width: 12px;
+}
+
+.Background6--small .Background6-drop--md {
+  width: 16px;
+}
+
+.Background6--small .Background6-drop--lg {
+  width: 22px;
+}

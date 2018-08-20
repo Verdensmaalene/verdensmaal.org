@@ -1,0 +1,272 @@
+/* @define Background11 */
+
+.Background11 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Background11-city {
+  height: 20%;
+  padding: 0 5vw;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 900px) {
+  .Background11-city {
+    width: auto;
+    max-height: 23vh;
+  }
+}
+
+.Background11--small .Background11-city {
+  width: auto;
+  left: 103%;
+}
+
+.Background11-cityThing {
+  opacity: 0;
+  transform: translateY(100%);
+  animation: Background11-cityThing--appear 400ms 100ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.Background11-cityThing--shaded {
+  fill: rgb(var(--color-goal-11-shaded));
+}
+
+@keyframes Background11-cityThing--appear {
+  from {
+    transform: translateY(100%);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+/**
+ * Bus
+ */
+
+.Background11-bus {
+  height: 4%;
+  position: absolute;
+  right: calc(100% + 1px);
+  bottom: 0;
+  will-change: transform;
+  transition-delay: 500ms;
+}
+
+.Background11-bus.is-coming {
+  transition-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.Background11-bus.is-leaving {
+  transition-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
+}
+
+@media (min-width: 900px) {
+  .Background11-bus {
+    transition-delay: 0ms;
+    max-width: 10vw;
+    max-height: 3.5vh;
+  }
+}
+
+:root.has-js .Background11-bus.in-transition {
+  transition-property: transform;
+}
+
+/**
+ * Fountain
+ */
+
+.Background11-spray {
+  stroke-dashoffset: 80;
+  animation-name: Background11-spray--running;
+  animation-duration: 2500ms;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+:root.has-js .Background11-spray {
+  animation-name: none;
+}
+
+/**
+ * 1. I dunno, it just works 😎
+ */
+
+:root.has-js .Background11-spray.is-starting {
+  stroke-dasharray: 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 107; /* 1 */
+  stroke-dashoffset: 302; /* 1 */
+  animation-duration: 2500ms;
+  animation-name: Background11-spray--starting;
+  animation-iteration-count: 1;
+}
+
+@keyframes Background11-spray--starting {
+  to {
+    stroke-dashoffset: 198; /* 1 */
+  }
+}
+
+:root.has-js .Background11-spray.is-running {
+  animation-name: Background11-spray--running;
+}
+
+@keyframes Background11-spray--running {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/**
+ * Sky
+ */
+
+.Background11-citySky {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  animation: Background11-citySky--rise 900ms cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+@keyframes Background11-citySky--rise {
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+.Background11-citySun {
+  width: 86px;
+  max-width: 10vw;
+  position: absolute;
+  left: 6vw;
+  top: 48vh;
+  visibility: hidden;
+}
+
+@media (min-width: 900px) {
+  .Background11-citySun {
+    visibility: visible;
+  }
+}
+
+.Background11--small .Background11-citySun {
+  display: none;
+}
+
+.Background11-lightRay {
+  stroke-dasharray: 10 10;
+  stroke-dashoffset: 30;
+  animation: Background11-lightRay--appear 2500ms linear infinite forwards;
+}
+
+@keyframes Background11-lightRay--appear {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 30;
+  }
+
+  15% {
+    opacity: 1;
+    stroke-dashoffset: 27;
+  }
+
+  85% {
+    opacity: 1;
+    stroke-dashoffset: 20;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 10;
+  }
+}
+
+.Background11-cityCloud {
+  position: absolute;
+  color: #fff;
+  opacity: 0.2;
+  animation: Background11-cityCloud--appear 1200ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes Background11-cityCloud--appear {
+  0% {
+    transform: translateY(200%) translateY(50px);
+  }
+
+  25% {
+    transform: translateY(200%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.Background11-cityCloud--small {
+  width: 9%;
+}
+
+.Background11-cityCloud--medium {
+  width: 15%;
+}
+
+.Background11-cityCloud--large {
+  width: 24%;
+}
+
+@media (min-width: 900px) {
+  .Background11-cityCloud--small {
+    width: 3%;
+  }
+
+  .Background11-cityCloud--medium {
+    width: 5%;
+  }
+
+  .Background11-cityCloud--large {
+    width: 8%;
+  }
+}
+
+.Background11-cityCloud--dark {
+  opacity: 0.4;
+  color: rgb(var(--color-goal-11-shaded));
+}
+
+.Background11-cityCloud:nth-child(1) {
+  top: 60vh;
+  left: -2.5%;
+}
+
+.Background11-cityCloud:nth-child(2) {
+  top: 49vh;
+  left: 5.55%;
+}
+
+.Background11-cityCloud:nth-child(3) {
+  top: 28vh;
+  right: 15%;
+}
+
+.Background11-cityCloud:nth-child(4) {
+  top: 33vh;
+  right: 14%;
+}
+
+.Background11-cityCloud:nth-child(5) {
+  top: 50vh;
+  right: -3%;
+}

@@ -1,9 +1,29 @@
 var html = require('choo/html')
 var Component = require('choo/component')
+var splitRequire = require('split-require')
 var Goal = require('../goal')
 var {i18n} = require('../base')
 
 var text = i18n(require('./lang.json'))
+var backgrounds = [
+  (callback) => splitRequire('../goal/background/1', callback),
+  (callback) => splitRequire('../goal/background/2', callback),
+  (callback) => splitRequire('../goal/background/3', callback),
+  (callback) => splitRequire('../goal/background/4', callback),
+  (callback) => splitRequire('../goal/background/5', callback),
+  (callback) => splitRequire('../goal/background/6', callback),
+  (callback) => splitRequire('../goal/background/7', callback),
+  (callback) => splitRequire('../goal/background/8', callback),
+  (callback) => splitRequire('../goal/background/9', callback),
+  (callback) => splitRequire('../goal/background/10', callback),
+  (callback) => splitRequire('../goal/background/11', callback),
+  (callback) => splitRequire('../goal/background/12', callback),
+  (callback) => splitRequire('../goal/background/13', callback),
+  (callback) => splitRequire('../goal/background/14', callback),
+  (callback) => splitRequire('../goal/background/15', callback),
+  (callback) => splitRequire('../goal/background/16', callback),
+  (callback) => splitRequire('../goal/background/17', callback)
+]
 
 var TOTAL_GOALS = 17
 var LAYOUTS = [ // [<landscape>, <portrait>]
@@ -14,13 +34,14 @@ var LAYOUTS = [ // [<landscape>, <portrait>]
   [9, 16],
   [10, 11],
   [1, 12],
-  [5, 15],
-  [4, 14]
+  [15, 5],
+  [14, 4]
 ]
 
 module.exports = class GoalGrid extends Component {
   constructor (id, state, emit) {
     super(id)
+    this.backgrounds = []
     this.cache = state.cache
     this.local = state.components[id] = {
       id: id,
@@ -34,7 +55,24 @@ module.exports = class GoalGrid extends Component {
     return this.local.goals !== goals.map((goal) => goal.number).join()
   }
 
+  background (num, opts) {
+    if (typeof window === 'undefined') return null
+
+    var index = num - 1
+    var background = this.backgrounds[index]
+    if (background) return background.render(opts)
+
+    background = backgrounds[index]
+    background((err, Background) => {
+      if (err) background = { render () { throw err } }
+      else background = new Background(`background-${num}`)
+      this.backgrounds[index] = background
+      this.rerender()
+    })
+  }
+
   createElement (goals = [], layout = null, slot = Function.prototype) {
+    var self = this
     this.local.layout = layout
     this.local.goals = goals.map((goal) => goal.number).join()
 
@@ -75,6 +113,11 @@ module.exports = class GoalGrid extends Component {
             <div class="GoalGrid-content">
               <p class="GoalGrid-description">${props.description}</p>
               <span class="GoalGrid-button">${text`Explore goal`}</span>
+              ${props.format !== 'square' ? html`
+                <div class="GoalGrid-background">
+                  ${typeof window !== 'undefined' ? self.background(props.number, {size: 'small'}) : null}
+                </div>
+              ` : null}
             </div>
           ` : null)}
         </a>
