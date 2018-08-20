@@ -1,7 +1,8 @@
 /* @define Intro */
 
 @import "../base/global";
+@import "../text";
 
 .Target {
-
+  display: flex;
 }

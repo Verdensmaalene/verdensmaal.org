@@ -4,15 +4,20 @@ var text = i18n()
 
 module.exports = target
 
-function target (opts) {
+function target (opts = {}) {
+  var id = opts.id ? opts.id : '?'
   return html`
     <div class="Target">
-      <figure class="Target-figure">
-        <img src="${opts.src}" alt="${text`Delmål`} ${opts.id}" />
-        <figcaption class="Target-caption">${text`Delmål`} ${opts.id}</figcaption>
-      </figure>
-      <h2 class="Target-title"><span class="u-hiddenVisually">${text`Delmål`} ${opts.id} – </span> ${opts.title}</h1>
-      <p class="Target-body">${opts.body}</p>
+      ${opts.icon ? html`
+        <figure class="Target-figure">
+          <img src="${opts.icon.url}" alt="${text`Delmål`} ${id}" />
+          <figcaption class="Target-caption">${text`Delmål`} ${id}</figcaption>
+        </figure>
+      ` : null}
+      <div class="Text">
+        <h2><span class="u-hiddenVisually">${text`Delmål`} ${id} – </span> ${opts.title}</h1>
+        ${opts.body}
+      </div>
     </div>
   `
 }
