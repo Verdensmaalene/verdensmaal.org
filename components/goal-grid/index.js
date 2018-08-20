@@ -115,7 +115,7 @@ module.exports = class GoalGrid extends Component {
               <span class="GoalGrid-button">${text`Explore goal`}</span>
               ${props.format !== 'square' ? html`
                 <div class="GoalGrid-background">
-                  ${typeof window !== 'undefined' ? self.background(props.number, {size: 'small'}) : null}
+                  ${self.background(props.number, {size: 'small'})}
                 </div>
               ` : null}
             </div>

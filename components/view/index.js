@@ -1,4 +1,6 @@
+var assert = require('assert')
 var html = require('choo/html')
+var Component = require('choo/component')
 var error = require('./error')
 var {i18n} = require('../base')
 var Header = require('../header')
@@ -7,14 +9,33 @@ var text = i18n()
 
 var DEFAULT_TITLE = text`SITE_TITLE`
 
-module.exports = createView
+module.exports = View
+
+function View (view, meta) {
+  if (!(this instanceof View)) return createView(view, meta)
+  var id = view
+  assert(typeof id === 'string', 'View: id should be of type string')
+  Component.call(this, id)
+  this.createElement = createView(this.createElement, this.meta).bind(this)
+}
+
+View.prototype = Object.create(Component.prototype)
+View.prototype.constructor = View
+View.createView = createView
+View.createClass = createClass
+
+function createClass (id, Class) {
+  return function (state, emit) {
+    return state.cache(Class, id).render(state, emit)
+  }
+}
 
 function createView (view, meta) {
   return function (state, emit) {
     var children
     try {
-      children = state.error ? error(state.error) : view(state, emit)
-      let next = meta(state)
+      children = state.error ? error(state.error) : view.call(this, state, emit)
+      let next = meta.call(this, state)
       if (next.title !== DEFAULT_TITLE) {
         next.title = `${next.title} | ${DEFAULT_TITLE}`
       }

@@ -1,7 +1,11 @@
 /* @define Background1 */
 
 .Background1 {
-
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .Background1-people {

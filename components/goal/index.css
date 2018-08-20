@@ -214,6 +214,14 @@
 }
 
 /**
+ * Content container
+ */
+
+.Goal-content {
+  z-index: -1;
+}
+
+/**
  * Fullscreen
  */
 
@@ -248,7 +256,7 @@
 
   .Goal--fullscreen .Goal-content {
     width: calc(100% - (155px + (var(--offset, 0) * 3.7px)));
-    transform: translateX(calc(155px + (var(--offset, 0) * 3.7px)));
+    margin-left: calc(155px + (var(--offset, 0) * 3.7px));
   }
 }
 
@@ -264,7 +272,7 @@
 
   .Goal--fullscreen .Goal-content {
     width: calc(100% - (200px + (var(--offset, 0) * 4.8px)));
-    transform: translateX(calc(200px + (var(--offset, 0) * 4.8px)));
+    margin-left: calc(200px + (var(--offset, 0) * 4.8px));
   }
 }
 
@@ -275,7 +283,7 @@
 
   .Goal--fullscreen .Goal-content {
     width: calc(100% - (280px + (var(--offset, 0) * 6.2px)));
-    transform: translateX(calc(280px + (var(--offset, 0) * 6.2px)));
+    margin-left: calc(280px + (var(--offset, 0) * 6.2px));
   }
 }
 
