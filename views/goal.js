@@ -11,11 +11,7 @@ module.exports = view(goal, meta)
 function goal (state, emit) {
   var [, num, uid] = state.params.wildcard.match(/^(\d{1,2})-(.+)$/)
 
-  return html`
-    <main class="View-container">
-      ${state.docs.getByUID('goal', uid, render)}
-    </main>
-  `
+  return state.docs.getByUID('goal', uid, render)
 
   function render (err, doc) {
     if (err) throw err
@@ -29,11 +25,15 @@ function goal (state, emit) {
       label: asText(doc.data.label)
     }
 
-    return goal.render(props, html`
-      <div class="Text u-slideUp">
-        <p><strong>${asText(doc.data.description)}</strong></p>
-      </div>
-    `)
+    return html`
+      <main class="View-main">
+        ${goal.render(props, html`
+          <div class="Text  u-slideUp">
+            <p><strong>${asText(doc.data.description)}</strong></p>
+          </div>
+        `)}
+      </main>
+    `
   }
 }
 
