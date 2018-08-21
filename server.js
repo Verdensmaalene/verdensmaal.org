@@ -23,52 +23,19 @@ app.use(route.get('/robots.txt', function (ctx, next) {
   `
 }))
 
-// randomize layout
-app.use(route.get('/', function (ctx, next) {
-  if (!ctx.accepts('html')) return next()
-  var layout = parseInt(ctx.query.layout, 10)
-  if (!layout) layout = Math.ceil(Math.random() * 9)
-  ctx.state.ui = ctx.state.ui || {}
-  ctx.state.ui.gridLayout = layout
-}))
-
-// redirect goal shorthand url to complete slug
-app.use(route.get('/:num(\\d{1,2})', async function (ctx, num) {
-  var api = await Prismic.api(REPOSITORY, {req: ctx.req})
-  var response = await api.query(Prismic.Predicates.at('my.goal.number', +num))
-  var doc = response.results[0]
-  ctx.assert(doc, 404, 'Page not found')
-  ctx.redirect(`/${num}-${doc.uid}`)
-}))
-
-// add webhook for psismic updates
-app.use(route.post('/prismic-hook', compose([body(), async function (ctx) {
+// add webhook for prismic updates
+app.use(route.post('/prismic-hook', compose([body(), function (ctx) {
   var secret = ctx.request.body && ctx.request.body.secret
   ctx.assert(secret === process.env.PRISMIC_VERDENSMAALENE_SECRET, 403, 'Secret mismatch')
   return new Promise(function (resolve, reject) {
     purge(function (err, response) {
       if (err) return reject(err)
+      ctx.type = 'application/json'
+      ctx.body = {}
       resolve()
     })
   })
 }])))
-
-// set cache headers
-app.use(function (ctx, next) {
-  if (!ctx.accepts('html')) return next()
-  var previewCookie = ctx.cookies.get(Prismic.previewCookie)
-  if (previewCookie) {
-    ctx.state.ref = previewCookie
-    ctx.set('Cache-Control', 'max-age=0')
-  } else {
-    ctx.state.ref = null
-  }
-  var allowCache = process.env.NODE_ENV !== 'development'
-  if (!previewCookie && allowCache && ctx.path !== '/prismic-preview') {
-    ctx.set('Cache-Control', `s-maxage=${60 * 60 * 24 * 7}, max-age=${60}`)
-  }
-  return next()
-})
 
 // set preview cookie
 app.use(route.get('/prismic-preview', async function (ctx) {
@@ -88,6 +55,42 @@ app.use(route.get('/prismic-preview', async function (ctx) {
   ctx.cookies.set(Prismic.previewCookie, token, {expires: expires, path: '/'})
   ctx.redirect(href)
 }))
+
+// redirect goal shorthand url to complete slug
+app.use(route.get('/:num(\\d{1,2})', async function (ctx, num) {
+  var api = await Prismic.api(REPOSITORY, {req: ctx.req})
+  var response = await api.query(Prismic.Predicates.at('my.goal.number', +num))
+  var doc = response.results[0]
+  ctx.assert(doc, 404, 'Page not found')
+  ctx.redirect(`/${num}-${doc.uid}`)
+}))
+
+// randomize layout
+app.use(route.get('/', function (ctx, next) {
+  if (!ctx.accepts('html')) return next()
+  var layout = parseInt(ctx.query.layout, 10)
+  if (!layout) layout = Math.ceil(Math.random() * 9)
+  ctx.state.ui = ctx.state.ui || {}
+  ctx.state.ui.gridLayout = layout
+  return next()
+}))
+
+// set cache headers
+app.use(function (ctx, next) {
+  if (!ctx.accepts('html')) return next()
+  var previewCookie = ctx.cookies.get(Prismic.previewCookie)
+  if (previewCookie) {
+    ctx.state.ref = previewCookie
+    ctx.set('Cache-Control', 'max-age=0')
+  } else {
+    ctx.state.ref = null
+  }
+  var allowCache = process.env.NODE_ENV !== 'development'
+  if (!previewCookie && allowCache && ctx.path !== '/prismic-preview') {
+    ctx.set('Cache-Control', `s-maxage=${60 * 60 * 24 * 7}, max-age=${60}`)
+  }
+  return next()
+})
 
 if (process.env.NOW && process.env.NODE_ENV === 'production') {
   purge(['/sw.js'], function (err) {

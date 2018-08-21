@@ -13,7 +13,9 @@ function prismicStore (opts) {
   else cache = opts.lru || new LRU(100)
 
   return function (state, emitter) {
-    var init = Prismic.getApi(opts.repository, Object.assign({req: state.req}, opts))
+    var init = Prismic.getApi(opts.repository, Object.assign({
+      req: state.req
+    }, opts))
 
     if (typeof window === 'undefined' && state.prefetch) {
       cache.clear()
