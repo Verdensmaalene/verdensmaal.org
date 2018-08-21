@@ -24,14 +24,9 @@ function targetGrid (opts = {}) {
           </div>
         </div>
       ` : null}
-<<<<<<< HEAD
-      ${opts.targets.map(cell)}
-=======
-
       <div class="TargetGrid-container">
         ${opts.targets.map(cell)}
       </div>
->>>>>>> Design for target grid and targets
     </section>
   `
 }
