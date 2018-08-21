@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "standard && dependency-check package.json",
+    "deploy": "npx now -T codeandconspire && npx now alias -T codeandconspire",
     "start": "node server.js"
   },
   "documentify": {
@@ -38,6 +39,7 @@
     ]
   },
   "now": {
+    "alias": "dk.globalgoals.org",
     "env": {
       "NODE_ENV": "production",
       "PRISMIC_VERDENSMAALENE_SECRET": "@prismic-verdensmaalene-secret",
