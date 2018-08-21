@@ -21,10 +21,13 @@ function View (view, meta) {
 
 View.prototype = Object.create(Component.prototype)
 View.prototype.constructor = View
+View.prototype.meta = function () {
+  throw new Error('View: meta should be implemented')
+}
 View.createView = createView
 View.createClass = createClass
 
-function createClass (id, Class) {
+function createClass (Class, id) {
   return function (state, emit) {
     return state.cache(Class, id).render(state, emit)
   }
@@ -60,7 +63,7 @@ function createView (view, meta) {
     }
 
     return html`
-      <body class="View">
+      <body class="View" id="app-view">
         <div class="View-header ${opts.static ? 'View-header--stuck' : ''}">
           ${state.cache(Header, 'header').render(links(), state.href, opts)}
         </div>

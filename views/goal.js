@@ -117,4 +117,4 @@ class GoalPage extends View {
   }
 }
 
-module.exports = View.createClass('goal-page', GoalPage)
+module.exports = View.createClass(GoalPage, 'goal-page')
