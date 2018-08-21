@@ -93,11 +93,8 @@ class GoalPage extends View {
       var props = {format: 'fullscreen', number: +num}
       if (!doc) return goal.render(props, background)
 
-      Object.assign(props, {
-        format: 'fullscreen',
-        number: doc.data.number,
-        label: asText(doc.data.label)
-      })
+      props.number = doc.data.number
+      props.label = asText(doc.data.label)
 
       return html`
         <main class="View-main">
@@ -110,7 +107,7 @@ class GoalPage extends View {
             </div>
           `)}
 
-          <div class="View-section" id="#targets">
+          <div class="View-section" id="targets">
             ${targetGrid(targets(doc.data))}
           </div>
         </main>

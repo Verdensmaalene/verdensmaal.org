@@ -6,7 +6,7 @@ module.exports = targetGrid
 function targetGrid (opts = {}) {
   return html`
     <section class="TargetGrid">
-      ${opts.title || opts.description.length ? html`
+      ${opts.title || opts.description ? html`
         <div class="TargetGrid-intro">
           <div class="Text">
             ${opts.title ? html`
@@ -16,7 +16,6 @@ function targetGrid (opts = {}) {
           </div>
         </div>
       ` : null}
-
       ${opts.targets.map(cell)}
     </section>
   `

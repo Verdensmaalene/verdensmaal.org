@@ -1,6 +1,7 @@
 var html = require('choo/html')
 var {i18n} = require('../base')
-var text = i18n()
+
+var text = i18n(require('./lang.json'))
 
 module.exports = target
 
@@ -10,12 +11,12 @@ function target (opts = {}) {
     <div class="Target">
       ${opts.icon ? html`
         <figure class="Target-figure">
-          <img src="${opts.icon.url}" alt="${text`Delmål`} ${id}" />
-          <figcaption class="Target-caption">${text`Delmål`} ${id}</figcaption>
+          <img src="${opts.icon.url}" alt="${text`Target`} ${id}" />
+          <figcaption class="Target-caption">${text`Target`} ${id}</figcaption>
         </figure>
       ` : null}
       <div class="Text">
-        <h2><span class="u-hiddenVisually">${text`Delmål`} ${id} – </span> ${opts.title}</h1>
+        <h2><span class="u-hiddenVisually">${text`Target`} ${id} – </span> ${opts.title}</h2>
         ${opts.body}
       </div>
     </div>
