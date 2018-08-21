@@ -3,5 +3,42 @@
 @import "../base/global";
 
 .TargetGrid {
-  
+  margin: 6rem 0;
+}
+
+.TargetGrid-intro {
+  margin-bottom: 2rem;
+}
+
+.TargetGrid-container {
+  --gutter: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(100% + var(--gutter, 2rem));
+  margin: 0 calc(var(--gutter, 2rem) * -0.5) calc(var(--gutter, 2rem) * -1);
+}
+
+.TargetGrid-cell {
+  display: flex;
+  flex: 0 0 100%;
+  min-width: 0;
+  padding: 0 calc(var(--gutter) * 0.5);
+  margin-bottom: var(--gutter);
+}
+
+@media (min-width: 600px) {
+  .TargetGrid-intro {
+    margin-bottom: 4rem;
+  }
+
+  .TargetGrid-cell {
+    width: 50%;
+    flex-basis: 50%;
+  }
+}
+
+@media (min-width: 900px) {
+  .TargetGrid-container {
+    --gutter: 3rem;
+  }
 }

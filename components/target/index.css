@@ -5,4 +5,105 @@
 
 .Target {
   display: flex;
+  flex-direction: column;
+  position: relative;
 }
+
+.Target-figure {
+  padding-top: 55%;
+  margin-bottom: 1rem;
+  position: relative;
+  color: var(--current-color, #fff);
+  background: var(--current-background, #000);
+}
+
+.Target-caption {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  font-size: 1.35rem;
+  white-space: nowrap;
+}
+
+.Target-icon {
+  width: 42%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.Target-title {
+  font-size: 1.5rem;
+}
+
+@media (min-width: 600px) {
+  .Target {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0;
+  }
+  
+  .Target::before {
+    content: "";
+    position: absolute;
+    top: -1.5rem;
+    right: -1.5rem;
+    left: -1.5rem;
+    bottom: -1.5rem;
+    z-index: -1;
+    opacity: 0;
+    background: #f6f6f6;
+    transition: opacity 120ms var(--ease-out);
+  }
+
+  .Target:hover::before {
+    opacity: 1;
+  }
+
+  .Target-figure {
+    flex: 1 0 30%;
+    max-width: 8.5rem;
+    min-width: 6rem;
+    padding: 0;
+    margin: 0 1rem 0 0;
+    background: transparent;
+  }
+
+  .Target-caption, 
+  .Target-icon {
+    color: var(--current-color, #fff);
+    background: var(--current-background, #000);
+  }
+
+  .Target-caption {
+    padding: 0.2rem 0.2rem 0.1rem;
+    margin-bottom: 0.25rem;
+    position: static;
+    font-size: 1.35rem;
+    text-align: center;
+  }
+  
+  .Target-icon {
+    width: 100%;
+    position: static;
+    transform: none;
+  }
+
+  .Target-title {
+    margin-top: -0.2rem;
+    padding-right: 4rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .Target-figure {
+    margin-right: 2rem;
+  }
+
+  .Target-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+}
+

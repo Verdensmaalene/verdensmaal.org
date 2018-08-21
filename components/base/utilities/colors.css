@@ -8,6 +8,12 @@
  * --current-color
  */
 
+.u-bgBlack { --current-background: #000 !important; }
+.u-colorBlack { --current-color: #000 !important; }
+
+.u-bgWhite { --current-background: #fff !important; }
+.u-colorWhite { --current-color: #fff !important; }
+
 .u-bgGrayLight { --current-background: rgb(var(--color-gray-light)) !important; }
 .u-colorGrayLight { --current-color: rgb(var(--color-gray-light)) !important; }
 .u-bgGray { --current-background: rgb(var(--color-gray)) !important; }

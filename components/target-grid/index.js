@@ -4,6 +4,14 @@ var target = require('../target')
 module.exports = targetGrid
 
 function targetGrid (opts = {}) {
+  function cell (data) {
+    return html`
+      <div class="TargetGrid-cell">
+        ${target(Object.assign({}, data, {goal: opts.goal}))}
+      </div>
+    `
+  }
+
   return html`
     <section class="TargetGrid">
       ${opts.title || opts.description ? html`
@@ -16,11 +24,14 @@ function targetGrid (opts = {}) {
           </div>
         </div>
       ` : null}
+<<<<<<< HEAD
       ${opts.targets.map(cell)}
+=======
+
+      <div class="TargetGrid-container">
+        ${opts.targets.map(cell)}
+      </div>
+>>>>>>> Design for target grid and targets
     </section>
   `
-}
-
-function cell (data) {
-  return html`<div class="TargetGrid-cell">${target(data)}</div>`
 }

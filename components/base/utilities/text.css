@@ -26,12 +26,15 @@
   font-family: var(--default-font-family) !important;
   line-height: var(--default-line-height) !important;
   letter-spacing: var(--default-font-size) !important;
+  text-transform: normal;
+  word-spacing: normal;
 }
 
 .u-textHeading {
   font-family: var(--heading-font-family) !important;
   line-height: var(--heading-line-height) !important;
   word-spacing: var(--heading-word-spacing) !important;
+  text-transform: uppercase;
 }
 
 .u-rtl {
