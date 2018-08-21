@@ -37,6 +37,15 @@
       ]
     ]
   },
+  "now": {
+    "env": {
+      "NODE_ENV": "production",
+      "PRISMIC_VERDENSMAALENE_SECRET": "@prismic-verdensmaalene-secret",
+      "CLOUDFLARE_VERDENSMAALENE_ZONE": "@cloudflare-verdensmaalene-zone",
+      "CLOUDFLARE_CODEANDCONSPIRE_EMAIL": "@cloudflare-codeandconspire-email",
+      "CLOUDFLARE_CODEANDCONSPIRE_KEY": "@cloudflare-codeandconspire-key"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codeandconspire/dk.globalgoals.org.git"
@@ -49,6 +58,7 @@
   "homepage": "https://github.com/codeandconspire/dk.globalgoals.org#readme",
   "dependencies": {
     "autoprefixer": "^9.1.1",
+    "cccpurge": "^1.4.0",
     "choo": "^6.13.0",
     "choo-service-worker": "^2.4.0",
     "dedent": "^0.7.0",

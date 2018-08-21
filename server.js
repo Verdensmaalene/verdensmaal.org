@@ -9,12 +9,13 @@ var body = require('koa-body')
 var route = require('koa-route')
 var compose = require('koa-compose')
 var Prismic = require('prismic-javascript')
+var purge = require('./lib/purge')
 
 var app = jalla('index.js', {sw: 'sw.js'})
 
 // disallow robots anywhere but live URL
 app.use(route.get('/robots.txt', function (ctx, next) {
-  if (ctx.host === 'dk.globalgoals.org') return next()
+  // if (ctx.host === 'dk.globalgoals.org') return next()
   ctx.type = 'text/plain'
   ctx.body = dedent`
     User-agent: *
@@ -45,10 +46,10 @@ app.use(route.post('/prismic-hook', compose([body(), async function (ctx) {
   var secret = ctx.request.body && ctx.request.body.secret
   ctx.assert(secret === process.env.PRISMIC_VERDENSMAALENE_SECRET, 403, 'Secret mismatch')
   return new Promise(function (resolve, reject) {
-    // purge(function (err, response) {
-    //   if (err) return reject(err)
-    //   resolve()
-    // })
+    purge(function (err, response) {
+      if (err) return reject(err)
+      resolve()
+    })
   })
 }])))
 
@@ -88,7 +89,14 @@ app.use(route.get('/prismic-preview', async function (ctx) {
   ctx.redirect(href)
 }))
 
-start()
+if (process.env.NOW && process.env.NODE_ENV === 'production') {
+  purge(['/sw.js'], function (err) {
+    if (err) throw err
+    start()
+  })
+} else {
+  start()
+}
 
 // resolve document preview url
 // obj -> str
