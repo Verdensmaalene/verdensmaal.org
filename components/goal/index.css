@@ -39,22 +39,6 @@
   padding-top: calc((((100% - var(--gutter, 0px)) / 2) * 3) + var(--gutter, 0px) * 2); /* 3 */
 }
 
-/**
- * Achieve equivalent of 8% square width
- */
-
-.Goal--square .Goal-container {
-  --space: 8%;
-}
-
-.Goal--landscape .Goal-container {
-  --space: calc(((100% - var(--gutter, 0px) * 2) / 3) * 0.08);
-}
-
-.Goal--portrait .Goal-container {
-  --space: calc(((100% - var(--gutter, 0px)) / 2) * 0.08);
-}
-
 .Goal::after {
   content: "";
   width: 100%;
@@ -124,7 +108,6 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: space-between;
-  padding: 0.5rem;
 }
 
 /**
@@ -166,15 +149,9 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  width: 116%;
-  margin: 0 -8%;
+  width: 100%;
   user-select: none;
   white-space: nowrap;
-}
-
-.Goal--landscape .Goal-icon,
-.Goal--portrait .Goal-icon {
-  margin: 0 0 0 -8%;
 }
 
 @media print {
@@ -192,6 +169,7 @@
   width: 100%;
   height: auto;
   min-height: 0;
+  margin-top: 8%;
   color: currentColor;
   font-family: var(--heading-font-family);
   line-height: var(--heading-line-height);
@@ -218,7 +196,13 @@
  */
 
 .Goal-content {
-  z-index: -1;
+  margin: 1.2rem;
+}
+
+@media (min-width: 1200px) {
+  .Goal-content {
+    margin: 2rem;
+  }
 }
 
 /**
