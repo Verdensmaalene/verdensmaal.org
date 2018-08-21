@@ -277,7 +277,7 @@
 .GoalGrid-button {
   display: inline-block;
   padding: 0.65em 1em 0.55em;
-  margin-top: var(--space);
+  margin-top: 0.5rem;
   color: transparent;
   font-size: 1.5rem;
   font-family: var(--heading-font-family);

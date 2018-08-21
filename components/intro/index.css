@@ -3,7 +3,7 @@
 @import "../base/global";
 
 .Intro {
-
+  margin-bottom: 2rem;
 }
 
 .Intro::before {
@@ -29,7 +29,11 @@
   max-width: 39em;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
+  .Intro {
+    margin-bottom: 4rem;
+  }
+
   .Intro::before {
     max-height: none;
     min-height: 3rem;

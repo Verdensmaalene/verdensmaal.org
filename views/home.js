@@ -53,7 +53,7 @@ function home (state, emit) {
     return html`
       <div class="View-section">
         ${intro({title: title, body: description})}
-        <section class="u-spaceT4">
+        <section>
           ${grid.render(goals, state.ui.gridLayout, slot)}
         </section>
       </div>
