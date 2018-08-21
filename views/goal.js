@@ -92,7 +92,13 @@ class GoalPage extends View {
 
       var goal = state.cache(Goal, state.params.wildcard)
       var props = {format: 'fullscreen', number: +num}
-      if (!doc) return goal.render(props, background)
+      if (!doc) {
+        return html`
+          <main class="View-main">
+            ${goal.render(props, background)}
+          </main>
+        `
+      }
 
       props.number = doc.data.number
       props.label = asText(doc.data.label)
