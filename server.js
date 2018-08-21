@@ -67,7 +67,7 @@ app.use(function (ctx, next) {
   if (!previewCookie && allowCache && ctx.path !== '/prismic-preview') {
     ctx.set('Cache-Control', `s-maxage=${60 * 60 * 24 * 7}, max-age=${60}`)
   }
-  next()
+  return next()
 })
 
 // set preview cookie

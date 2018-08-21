@@ -4,14 +4,6 @@ var target = require('../target')
 module.exports = targetGrid
 
 function targetGrid (opts = {}) {
-  function cell (data) {
-    return html`
-      <div class="TargetGrid-cell">
-        ${target(Object.assign({}, data, {goal: opts.goal}))}
-      </div>
-    `
-  }
-
   return html`
     <section class="TargetGrid">
       ${opts.title || opts.description ? html`
@@ -29,4 +21,12 @@ function targetGrid (opts = {}) {
       </div>
     </section>
   `
+
+  function cell (data) {
+    return html`
+      <div class="TargetGrid-cell">
+        ${target(Object.assign({}, data, {goal: opts.goal}))}
+      </div>
+    `
+  }
 }
