@@ -6,4 +6,8 @@ function navigation (state, emitter) {
   emitter.prependListener('navigate', function () {
     state.referrer = state.href
   })
+
+  emitter.on('navigate', function () {
+    window.scrollTo(0, 0)
+  })
 }
