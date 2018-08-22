@@ -12,12 +12,19 @@
 
 .GoalGrid-slot--center .GoalGrid-container {
   display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 18%;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .GoalGrid-slot--center.GoalGrid-slot--square {
-  padding: 18%;
+  padding-bottom: 100%;
+  position: relative;
 }
 
 .GoalGrid-slot--center.GoalGrid-slot--small .GoalGrid-container {
