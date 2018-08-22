@@ -3,15 +3,16 @@
 @import "../base/global";
 
 .Logo {
-  display: block;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  align-items: center;
+  user-select: none;
 }
 
 .Logo-symbol {
   display: block;
-  height: 100%;
-  width: 100%;
+  height: 3em;
+  width: 3em;
+  margin-right: 0.46em;
 }
 
 .Logo-slice:nth-child(1) { color: rgb(var(--color-goal-1)); }
@@ -33,16 +34,37 @@
 .Logo-slice:nth-child(17) { color: rgb(var(--color-goal-17)); }
 
 .Logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.Logo-title {
+  font-family: var(--heading-font-family);
+  word-spacing: 0.015em;
+  text-transform: uppercase;
   display: block;
-  height: 100%;
-  width: 100%;
+  line-height: 1em;
+  font-size: 1.5em;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+  font-display: block;
+}
+
+.Logo-sub {
+  font-family: helvetica, Arial, Helvetica, sans-serif;
+  text-transform: capitalize;
+  font-size: 0.6em;
+  letter-spacing: -0.01em;
+  line-height: 1em;
+  margin-top: -0.1em;
+  margin-left: 0.1em;
 }
 
 /**
  * Horizontal
  */
 
-.Logo--horizontal {
+/* .Logo--horizontal {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -67,12 +89,12 @@
   top: 2.5%;
   left: 4.5%;
   max-width: 160px;
-}
+} */
 
 /**
  * Vertical
  */
-
+/* 
 .Logo--vertical .Logo-symbol {
   width: 67%;
   height: 67%;
@@ -81,4 +103,4 @@
 
 .Logo--vertical .Logo-text {
   height: 25%;
-}
+} */

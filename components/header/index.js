@@ -80,8 +80,7 @@ module.exports = class Header extends Component {
               </a>
             ` : html`
               <a class="Header-logo" href="/" rel="home">
-                <span class="u-hiddenVisually">${text`SITE_TITLE`}</span>
-                ${logo.horizontal()}
+                ${logo()}
               </a>
             `}
             <a class="${className('Header-button Header-button--toggle js-toggle', {'Header-button--close': isOpen})}" href="#${isOpen ? '' : id}" draggable="false" onclick=${toggle} role="button" aria-controls="${id}-navigation" aria-expanded="${isOpen ? 'true' : 'false'}">

@@ -65,7 +65,7 @@ function home (state, emit) {
 // str -> HTMLElement
 function slot (type) {
   switch (type) {
-    case 'square': return center(logo.vertical(), type)
+    case 'square': return center(logo({vertical: true}), type)
     case 'large': return center('large', type)
     case 'small': return center('small', type)
     default: return null
