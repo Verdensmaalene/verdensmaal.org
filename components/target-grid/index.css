@@ -26,7 +26,7 @@
   margin-bottom: var(--gutter);
 }
 
-@media (min-width: 600px) {
+@media (min-width: 800px) {
   .TargetGrid-intro {
     margin-bottom: 4rem;
   }

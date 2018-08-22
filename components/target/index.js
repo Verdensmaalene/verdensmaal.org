@@ -11,7 +11,7 @@ function target (opts = {}) {
   var bg = 'u-bg' + opts.goal
 
   return html`
-    <div class="Target">
+    <div class="Target" id="${id}">
       ${opts.icon ? html`
         <figure class="Target-figure ${color} ${bg}">
           <figcaption class="Target-caption u-textHeading">${text`Target`} ${id}</figcaption>
