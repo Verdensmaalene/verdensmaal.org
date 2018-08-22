@@ -1,6 +1,5 @@
 var html = require('choo/html')
 var {asText} = require('prismic-richtext')
-var card = require('../components/card')
 var view = require('../components/view')
 var logo = require('../components/logo')
 var {i18n} = require('../components/base')

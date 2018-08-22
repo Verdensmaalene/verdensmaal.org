@@ -19,7 +19,6 @@
 }
 
 .TargetGrid-cell {
-  display: flex;
   flex: 0 0 100%;
   min-width: 0;
   padding: 0 calc(var(--gutter) * 0.5);

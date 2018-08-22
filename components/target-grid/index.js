@@ -1,5 +1,5 @@
 var html = require('choo/html')
-var target = require('../target')
+var Target = require('../target')
 
 module.exports = targetGrid
 
@@ -25,7 +25,7 @@ function targetGrid (opts = {}) {
   function cell (data) {
     return html`
       <div class="TargetGrid-cell">
-        ${target(Object.assign({}, data, {goal: opts.goal}))}
+        ${new Target(data.id, Object.assign({}, data, {goal: opts.goal})).render()}
       </div>
     `
   }

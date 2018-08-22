@@ -8,11 +8,16 @@
  */
 
 .Target {
-  display: flex;
-  flex-direction: column;
-  position: relative;
+  width: 100%;
   padding-top: 2rem; /* 1 */
   margin-top: -2rem; /* 1 */
+  position: relative;
+  --collapse-body: 0;
+}
+
+.Target-container {
+  display: flex;
+  flex-direction: column;
 }
 
 .Target-figure {
@@ -39,7 +44,13 @@
   transform: translate(-50%, -50%);
 }
 
+/**
+ * 1. Move above fade
+ */
+
 .Target-title {
+  position: relative;
+  z-index: 1; /* 1 */
   font-size: 1.5rem;
 }
 
@@ -52,25 +63,36 @@
 
 @media (min-width: 600px) {
   .Target {
+    --collapse-body: 1;
+  }
+
+  .Target-container {
     flex-direction: row;
-    align-items: flex-start;
+  }
+
+  .Target-body {
     padding-right: 1rem;
   }
-  
+
   .Target::before {
     content: "";
+    z-index: -1;
+    opacity: 0;
+    background: rgba(246, 246, 246, 1);
+    transition: opacity 100ms var(--ease-out);
+  }
+  
+  .Target::before,
+  .Target-button {
     position: absolute;
     top: 1rem;
     right: -1rem;
     left: -1rem;
     bottom: -1rem;
-    z-index: -1;
-    opacity: 0;
-    background: #f6f6f6;
-    transition: opacity 120ms var(--ease-out);
   }
 
-  .Target:hover::before {
+  .Target:hover::before,
+  .Target:focus-within::before {
     opacity: 1;
   }
 
@@ -105,13 +127,14 @@
 
   .Target-title {
     margin-top: -0.2rem;
-    padding-right: 3rem;
+    padding-right: 4rem;
     font-size: 1.75rem;
   }
 }
 
 @media (min-width: 900px) {
-  .Target::before {
+  .Target::before,
+  .Target-button {
     top: 0.5rem;
     right: -1.5rem;
     left: -1.5rem;
@@ -121,10 +144,70 @@
   .Target-figure {
     margin-right: 2rem;
   }
+}
 
+@media (min-width: 1000px) {
   .Target-title {
     font-size: 2rem;
     margin-bottom: 0.5rem;
   }
 }
 
+.Target.is-collapsed .Target-body {
+  position: absolute;
+}
+
+.Target.is-collapsed .Target-content {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.Target-show {
+  width: 100%;
+  height: 20rem;
+  text-align: left;
+  position: absolute;
+  left: 0;
+  bottom: -9.5rem;
+  color: rgb(var(--color-gray));
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%);
+  background-position: 0 -1.5rem;
+  outline: 0;
+  transition: color 100ms var(--ease-out);
+  background-repeat: no-repeat;
+}
+
+.Target-show::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to bottom, rgba(246, 246, 246, 0) 0%, rgba(246, 246, 246, 1) 50%);
+  background-position: 0 -1.5rem;
+  opacity: 0;
+  transition: opacity 100ms var(--ease-out);
+}
+
+.Target:hover .Target-show,
+.Target:focus-within .Target-show {
+  color: var(--default-color);
+}
+
+.Target-more {
+  position: relative;
+  z-index: 1;
+}
+
+.Target:hover .Target-show::before,
+.Target:focus-within .Target-show::before {
+  opacity: 1;
+}
+
+.Target-button {
+  outline: 0;
+  cursor: defalut;
+  z-index: 1;
+}
