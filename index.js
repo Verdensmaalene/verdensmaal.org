@@ -17,6 +17,7 @@ app.use(require('./stores/ui'))
 
 app.route('/', require('./views/home'))
 app.route('/nyheder', require('./views/news'))
+app.route('/nyheder/:uid', require('./views/article'))
 app.route('/*', catchall)
 
 try {

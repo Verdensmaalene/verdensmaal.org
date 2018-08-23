@@ -8,6 +8,9 @@
  * --current-color
  */
 
+.u-colorCurrent { color: var(--current-color) !important; }
+.u-bgCurrent { background: var(--current-background) !important; }
+
 .u-bgBlack { --current-background: #000 !important; }
 .u-colorBlack { --current-color: #000 !important; }
 

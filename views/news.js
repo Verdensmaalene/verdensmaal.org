@@ -45,7 +45,7 @@ function news (state, emit) {
     `
   })
 
-  // fetch page falling back to previous page (in client)
+  // fetch page, falling back to previous page during (while loading)
   // (num, fn) -> HTMLElement
   function page (num) {
     let predicate = Predicates.at('document.type', 'news')
@@ -91,6 +91,7 @@ function news (state, emit) {
         grid({size: '1of3'}, response.results.slice(2, PAGE_SIZE + 2).map(newsCard))
       ]
 
+      // animate all rows (pages) but the first one
       if (response.results_size > PAGE_SIZE + 2) {
         rows.push(grid(
           {size: '1of3', appear: true},
@@ -135,7 +136,7 @@ function newsCard (doc) {
 function meta (state) {
   return state.docs.getSingle('news_listing', function (err, doc) {
     if (err) throw err
-    if (!doc) return {}
+    if (!doc) return {title: text`LOADING_TEXT_SHORT`}
     return {
       title: asText(doc.data.title),
       description: asText(doc.data.description),

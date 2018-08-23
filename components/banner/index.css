@@ -1,0 +1,30 @@
+/* @define Banner */
+
+@import "../base/global";
+
+.Banner {
+  width: 100%;
+  height: 50vh;
+  max-height: 700px;
+  overflow: hidden;
+}
+
+.Banner-figure {
+  object-fit: cover;
+  width: 100%;
+  min-height: 100%;
+  height: auto;
+  background-color: rgba(var(--color-gray-light), 0.6);
+}
+
+@media (min-width: 600px) {
+  .Banner {
+    height: 63vh;
+  }
+}
+
+@supports (object-fit: cover) {
+  .Banner-figure {
+    height: 100%;
+  }
+}

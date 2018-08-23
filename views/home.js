@@ -74,7 +74,7 @@ function slot (type) {
 function meta (state) {
   return state.docs.getSingle('website', function (err, doc) {
     if (err) throw err
-    if (!doc) return {}
+    if (!doc) return {title: text`LOADING_TEXT_SHORT`}
     return {
       title: asText(doc.data.name),
       description: asText(doc.data.description),
