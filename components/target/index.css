@@ -9,15 +9,14 @@
 
 .Target {
   width: 100%;
-  padding-top: 2rem; /* 1 */
-  margin-top: -2rem; /* 1 */
+  display: flex;
+  flex-direction: column;
   position: relative;
   --collapse-body: 0;
 }
 
-.Target-container {
-  display: flex;
-  flex-direction: column;
+.Target-content {
+  overflow: hidden;
 }
 
 .Target-figure {
@@ -64,36 +63,27 @@
 @media (min-width: 600px) {
   .Target {
     --collapse-body: 1;
-  }
-
-  .Target-container {
     flex-direction: row;
+    padding: 1rem;
   }
 
   .Target-body {
     padding-right: 1rem;
-  }
-
-  .Target::before {
-    content: "";
-    z-index: -1;
-    opacity: 0;
-    background: rgba(246, 246, 246, 1);
-    transition: opacity 100ms var(--ease-out);
+    margin-bottom: -0.3rem;
   }
   
-  .Target::before,
   .Target-button {
+    width: 100%;
+    height: 100%;
     position: absolute;
-    top: 1rem;
-    right: -1rem;
-    left: -1rem;
-    bottom: -1rem;
+    top: 0;
+    left: 0;
   }
 
-  .Target:hover::before,
-  .Target:focus-within::before {
-    opacity: 1;
+  .Target:hover,
+  .Target:focus-within {
+    outline: 4px solid rgb(var(--color-gray-light));
+    outline-offset: -2px;
   }
 
   .Target-figure {
@@ -136,12 +126,8 @@
 }
 
 @media (min-width: 900px) {
-  .Target::before,
-  .Target-button {
-    top: 0.5rem;
-    right: -1.5rem;
-    left: -1.5rem;
-    bottom: -1.5rem;
+  .Target {
+    padding: 1.5rem;
   }
 
   .Target-figure {
@@ -152,65 +138,48 @@
 @media (min-width: 1000px) {
   .Target-title {
     font-size: 2rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
   }
 }
 
-.Target.is-collapsed .Target-body {
+:root.has-js .Target.is-collapsed .Target-body,
+:root:not(.has-js) .Target:not(:target) .Target-body {
   position: absolute;
 }
 
-.Target.is-collapsed .Target-content {
-  overflow: hidden;
+:root.has-js .Target.is-collapsed .Target-content,
+:root:not(.has-js) .Target:not(:target) .Target-content {
   position: relative;
   width: 100%;
 }
 
-.Target-show {
+.Target-fade {
   width: 100%;
-  height: 20rem;
-  text-align: left;
+  height: 6rem;
   position: absolute;
   left: 0;
-  bottom: -9.5rem;
+  bottom: 0;
   color: rgb(var(--color-gray));
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%);
-  background-position: 0 -1.5rem;
-  outline: 0;
-  transition: color 100ms var(--ease-out);
+  background-position: 0 0;
+  display: flex;
+  align-items: flex-end;
+  line-height: 1.1;
+  background-position: 0 1.3rem;
   background-repeat: no-repeat;
 }
 
-.Target-show::before {
-  content: "";
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: linear-gradient(to bottom, rgba(246, 246, 246, 0) 0%, rgba(246, 246, 246, 1) 50%);
-  background-position: 0 -1.5rem;
-  opacity: 0;
-  transition: opacity 100ms var(--ease-out);
-}
-
-.Target:hover .Target-show,
-.Target:focus-within .Target-show {
+.Target:hover .Target-fade,
+.Target:focus-within .Target-fade {
   color: var(--default-color);
-}
-
-.Target-more {
-  position: relative;
-  z-index: 1;
-}
-
-.Target:hover .Target-show::before,
-.Target:focus-within .Target-show::before {
-  opacity: 1;
 }
 
 .Target-button {
   outline: 0;
-  cursor: defalut;
+  cursor: default;
   z-index: 1;
+}
+
+:root:not(.has-js) .Target:target .Target-fade {
+  display: none;
 }

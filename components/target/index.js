@@ -9,7 +9,7 @@ module.exports = class Target extends Component {
   constructor (id, opts) {
     super(id)
     this.clicked = false
-    this.collapsed = false
+    this.collapsed = true
     this.opts = opts
   }
 
@@ -45,39 +45,36 @@ module.exports = class Target extends Component {
     var color = this.opts.goal === 7 ? 'u-colorBlack' : 'u-colorWhite'
     var bg = 'u-bg' + this.opts.goal
 
-    var onclick = () => {
+    var onclick = (event) => {
       this.clicked = true
       this.collapsed = false
       this.rerender()
+      event.preventDefault()
     }
 
     return html`
       <div class="Target ${this.collapsed ? 'is-collapsed' : ''}" id="${id}">
-        <div class="Target-container">
-          ${this.opts.icon ? html`
-            <figure class="Target-figure ${color} ${bg}">
-              <div class="js-figure">
-                <figcaption class="Target-caption u-textHeading">${text`Target`} ${id}</figcaption>
-                <img class="Target-icon" src="${this.opts.icon.url}" alt="${text`Target`} ${id}" />
-              </div>
-            </figure>
-          ` : null}
-          <div class="Target-content js-content">
-            <h2 class="Target-title u-textHeading">
-              <span class="u-hiddenVisually">${text`Target`} ${id} – </span> ${this.opts.title}
-            </h2>
-            <div class="Target-body">
-              ${this.opts.body}
+        ${this.opts.icon ? html`
+          <figure class="Target-figure ${color} ${bg}">
+            <div class="js-figure">
+              <figcaption class="Target-caption u-textHeading">${text`Target`} ${id}</figcaption>
+              <img class="Target-icon" src="${this.opts.icon.url}" alt="${text`Target`} ${id}" />
             </div>
-            ${this.collapsed ? html`
-              <button class="Target-show" onclick=${onclick} role="button">
-                <span class="Target-more">${text`Show more`}</span>
-              </button>
-            ` : null}
+          </figure>
+        ` : null}
+        <div class="Target-content js-content">
+          <h2 class="Target-title u-textHeading">
+            <span class="u-hiddenVisually">${text`Target`} ${id} – </span> ${this.opts.title}
+          </h2>
+          <div class="Target-body">
+            ${this.opts.body}
           </div>
+          ${this.collapsed ? html`
+            <span area-hidden="true" class="Target-fade"><span>${text`Show more`}</span></span>
+          ` : null}
         </div>
         ${this.collapsed ? html`
-          <div class="Target-button" onclick=${onclick} tabindex="-1"></div>
+          <a href="#${id}" class="Target-button" onclick=${onclick}><span class="u-hiddenVisually">${text`Show more`}</span></a>
         ` : null}
       </div>
     `
