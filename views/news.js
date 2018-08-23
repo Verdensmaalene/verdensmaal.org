@@ -55,15 +55,15 @@ function news (state, emit) {
     }
 
     return state.docs.get(predicate, opts, function fallback (err, response) {
-      if (err) return onpage(err)
-      if (response) return onpage(null, response)
+      if (err) return onresponse(err)
+      if (response) return onresponse(null, response)
       if (num > 1 && typeof window !== 'undefined') return page(num - 1)
-      return onpage()
+      return onresponse()
     })
 
-    // create a render a block for news items
-    // num -> fn
-    function onpage (err, response) {
+    // render page
+    // (Error, obj) -> HTMLElement
+    function onresponse (err, response) {
       if (err) throw err
       if (!response) {
         var cells = []
