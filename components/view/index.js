@@ -77,5 +77,8 @@ function links () {
   return [{
     href: '/',
     title: text`The 17 Goals`
+  }, {
+    href: '/nyheder',
+    title: text`News`
   }]
 }

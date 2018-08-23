@@ -202,5 +202,6 @@
 
 .u-sizeFull {
   width: 100% !important;
+  max-width: none !important;
   flex: 1 0 100% !important;
 }

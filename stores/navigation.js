@@ -7,7 +7,15 @@ function navigation (state, emitter) {
     state.referrer = state.href
   })
 
-  emitter.on('navigate', function () {
-    window.scrollTo(0, 0)
+  var maintainScroll = false
+  emitter.prependListener('pushState', function (href, preventScroll) {
+    maintainScroll = preventScroll || maintainScroll
+  })
+
+  emitter.on('pushState', function () {
+    window.requestAnimationFrame(function () {
+      if (!maintainScroll) window.scrollTo(0, 0)
+      maintainScroll = false
+    })
   })
 }

@@ -7,6 +7,11 @@
   position: relative;
   max-height: 420px;
   overflow: hidden;
+  background-color: rgba(var(--color-gray-light), 0.6);
+}
+
+.Figure.is-loading {
+  background-color: rgba(var(--color-gray-light), 0.6);
 }
 
 .Figure-caption {

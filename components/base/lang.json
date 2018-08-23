@@ -2,7 +2,6 @@
   "SITE_TITLE": "Verdensmål",
   "The 17 Goals": "De 17 mål",
   "Oops": "Ups",
-  "Loading": "Indlæser",
   "There is no page at this address. Try finding your way using the menu or from": "Der er ingen side på denne adresse. Prøv at finde din vej ved hjælp af menuen eller fra",
   "the homepage": "hjemmesiden",
   "We apologize, an error has occured on our site. It may be temporary and you could": "Vi undskylder, der er opstået en fejl på vores hjemmeside. Det kan være midlertidigt, og du kunne",
@@ -24,5 +23,8 @@
   "MONTH_10": "november",
   "MONTH_11": "december",
   "Published on %s %s, %s": "Udgivet den %s %s, %s",
-  "Back to Goals": "Tilbage til målene"
+  "Back to Goals": "Tilbage til målene",
+  "News": "Nyheder",
+  "Nothing to see here": "Nothing to see here",
+  "Show more": "Vis mere"
 }

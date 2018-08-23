@@ -31,10 +31,10 @@ function home (state, emit) {
   function render (err, doc) {
     if (err) throw err
 
-    var goals, title, description
+    var goals, title, body
     if (doc) {
       title = asText(doc.data.title)
-      description = asText(doc.data.description)
+      body = asText(doc.data.description)
       goals = doc.data.goals.map(({link}) => ({
         number: link.data.number,
         label: asText(link.data.label),
@@ -43,7 +43,7 @@ function home (state, emit) {
       }))
     } else {
       title = html`<span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`
-      description = html`<span class="u-loading">${text`LOADING_TEXT_LONG`}</span>`
+      body = html`<span class="u-loading">${text`LOADING_TEXT_LONG`}</span>`
       goals = []
       for (let i = 0; i < 17; i++) goals.push({href: `/${i + 1}`, blank: true})
     }
@@ -51,7 +51,7 @@ function home (state, emit) {
     var grid = state.cache(GoalGrid, 'homepage-goalgrid')
     return html`
       <div class="View-section">
-        ${intro({title: title, body: description})}
+        ${intro({title, body})}
         <section>
           ${grid.render(goals, state.ui.gridLayout, slot)}
         </section>
