@@ -38,7 +38,7 @@ class GoalPage extends View {
     var [, uid] = state.params.wildcard.match(/^\d{1,2}-(.+)$/)
     return state.docs.getByUID('goal', uid, function (err, doc) {
       if (err) throw err
-      if (!doc) return {title: text`Loading`}
+      if (!doc) return {title: text`LOADING_TEXT_SHORT`}
       return {
         title: asText(doc.data.title),
         description: asText(doc.data.description),
