@@ -46,12 +46,8 @@
 }
 
 @media (min-width: 900px) {
-  /* .TargetGrid-container {
+  .TargetGrid-container {
     width: calc(100% + 3rem);
-    margin: 0 0 -3rem;
+    margin: 0 -1.5rem;
   }
-  
-  .TargetGrid-cell {
-    margin-bottom: 3rem;
-  } */
 }
