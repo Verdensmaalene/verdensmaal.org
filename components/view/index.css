@@ -1,7 +1,6 @@
 /* @define View */
 
 @import "../base/global";
-@import "../grid";
 
 .View {
   display: flex;
