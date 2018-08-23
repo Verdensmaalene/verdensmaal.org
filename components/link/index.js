@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var assert = require('assert')
-var {i18n, isSameDomain, filetype} = require('../base')
+var {i18n, isSameDomain, filetype, className} = require('../base')
 
 var text = i18n(require('./lang.json'))
 
@@ -18,9 +18,11 @@ function link (opts = {}) {
   if (opts.external) attrs.rel = 'noopener noreferrer'
   if (opts.file) attrs.download = 'true'
   if (opts.external) attrs.target = '_blank'
-  if (opts.block) attrs.class += ' Link--block'
-  if (opts.silent) attrs.class += ' Link--silent'
-  if (opts.inherit) attrs.class += ' Link--inherit'
+  attrs.class = className('Link', {
+    'Link--block': opts.block,
+    'Link--silent': opts.silent,
+    'Link--inherit': opts.inherit
+  })
 
   return html`
     <a ${attrs}>
@@ -31,7 +33,7 @@ function link (opts = {}) {
 }
 
 function loading (opts = {}) {
-  return html`<span>LOADING</span>`
+  return html`<span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`
 }
 
 function label (opts) {
