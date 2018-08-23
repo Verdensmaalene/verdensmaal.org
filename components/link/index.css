@@ -51,7 +51,7 @@
 }
 
 .Link:not(.Link--silent):hover {
-  background: rgba(var(--color-link-hover-block, 0, 0, 0), 0.04);
+  background: rgba(var(--current-background, 0, 0, 0), 0.04);
   color: rgb(var(--color-link-shaded));
 }
 

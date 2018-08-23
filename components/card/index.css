@@ -5,7 +5,6 @@
 @import "../link";
 
 .Card {
-  --color-link-hover-block: 0, 0, 0;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -105,6 +104,7 @@
 }
 
 .Card-footer {
+  --current-background: 0, 0, 0;
   flex-grow: 0;
   width: 100%;
 }
@@ -122,6 +122,7 @@
 }
 
 .Card--dark .Card-footer {
+  --current-background: 255, 255, 255;
   border-top-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -130,7 +131,6 @@
 }
 
 .Card--dark {
-  --color-link-hover-block: 255, 255, 255;
   color: #fff;
 }
 
