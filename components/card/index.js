@@ -54,10 +54,15 @@ function loading (props = {}) {
   return html`
     <article class="Card">
       ${figure.loading()}
-      <div class="Card-body">
-        <h1>${text`LOADING_TEXT_MEDIUM`}</h1>
-        <p>${text`LOADING_TEXT_LONG`}</p>
-        ${link.loading()}
+      <div class="Card-content">
+        <div class="Card-body">
+          ${props.date ? html`
+            <time class="Card-meta"><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></time>
+          ` : null}
+          <h1 class="Card-title"><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h1>
+          <p class="Card-text"><span class="u-loading">${text`LOADING_TEXT_LONG`}</span></p>
+          ${link.loading()}
+        </div>
       </div>
     </article>
   `
