@@ -80,5 +80,8 @@ function links () {
   }, {
     href: '/nyheder',
     title: text`News`
+  }, {
+    href: '/begivenheder',
+    title: text`Events`
   }]
 }
