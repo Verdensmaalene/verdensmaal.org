@@ -14,8 +14,6 @@ var PAGE_SIZE = 3
 module.exports = view(news, meta)
 
 function news (state, emit) {
-  var more = true
-
   return state.docs.getSingle('news_listing', function render (err, doc) {
     if (err) throw err
     var title, body
@@ -30,14 +28,33 @@ function news (state, emit) {
     var num = +state.query.page
     num = isNaN(num) ? 1 : num
 
+    var news = []
+    for (let i = 0; i < num; i++) {
+      if (news.length < num * PAGE_SIZE + 2) news.push(...page(i + 1))
+    }
+
+    var latest = news.slice(0, 2)
+    var first = news.slice(2, PAGE_SIZE + 2)
+    var rest = news.slice(PAGE_SIZE + 2, num * PAGE_SIZE + 2).filter(Boolean)
+
     return html`
       <main class="View-main">
         <div class="View-section">
           ${intro({title, body})}
-          ${page(num)}
-          ${more ? html`
+          ${news.length ? html`
+            <section>
+              ${grid({size: '1of2'}, latest.map(withLoading))}
+              ${grid({size: '1of3'}, first.map(withLoading))}
+              ${grid({size: '1of3', appear: true}, rest.map(newsCard))}
+            </section>
+          ` : html`
+            <div class="Text u-textCenter u-sizeFull">
+              <p>${text`Nothing to see here`}</p>
+            </div>
+          `}
+          ${news.length >= num * PAGE_SIZE + 2 ? html`
             <p class="u-textCenter">
-              ${button({href: `/nyheder?page=${num + 1}`, text: text`Show more`, onclick: onclick, disabled: state.ui.isLoading})}
+              ${button({href: `/nyheder?page=${num + 1}`, text: text`Show more`, onclick: onclick})}
             </p>
           ` : null}
         </div>
@@ -45,68 +62,38 @@ function news (state, emit) {
     `
   })
 
-  // fetch page, falling back to previous page during (while loading)
-  // (num, fn) -> HTMLElement
+  // render doc as card, fallback to loading while fetching doc
+  // obj -> HTMLElement
+  function withLoading (doc) {
+    if (doc) return newsCard(doc)
+    return card.loading({date: true})
+  }
+
+  // fetch page by number
+  // num -> arr
   function page (num) {
     let predicate = Predicates.at('document.type', 'news')
     let opts = {
-      pageSize: num * PAGE_SIZE + 2,
+      page: num,
+      pageSize: PAGE_SIZE + 2,
       orderings: '[document.first_publication_date desc]'
     }
 
-    return state.docs.get(predicate, opts, function fallback (err, response) {
-      if (err) return onresponse(err)
-      if (response) return onresponse(null, response)
-      if (num > 1 && typeof window !== 'undefined') return page(num - 1)
-      return onresponse()
-    })
-
-    // render page
-    // (Error, obj) -> HTMLElement
-    function onresponse (err, response) {
+    return state.docs.get(predicate, opts, function onresponse (err, response) {
       if (err) throw err
       if (!response) {
         var cells = []
-        for (let i = 0; i < PAGE_SIZE; i++) cells.push({date: true})
-        return [
-          grid({size: '1of2'}, cells.slice(0, 2).map(card.loading)),
-          grid({size: '1of3'}, cells.map(card.loading))
-        ]
+        for (let i = 0; i < PAGE_SIZE; i++) cells.push(null)
+        return cells
       }
-
-      if (!response.results_size) {
-        more = false
-        return html`
-          <div class="Text u-textCenter u-sizeFull">
-            <p>${text`Nothing to see here`}</p>
-          </div>
-        `
-      }
-
-      // remove more button if we received an incomplete response
-      if (response.results_size !== num * PAGE_SIZE + 2) more = false
-
-      var rows = [
-        grid({size: '1of2'}, response.results.slice(0, 2).map(newsCard)),
-        grid({size: '1of3'}, response.results.slice(2, PAGE_SIZE + 2).map(newsCard))
-      ]
-
-      // animate all rows (pages) but the first one
-      if (response.results_size > PAGE_SIZE + 2) {
-        rows.push(grid(
-          {size: '1of3', appear: true},
-          response.results.slice(PAGE_SIZE + 2).map(newsCard))
-        )
-      }
-
-      return rows
-    }
+      return response.results
+    })
   }
 
   // capture click and emit silent pushState
   // obj -> void
   function onclick (event) {
-    emit('pushState', event.target.href, true)
+    if (!state.ui.isLoading) emit('pushState', event.target.href, true)
     event.preventDefault()
   }
 }
