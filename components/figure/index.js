@@ -3,6 +3,7 @@ var assert = require('assert')
 
 module.exports = figure
 figure.loading = loading
+figure.placeholder = placeholder
 
 function figure (opts = {}) {
   assert(opts.src, 'figure: src string is required')
@@ -20,10 +21,14 @@ function caption (opts = {}) {
   html`
     <figcaption class="Figure-caption">
       <p>${opts.caption}</p>
-    </figcaption> 
+    </figcaption>
   `
 }
 
 function loading (opts = {}) {
+  return html`<div class="Figure is-loading"></div>`
+}
+
+function placeholder (opts = {}) {
   return html`<div class="Figure is-loading"></div>`
 }

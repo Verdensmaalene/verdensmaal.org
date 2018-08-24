@@ -29,7 +29,7 @@ function card (props = {}) {
 
   return html`
     <article ${attrs}>
-      ${figure(props.figure)}
+      ${props.figure ? figure(props.figure) : figure.placeholder()}
       <div class="Card-content ${bg ? 'u-hoverTriggerTarget' : ''}">
         <div class="Card-body">
           ${props.date && props.date.text ? html`
