@@ -24,8 +24,10 @@
   background-color: rgba(var(--color-gray), 0.18);
 }
 
-.Button[disabled] {
+.Button[disabled],
+.Button.is-disabled {
   opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .Button--adapt {
