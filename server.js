@@ -7,6 +7,7 @@ var jalla = require('jalla')
 var dedent = require('dedent')
 var body = require('koa-body')
 var route = require('koa-route')
+var geoip = require('geoip-lite')
 var compose = require('koa-compose')
 var Prismic = require('prismic-javascript')
 var purge = require('./lib/purge')
@@ -63,6 +64,14 @@ app.use(route.get('/:num(\\d{1,2})', async function (ctx, num) {
   var doc = response.results[0]
   ctx.assert(doc, 404, 'Page not found')
   ctx.redirect(`/${num}-${doc.uid}`)
+}))
+
+// loopkup user location by ip
+app.use(route.get('/geoip', function (ctx, next) {
+  ctx.set('Cache-Control', 'max-age=0')
+  ctx.type = 'application/json'
+  var ip = ctx.headers['cf-connecting-ip'] || ctx.ip
+  ctx.body = geoip.lookup(ip.replace('::1', '2.131.255.255'))
 }))
 
 // randomize layout

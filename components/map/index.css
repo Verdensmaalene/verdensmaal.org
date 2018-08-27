@@ -10,7 +10,12 @@
   background-color: rgb(var(--color-gray-light));
 }
 
-.Map::before {
+.Map.has-error {
+  align-items: center;
+  justify-content: center;
+}
+
+.Map:not(.has-error)::before {
   content: "";
   display: block;
   width: 0;
