@@ -26,4 +26,11 @@
 .Map-marker {
   cursor: pointer;
   color: var(--current-color);
+  transition: transform 150ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.Map-marker.is-selected {
+  transform-origin: 50% 100%;
+  transform: scale(1.2);
+  transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
 }

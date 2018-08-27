@@ -79,8 +79,19 @@ module.exports = class Map extends Component {
 
   createMarker (location) {
     var lnglat = [location.longitude, location.latitude]
-    var opts = {color: location.color, anchor: 'bottom', element: render()}
+    var element = html`
+      <svg viewBox="0 0 16 22" width="16" height="22" class="Map-marker">
+        <g fill="none" fill-rule="evenodd">
+          <ellipse fill-opacity=".1" fill="#000" cx="8" cy="20" rx="8" ry="2"/>
+          <circle fill="currentColor" cx="8" cy="6" r="6"/>
+          <circle fill="#FFF" cx="8" cy="6" r="2"/>
+          <path d="M7 11h2v9c0 .6-.4 1-1 1a1 1 0 0 1-1-1v-9z" fill="currentColor"/>
+        </g>
+      </svg>
+    `
 
+    var opts = {color: location.color, anchor: 'bottom'}
+    opts.element = html`<div>${element}</div>`
     var marker = new mapboxgl.Marker(opts).setLngLat(lnglat)
 
     if (typeof location.popup === 'function') {
@@ -88,31 +99,26 @@ module.exports = class Map extends Component {
         'top': [0, 0],
         'top-left': [0, 0],
         'top-right': [0, 0],
-        'bottom': [0, -24],
-        'bottom-left': [0, -22],
-        'bottom-right': [0, -22],
-        'left': [8, -15],
-        'right': [-8, -15]
+        'bottom': [0, -28],
+        'bottom-left': [0, -28],
+        'bottom-right': [0, -28],
+        'left': [8, -20],
+        'right': [-8, -20]
       }
       let popup = new mapboxgl.Popup({closeButton: false, offset: offset})
       popup.setDOMContent(location.popup())
       marker.setPopup(popup)
+
+      popup.on('open', function () {
+        element.classList.add('is-selected')
+      })
+
+      popup.on('close', function () {
+        element.classList.remove('is-selected')
+      })
     }
 
     return marker
-
-    function render () {
-      return html`
-        <svg viewBox="0 0 16 22" width="16" height="22" class="Map-marker">
-          <g fill="none" fill-rule="evenodd">
-            <ellipse fill-opacity=".1" fill="#000" cx="8" cy="20" rx="8" ry="2"/>
-            <circle fill="currentColor" cx="8" cy="6" r="6"/>
-            <circle fill="#FFF" cx="8" cy="6" r="2"/>
-            <path d="M7 11h2v9c0 .6-.4 1-1 1a1 1 0 0 1-1-1v-9z" fill="currentColor"/>
-          </g>
-        </svg>
-      `
-    }
   }
 
   throw (err) {
