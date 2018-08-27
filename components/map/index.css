@@ -23,14 +23,7 @@
   padding-top: calc(100% * 9/16);
 }
 
-@media (mix-width: 600px) {
-  .Grid {
-    --gutter: 2rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .Grid {
-    --gutter: 2.8rem;
-  }
+.Map-marker {
+  cursor: pointer;
+  color: var(--current-color);
 }

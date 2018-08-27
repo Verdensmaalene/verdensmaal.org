@@ -77,13 +77,20 @@ function events (state, emit) {
   }
 }
 
+// format document for use in map
+// obj -> obj
 function asLocation (doc) {
+  var date = new Date(doc.data.datetime)
   return {
-    title: asText(doc.data.title),
-    date: new Date(doc.data.datetime),
-    href: `/begivenheder/${doc.uid}`,
     latitude: doc.data.location.latitude,
-    longitude: doc.data.location.longitude
+    longitude: doc.data.location.longitude,
+    popup () {
+      return html`
+        <div class="Text">
+          <a href="/begivenheder/${doc.uid}">${asText(doc.data.title)}</a>
+        </div>
+      `
+    }
   }
 }
 
