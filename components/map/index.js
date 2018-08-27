@@ -14,9 +14,11 @@ module.exports = class Map extends Component {
 
   update (locations = [], bounds = []) {
     if (this.local.locations.join() !== locations.join()) {
-      this.markers.forEach((marker) => marker.remove())
-      this.markers = this.local.locations.map(this.createMarker.bind(this))
-      this.markers.forEach((marker) => marker.addTo(this.map))
+      if (this.markers) {
+        this.markers.forEach((marker) => marker.remove())
+        this.markers = this.local.locations.map(this.createMarker.bind(this))
+        this.markers.forEach((marker) => marker.addTo(this.map))
+      }
       this.local.locations = locations
     }
 
