@@ -28,17 +28,9 @@
 }
 
 .GoalGrid-slot--center.GoalGrid-slot--small .GoalGrid-container {
-  position: absolute;
-  left: calc(100% / 3 * 0.18);
-  right: calc(100% / 3 * 0.18);
-  top: 18%;
-  bottom: 18%;
+  padding: calc(((100% - var(--gutter, 0) * 2) / 3) * 0.18);
 }
 
 .GoalGrid-slot--center.GoalGrid-slot--large .GoalGrid-container {
-  position: absolute;
-  left: calc(100% / 3 * 0.18);
-  right: calc(100% / 3 * 0.18);
-  top: calc(100% / 2 * 0.18);
-  bottom: calc(100% / 2 * 0.18);
+  padding: calc(((100% - var(--gutter, 0) * 2) / 3) * 0.18);
 }

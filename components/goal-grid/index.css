@@ -5,7 +5,7 @@
 
 .GoalGrid {
   --gutter: 0.625rem;
-  margin: calc((var(--gutter, 0.625rem) / 2) * -1);
+  margin: calc((var(--gutter, 0) / 2) * -1);
   user-select: none;
   contain: style layout paint;
 }
@@ -20,7 +20,7 @@
   display: block;
   float: left;
   width: 50%;
-  border: solid calc(var(--gutter, 0.625rem) / 2) transparent;
+  border: solid calc(var(--gutter, 0) / 2) transparent;
   position: relative;
   z-index: 1;
   transform: scale(1);
@@ -42,7 +42,7 @@
   display: block;
   width: 0;
   height: 0;
-  padding-top: calc((100% / 3) - 6px);
+  padding-top: calc((100% - var(--gutter, 0) * 2) / 3);
 }
 
 @media (min-width: 500px) {
@@ -95,7 +95,7 @@
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       grid-template-rows: repeat(6, 1fr);
-      grid-gap: var(--gutter, 0.625rem);
+      grid-gap: var(--gutter, 0);
     }
 
     .GoalGrid--layout .GoalGrid-item {
