@@ -4,21 +4,7 @@ function ui (state, emitter) {
   state.ui = state.ui || {}
   state.ui.isLoading = false
   state.ui.hasOverlay = false
-  state.ui.country = state.ui.country || 'DK'
   state.ui.gridLayout = state.ui.gridLayout || Math.ceil(Math.random() * 9)
-
-  emitter.on('DOMContentLoaded', function () {
-    window.fetch('/geoip').then(function (response) {
-      if (!response.ok) throw new Error('Failed to fetch geoip')
-      return response.json().then(function (geoip) {
-        state.ui.country = geoip.country
-        emitter.emit('render')
-      })
-    }).catch(function () {
-      state.ui.country = 'DK'
-      emitter.emit('render')
-    })
-  })
 
   emitter.on('header:toggle', function (isOpen) {
     state.hasOverlay = isOpen

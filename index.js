@@ -11,6 +11,7 @@ if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
 app.use(require('choo-service-worker')('/sw.js'))
 app.use(require('./stores/prismic')({repository: REPOSITORY}))
 app.use(require('./stores/navigation'))
+app.use(require('./stores/geoip'))
 app.use(require('./stores/meta'))
 app.use(require('./stores/ssr'))
 app.use(require('./stores/ui'))
@@ -19,6 +20,7 @@ app.route('/', require('./views/home'))
 app.route('/nyheder', require('./views/news'))
 app.route('/nyheder/:uid', require('./views/article'))
 app.route('/begivenheder', require('./views/events'))
+app.route('/begivenheder/:uid', require('./views/event'))
 app.route('/*', catchall)
 
 try {

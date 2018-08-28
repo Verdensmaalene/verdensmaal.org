@@ -1,3 +1,4 @@
+var assert = require('assert')
 var html = require('choo/html')
 var Component = require('choo/component')
 var splitRequire = require('split-require')
@@ -12,17 +13,24 @@ module.exports = class Map extends Component {
     this.local = state.components[id] = {}
   }
 
-  update (locations = [], bounds = []) {
+  update (locations, bounds) {
     if (this.local.locations.join() !== locations.join()) {
       if (this.markers) {
         this.markers.forEach((marker) => marker.remove())
-        this.markers = this.local.locations.map(this.createMarker.bind(this))
-        this.markers.forEach((marker) => marker.addTo(this.map))
+        if (locations) {
+          this.markers = locations.map(this.createMarker.bind(this))
+          this.markers.forEach((marker) => marker.addTo(this.map))
+        }
       }
+      if (this.map) this.map.fitBounds(this.getBounds())
       this.local.locations = locations
     }
 
-    if (this.local.bounds.join() !== bounds.join()) {
+    if (typeof this.local.bounds !== typeof bounds || (
+      bounds &&
+      this.local.bounds &&
+      this.local.bounds.join() !== bounds.join()
+    )) {
       this.local.bounds = bounds
       if (this.map) this.map.fitBounds(this.getBounds())
     }
@@ -53,6 +61,8 @@ module.exports = class Map extends Component {
         container: element,
         scrollZoom: false,
         zoom: 6,
+        minZoom: 4,
+        maxZoom: 18,
         center: bounds.getCenter(),
         attributionControl: false,
         failIfMajorPerformanceCaveat: true,
@@ -61,15 +71,22 @@ module.exports = class Map extends Component {
 
       map.on('error', onerror)
       map.fitBounds(bounds)
-      self.markers = self.local.locations.map(self.createMarker.bind(self))
-      self.markers.forEach((marker) => marker.addTo(map))
+
+      if (self.local.locations) {
+        self.markers = self.local.locations.map(self.createMarker.bind(self))
+        self.markers.forEach((marker) => marker.addTo(map))
+      }
+
+      // avoid too zoomed in start view when missing explicit bounds
+      if (!self.local.bounds && map.getZoom() < 6) map.setZoom(6)
     }
   }
 
   // construct bounds object, falling back to locations' bounds
   // (arr?, arr?) -> LngLatBounds
   getBounds (locations = this.local.locations, bounds = this.local.bounds) {
-    if (bounds.length) return new mapboxgl.LngLatBounds(...bounds)
+    if (bounds) return new mapboxgl.LngLatBounds(...bounds)
+    if (!locations) return new mapboxgl.LngLatBounds()
     bounds = new mapboxgl.LngLatBounds()
     this.local.locations.forEach(function (marker) {
       bounds.extend([marker.longitude, marker.latitude])
@@ -78,9 +95,10 @@ module.exports = class Map extends Component {
   }
 
   createMarker (location) {
+    var hasPopup = typeof location.popup === 'function'
     var lnglat = [location.longitude, location.latitude]
     var element = html`
-      <svg viewBox="0 0 16 22" width="16" height="22" class="Map-marker">
+      <svg viewBox="0 0 16 22" width="16" height="22" class="Map-marker ${hasPopup ? '' : 'Map-marker--static'}">
         <g fill="none" fill-rule="evenodd">
           <ellipse fill-opacity=".1" fill="#000" cx="8" cy="20" rx="8" ry="2"/>
           <circle fill="currentColor" cx="8" cy="6" r="6"/>
@@ -94,7 +112,7 @@ module.exports = class Map extends Component {
     opts.element = html`<div>${element}</div>`
     var marker = new mapboxgl.Marker(opts).setLngLat(lnglat)
 
-    if (typeof location.popup === 'function') {
+    if (hasPopup) {
       let offset = {
         'top': [0, 0],
         'top-left': [0, 0],
@@ -126,7 +144,8 @@ module.exports = class Map extends Component {
     this.rerender()
   }
 
-  createElement (locations = [], bounds = []) {
+  createElement (locations, bounds = null) {
+    assert(Array.isArray(locations), 'Map: locations should be of type array')
     this.local.bounds = bounds
     this.local.locations = locations
     return html`
