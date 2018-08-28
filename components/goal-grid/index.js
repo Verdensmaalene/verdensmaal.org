@@ -111,7 +111,7 @@ module.exports = class GoalGrid extends Component {
         <a class="GoalGrid-item GoalGrid-item--${num} GoalGrid-item--${props.format}" href="${props.href}" title="${props.label ? props.label.replace(/\n/, ' ') : ''}">
           ${goal.render(props, !props.blank && props.format !== 'square' ? html`
             <div class="GoalGrid-content">
-              <p class="GoalGrid-description">${props.description}</p>
+              <p class="GoalGrid-description ${props.description.length > 120 ? 'GoalGrid-description--long' : ''}">${props.description}</p>
               <span class="GoalGrid-button">${text`Explore goal`}</span>
               ${props.format !== 'square' ? html`
                 <div class="GoalGrid-background">

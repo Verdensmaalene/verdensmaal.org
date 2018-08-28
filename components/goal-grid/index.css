@@ -268,8 +268,28 @@
   max-width: 24em;
 }
 
+.GoalGrid-description--long {
+  font-size: 0.7rem;
+}
+
+@media (min-width: 1000px) {
+  .GoalGrid-description--long {
+    font-size: 0.9rem;
+  }
+}
+
 @media (min-width: 1200px) {
   .GoalGrid-description {
+    font-size: 1.2rem;
+  }
+
+  .GoalGrid-description--long {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .GoalGrid-description--long {
     font-size: 1.2rem;
   }
 }
