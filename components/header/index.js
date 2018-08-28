@@ -33,7 +33,10 @@ module.exports = class Header extends Component {
   }
 
   update (links, href, opts) {
-    if (href !== this.local.href) return true
+    if (href !== this.local.href) {
+      this.local.isOpen = false
+      return true
+    }
     return Object.keys(opts).reduce((shouldUpdate, key) => {
       return shouldUpdate || opts[key] !== this.local.opts[key]
     }, false)

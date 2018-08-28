@@ -12,6 +12,11 @@ function ui (state, emitter) {
     emitter.emit('render')
   })
 
+  emitter.prependListener('navigate', function () {
+    state.hasOverlay = false
+    document.documentElement.classList.remove('has-overlay')
+  })
+
   var requests = 0
   emitter.on('prismic:request', start)
   emitter.on('prismic:response', end)
