@@ -70,19 +70,17 @@ function event (state, emit) {
 }
 
 function meta (state) {
+  var image = state.docs.getSingle('website', function (err, doc) {
+    if (err) throw err
+    if (!doc) return state.meta['og:image']
+    return doc.data.default_social_image.url
+  })
+
   return state.docs.getByUID('event', state.params.uid, function (err, doc) {
     if (err) throw err
     if (!doc) return {title: text`LOADING_TEXT_SHORT`}
-    var image = doc.data.image.url
-    if (!image) {
-      image = state.docs.getSingle('website', function (err, doc) {
-        if (err) throw err
-        if (!doc) return state.meta['og:image']
-        return doc.data.default_social_image.url
-      })
-    }
     return {
-      'og:image': image,
+      'og:image': doc.data.image.url || image,
       title: asText(doc.data.title),
       description: asText(doc.data.description)
     }

@@ -3,6 +3,8 @@ var choo = require('choo')
 var REPOSITORY = 'https://verdensmaalene.cdn.prismic.io/api/v2'
 var app = choo({hash: false})
 
+app.use(require('./stores/reset'))
+
 if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
   app.use(require('choo-devtools')())
   app.use(require('choo-service-worker/clear')())

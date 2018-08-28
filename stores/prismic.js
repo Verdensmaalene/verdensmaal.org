@@ -43,8 +43,9 @@ function prismicStore (opts) {
       var cached = cache.get(key)
 
       var result
-      if (!cached || cached instanceof Promise) result = callback(null)
-      else if (cached instanceof Error) result = callback(cached)
+      if (!cached) result = callback(null)
+      else if (cached instanceof Error) return callback(cached)
+      else if (cached instanceof Promise) return callback(null, null)
       else if (cached) return callback(null, cached)
 
       var request = init.then(function (api) {
