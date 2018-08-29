@@ -23,7 +23,7 @@ function logo (opts = {}) {
 
 function symbol () {
   return html`
-    <svg class="Logo-symbol" viewBox="0 0 302 302" width="302" height="302">
+    <svg class="Logo-symbol" role="presentation" viewBox="0 0 302 302" width="302" height="302">
       <g fill="none" fill-rule="evenodd">
         <g class="Logo-slice"><path fill="currentColor" d="M156.7 66c7.3.6 14.3 2 21 4.2l23.7-61.4c-14-5-29-8-44.7-8.5V66" /></g>
         <g class="Logo-slice"><path fill="currentColor" d="M186.6 73.6c6.7 3 13 7 18.6 11.7l44.4-48.5c-11.7-10-25-18.4-39.4-24.6l-23.6 61.4" /></g>
