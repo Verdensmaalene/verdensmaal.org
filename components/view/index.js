@@ -4,6 +4,7 @@ var Component = require('choo/component')
 var error = require('./error')
 var { i18n, isSameDomain } = require('../base')
 var Header = require('../header')
+var footer = require('../footer')
 
 var text = i18n()
 
@@ -70,6 +71,9 @@ function createView (view, meta) {
           ${info.navigation ? state.cache(Header, 'header').render(info.navigation[0], state.href, opts) : null}
         </div>
         ${children}
+        <div class="View-footer">
+          ${footer(contentinfo(state), state.href)}
+        </div>
       </body>
     `
   }

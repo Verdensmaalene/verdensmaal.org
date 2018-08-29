@@ -1,50 +1,24 @@
-/* @define View */
+/* @define Footer */
 
 @import "../base/global";
 
-.View {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  padding-bottom: 8rem;
+.Footer {
+
 }
 
-.View-header {
-  position: relative;
-  z-index: 1;
-}
-
-.View-header--stuck {
+.Footer-content {
   width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.View-main {
-  flex-grow: 1;
-}
-
-.View-footer {
-  margin-top: 6rem;
-}
-
-.View-section {
-  width: 100%;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+  padding-left: calc(1.2rem + constant(safe-area-inset-right));
+  padding-right: calc(1.2rem + constant(safe-area-inset-right));
+  padding-left: calc(1.2rem + env(safe-area-inset-right));
+  padding-right: calc(1.2rem + env(safe-area-inset-right));
   margin: 0 auto;
-  padding-left: 1.125rem;
-  padding-right: 1.125rem;
-  padding-left: calc(1.125rem + constant(safe-area-inset-right));
-  padding-right: calc(1.125rem + constant(safe-area-inset-right));
-  padding-left: calc(1.125rem + env(safe-area-inset-right));
-  padding-right: calc(1.125rem + env(safe-area-inset-right));
 }
 
 @media (min-width: 600px) {
-  .View-section,
-  .View-md-section {
-    width: 100%;
-    margin: 0 auto;
+  .Footer-content {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     padding-left: calc(1.5rem + constant(safe-area-inset-right));
@@ -55,8 +29,7 @@
 }
 
 @media (min-width: 1000px) {
-  .View-section,
-  .View-md-section {
+  .Footer-content {
     padding-left: 2rem;
     padding-right: 2rem;
     padding-left: calc(2rem + constant(safe-area-inset-right));
@@ -67,8 +40,7 @@
 }
 
 @media (min-width: 1200px) {
-  .View-section,
-  .View-md-section {
+  .Footer-content {
     padding-left: 3rem;
     padding-right: 3rem;
     padding-left: calc(3rem + constant(safe-area-inset-right));
