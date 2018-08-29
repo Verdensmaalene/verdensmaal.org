@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var Component = require('choo/component')
-var {i18n} = require('../base')
+var { i18n } = require('../base')
 var nanoraf = require('nanoraf')
 
 var text = i18n(require('./lang.json'))

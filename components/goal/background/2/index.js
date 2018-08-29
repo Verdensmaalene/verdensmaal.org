@@ -1,7 +1,7 @@
 var css = require('sheetify')
 var html = require('choo/html')
 var Component = require('choo/component')
-var {vw} = require('../../../base')
+var { vw } = require('../../../base')
 css('./index.css')
 
 module.exports = class Background2 extends Component {

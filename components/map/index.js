@@ -108,7 +108,7 @@ module.exports = class Map extends Component {
       </svg>
     `
 
-    var opts = {color: location.color, anchor: 'bottom'}
+    var opts = { color: location.color, anchor: 'bottom' }
     opts.element = html`<div>${element}</div>`
     var marker = new mapboxgl.Marker(opts).setLngLat(lnglat)
 
@@ -123,7 +123,7 @@ module.exports = class Map extends Component {
         'left': [8, -20],
         'right': [-8, -20]
       }
-      let popup = new mapboxgl.Popup({closeButton: false, offset: offset})
+      let popup = new mapboxgl.Popup({ closeButton: false, offset: offset })
       popup.setDOMContent(location.popup())
       marker.setPopup(popup)
 

@@ -2,7 +2,7 @@ var assert = require('assert')
 var html = require('choo/html')
 var Component = require('choo/component')
 var error = require('./error')
-var {i18n} = require('../base')
+var { i18n } = require('../base')
 var Header = require('../header')
 
 var text = i18n()
@@ -47,7 +47,7 @@ function createView (view, meta) {
       // if (state.throw) throw err
       err.status = err.status || 500
       children = error(err)
-      emit('meta', {title: `${text`Oops`} | ${DEFAULT_TITLE}`})
+      emit('meta', { title: `${text`Oops`} | ${DEFAULT_TITLE}` })
     }
 
     var opts = {}
@@ -57,7 +57,7 @@ function createView (view, meta) {
         opts.theme = +goal === 7 ? 'black' : 'white'
         opts.static = true
         if (state.referrer === '') {
-          opts.back = {text: text`Back to Goals`, href: '/'}
+          opts.back = { text: text`Back to Goals`, href: '/' }
         }
       }
     }

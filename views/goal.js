@@ -1,11 +1,11 @@
 var html = require('choo/html')
-var {asText} = require('prismic-richtext')
+var { asText } = require('prismic-richtext')
 var asElement = require('prismic-element')
 var splitRequire = require('split-require')
 var View = require('../components/view')
 var Goal = require('../components/goal')
 var targetGrid = require('../components/target-grid')
-var {i18n} = require('../components/base')
+var { i18n } = require('../components/base')
 
 var text = i18n()
 var backgrounds = [
@@ -38,7 +38,7 @@ class GoalPage extends View {
     var [, uid] = state.params.wildcard.match(/^\d{1,2}-(.+)$/)
     return state.docs.getByUID('goal', uid, function (err, doc) {
       if (err) throw err
-      if (!doc) return {title: text`LOADING_TEXT_SHORT`}
+      if (!doc) return { title: text`LOADING_TEXT_SHORT` }
       return {
         title: asText(doc.data.title),
         description: asText(doc.data.description),
@@ -91,7 +91,7 @@ class GoalPage extends View {
       if (err) throw err
 
       var goal = state.cache(Goal, state.params.wildcard)
-      var props = {format: 'fullscreen', number: +num}
+      var props = { format: 'fullscreen', number: +num }
       if (!doc) {
         return html`
           <main class="View-main">

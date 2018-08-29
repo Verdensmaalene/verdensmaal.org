@@ -1,8 +1,8 @@
 var html = require('choo/html')
-var {asText} = require('prismic-richtext')
+var { asText } = require('prismic-richtext')
 var asElement = require('prismic-element')
 var view = require('../components/view')
-var {i18n} = require('../components/base')
+var { i18n } = require('../components/base')
 var banner = require('../components/banner')
 
 var text = i18n()
@@ -38,7 +38,7 @@ function article (state, emit) {
     return html`
       <main class="View-main">
         <article>
-          ${banner({width: img.dimensions.width, height: img.dimensions.height, src: img.url, alt: img.alt})}
+          ${banner({ width: img.dimensions.width, height: img.dimensions.height, src: img.url, alt: img.alt })}
           <div class="View-section">
             <div class="Text">
               <time class="u-colorGray u-colorCurrent" datetime="${date}">
@@ -58,7 +58,7 @@ function article (state, emit) {
 function meta (state) {
   return state.docs.getByUID('news', state.params.uid, function (err, doc) {
     if (err) throw err
-    if (!doc) return {title: text`LOADING_TEXT_SHORT`}
+    if (!doc) return { title: text`LOADING_TEXT_SHORT` }
     return {
       'og:image': doc.data.image.url,
       title: asText(doc.data.title),

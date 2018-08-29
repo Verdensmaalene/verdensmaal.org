@@ -2,7 +2,7 @@ var html = require('choo/html')
 var nanoraf = require('nanoraf')
 var Component = require('choo/component')
 var logo = require('../logo')
-var {className, i18n} = require('../base')
+var { className, i18n } = require('../base')
 
 var text = i18n(require('./lang.json'))
 var SCROLL_MIN = 50
@@ -56,7 +56,7 @@ module.exports = class Header extends Component {
     onscroll()
     window.addEventListener('wheel', preventScroll)
     window.addEventListener('touchmove', preventScroll)
-    window.addEventListener('scroll', onscroll, {passive: true})
+    window.addEventListener('scroll', onscroll, { passive: true })
     this.unload = () => window.removeEventListener('scroll', onscroll)
   }
 
@@ -64,7 +64,7 @@ module.exports = class Header extends Component {
     this.local.opts = opts
     this.local.href = href.replace(/\/$/, '')
 
-    var {id, isOpen} = this.local
+    var { id, isOpen } = this.local
 
     var toggle = (event) => {
       this.toggle()
@@ -72,7 +72,7 @@ module.exports = class Header extends Component {
     }
 
     return html`
-      <header class="${className('Header', {[`Header--${opts.theme}`]: opts.theme, 'Header--static': opts.static, 'is-open': isOpen})}" style="--scroll: ${this.local.scroll}" id="${id}">
+      <header class="${className('Header', { [`Header--${opts.theme}`]: opts.theme, 'Header--static': opts.static, 'is-open': isOpen })}" style="--scroll: ${this.local.scroll}" id="${id}">
         <div class="Header-bar">
           <div class="Header-fill"></div>
           <div class="Header-content">
@@ -86,8 +86,8 @@ module.exports = class Header extends Component {
                 ${logo()}
               </a>
             `}
-            <a class="${className('Header-button Header-button--toggle js-toggle', {'Header-button--close': isOpen})}" href="#${isOpen ? '' : id}" draggable="false" onclick=${toggle} role="button" aria-controls="${id}-navigation" aria-expanded="${isOpen ? 'true' : 'false'}">
-              <div class="${className('Header-burger', {'Header-burger--cross': isOpen})}"><div class="Header-beanPatty"></div></div>
+            <a class="${className('Header-button Header-button--toggle js-toggle', { 'Header-button--close': isOpen })}" href="#${isOpen ? '' : id}" draggable="false" onclick=${toggle} role="button" aria-controls="${id}-navigation" aria-expanded="${isOpen ? 'true' : 'false'}">
+              <div class="${className('Header-burger', { 'Header-burger--cross': isOpen })}"><div class="Header-beanPatty"></div></div>
               <span class="Header-toggleText"><span class="u-hiddenVisually">${isOpen ? text`Hide menu` : text`Show menu`}</span> ${isOpen ? text`Close` : text`Menu`}</span>
             </a>
             <nav class="Header-nav" id="${id}-navigation">
@@ -96,7 +96,7 @@ module.exports = class Header extends Component {
                   <li class="Header-item">${item()}</li>
                 ` : html`
                   <li class="Header-item">
-                    <a class="${className('Header-button Header-button--link', {'is-current': item.href.replace(/\/$/, '') === href, 'Header-button--external': item.external})}" target="${item.external ? '_blank' : '_self'}" rel="${item.external ? 'noopener noreferrer' : ''}" href="${item.href}">
+                    <a class="${className('Header-button Header-button--link', { 'is-current': item.href.replace(/\/$/, '') === href, 'Header-button--external': item.external })}" target="${item.external ? '_blank' : '_self'}" rel="${item.external ? 'noopener noreferrer' : ''}" href="${item.href}">
                       ${item.title}
                       ${item.external ? html`
                         <div>

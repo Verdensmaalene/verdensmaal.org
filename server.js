@@ -12,7 +12,7 @@ var compose = require('koa-compose')
 var Prismic = require('prismic-javascript')
 var purge = require('./lib/purge')
 
-var app = jalla('index.js', {sw: 'sw.js'})
+var app = jalla('index.js', { sw: 'sw.js' })
 
 // disallow robots anywhere but live URL
 app.use(route.get('/robots.txt', function (ctx, next) {
@@ -46,20 +46,20 @@ app.use(route.get('/prismic-preview', async function (ctx) {
   }
 
   var token = ctx.query.token
-  var api = await Prismic.api(REPOSITORY, {req: ctx.req})
+  var api = await Prismic.api(REPOSITORY, { req: ctx.req })
   var href = await api.previewSession(token, resolvePreview, '/')
   var expires = process.env.NODE_ENV === 'development'
     ? new Date(Date.now() + (1000 * 60 * 60 * 12))
     : new Date(Date.now() + (1000 * 60 * 30))
 
   ctx.set('Cache-Control', 'max-age=0')
-  ctx.cookies.set(Prismic.previewCookie, token, {expires: expires, path: '/'})
+  ctx.cookies.set(Prismic.previewCookie, token, { expires: expires, path: '/' })
   ctx.redirect(href)
 }))
 
 // redirect goal shorthand url to complete slug
 app.use(route.get('/:num(\\d{1,2})', async function (ctx, num) {
-  var api = await Prismic.api(REPOSITORY, {req: ctx.req})
+  var api = await Prismic.api(REPOSITORY, { req: ctx.req })
   var response = await api.query(Prismic.Predicates.at('my.goal.number', +num))
   var doc = response.results[0]
   ctx.assert(doc, 404, 'Page not found')

@@ -1,5 +1,5 @@
 var html = require('choo/html')
-var {i18n} = require('../base')
+var { i18n } = require('../base')
 
 var text = i18n()
 

@@ -1,11 +1,11 @@
 var html = require('choo/html')
-var {asText} = require('prismic-richtext')
-var {Predicates} = require('prismic-javascript')
+var { asText } = require('prismic-richtext')
+var { Predicates } = require('prismic-javascript')
 var view = require('../components/view')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var intro = require('../components/intro')
-var {i18n} = require('../components/base')
+var { i18n } = require('../components/base')
 var button = require('../components/button')
 
 var text = i18n()
@@ -40,12 +40,12 @@ function news (state, emit) {
     return html`
       <main class="View-main">
         <div class="View-section">
-          ${intro({title, body})}
+          ${intro({ title, body })}
           ${news.length ? html`
             <section>
-              ${grid({size: '1of2'}, latest.map(withLoading))}
-              ${grid({size: '1of3'}, first.map(withLoading))}
-              ${grid({size: '1of3', appear: true}, rest.map(newsCard))}
+              ${grid({ size: '1of2' }, latest.map(withLoading))}
+              ${grid({ size: '1of3' }, first.map(withLoading))}
+              ${grid({ size: '1of3', appear: true }, rest.map(newsCard))}
             </section>
           ` : html`
             <div class="Text u-textCenter u-sizeFull">
@@ -54,7 +54,7 @@ function news (state, emit) {
           `}
           ${news.length >= num * PAGE_SIZE + 2 ? html`
             <p class="u-textCenter">
-              ${button({href: `/nyheder?page=${num + 1}`, text: text`Show more`, class: state.isLoading ? 'is-loading' : '', onclick: onclick})}
+              ${button({ href: `/nyheder?page=${num + 1}`, text: text`Show more`, class: state.isLoading ? 'is-loading' : '', onclick: onclick })}
             </p>
           ` : null}
         </div>
@@ -66,7 +66,7 @@ function news (state, emit) {
   // obj -> HTMLElement
   function withLoading (doc) {
     if (doc) return newsCard(doc)
-    return card.loading({date: true})
+    return card.loading({ date: true })
   }
 
   // fetch page by number
@@ -123,7 +123,7 @@ function newsCard (doc) {
 function meta (state) {
   return state.docs.getSingle('news_listing', function (err, doc) {
     if (err) throw err
-    if (!doc) return {title: text`LOADING_TEXT_SHORT`}
+    if (!doc) return { title: text`LOADING_TEXT_SHORT` }
     return {
       title: asText(doc.data.title),
       description: asText(doc.data.description),

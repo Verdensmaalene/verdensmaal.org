@@ -25,7 +25,7 @@ function targetGrid (opts = {}) {
   function cell (data) {
     return html`
       <div class="TargetGrid-cell">
-        ${new Target(data.id, Object.assign({}, data, {goal: opts.goal})).render()}
+        ${new Target(data.id, Object.assign({}, data, { goal: opts.goal })).render()}
       </div>
     `
   }

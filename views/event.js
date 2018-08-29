@@ -1,8 +1,8 @@
 var html = require('choo/html')
-var {asText} = require('prismic-richtext')
+var { asText } = require('prismic-richtext')
 var Map = require('../components/map')
 var view = require('../components/view')
-var {i18n} = require('../components/base')
+var { i18n } = require('../components/base')
 var banner = require('../components/banner')
 
 var text = i18n()
@@ -37,7 +37,7 @@ function event (state, emit) {
     var hero
     if (doc.data.image.url) {
       let img = doc.data.image
-      hero = banner({width: img.dimensions.width, height: img.dimensions.height, src: img.url, alt: img.alt})
+      hero = banner({ width: img.dimensions.width, height: img.dimensions.height, src: img.url, alt: img.alt })
     } else {
       let location = doc.data.location
       let country = Object.keys(state.bounds).find(function (key) {
@@ -78,7 +78,7 @@ function meta (state) {
 
   return state.docs.getByUID('event', state.params.uid, function (err, doc) {
     if (err) throw err
-    if (!doc) return {title: text`LOADING_TEXT_SHORT`}
+    if (!doc) return { title: text`LOADING_TEXT_SHORT` }
     return {
       'og:image': doc.data.image.url || image,
       title: asText(doc.data.title),

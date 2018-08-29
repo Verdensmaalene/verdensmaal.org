@@ -1,5 +1,5 @@
 var html = require('choo/html')
-var {className, i18n} = require('../../base')
+var { className, i18n } = require('../../base')
 
 var icons = [
   require('./1'),
@@ -113,7 +113,7 @@ function draw (number, text, lang = 'en') {
   if (isArabic) digitPos = 200 - digitPos
 
   return html`
-    <svg role="presentational" aria-hidden="true" class="${className('Goal-label', {'u-rtl': isArabic})}" height="${height * 0.92}" viewBox="0 0 200 ${height}" style="-ms-flex: 1 1 ${height}px;" preserveAspectRatio="xMidYMin meet">
+    <svg role="presentational" aria-hidden="true" class="${className('Goal-label', { 'u-rtl': isArabic })}" height="${height * 0.92}" viewBox="0 0 200 ${height}" style="-ms-flex: 1 1 ${height}px;" preserveAspectRatio="xMidYMin meet">
       <g transform="scale(0.94)">
         <text class="Goal-number" font-size="59.4" fill="currentColor" text-anchor="middle" alignment-baseline="hanging">
           <tspan x="${digitPos}" y="41" letter-spacing="${isArabic ? '-0.1' : ''}" text-anchor="middle">
@@ -122,11 +122,11 @@ function draw (number, text, lang = 'en') {
         </text>
         <text class="Goal-text" font-size="${multiplier * 24}" y="-7" fill="currentColor" text-anchor="start" alignment-baseline="hanging">
           ${lines.map((line) => {
-            var styles = lineStyles(line, lang)
-            return html`
+    var styles = lineStyles(line, lang)
+    return html`
               <tspan x="${textPos}" dy="24" word-spacing="${!isArabic ? styles.wordSpacing : ''}" letter-spacing="${!isArabic ? styles.letterSpacing : ''}" text-anchor="start">${line}</tspan>
             `
-          })}
+  })}
         </text>
       </g>
     </svg>
@@ -166,7 +166,7 @@ function lineStyles (line, lang = 'en') {
   letterSpacing = longLine ? '0.3' : letterSpacing
   letterSpacing = longerLine ? '-0.05' : letterSpacing
 
-  return {wordSpacing, letterSpacing}
+  return { wordSpacing, letterSpacing }
 }
 
 // translate number

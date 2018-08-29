@@ -1,7 +1,7 @@
 var choo = require('choo')
 
 var REPOSITORY = 'https://verdensmaalene.cdn.prismic.io/api/v2'
-var app = choo({hash: false})
+var app = choo({ hash: false })
 
 app.use(require('./stores/reset'))
 
@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
 }
 
 app.use(require('choo-service-worker')('/sw.js'))
-app.use(require('./stores/prismic')({repository: REPOSITORY}))
+app.use(require('./stores/prismic')({ repository: REPOSITORY }))
 app.use(require('./stores/navigation'))
 app.use(require('./stores/geoip'))
 app.use(require('./stores/meta'))

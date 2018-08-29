@@ -1,12 +1,12 @@
 var html = require('choo/html')
-var {asText} = require('prismic-richtext')
-var {Predicates} = require('prismic-javascript')
+var { asText } = require('prismic-richtext')
+var { Predicates } = require('prismic-javascript')
 var Map = require('../components/map')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var view = require('../components/view')
 var intro = require('../components/intro')
-var {i18n} = require('../components/base')
+var { i18n } = require('../components/base')
 
 var text = i18n()
 
@@ -33,7 +33,7 @@ function events (state, emit) {
     return html`
       <main class="View-main">
         <div class="View-section">
-          ${intro({title, body})}
+          ${intro({ title, body })}
           ${state.docs.get(predicate, opts, onresponse)}
         </div>
       </main>
@@ -66,7 +66,7 @@ function events (state, emit) {
         <div class="u-spaceB5">
           ${state.cache(Map, 'events-map').render(locations, bounds)}
         </div>
-        ${grid({size: '1of3'}, cells)}
+        ${grid({ size: '1of3' }, cells)}
       </div>
     `
   }
@@ -81,9 +81,15 @@ function asLocation (doc) {
     longitude: doc.data.location.longitude,
     popup () {
       return html`
-        <div class="Text">
-          <a href="/begivenheder/${doc.uid}">${asText(doc.data.title)}</a>
-        </div>
+        <p style="display: flex;">
+          <time datetime="${JSON.stringify(date).replace(/"/g, '')}" class="u-textHeading">
+            <span style="font-size: 3rem;">${('0' + date.getDate()).substr(-2)}</span><br>
+            ${text(`MONTH_${date.getMonth()}`)}
+          </time>
+          <div class="Text">
+            <a href="/begivenheder/${doc.uid}">${asText(doc.data.title)}</a>
+          </div>
+        </p>
       `
     }
   }
@@ -114,7 +120,7 @@ function eventCard (doc) {
 function meta (state) {
   return state.docs.getSingle('events_listing', function (err, doc) {
     if (err) throw err
-    if (!doc) return {title: text`LOADING_TEXT_SHORT`}
+    if (!doc) return { title: text`LOADING_TEXT_SHORT` }
     return {
       title: asText(doc.data.title),
       description: asText(doc.data.description),

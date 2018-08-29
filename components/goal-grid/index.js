@@ -2,7 +2,7 @@ var html = require('choo/html')
 var Component = require('choo/component')
 var splitRequire = require('split-require')
 var Goal = require('../goal')
-var {i18n} = require('../base')
+var { i18n } = require('../base')
 
 var text = i18n(require('./lang.json'))
 var backgrounds = [
@@ -84,11 +84,11 @@ module.exports = class GoalGrid extends Component {
       let pair = LAYOUTS[layout - 1]
       let goal = goals.find((goal) => goal.number === num)
       let format = pair.includes(num) ? ['landscape', 'portrait'][pair.indexOf(num)] : 'square'
-      let props = Object.assign({format: format, blank: !goal}, goal)
+      let props = Object.assign({ format: format, blank: !goal }, goal)
       cells.push(child(props, i + 1))
       if (format !== 'square') {
         // augument a square goal for each landscape/portrait
-        cells.push(child(Object.assign({}, props, {format: 'square'}), i + 1))
+        cells.push(child(Object.assign({}, props, { format: 'square' }), i + 1))
       }
     }
 
@@ -115,7 +115,7 @@ module.exports = class GoalGrid extends Component {
               <span class="GoalGrid-button">${text`Explore goal`}</span>
               ${props.format !== 'square' ? html`
                 <div class="GoalGrid-background">
-                  ${self.background(props.number, {size: 'small'})}
+                  ${self.background(props.number, { size: 'small' })}
                 </div>
               ` : null}
             </div>

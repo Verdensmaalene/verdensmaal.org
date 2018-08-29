@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var Component = require('choo/component')
-var {vw, vh, className} = require('../base')
+var { vw, vh, className } = require('../base')
 var icon = require('./icon')
 
 var PRESS_SCALE_FACTOR = 0.97 // Hardcoded in CSS, see ./index.css
@@ -33,7 +33,7 @@ module.exports = class Link extends Component {
   // }
 
   init (element) {
-    const { state, emit, goal, doc } = this
+    const { state, emit, goal } = this
 
     this.isInitialized = true
 
@@ -129,7 +129,7 @@ module.exports = class Link extends Component {
        */
 
       const takeover = html`<div class="View-takeover View-takeover--${goal} u-bg${goal}"></div>`
-      const hero = (new Hero(Hero.identity(doc), state, emit, {background: false})).render(doc)
+      const hero = {} // (new Hero(Hero.identity(doc), state, emit, { background: false })).render(doc)
 
       /**
        * Avoid transitions while calculating layout

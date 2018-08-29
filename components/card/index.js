@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var figure = require('../figure')
-var {filetype, luma, i18n} = require('../base')
+var { filetype, luma, i18n } = require('../base')
 var link = require('../link')
 
 var text = i18n(require('./lang.json'))
