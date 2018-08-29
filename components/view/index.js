@@ -2,7 +2,7 @@ var assert = require('assert')
 var html = require('choo/html')
 var Component = require('choo/component')
 var error = require('./error')
-var { i18n } = require('../base')
+var { i18n, isSameDomain } = require('../base')
 var Header = require('../header')
 
 var text = i18n()
@@ -62,10 +62,12 @@ function createView (view, meta) {
       }
     }
 
+    var info = contentinfo(state)
+
     return html`
       <body class="View" id="app-view">
         <div class="View-header ${opts.static ? 'View-header--stuck' : ''}">
-          ${state.cache(Header, 'header').render(links(), state.href, opts)}
+          ${info.navigation ? state.cache(Header, 'header').render(info.navigation[0], state.href, opts) : null}
         </div>
         ${children}
       </body>
@@ -73,15 +75,43 @@ function createView (view, meta) {
   }
 }
 
-function links () {
-  return [{
-    href: '/',
-    title: text`The 17 Goals`
-  }, {
-    href: '/nyheder',
-    title: text`News`
-  }, {
-    href: '/begivenheder',
-    title: text`Events`
-  }]
+function contentinfo (state) {
+  return state.docs.getSingle('website', function (err, doc) {
+    if (err) throw err
+    if (!doc) return {}
+
+    var navigation = [
+      {
+        title: doc.data.navigation_title_first,
+        links: doc.data.navigation_first
+      }, {
+        title: doc.data.navigation_title_second,
+        links: doc.data.navigation_second
+      }, {
+        title: doc.data.navigation_title_third,
+        links: doc.data.navigation_third
+      }, {
+        title: doc.data.navigation_title_forth,
+        links: doc.data.navigation_forth
+      }
+    ]
+
+    return {
+      navigation: navigation.map((nav) => nav.links.map((item) => {
+        function href (link) {
+          if (item.link.url) return item.link.url
+          if (item.link.type === 'homepage') return '/'
+          return '/' + item.link.slug
+        }
+
+        return Object.assign({}, {
+          title: item.title,
+          href: href(item.link),
+          external: !isSameDomain(item.link.url)
+        })
+      })),
+      companies: doc.data.company,
+      social: doc.data.accounts
+    }
+  })
 }
