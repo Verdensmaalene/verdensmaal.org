@@ -88,7 +88,7 @@ function asLocation (doc) {
             ${text(`MONTH_${date.getMonth()}`)}
           </time>
           <div class="Text">
-            <a href="/begivenheder/${doc.uid}">${asText(doc.data.title)}</a>
+            <a href="/events/${doc.uid}">${asText(doc.data.title)}</a>
           </div>
         </p>
       `
@@ -113,7 +113,7 @@ function eventCard (doc) {
       text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
     },
     link: {
-      href: `/begivenheder/${doc.uid}`
+      href: `/events/${doc.uid}`
     }
   })
 }
