@@ -7,6 +7,8 @@
 }
 
 .Footer-content {
+  display: flex;
+  flex-wrap: wrap;
   width: 100%;
   padding-left: 1.2rem;
   padding-right: 1.2rem;
@@ -48,5 +50,125 @@
     padding-left: calc(3rem + env(safe-area-inset-right));
     padding-right: calc(3rem + env(safe-area-inset-right));
     max-width: calc(var(--max-width) + (3rem * 2));
+  }
+}
+
+.Footer-section {
+  flex: 1 1 50%;
+}
+
+.Footer-title {
+  flex-basis: 100%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
+}
+
+.Footer-list {
+  
+}
+
+.Footer-item {
+  
+}
+
+.Footer-link {
+  
+}
+
+.Footer-logo {
+  display: inline-block;
+}
+
+.Footer-section--4 {
+  order: 1;
+  display: none;
+}
+
+.Footer-section--logo {
+  display: none;
+}
+
+.Footer-section--4 .Footer-title {
+  opacity: 0;
+  position: absolute;
+  font-size: 0;
+}
+
+.Footer-section--credits {
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.Footer-credit {
+  flex: 0 1 50%;
+  position: relative;
+}
+
+.Footer-credit .Footer-link::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.Footer-credit .Footer-figure {
+  display: none;
+}
+
+@media (min-width: 500px) {
+  .Footer-section,
+  .Footer-credit {
+    flex-basis: calc(100% / 3);
+  }
+
+  .Footer-section--credits {
+    flex-basis: 100%;
+  }
+
+  .Footer-credit .Footer-figure {
+    display: block;
+  }
+}
+
+@media (min-width: 800px) {
+  .Footer-content {
+    justify-content: flex-end;
+  }
+  
+  .Footer-section {
+    flex-basis: calc(100% / 4);
+  }
+
+  .Footer-section--logo {
+    display: block;
+  }
+
+  .Footer-section--credits {
+    flex: 0 0 calc((100% / 4) * 3);
+  }
+}
+
+@media (min-width: 1100px) {
+  .Footer-section {
+    flex-basis: calc(100% / 6);
+  }
+
+  .Footer-section--logo {
+    display: block;
+  }
+
+  .Footer-section--credits {
+    flex-basis: calc((100% / 6) * 2);
+  }
+
+  .Footer-credit {
+    flex-basis: 50%;
   }
 }

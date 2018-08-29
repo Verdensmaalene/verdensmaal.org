@@ -64,7 +64,6 @@ function createView (view, meta) {
     }
 
     var info = contentinfo(state)
-
     return html`
       <body class="View" id="app-view">
         <div class="View-header ${opts.static ? 'View-header--stuck' : ''}">
@@ -72,7 +71,7 @@ function createView (view, meta) {
         </div>
         ${children}
         <div class="View-footer">
-          ${footer(contentinfo(state), state.href)}
+          ${info.navigation ? footer(contentinfo(state), state.href) : null}
         </div>
       </body>
     `
@@ -83,6 +82,12 @@ function contentinfo (state) {
   return state.docs.getSingle('website', function (err, doc) {
     if (err) throw err
     if (!doc) return {}
+
+    function href (link) {
+      if (link.url) return link.url
+      if (link.type === 'homepage') return '/'
+      return '/' + link.slug
+    }
 
     var navigation = [
       {
@@ -101,21 +106,23 @@ function contentinfo (state) {
     ]
 
     return {
-      navigation: navigation.map((nav) => nav.links.map((item) => {
-        function href (link) {
-          if (item.link.url) return item.link.url
-          if (item.link.type === 'homepage') return '/'
-          return '/' + item.link.slug
+      credits: {
+        title: doc.data.credits_title,
+        companies: doc.data.companies
+      },
+      social: doc.data.accounts,
+      navigation: navigation.map(function (nav) {
+        return {
+          title: nav.title,
+          links: nav.links.map(function (item) {
+            return Object.assign({}, {
+              title: item.title,
+              href: href(item.link),
+              external: !isSameDomain(item.link.url)
+            })
+          })
         }
-
-        return Object.assign({}, {
-          title: item.title,
-          href: href(item.link),
-          external: !isSameDomain(item.link.url)
-        })
-      })),
-      companies: doc.data.company,
-      social: doc.data.accounts
+      })
     }
   })
 }

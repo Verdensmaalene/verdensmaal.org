@@ -69,6 +69,7 @@
 }
 
 .Logo--vertical .Logo-symbol {
+  display: inline-block;
   margin-right: 0;
   margin-bottom: 0.46em;
   width: 5.1em;
