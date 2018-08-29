@@ -21,12 +21,15 @@ module.exports = class Map extends Component {
       hasChanged = true
       this.local.locations = locations
 
-      if (!this.map.getSource('locations')) {
-        // update map data source
-        this.map.getSource('locations').setData({
-          type: 'FeatureCollection',
-          features: locations.map(asFeature)
-        })
+      if (this.map) {
+        let source = this.map.getSource('locations')
+        if (source) {
+          // update map data source
+          this.map.getSource('locations').setData({
+            type: 'FeatureCollection',
+            features: locations.map(asFeature)
+          })
+        }
       }
     }
 
