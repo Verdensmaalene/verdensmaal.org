@@ -77,6 +77,7 @@ function events (state, emit) {
 function asLocation (doc) {
   var date = new Date(doc.data.datetime)
   return {
+    id: doc.id,
     latitude: doc.data.location.latitude,
     longitude: doc.data.location.longitude,
     popup () {
