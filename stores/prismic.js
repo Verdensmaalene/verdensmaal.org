@@ -19,11 +19,23 @@ function prismicStore (opts) {
 
     if (typeof window === 'undefined' && state.prefetch) {
       cache.clear()
-    } else if (typeof window !== 'undefined' && state.docs) {
+    }
+
+    if (state.docs) {
       assert(typeof state.docs === 'object', 'choo-prismic: state.docs should be type object')
       var cachekeys = Object.keys(state.docs)
-      for (var i = 0, len = cachekeys.length; i < len; i++) {
-        cache.set(cachekeys[i], state.docs[cachekeys[i]])
+      for (var i = 0, len = cachekeys.length, val; i < len; i++) {
+        val = state.docs[cachekeys[i]]
+        if (val.status) {
+          // a status property indicates an error response
+          val = Object.assign(new Error(), {
+            status: val.status,
+            message: val.message || val.status === 404
+              ? 'Document not found'
+              : 'An error occured'
+          })
+        }
+        cache.set(cachekeys[i], val)
       }
     }
 
@@ -112,23 +124,22 @@ function prismicStore (opts) {
       return opts.resolve(doc)
     }
 
-    state.docs = {
+    state.docs = Object.create({
       get: get,
       cache: cache,
       resolve: resolve,
       getByID: getByID,
       getByIDs: getByIDs,
       getByUID: getByUID,
-      getSingle: getSingle
-    }
-
-    state.docs.toJSON = function () {
-      var json = {}
-      for (var i = 0; i < cache.keys.length; i++) {
-        json[cache.keys[i]] = cache.get(cache.keys[i])
+      getSingle: getSingle,
+      toJSON () {
+        var json = {}
+        for (var i = 0; i < cache.keys.length; i++) {
+          json[cache.keys[i]] = cache.get(cache.keys[i])
+        }
+        return json
       }
-      return json
-    }
+    })
   }
 }
 
@@ -138,9 +149,11 @@ function first (callback) {
   return function (err, response) {
     if (err) return callback(err)
     if (!response) return callback(null)
-    if (!response.results && response.status) {
-      err = new Error('An error occured')
-      err.status = response.status
+    if (!response.results || !response.results.length) {
+      err = new Error(
+        response.results.length ? 'An error occured' : 'Document not found'
+      )
+      err.status = response.status || 404
       return callback(err)
     }
     return callback(null, response.results[0])

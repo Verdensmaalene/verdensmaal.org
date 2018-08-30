@@ -45,7 +45,7 @@ function createView (view, meta) {
       }
       emit('meta', next)
     } catch (err) {
-      // if (state.throw) throw err
+      if (state.throw) throw err
       err.status = err.status || 500
       children = error(err)
       emit('meta', { title: `${text`Oops`} | ${DEFAULT_TITLE}` })
@@ -53,7 +53,7 @@ function createView (view, meta) {
 
     var opts = {}
     if (state.params.wildcard) {
-      let [, goal] = state.params.wildcard.match(/^(\d{1,2})-.+$/)
+      let [, goal] = (state.params.wildcard.match(/^(\d{1,2})-.+$/) || [])
       if (goal) {
         opts.theme = +goal === 7 ? 'black' : 'white'
         opts.static = true

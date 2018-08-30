@@ -21,13 +21,13 @@ function meta (state) {
     return doc.data.default_social_image.url
   })
 
-  return state.docs.getByUID('page', state.params.wildcard, function (err, doc) {
+  return state.docs.getByUID('sector', state.params.wildcard, function (err, doc) {
     if (err) throw err
     if (!doc) return { title: text`LOADING_TEXT_SHORT` }
     return {
       title: asText(doc.data.title),
       description: asText(doc.data.description),
-      'og:image': doc.data.social_image.url || image
+      'og:image': doc.data.image.url || image
     }
   })
 }

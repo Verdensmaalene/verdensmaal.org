@@ -33,19 +33,29 @@ try {
   }
 }
 
-// custom routing middleware for routing goal page
+// custom waterfall routing goal/sector -> page -> 404
 // (obj, fn) -> HTMLElement
 function catchall (state, emit) {
   var isGoalPage = /^(\d{1,2})-(.+)$/.test(state.params.wildcard)
-  var view = isGoalPage ? require('./views/goal') : require('./views/page')
+  var view = isGoalPage ? require('./views/goal') : require('./views/sector')
+  let res
   try {
     state.throw = true
-    let res = view(state, emit)
+    res = view(state, emit)
     state.throw = false
     return res
   } catch (err) {
+    if (isGoalPage) {
+      try {
+        view = require('./views/sector')
+        res = view(state, emit)
+        state.throw = false
+        return res
+      } catch (err) {}
+    }
     state.throw = false
-    view = require('./views/404')
-    return view(state, emit)
+    view = require('./views/page')
+    res = view(state, emit)
+    return res
   }
 }

@@ -84,6 +84,42 @@ app.use(route.get('/', function (ctx, next) {
   return next()
 }))
 
+// preemptive waterfall route for goal/sector -> page -> 404
+app.use(route.get('/*', async function (ctx, wildcard, next) {
+  if (!ctx.accepts('html')) return next()
+  var isGoalPage = /^(\d{1,2})-(.+)$/.test(wildcard)
+  var api = await Prismic.api(REPOSITORY, { req: ctx.req })
+  var docs = ctx.state.docs = ctx.state.docs || {}
+
+  try {
+    let response
+    if (isGoalPage) {
+      let [, uid] = wildcard.match(/^\d{1,2}-(.+)$/)
+      response = await getByUID('goal', uid)
+    }
+    if (!response || response instanceof Error) response = await getByUID('sector', wildcard)
+    if (response instanceof Error) response = await getByUID('page', wildcard)
+    if (response instanceof Error) throw response
+  } catch (err) {
+    if (err.fatal) throw err
+    ctx.status = 404
+  }
+
+  // get doc by uid and cache response in docs
+  async function getByUID (type, uid) {
+    var predicate = Prismic.Predicates.at(`my.${type}.uid`, uid)
+    var response = await api.query(predicate)
+    if (!response.results_size) {
+      response = new Error('Page not found')
+      response.status = 404
+    }
+    docs[predicate] = response
+    return response
+  }
+
+  return next()
+}))
+
 // set cache headers
 app.use(function (ctx, next) {
   if (!ctx.accepts('html')) return next()
