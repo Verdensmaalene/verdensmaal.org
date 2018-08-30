@@ -23,11 +23,7 @@ function footer (data) {
             <h1 class="Footer-title">${nav.title}</h1>
             <nav>
               <ul class="Footer-list">
-                ${nav.links.map((item) => html`
-                  <li class="Footer-item">
-                    <a class="Footer-link" href="${item.href}" target="${item.external ? '_blank' : '_self'}" rel="${item.external ? 'noopener noreferrer' : ''}" >${item.title}</a>
-                  </li>
-                `)}
+                ${nav.links.map(item)}
               </ul>
             </nav>
           </section>
@@ -35,21 +31,40 @@ function footer (data) {
         ${data.credits ? html`
           <section class="Footer-section Footer-section--credits">
             <h1 class="Footer-title">${data.credits.title}</h1>
-            ${data.credits.companies.map((item) => html`
-              <p class="Footer-credit">
-                <img class="Footer-figure" src="${item.logo.url}" alt="${text`${item.title} logo in black and white`}">
-                <span class="Footer-sub">${item.role}</span>
-                <strong>${item.title}</strong>
-                ${item.href ? html`
-                  <a class="Footer-link" href="${item.href}" target="_bank" rel="noopener noreferrer">
-                    <span class="u-hiddenVisually">${text`Visit website`}</span>
-                  </a>
-                ` : null}
-              </p>
-            `)}
+            ${data.credits.companies.map(credit)}
           </section>
         ` : null}
       </div>
     </footer>
+  `
+}
+
+function item (item) {
+  var attrs = { href: item.href }
+  if (item.external) attrs.target = '_blank'
+  if (item.external) attrs.rel = 'noopener noreferrer'
+
+  return html`
+    <li class="Footer-item">
+      <a class="Footer-link" ${attrs}>${item.title}</a>
+    </li>
+  `
+}
+
+function credit (item) {
+  var alt = item.alt ? item.alt : text`${item.title} logo in black and white`
+  return html`
+    <p class="Footer-credit">
+      <figure class="Footer-figure">
+        <img class="Footer-img" src="${item.logo.url}" alt="${alt}">
+      </figure>
+      <span class="Footer-sub">${item.role}<span class="u-hiddenVisually">:</span></span>
+      ${item.title}
+      ${item.href ? html`
+        <a class="Footer-link" href="${item.href}" target="_bank" rel="noopener noreferrer">
+          <span class="u-hiddenVisually">${text`Visit website`}</span>
+        </a>
+      ` : null}
+    </p>
   `
 }

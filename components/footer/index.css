@@ -3,7 +3,7 @@
 @import "../base/global";
 
 .Footer {
-
+  margin: 0 -0.5rem;
 }
 
 .Footer-content {
@@ -54,7 +54,8 @@
 }
 
 .Footer-section {
-  flex: 1 1 50%;
+  flex: 1 1 calc(50% - 1rem);
+  margin: 3rem 0.5rem 0;
 }
 
 .Footer-title {
@@ -68,15 +69,16 @@
 }
 
 .Footer-list {
-  
+  margin-top: 1rem;
 }
 
 .Footer-item {
-  
+  margin: 0.5rem 0;
 }
 
 .Footer-link {
-  
+  padding: 0.5em;
+  margin: -0.5em;
 }
 
 .Footer-logo {
@@ -84,8 +86,22 @@
 }
 
 .Footer-section--4 {
+  padding: 1.7rem 0 2.2rem;
+  margin-top: 2rem;
+  border-top: 1px solid rgb(var(--color-gray-light));
+  flex-basis: 100% !important;
   order: 1;
-  display: none;
+}
+
+.Footer-section--4 .Footer-list {
+  max-width: 25rem;
+  margin: 0;
+}
+
+.Footer-section--4 .Footer-item {
+  display: inline;
+  margin-right: 1.6rem;
+  font-size: 0.9rem;
 }
 
 .Footer-section--logo {
@@ -101,12 +117,21 @@
 .Footer-section--credits {
   flex-basis: 100%;
   flex-wrap: wrap;
+  align-content: baseline;
   display: flex;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.Footer-section--credits .Footer-title {
+  margin: 0 0.5rem;
 }
 
 .Footer-credit {
-  flex: 0 1 50%;
+  flex: 0 1 calc(50% - 1rem);
+  margin: 1rem 0.5rem 1rem;
   position: relative;
+  font-size: 0.9rem;
 }
 
 .Footer-credit .Footer-link::after {
@@ -118,14 +143,26 @@
   left: 0;
 }
 
+.Footer-sub {
+  display: block;
+  color: rgba(var(--color-gray));
+}
+
 .Footer-credit .Footer-figure {
   display: none;
+  margin-bottom: 0.6rem;
+}
+
+.Footer-credit .Footer-img {
+  display: inline-block;
+  vertical-align: middle;
+  width: 85%;
 }
 
 @media (min-width: 500px) {
   .Footer-section,
   .Footer-credit {
-    flex-basis: calc(100% / 3);
+    flex-basis: calc((100% / 3) - 1rem);
   }
 
   .Footer-section--credits {
@@ -143,7 +180,7 @@
   }
   
   .Footer-section {
-    flex-basis: calc(100% / 4);
+    flex-basis: calc((100% / 4) - 1rem);
   }
 
   .Footer-section--logo {
@@ -153,11 +190,19 @@
   .Footer-section--credits {
     flex: 0 0 calc((100% / 4) * 3);
   }
+
+  .Footer-section--4 {
+    padding: 1.5rem 0 1.7rem;
+  }
+
+  .Footer-section--4 .Footer-list {
+    max-width: none;
+  }
 }
 
 @media (min-width: 1100px) {
   .Footer-section {
-    flex-basis: calc(100% / 6);
+    flex-basis: calc((100% / 6) - 1rem);
   }
 
   .Footer-section--logo {
@@ -168,7 +213,16 @@
     flex-basis: calc((100% / 6) * 2);
   }
 
+  .Footer-list,
   .Footer-credit {
-    flex-basis: 50%;
+    margin-top: 2rem;
+  }
+
+  .Footer-item {
+    margin-top: 1.5rem;
+  }
+
+  .Footer-credit {
+    flex-basis: calc(50% - 1rem);
   }
 }
