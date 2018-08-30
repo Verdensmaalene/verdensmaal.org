@@ -169,14 +169,6 @@
   transition: background-color 140ms var(--ease-out);
 }
 
-:root[data-focus-source="key"] .Text h1 a:focus,
-:root[data-focus-source="key"] .Text h2 a:focus,
-:root[data-focus-source="key"] .Text h3 a:focus,
-:root[data-focus-source="key"] .Text h4 a:focus {
-  outline: 3px solid black;
-  outline-offset: -1px;
-}
-
 .Text h1 a:hover,
 .Text h2 a:hover,
 .Text h3 a:hover,

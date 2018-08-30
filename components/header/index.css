@@ -363,15 +363,6 @@
 }
 
 /**
- * Tweak the global focus states a little bit
- */
-
-:root[data-focus-source="key"] .Header-logo:focus,
-:root[data-focus-source="key"] .Header-button:focus {
-  box-shadow: inset 0 0 0 2px currentColor;
-}
-
-/**
  * Narrow viewports with vertical navigation
  */
 

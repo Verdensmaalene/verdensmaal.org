@@ -7,7 +7,6 @@
   --gutter: 0.625rem;
   margin: calc((var(--gutter, 0) / 2) * -1);
   user-select: none;
-  contain: style layout paint;
 }
 
 @media print {
@@ -25,6 +24,10 @@
   z-index: 1;
   transform: scale(1);
   transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.GoalGrid-item:focus {
+  outline-color: #000;
 }
 
 .GoalGrid-item--portrait,
@@ -221,16 +224,6 @@
 
 .GoalGrid-item.is-pressed {
   transform: scale(0.97); /* 1 */
-}
-
-:root[data-focus-source="key"] .GoalGrid-item:focus {
-  box-shadow: none;
-}
-
-:root[data-focus-source="key"] .GoalGrid-item:focus .GoalGrid-bg {
-  box-shadow: none;
-  outline: 3px solid #000;
-  outline-offset: -3px;
 }
 
 .GoalGrid-item.is-pressed::before {

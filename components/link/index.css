@@ -1,6 +1,6 @@
 /* @define Link */
 
-@import "../base";
+@import "../base/global";
 
 .Link {
   display: inline-block;
@@ -117,23 +117,7 @@
  * Tweak the global focus states a little bit
  */
 
-/* :root[data-focus-source="key"] .Link:focus {
-  box-shadow: none;
-  outline: 0;
-}
-
-:root[data-focus-source="key"] .Link:focus .LinkText::after {
-  content: "";
-  width: 100%;
-  height: 100%;
-  box-sizing: content-box;
-  padding: 0 20px 0 14px;
-  position: absolute;
-  top: 0;
-  left: -14px;
-  box-shadow: 0 0 0 2px currentColor;
-  border-radius: 2px;
-}
+/*
 
 .Link--fill .Link {
   padding: 0;
@@ -155,11 +139,11 @@
 
 .Link--fill .Link,
 .Link--fill .Link:hover,
-:root[scripting-enabled] .Link--fill:hover .Link {
+:root.has-js .Link--fill:hover .Link {
   color: #fff;
 }
 
-:root[scripting-enabled] .Link--linked:not(.is-loading):hover .Link-content::before {
+:root.has-js .Link--linked:not(.is-loading):hover .Link-content::before {
   opacity: 1;
 }
 
@@ -167,6 +151,6 @@
 .Link--light .Link-meta,
 .Link--light .Link,
 .Link--light .Link:hover,
-:root[scripting-enabled] .Link--light:hover .Link {
+:root.has-js .Link--light:hover .Link {
   color: rgba(0, 0, 0, 0.9);
 } */

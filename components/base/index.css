@@ -155,6 +155,31 @@ button {
 }
 
 /**
+ * Remove default focus styles for mouse users if :focus-visible is supported on
+ * this platform, or polyfilled with https://github.com/WICG/focus-visible
+ */
+
+:focus:not(:focus-visible) {
+  outline: 0;
+}
+
+:root[scripting-enabled] :focus:not(.focus-visible) {
+  outline: 0;
+}
+
+/**
+ * Provide enhanced focus styles for keyboard focus
+ */
+
+:focus-visible {
+  outline: rgb(var(--color-gray-dark)) solid 0.4rem;
+}
+
+:root[scripting-enabled] .focus-visible {
+  outline: rgb(var(--color-gray-dark)) solid 0.4rem;
+}
+
+/**
  * Print styles
  */
 

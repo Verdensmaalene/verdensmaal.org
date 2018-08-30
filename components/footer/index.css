@@ -87,15 +87,17 @@
 
 .Footer-credit {
   flex: 0 1 calc(50% - 1rem);
-  margin: 1rem 0.5rem 1rem;
+  margin: 0.5rem 0 0.5rem;
+  padding: 0.5rem;
   position: relative;
   font-size: 0.9rem;
 }
 
-.Footer-credit .Footer-link::after {
-  content: "";
-  width: 100%;
+.Footer-credit .Footer-link {
+  width: 90%;
   height: 100%;
+  padding: 0;
+  margin: 0;
   position: absolute;
   top: 0;
   left: 0;

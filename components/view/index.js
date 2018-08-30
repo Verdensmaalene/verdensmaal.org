@@ -8,6 +8,10 @@ var footer = require('../footer')
 
 var text = i18n()
 
+if (typeof window !== 'undefined') {
+  require('focus-visible')
+}
+
 var DEFAULT_TITLE = text`SITE_TITLE`
 
 module.exports = View
