@@ -39,7 +39,7 @@ function news (state, emit) {
 
     return html`
       <main class="View-main">
-        <div class="View-section">
+        <div class="u-container">
           ${intro({ title, body })}
           ${news.length ? html`
             <section>

@@ -11,7 +11,7 @@ function footer (data) {
 
   return html`
     <footer class="Footer">
-      <div class="Footer-content">
+      <div class="Footer-content u-container">
         <h1 class="u-hiddenVisually">${text`Content information`}</h1>
         <div class="Footer-section Footer-section--logo">
           <div class="Footer-logo">

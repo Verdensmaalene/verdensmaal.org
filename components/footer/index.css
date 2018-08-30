@@ -9,48 +9,6 @@
 .Footer-content {
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
-  padding-left: 1.2rem;
-  padding-right: 1.2rem;
-  padding-left: calc(1.2rem + constant(safe-area-inset-right));
-  padding-right: calc(1.2rem + constant(safe-area-inset-right));
-  padding-left: calc(1.2rem + env(safe-area-inset-right));
-  padding-right: calc(1.2rem + env(safe-area-inset-right));
-  margin: 0 auto;
-}
-
-@media (min-width: 600px) {
-  .Footer-content {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    padding-left: calc(1.5rem + constant(safe-area-inset-right));
-    padding-right: calc(1.5rem + constant(safe-area-inset-right));
-    padding-left: calc(1.5rem + env(safe-area-inset-right));
-    padding-right: calc(1.5rem + env(safe-area-inset-right));
-  }
-}
-
-@media (min-width: 1000px) {
-  .Footer-content {
-    padding-left: 2rem;
-    padding-right: 2rem;
-    padding-left: calc(2rem + constant(safe-area-inset-right));
-    padding-right: calc(2rem + constant(safe-area-inset-right));
-    padding-left: calc(2rem + env(safe-area-inset-right));
-    padding-right: calc(2rem + env(safe-area-inset-right));
-  }
-}
-
-@media (min-width: 1200px) {
-  .Footer-content {
-    padding-left: 3rem;
-    padding-right: 3rem;
-    padding-left: calc(3rem + constant(safe-area-inset-right));
-    padding-right: calc(3rem + constant(safe-area-inset-right));
-    padding-left: calc(3rem + env(safe-area-inset-right));
-    padding-right: calc(3rem + env(safe-area-inset-right));
-    max-width: calc(var(--max-width) + (3rem * 2));
-  }
 }
 
 .Footer-section {

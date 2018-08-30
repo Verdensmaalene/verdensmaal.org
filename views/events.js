@@ -32,7 +32,7 @@ function events (state, emit) {
 
     return html`
       <main class="View-main">
-        <div class="View-section">
+        <div class="u-container">
           ${intro({ title, body })}
           ${state.docs.get(predicate, opts, onresponse)}
         </div>

@@ -75,7 +75,7 @@ module.exports = class Header extends Component {
       <header class="${className('Header', { [`Header--${opts.theme}`]: opts.theme, 'Header--static': opts.static, 'is-open': isOpen })}" style="--scroll: ${this.local.scroll}" id="${id}">
         <div class="Header-bar">
           <div class="Header-fill"></div>
-          <div class="Header-content">
+          <div class="Header-content u-container">
             ${opts.back ? html`
               <a class="Header-button Header-button--back" onclick=${onback} href="${opts.back.href}">
                 ${opts.back.text}

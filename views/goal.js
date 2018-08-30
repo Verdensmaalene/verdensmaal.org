@@ -114,7 +114,7 @@ class GoalPage extends View {
             </div>
           `)}
 
-          <div class="View-section" id="targets">
+          <div class="u-container" id="targets">
             ${targetGrid(targets(doc.data))}
           </div>
         </main>

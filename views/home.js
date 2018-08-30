@@ -50,7 +50,7 @@ function home (state, emit) {
 
     var grid = state.cache(GoalGrid, 'homepage-goalgrid')
     return html`
-      <div class="View-section">
+      <div class="u-container">
         ${intro({ title, body })}
         <section>
           ${grid.render(goals, state.ui.gridLayout, slot)}

@@ -21,7 +21,7 @@ function article (state, emit) {
         <main class="View-main">
           <article>
             ${banner.loading()}
-            <div class="View-section">
+            <div class="u-container">
               <div class="Text">
                 <span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span>
                 <h1><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h1>
@@ -39,7 +39,7 @@ function article (state, emit) {
       <main class="View-main">
         <article>
           ${banner({ width: img.dimensions.width, height: img.dimensions.height, src: img.url, alt: img.alt })}
-          <div class="View-section">
+          <div class="u-container">
             <div class="Text">
               <time class="u-colorGray u-colorCurrent" datetime="${date}">
                 ${text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`}

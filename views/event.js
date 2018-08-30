@@ -21,7 +21,7 @@ function event (state, emit) {
         <main class="View-main">
           <article>
             ${banner.loading()}
-            <div class="View-section">
+            <div class="u-container">
               <div class="Text">
                 <span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span>
                 <h1><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h1>
@@ -54,7 +54,7 @@ function event (state, emit) {
       <main class="View-main">
         <article>
           ${hero}
-          <div class="View-section">
+          <div class="u-container">
             <div class="Text">
               <time class="u-colorGray u-colorCurrent" datetime="${date}">
                 ${date}
