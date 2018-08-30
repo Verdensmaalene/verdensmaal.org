@@ -155,6 +155,12 @@ function resolvePreview (doc) {
   switch (doc.type) {
     case 'homepage': return '/'
     case 'goal': return `/${doc.data.number}-${doc.uid}`
+    case 'page':
+    case 'sector': return `/${doc.uid}`
+    case 'news': return `/nyheder/${doc.uid}`
+    case 'event': return `/events/${doc.uid}`
+    case 'news_listing': return '/nyheder'
+    case 'events_listing': return '/events'
     default: throw new Error('Preview not available')
   }
 }
