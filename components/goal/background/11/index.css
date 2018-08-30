@@ -80,7 +80,7 @@
   }
 }
 
-:root.has-js .Background11-bus.in-transition {
+:root[scripting-enabled] .Background11-bus.in-transition {
   transition-property: transform;
 }
 
@@ -96,7 +96,7 @@
   animation-iteration-count: infinite;
 }
 
-:root.has-js .Background11-spray {
+:root[scripting-enabled] .Background11-spray {
   animation-name: none;
 }
 
@@ -104,7 +104,7 @@
  * 1. I dunno, it just works 😎
  */
 
-:root.has-js .Background11-spray.is-starting {
+:root[scripting-enabled] .Background11-spray.is-starting {
   stroke-dasharray: 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 107; /* 1 */
   stroke-dashoffset: 302; /* 1 */
   animation-duration: 2500ms;
@@ -118,7 +118,7 @@
   }
 }
 
-:root.has-js .Background11-spray.is-running {
+:root[scripting-enabled] .Background11-spray.is-running {
   animation-name: Background11-spray--running;
 }
 

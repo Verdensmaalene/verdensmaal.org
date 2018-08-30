@@ -149,8 +149,8 @@ button {
  * Pointer is for links, not for actions on the same page
  */
 
-:root.has-js [role="button"],
-:root.has-js [role="tab"] {
+:root[scripting-enabled] [role="button"],
+:root[scripting-enabled] [role="tab"] {
   cursor: default;
 }
 

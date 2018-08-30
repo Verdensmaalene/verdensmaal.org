@@ -155,11 +155,11 @@
 
 .Link--fill .Link,
 .Link--fill .Link:hover,
-:root.has-js .Link--fill:hover .Link {
+:root[scripting-enabled] .Link--fill:hover .Link {
   color: #fff;
 }
 
-:root.has-js .Link--linked:not(.is-loading):hover .Link-content::before {
+:root[scripting-enabled] .Link--linked:not(.is-loading):hover .Link-content::before {
   opacity: 1;
 }
 
@@ -167,6 +167,6 @@
 .Link--light .Link-meta,
 .Link--light .Link,
 .Link--light .Link:hover,
-:root.has-js .Link--light:hover .Link {
+:root[scripting-enabled] .Link--light:hover .Link {
   color: rgba(0, 0, 0, 0.9);
 } */

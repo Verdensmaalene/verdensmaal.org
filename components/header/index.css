@@ -50,7 +50,7 @@
   position: relative;
 }
 
-:root.has-js .Header:not(.Header--static) .Header-bar {
+:root[scripting-enabled] .Header:not(.Header--static) .Header-bar {
   position: fixed;
 }
 

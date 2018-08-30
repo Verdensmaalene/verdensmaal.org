@@ -84,7 +84,7 @@
 
 @supports (display: grid) {
   @media (min-width: 900px) {
-    :root.has-js .GoalGrid--layout .GoalGrid-animation {
+    :root[scripting-enabled] .GoalGrid--layout .GoalGrid-animation {
       display: block;
       overflow: hidden;
     }

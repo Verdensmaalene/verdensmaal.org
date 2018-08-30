@@ -35,11 +35,11 @@
   }
 }
 
-:root.has-js .Background3-lifepath {
+:root[scripting-enabled] .Background3-lifepath {
   visibility: hidden;
 }
 
-:root.has-js .Background3-lifepath.in-transition {
+:root[scripting-enabled] .Background3-lifepath.in-transition {
   visibility: visible;
 }
 
