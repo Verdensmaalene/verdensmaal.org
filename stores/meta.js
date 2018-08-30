@@ -23,15 +23,17 @@ function meta (state, emitter, app) {
     })
 
     if (typeof window !== 'undefined') {
+      var goal = next.goal
       var link = document.head.querySelector(`link[rel="shortcut icon"]`)
       var root = document.documentElement
-      var attrs = favicon(next.goal ? next.goal : null)
+      var attrs = favicon(goal || null)
+      var rootClass = root.getAttribute('class')
 
       link.setAttribute('type', attrs.type)
       link.setAttribute('href', attrs.icon)
 
-      root.className = 'has-js'
-      if (next.goal) root.className = `u-bg${next.goal} u-bgCurrent`
+      root.setAttribute('class', rootClass.replace(/u-bg.+?(?:\s|$)/, ''))
+      if (goal) root.className = rootClass + ` u-bg${goal} u-bgCurrent`
     }
   })
 }
