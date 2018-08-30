@@ -42,7 +42,8 @@ class GoalPage extends View {
       return {
         title: asText(doc.data.title),
         description: asText(doc.data.description),
-        'og:image': doc.data.social_image.url
+        'og:image': doc.data.social_image.url,
+        goal: doc.data.number
       }
     })
   }

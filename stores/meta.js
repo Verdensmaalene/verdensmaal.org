@@ -1,3 +1,5 @@
+var favicon = require('../components/favicon')
+
 module.exports = meta
 
 var ROOT = 'https://dk.globalgoals.org'
@@ -11,6 +13,7 @@ function meta (state, emitter, app) {
     var url = ROOT + state.href
     var tags = Object.assign({ 'og:url': url }, next)
     if (next.title && !next['og:title']) tags['og:title'] = next.title
+    delete tags.goal
 
     Object.keys(tags).forEach(function (key) {
       state.meta[key] = tags[key].replace(/^\//, ROOT + '/')
@@ -18,5 +21,17 @@ function meta (state, emitter, app) {
       var el = document.head.querySelector(`meta[property="${key}"]`)
       if (el) el.setAttribute('content', state.meta[key])
     })
+
+    if (typeof window !== 'undefined') {
+      var link = document.head.querySelector(`link[rel="shortcut icon"]`)
+      var root = document.documentElement
+      var attrs = favicon(next.goal ? next.goal : null)
+
+      link.setAttribute('type', attrs.type)
+      link.setAttribute('href', attrs.icon)
+
+      root.className = 'has-js'
+      if (next.goal) root.className = `u-bg${next.goal} u-bgCurrent`
+    }
   })
 }

@@ -37,7 +37,7 @@
   overflow-x: hidden; /* 2 */
   cursor: default; /* 4 */
   font-family: var(--default-font-family);
-  background: rgb(var(--default-background)); /* 5 */
+  background: rgb(var(--default-background-color)); /* 5 */
   color: rgb(var(--default-color));
   font-size: 100%;
   line-height: var(--default-line-height);
