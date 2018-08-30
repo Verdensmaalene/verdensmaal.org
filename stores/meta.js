@@ -31,8 +31,9 @@ function meta (state, emitter, app) {
       link.setAttribute('type', attrs.type)
       link.setAttribute('href', attrs.icon)
 
-      root.setAttribute('class', rootClass.replace(/u-bg.+?(?:\s|$)/, ''))
-      if (next.goal) root.className = rootClass + ` u-bg${next.goal}`
+      rootClass = rootClass.replace(/u-bg.+?(?:\s|$)/g, '')
+      if (next.goal) rootClass = rootClass + `u-bg${next.goal} u-bgCurrent`
+      root.className = rootClass
     }
   })
 }
