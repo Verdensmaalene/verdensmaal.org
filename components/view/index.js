@@ -67,11 +67,11 @@ function createView (view, meta) {
     return html`
       <body class="View" id="app-view">
         <div class="View-header ${opts.static ? 'View-header--stuck' : ''}">
-          ${info.navigation ? state.cache(Header, 'header').render(info.navigation[0], state.href, opts) : null}
+          ${info ? state.cache(Header, 'header').render(info.navigation[0], state.href, opts) : null}
         </div>
         ${children}
         <div class="View-footer">
-          ${info.navigation ? footer(contentinfo(state), state.href) : null}
+          ${info ? footer(contentinfo(state), state.href) : null}
         </div>
       </body>
     `
@@ -81,7 +81,7 @@ function createView (view, meta) {
 function contentinfo (state) {
   return state.docs.getSingle('website', function (err, doc) {
     if (err) throw err
-    if (!doc) return {}
+    if (!doc) return null
 
     function href (link) {
       if (link.url) return link.url
