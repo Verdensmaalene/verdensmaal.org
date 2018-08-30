@@ -1,6 +1,6 @@
 /* @define Footer */
 
-@import "../base/global";
+@import "../base";
 
 .Footer {
   margin: 0 -0.5rem;

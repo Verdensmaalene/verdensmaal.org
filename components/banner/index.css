@@ -1,6 +1,6 @@
 /* @define Banner */
 
-@import "../base/global";
+@import "../base";
 
 .Banner {
   width: 100%;

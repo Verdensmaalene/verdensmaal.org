@@ -1,6 +1,6 @@
 /* @define GoalGrid */
 
-@import "../base/global";
+@import "../base";
 @import "../text";
 
 .GoalGrid {

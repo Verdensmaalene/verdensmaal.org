@@ -1,6 +1,6 @@
 /* @define Grid */
 
-@import "../base/global";
+@import "../base";
 
 .Grid {
   --gutter: 1.5rem;

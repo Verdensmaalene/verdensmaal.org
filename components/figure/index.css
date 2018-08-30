@@ -1,6 +1,6 @@
 /* @define Figure */
 
-@import "../base/global";
+@import "../base";
 
 .Figure {
   margin: 0;

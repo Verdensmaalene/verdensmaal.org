@@ -1,6 +1,6 @@
 /* @define Text */
 
-@import "../base/global";
+@import "../base";
 
 .Text {
   color: rgb(var(--current-color));

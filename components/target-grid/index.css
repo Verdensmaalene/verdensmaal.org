@@ -1,6 +1,6 @@
 /* @define Figure */
 
-@import "../base/global";
+@import "../base";
 
 .TargetGrid {
   margin: 6rem 0;

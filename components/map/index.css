@@ -1,6 +1,6 @@
 /* @define Map */
 
-@import "../base/global";
+@import "../base";
 
 .Map {
   display: flex;

@@ -1,6 +1,6 @@
 /* @define Goal */
 
-@import "../base/global";
+@import "../base";
 
 .Goal {
   --current-color: #fff;

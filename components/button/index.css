@@ -1,6 +1,6 @@
 /* @define Button */
 
-@import "../base/global";
+@import "../base";
 
 .Button {
   display: inline-block;

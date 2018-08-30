@@ -1,6 +1,6 @@
 /* @define Logo */
 
-@import "../base/global";
+@import "../base";
 
 .Logo {
   display: flex;
