@@ -15,14 +15,6 @@ module.exports = view(events, meta)
 function events (state, emit) {
   return state.docs.getSingle('events_listing', function render (err, doc) {
     if (err) throw err
-    var title, body
-    if (!doc) {
-      title = html`<span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`
-      body = html`<span class="u-loading">${text`LOADING_TEXT_LONG`}</span>`
-    } else {
-      title = asText(doc.data.title)
-      body = asText(doc.data.description)
-    }
 
     var predicate = Predicates.at('document.type', 'event')
     var opts = {
@@ -33,7 +25,7 @@ function events (state, emit) {
     return html`
       <main class="View-main">
         <div class="u-container">
-          ${intro({ title, body })}
+          ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
           ${state.docs.get(predicate, opts, onresponse)}
         </div>
       </main>

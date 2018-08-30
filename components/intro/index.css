@@ -4,6 +4,7 @@
 
 .Intro {
   margin-bottom: 2rem;
+  color: var(--current-color);
 }
 
 .Intro::before {

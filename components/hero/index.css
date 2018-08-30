@@ -1,0 +1,53 @@
+/* @define Hero */
+
+.Hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: 60vh;
+  min-height: 500px;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 600px) {
+  .Hero {
+    height: 76vh;
+  }
+}
+
+.Hero.is-loading {
+  background-color: rgba(var(--color-gray-light), 0.6);
+}
+
+.Hero-figure {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Hero-image {
+  object-fit: cover;
+  width: 100%;
+  min-height: 100%;
+  height: auto;
+  background-color: rgba(var(--color-gray-light), 0.6);
+}
+
+@supports (object-fit: cover) {
+  .Hero-image {
+    height: 100%;
+  }
+}
+
+.Hero-body {
+  --current-color: #fff;
+  position: relative;
+}
+
+.Hero:not(.is-loading) .Hero-body {
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+}

@@ -16,14 +16,6 @@ module.exports = view(news, meta)
 function news (state, emit) {
   return state.docs.getSingle('news_listing', function render (err, doc) {
     if (err) throw err
-    var title, body
-    if (!doc) {
-      title = html`<span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`
-      body = html`<span class="u-loading">${text`LOADING_TEXT_LONG`}</span>`
-    } else {
-      title = asText(doc.data.title)
-      body = asText(doc.data.description)
-    }
 
     var num = +state.query.page
     num = isNaN(num) ? 1 : num
@@ -40,7 +32,7 @@ function news (state, emit) {
     return html`
       <main class="View-main">
         <div class="u-container">
-          ${intro({ title, body })}
+          ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
           ${news.length ? html`
             <section>
               ${grid({ size: '1of2' }, latest.map(withLoading))}

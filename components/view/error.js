@@ -26,10 +26,7 @@ function error (err) {
               </p>
             `}
             ${process.env.NODE_ENV === 'development' ? html`
-              <div>
-                <pre>${err.name}: ${err.message}</pre>
-                <pre>${err.stack}</pre>
-              </div>
+              <pre>${err.stack}</pre>
             ` : null}
           </div>
         </div>

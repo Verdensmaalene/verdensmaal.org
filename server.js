@@ -84,7 +84,11 @@ app.use(route.get('/', function (ctx, next) {
   return next()
 }))
 
-// preemptive waterfall route for goal/sector -> page -> 404
+// Since a bunch of different types of pages live at the root we have to
+// prefetch them in the order goal -> sector -> page to figure out which one
+// has a matching uid.
+// By exposing it on `state.docs` the app will have an easier time during ssr.
+// This has the added benefit of letting us fetch two levels deep during ssr.
 app.use(route.get('/*', async function (ctx, wildcard, next) {
   if (!ctx.accepts('html')) return next()
   var isGoalPage = /^(\d{1,2})-(.+)$/.test(wildcard)
@@ -101,7 +105,6 @@ app.use(route.get('/*', async function (ctx, wildcard, next) {
     if (response instanceof Error) response = await getByUID('page', wildcard)
     if (response instanceof Error) throw response
   } catch (err) {
-    if (err.fatal) throw err
     ctx.status = 404
   }
 
