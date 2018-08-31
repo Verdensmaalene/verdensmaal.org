@@ -12,8 +12,13 @@
   --default-background-color: 255, 255, 255;
   --default-color: 26, 26, 26;
 
-  --color-link: 38, 189, 226;
-  --color-link-shaded: 16, 162, 198;
+  /* TODO: brand default colors, overwrite with site specific css */
+  /* --color-link: 38, 189, 226; */
+  /* --color-link-shaded: 16, 162, 198; */
+  --color-link: 232, 28, 53;
+  --color-link-shaded: 200, 24, 46;
+
+  --color-text-meta: 221, 221, 221;
 
   --max-width: 1800px;
 
