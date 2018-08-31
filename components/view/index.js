@@ -70,22 +70,24 @@ function createView (view, meta) {
       }
     }
 
-    var info = contentinfo(state)
+    var website = getWebsite(state)
     return html`
       <body class="View" id="app-view">
         <div class="View-header ${opts.static ? 'View-header--stuck' : ''}">
-          ${info ? state.cache(Header, 'header').render(info.navigation[0], state.href, opts) : null}
+          ${website ? state.cache(Header, 'header').render(website.navigation[0], state.href, opts) : null}
         </div>
         ${children}
         <div class="View-footer">
-          ${info ? footer(contentinfo(state), state.href) : null}
+          ${website ? footer(website, state.href) : null}
         </div>
       </body>
     `
   }
 }
 
-function contentinfo (state) {
+// get website config page
+// obj -> any
+function getWebsite (state) {
   return state.docs.getSingle('website', function (err, doc) {
     if (err) throw err
     if (!doc) return null
