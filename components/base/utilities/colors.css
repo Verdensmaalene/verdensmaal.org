@@ -11,100 +11,100 @@
 .u-colorCurrent { color: var(--current-color) !important; }
 .u-bgCurrent { background: var(--current-background) !important; }
 
-.u-bgBlack { --current-background: #000 !important; }
-.u-colorBlack { --current-color: #000 !important; }
+.u-bgBlack { --current-background: 0, 0, 0 !important; }
+.u-colorBlack { --current-color: 0, 0, 0 !important; }
 
-.u-bgWhite { --current-background: #fff !important; }
-.u-colorWhite { --current-color: #fff !important; }
+.u-bgWhite { --current-background: 255, 255, 255 !important; }
+.u-colorWhite { --current-color: 255, 255, 255 !important; }
 
-.u-bgGrayLight { --current-background: rgb(var(--color-gray-light)) !important; }
-.u-colorGrayLight { --current-color: rgb(var(--color-gray-light)) !important; }
-.u-bgGray { --current-background: rgb(var(--color-gray)) !important; }
-.u-colorGray { --current-color: rgb(var(--color-gray)) !important; }
-.u-bgGrayDark { --current-background: rgb(var(--color-gray-dark)) !important; }
-.u-colorGrayDark { --current-color: rgb(var(--color-gray-dark)) !important; }
+.u-bgGrayLight { --current-background: var(--color-gray-light) !important; }
+.u-colorGrayLight { --current-color: var(--color-gray-light) !important; }
+.u-bgGray { --current-background: var(--color-gray) !important; }
+.u-colorGray { --current-color: var(--color-gray) !important; }
+.u-bgGrayDark { --current-background: var(--color-gray-dark) !important; }
+.u-colorGrayDark { --current-color: var(--color-gray-dark) !important; }
 
-.u-bg1 { --current-background: rgb(var(--color-goal-1)) !important; }
-.u-bg1shaded { --current-background: rgb(var(--color-goal-1-shaded)) !important; }
-.u-color1 { --current-color: rgb(var(--color-goal-1)) !important; }
-.u-color1shaded { --current-color: rgb(var(--color-goal-1-shaded)) !important; }
+.u-bg1 { --current-background: var(--color-goal-1) !important; }
+.u-bg1shaded { --current-background: var(--color-goal-1-shaded) !important; }
+.u-color1 { --current-color: var(--color-goal-1) !important; }
+.u-color1shaded { --current-color: var(--color-goal-1-shaded) !important; }
 
-.u-bg2 { --current-background: rgb(var(--color-goal-2)) !important; }
-.u-bg2shaded { --current-background: rgb(var(--color-goal-2-shaded)) !important; }
-.u-color2 { --current-color: rgb(var(--color-goal-2)) !important; }
-.u-color2shaded { --current-color: rgb(var(--color-goal-2-shaded)) !important; }
+.u-bg2 { --current-background: var(--color-goal-2) !important; }
+.u-bg2shaded { --current-background: var(--color-goal-2-shaded) !important; }
+.u-color2 { --current-color: var(--color-goal-2) !important; }
+.u-color2shaded { --current-color: var(--color-goal-2-shaded) !important; }
 
-.u-bg3 { --current-background: rgb(var(--color-goal-3)) !important; }
-.u-bg3shaded { --current-background: rgb(var(--color-goal-3-shaded)) !important; }
-.u-color3 { --current-color: rgb(var(--color-goal-3)) !important; }
-.u-color3shaded { --current-color: rgb(var(--color-goal-3-shaded)) !important; }
+.u-bg3 { --current-background: var(--color-goal-3) !important; }
+.u-bg3shaded { --current-background: var(--color-goal-3-shaded) !important; }
+.u-color3 { --current-color: var(--color-goal-3) !important; }
+.u-color3shaded { --current-color: var(--color-goal-3-shaded) !important; }
 
-.u-bg4 { --current-background: rgb(var(--color-goal-4)) !important; }
-.u-bg4shaded { --current-background: rgb(var(--color-goal-4-shaded)) !important; }
-.u-color4 { --current-color: rgb(var(--color-goal-4)) !important; }
-.u-color4shaded { --current-color: rgb(var(--color-goal-4-shaded)) !important; }
+.u-bg4 { --current-background: var(--color-goal-4) !important; }
+.u-bg4shaded { --current-background: var(--color-goal-4-shaded) !important; }
+.u-color4 { --current-color: var(--color-goal-4) !important; }
+.u-color4shaded { --current-color: var(--color-goal-4-shaded) !important; }
 
-.u-bg5 { --current-background: rgb(var(--color-goal-5)) !important; }
-.u-bg5shaded { --current-background: rgb(var(--color-goal-5-shaded)) !important; }
-.u-color5 { --current-color: rgb(var(--color-goal-5)) !important; }
-.u-color5shaded { --current-color: rgb(var(--color-goal-5-shaded)) !important; }
+.u-bg5 { --current-background: var(--color-goal-5) !important; }
+.u-bg5shaded { --current-background: var(--color-goal-5-shaded) !important; }
+.u-color5 { --current-color: var(--color-goal-5) !important; }
+.u-color5shaded { --current-color: var(--color-goal-5-shaded) !important; }
 
-.u-bg6 { --current-background: rgb(var(--color-goal-6)) !important; }
-.u-bg6shaded { --current-background: rgb(var(--color-goal-6-shaded)) !important; }
-.u-color6 { --current-color: rgb(var(--color-goal-6)) !important; }
-.u-color6shaded { --current-color: rgb(var(--color-goal-6-shaded)) !important; }
+.u-bg6 { --current-background: var(--color-goal-6) !important; }
+.u-bg6shaded { --current-background: var(--color-goal-6-shaded) !important; }
+.u-color6 { --current-color: var(--color-goal-6) !important; }
+.u-color6shaded { --current-color: var(--color-goal-6-shaded) !important; }
 
-.u-bg7 { --current-background: rgb(var(--color-goal-7)) !important; }
-.u-bg7shaded { --current-background: rgb(var(--color-goal-7-shaded)) !important; }
-.u-color7 { --current-color: rgb(var(--color-goal-7)) !important; }
-.u-color7shaded { --current-color: rgb(var(--color-goal-7-shaded)) !important; }
+.u-bg7 { --current-background: var(--color-goal-7) !important; }
+.u-bg7shaded { --current-background: var(--color-goal-7-shaded) !important; }
+.u-color7 { --current-color: var(--color-goal-7) !important; }
+.u-color7shaded { --current-color: var(--color-goal-7-shaded) !important; }
 
-.u-bg8 { --current-background: rgb(var(--color-goal-8)) !important; }
-.u-bg8shaded { --current-background: rgb(var(--color-goal-8-shaded)) !important; }
-.u-color8 { --current-color: rgb(var(--color-goal-8)) !important; }
-.u-color8shaded { --current-color: rgb(var(--color-goal-8-shaded)) !important; }
+.u-bg8 { --current-background: var(--color-goal-8) !important; }
+.u-bg8shaded { --current-background: var(--color-goal-8-shaded) !important; }
+.u-color8 { --current-color: var(--color-goal-8) !important; }
+.u-color8shaded { --current-color: var(--color-goal-8-shaded) !important; }
 
-.u-bg9 { --current-background: rgb(var(--color-goal-9)) !important; }
-.u-bg9shaded { --current-background: rgb(var(--color-goal-9-shaded)) !important; }
-.u-color9 { --current-color: rgb(var(--color-goal-9)) !important; }
-.u-color9shaded { --current-color: rgb(var(--color-goal-9-shaded)) !important; }
+.u-bg9 { --current-background: var(--color-goal-9) !important; }
+.u-bg9shaded { --current-background: var(--color-goal-9-shaded) !important; }
+.u-color9 { --current-color: var(--color-goal-9) !important; }
+.u-color9shaded { --current-color: var(--color-goal-9-shaded) !important; }
 
-.u-bg10 { --current-background: rgb(var(--color-goal-10)) !important; }
-.u-bg10shaded { --current-background: rgb(var(--color-goal-10-shaded)) !important; }
-.u-color10 { --current-color: rgb(var(--color-goal-10)) !important; }
-.u-color10shaded { --current-color: rgb(var(--color-goal-10-shaded)) !important; }
+.u-bg10 { --current-background: var(--color-goal-10) !important; }
+.u-bg10shaded { --current-background: var(--color-goal-10-shaded) !important; }
+.u-color10 { --current-color: var(--color-goal-10) !important; }
+.u-color10shaded { --current-color: var(--color-goal-10-shaded) !important; }
 
-.u-bg11 { --current-background: rgb(var(--color-goal-11)) !important; }
-.u-bg11shaded { --current-background: rgb(var(--color-goal-11-shaded)) !important; }
-.u-color11 { --current-color: rgb(var(--color-goal-11)) !important; }
-.u-color11shaded { --current-color: rgb(var(--color-goal-11-shaded)) !important; }
+.u-bg11 { --current-background: var(--color-goal-11) !important; }
+.u-bg11shaded { --current-background: var(--color-goal-11-shaded) !important; }
+.u-color11 { --current-color: var(--color-goal-11) !important; }
+.u-color11shaded { --current-color: var(--color-goal-11-shaded) !important; }
 
-.u-bg12 { --current-background: rgb(var(--color-goal-12)) !important; }
-.u-bg12shaded { --current-background: rgb(var(--color-goal-12-shaded)) !important; }
-.u-color12 { --current-color: rgb(var(--color-goal-12)) !important; }
-.u-color12shaded { --current-color: rgb(var(--color-goal-12-shaded)) !important; }
+.u-bg12 { --current-background: var(--color-goal-12) !important; }
+.u-bg12shaded { --current-background: var(--color-goal-12-shaded) !important; }
+.u-color12 { --current-color: var(--color-goal-12) !important; }
+.u-color12shaded { --current-color: var(--color-goal-12-shaded) !important; }
 
-.u-bg13 { --current-background: rgb(var(--color-goal-13)) !important; }
-.u-bg13shaded { --current-background: rgb(var(--color-goal-13-shaded)) !important; }
-.u-color13 { --current-color: rgb(var(--color-goal-13)) !important; }
-.u-color13shaded { --current-color: rgb(var(--color-goal-13-shaded)) !important; }
+.u-bg13 { --current-background: var(--color-goal-13) !important; }
+.u-bg13shaded { --current-background: var(--color-goal-13-shaded) !important; }
+.u-color13 { --current-color: var(--color-goal-13) !important; }
+.u-color13shaded { --current-color: var(--color-goal-13-shaded) !important; }
 
-.u-bg14 { --current-background: rgb(var(--color-goal-14)) !important; }
-.u-bg14shaded { --current-background: rgb(var(--color-goal-14-shaded)) !important; }
-.u-color14 { --current-color: rgb(var(--color-goal-14)) !important; }
-.u-color14shaded { --current-color: rgb(var(--color-goal-14-shaded)) !important; }
+.u-bg14 { --current-background: var(--color-goal-14) !important; }
+.u-bg14shaded { --current-background: var(--color-goal-14-shaded) !important; }
+.u-color14 { --current-color: var(--color-goal-14) !important; }
+.u-color14shaded { --current-color: var(--color-goal-14-shaded) !important; }
 
-.u-bg15 { --current-background: rgb(var(--color-goal-15)) !important; }
-.u-bg15shaded { --current-background: rgb(var(--color-goal-15-shaded)) !important; }
-.u-color15 { --current-color: rgb(var(--color-goal-15)) !important; }
-.u-color15shaded { --current-color: rgb(var(--color-goal-15-shaded)) !important; }
+.u-bg15 { --current-background: var(--color-goal-15) !important; }
+.u-bg15shaded { --current-background: var(--color-goal-15-shaded) !important; }
+.u-color15 { --current-color: var(--color-goal-15) !important; }
+.u-color15shaded { --current-color: var(--color-goal-15-shaded) !important; }
 
-.u-bg16 { --current-background: rgb(var(--color-goal-16)) !important; }
-.u-bg16shaded { --current-background: rgb(var(--color-goal-16-shaded)) !important; }
-.u-color16 { --current-color: rgb(var(--color-goal-16)) !important; }
-.u-color16shaded { --current-color: rgb(var(--color-goal-16-shaded)) !important; }
+.u-bg16 { --current-background: var(--color-goal-16) !important; }
+.u-bg16shaded { --current-background: var(--color-goal-16-shaded) !important; }
+.u-color16 { --current-color: var(--color-goal-16) !important; }
+.u-color16shaded { --current-color: var(--color-goal-16-shaded) !important; }
 
-.u-bg17 { --current-background: rgb(var(--color-goal-17)) !important; }
-.u-bg17shaded { --current-background: rgb(var(--color-goal-17-shaded)) !important; }
-.u-color17 { --current-color: rgb(var(--color-goal-17)) !important; }
-.u-color17shaded { --current-color: rgb(var(--color-goal-17-shaded)) !important; }
+.u-bg17 { --current-background: var(--color-goal-17) !important; }
+.u-bg17shaded { --current-background: var(--color-goal-17-shaded) !important; }
+.u-color17 { --current-color: var(--color-goal-17) !important; }
+.u-color17shaded { --current-color: var(--color-goal-17-shaded) !important; }

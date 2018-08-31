@@ -23,8 +23,8 @@
   padding-top: 55%;
   margin-bottom: 1rem;
   position: relative;
-  color: var(--current-color, #fff);
-  background: var(--current-background, #000);
+  color: rgb(var(--current-color));
+  background: rgb(var(--current-background));
 }
 
 .Target-caption {
