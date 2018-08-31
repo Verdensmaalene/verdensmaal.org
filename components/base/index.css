@@ -163,19 +163,11 @@ button {
   outline: 0;
 }
 
-:root[scripting-enabled] :focus:not(.focus-visible) {
-  outline: 0;
-}
-
 /**
  * Provide enhanced focus styles for keyboard focus
  */
 
 :focus-visible {
-  outline: rgb(var(--color-gray-dark)) solid 0.4rem;
-}
-
-:root[scripting-enabled] .focus-visible {
   outline: rgb(var(--color-gray-dark)) solid 0.4rem;
 }
 
