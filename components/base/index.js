@@ -136,3 +136,14 @@ function metaKey (e) {
   if (e.button && e.button !== 0) return true
   return e.ctrlKey || e.metaKey || e.altKey || e.shiftKey
 }
+
+// pick props from object
+// (obj, arr|...str) -> obj
+exports.pluck = pluck
+function pluck (src, ...keys) {
+  keys = Array.isArray(keys[0]) ? keys[0] : keys
+  return keys.reduce(function (obj, key) {
+    if (src[key]) obj[key] = src[key]
+    return obj
+  }, {})
+}

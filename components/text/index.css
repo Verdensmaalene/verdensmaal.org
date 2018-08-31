@@ -10,6 +10,10 @@
   max-width: 38em;
 }
 
+.Text-gray {
+  --current-color: var(--color-text-meta);
+}
+
 .Text:first-child {
   margin-top: 0;
 }
@@ -98,6 +102,18 @@
 }
 
 /**
+ * 1. Maintain 16/9 aspect ratio for embedded content
+ */
+
+.Text iframe {
+  width: 100vw;
+  height: calc(100vw * 9/16); /* 1 */
+  max-width: 100%;
+  vertical-align: top;
+  user-select: none;
+}
+
+/**
  * Headings
  */
 
@@ -106,8 +122,15 @@
 .Text h3,
 .Text h4,
 .Text h5,
-.Text h6 {
+.Text h6,
+.Text-h1,
+.Text-h2,
+.Text-h3,
+.Text-h4,
+.Text-h5,
+.Text-h6 {
   margin: 0;
+  color: rgb(var(--current-color));
 }
 
 .Text h1:not(:first-child),
@@ -115,14 +138,24 @@
 .Text h3:not(:first-child),
 .Text h4:not(:first-child),
 .Text h5:not(:first-child),
-.Text h6:not(:first-child) {
+.Text h6:not(:first-child),
+.Text-h1:not(:first-child),
+.Text-h2:not(:first-child),
+.Text-h3:not(:first-child),
+.Text-h4:not(:first-child),
+.Text-h5:not(:first-child),
+.Text-h6:not(:first-child) {
   margin-top: 1em;
 }
 
 .Text h1,
 .Text h2,
 .Text h3,
-.Text h4 {
+.Text h4,
+.Text-h1,
+.Text-h2,
+.Text-h3,
+.Text-h4 {
   margin: 0 0 -0.25em;
   font-weight: bold;
   text-transform: uppercase;
@@ -131,25 +164,31 @@
   word-spacing: var(--heading-word-spacing);
 }
 
-.Text h1 {
+.Text h1
+.Text-h1 {
   font-size: 3rem;
   line-height: 1;
 }
 
-.Text h2 {
+.Text h2,
+.Text-h2 {
   font-size: 2rem;
   line-height: 1.05;
 }
 
 .Text h3,
-.Text h4 {
+.Text h4,
+.Text-h3,
+.Text-h4 {
   font-size: 1.5rem;
   line-height: 1.15;
   margin-bottom: -0.625em;
 }
 
 .Text h5,
-.Text h6 {
+.Text h6,
+.Text-h5,
+.Text-h6 {
   margin: 1.3em 0;
   font-weight: bold;
   font-size: inherit;
@@ -159,7 +198,11 @@
 .Text h1 a,
 .Text h2 a,
 .Text h3 a,
-.Text h4 a {
+.Text h4 a,
+.Text-h1 a,
+.Text-h2 a,
+.Text-h3 a,
+.Text-h4 a {
   background: rgb(var(--color-link));
   color: rgb(var(--current-background));
   padding: 0.15em 0.18em 0.08em;
@@ -172,7 +215,11 @@
 .Text h1 a:hover,
 .Text h2 a:hover,
 .Text h3 a:hover,
-.Text h4 a:hover {
+.Text h4 a:hover,
+.Text-h1 a:hover,
+.Text-h2 a:hover,
+.Text-h3 a:hover,
+.Text-h4 a:hover {
   background: rgb(var(--color-link-shaded));
   color: #fff;
 }
@@ -181,24 +228,32 @@
   .Text h1:not(:first-child),
   .Text h2:not(:first-child),
   .Text h3:not(:first-child),
-  .Text h4:not(:first-child) {
+  .Text h4:not(:first-child),
+  .Text-h1:not(:first-child),
+  .Text-h2:not(:first-child),
+  .Text-h3:not(:first-child),
+  .Text-h4:not(:first-child) {
     margin-top: 4.5rem;
   }
 
-  .Text h1 {
+  .Text h1,
+  .Text-h1 {
     font-size: 4.5rem;
   }
 
-  .Text h2 {
+  .Text h2,
+  .Text-h2 {
     font-size: 3rem;
   }
 
-  .Text h3 {
+  .Text h3,
+  .Text-h3 {
     font-size: 2rem;
     line-height: 1.05;
   }
 
-  .Text h4 {
+  .Text h4,
+  .Text-h4 {
     font-size: 1.5rem;
     line-height: 1.05;
   }

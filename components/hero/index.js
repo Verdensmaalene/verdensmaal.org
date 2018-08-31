@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var intro = require('../intro')
-var { i18n } = require('../base')
+var { i18n, pluck } = require('../base')
 
 var text = i18n()
 
@@ -32,14 +32,4 @@ function loading () {
       <div class="Hero-body u-container">${intro({ title, body })}</div>
     </div>
   `
-}
-
-// pick props from object
-// (obj, arr|...str) -> obj
-function pluck (src, ...keys) {
-  keys = Array.isArray(keys[0]) ? keys[0] : keys
-  return keys.reduce(function (obj, key) {
-    if (src[key]) obj[key] = src[key]
-    return obj
-  }, {})
 }

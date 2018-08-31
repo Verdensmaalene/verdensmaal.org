@@ -216,7 +216,7 @@ module.exports = class Map extends Component {
   }
 
   createElement (locations, bounds = null) {
-    assert(Array.isArray(locations), 'Map: locations should be of type array')
+    assert(Array.isArray(locations), 'Map: locations should be type array')
     this.local.bounds = bounds
     this.local.locations = locations
     return html`

@@ -16,10 +16,13 @@ var DEFAULT_TITLE = text`SITE_TITLE`
 
 module.exports = View
 
+// view constructor doubles as view factory
+// if not called with the `new` keyword it will just return a wrapper function
+// (fn, fn) -> View|fn
 function View (view, meta) {
   if (!(this instanceof View)) return createView(view, meta)
   var id = view
-  assert(typeof id === 'string', 'View: id should be of type string')
+  assert(typeof id === 'string', 'View: id should be type string')
   Component.call(this, id)
   this.createElement = createView(this.createElement, this.meta).bind(this)
 }

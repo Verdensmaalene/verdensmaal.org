@@ -1,12 +1,15 @@
 var html = require('choo/html')
+var raw = require('choo/html/raw')
 var asElement = require('prismic-element')
 var { asText } = require('prismic-richtext')
 var { Predicates } = require('prismic-javascript')
+var Map = require('../components/map')
 var view = require('../components/view')
 var hero = require('../components/hero')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var intro = require('../components/intro')
+var figure = require('../components/figure')
 var { i18n } = require('../components/base')
 
 var text = i18n()
@@ -48,7 +51,7 @@ function goal (state, emit) {
 
     // render slice as element
     // obj -> HTMLElement
-    function fromSlice (slice) {
+    function fromSlice (slice, index) {
       switch (slice.slice_type) {
         case 'text': return html`
           <div class="Text u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
@@ -93,7 +96,7 @@ function goal (state, emit) {
 
           return html`
             <div class="u-spaceT8" id="${slugify(slice.primary.shortcut_name || '')}">
-              ${grid({size: '1of3'}, featured.concat(docs))}
+              ${grid({ size: '1of3' }, featured.concat(docs))}
             </div>
           `
         }
@@ -120,10 +123,113 @@ function goal (state, emit) {
             ${slice.primary.author ? html`<figcaption>${slice.primary.author}</figcaption>` : null}
           </figure>
         `
+        case 'video': {
+          if (slice.primary.video.type !== 'video') return null
+          return html`
+            <div class="Text u-sizeFull u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+              ${video(slice.primary.video)}
+            </div>
+          `
+        }
+        case 'image': return html`
+          <div class="Text u-sizeFull u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+            <img class="u-sizeFull" width="${slice.primary.image.dimensions.width}" height="${slice.primary.image.dimensions.height}" src="${slice.primary.image.url}" alt="${slice.primary.image.alt || ''}" />
+          </div>
+        `
+        case 'gallery': {
+          let items = slice.items.map(function (item) {
+            if (item.image.url) {
+              return figure(Object.assign({
+                src: item.image.url,
+                alt: item.image.alt,
+                caption: item.image.copyright
+              }, item.image.dimensions))
+            }
+            if (item.video.html) return video(item.video)
+            return null
+          }).filter(Boolean)
+
+          return html`
+            <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+              ${grid({ size: '1of2' }, items)}
+            </div>
+          `
+        }
+        case 'link_text': return html`
+          <div class="Text u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+            <h3 class="u-spaceB0">
+              <span class="Text-h2 Text-gray">${asText(slice.primary.heading)}</span>
+            </h3>
+            <div class="Text-h2 u-spaceT0">${asElement(slice.primary.text, state.docs.resolve)}</div>
+          </div>
+        `
+        case 'map': {
+          let locations = slice.items.map(function (item) {
+            var location = Object.assign({}, item.location)
+            if (item.text.length) {
+              location.popup = () => asElement(item.text, state.docs.resolve)
+            }
+            return location
+          })
+          return html`
+            <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+              ${state.cache(Map, `${doc.id}-${index}`).render(locations)}
+            </div>
+          `
+        }
+        case 'link_list': {
+          let items = slice.items.map(function (item) {
+            var attrs = {}
+            var href
+
+            if (item.link.link_type === 'Document') {
+              href = state.docs.resolve(item.link)
+            }
+            if (item.link.link_type === 'Web') {
+              href = item.link.url
+              attrs.rel = 'noopener noreferrer'
+              if (item.link.target) attrs.target = item.link.target
+            }
+            if (item.link.link_type === 'Media') {
+              href = item.link.url
+              attrs.download = ''
+            }
+
+            if (!href) return null
+            return html`
+              <a href="${href}" ${attrs}>
+                <div class="Text">
+                  ${item.text}
+                  ${asElement(item.description, state.docs.resolve)}
+                </div>
+              </a>
+            `
+          }).filter(Boolean)
+
+          if (!items.length) return null
+          return html`
+            <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+              ${grid({ size: '1of3' }, items)}
+            </div>
+          `
+        }
         default: return null
       }
     }
   }
+}
+
+// render video embed
+// obj -> HTMLElement
+function video (props) {
+  let embed = props.html
+  if (props.provider_name === 'YouTube') {
+    // remove YouTube cruft and enhance privacy
+    embed = embed
+      .replace(/youtube\.com/, 'youtube-nocookie.com')
+      .replace(/(src=".+?)"/, '$1?rel=0&amp;showinfo=0"')
+  }
+  return raw(embed)
 }
 
 // transfor string to url friendly format

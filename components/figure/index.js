@@ -1,34 +1,37 @@
 var html = require('choo/html')
 var assert = require('assert')
+var { pluck } = require('../base')
 
 module.exports = figure
 figure.loading = loading
 figure.placeholder = placeholder
 
-function figure (opts = {}) {
-  assert(opts.src, 'figure: src string is required')
+function figure (props = {}) {
+  assert(props.src, 'figure: src string is required')
+  var src = props.src
+  var attrs = pluck(props, 'width', 'height', 'srcset', 'sizes', 'alt')
+  attrs.alt = attrs.alt || ''
 
   return html`
     <figure class="Figure u-hoverTriggerTarget">
-      <img class="Figure-item" src="${opts.src}" alt="${opts.alt ? opts.alt : ''}" />
-      ${caption(opts)}
+      <img class="Figure-item" ${attrs} src="${src}" />
+      ${props.caption ? caption(props.caption) : null}
     </figure>
   `
 }
 
-function caption (opts = {}) {
-  if (!opts.caption) return null
+function caption (content) {
   html`
     <figcaption class="Figure-caption">
-      <p>${opts.caption}</p>
+      <p>${content}</p>
     </figcaption>
   `
 }
 
-function loading (opts = {}) {
+function loading (props = {}) {
   return html`<div class="Figure is-loading"></div>`
 }
 
-function placeholder (opts = {}) {
+function placeholder (props = {}) {
   return html`<div class="Figure is-loading"></div>`
 }

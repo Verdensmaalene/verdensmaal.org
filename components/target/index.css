@@ -71,7 +71,7 @@
     padding-right: 1rem;
     margin-bottom: -0.3rem;
   }
-  
+
   .Target-button {
     width: 100%;
     height: 100%;
@@ -95,7 +95,7 @@
     background: transparent;
   }
 
-  .Target-caption, 
+  .Target-caption,
   .Target-icon {
     color: var(--current-color, #fff);
     background: var(--current-background, #000);
@@ -108,7 +108,7 @@
     font-size: 1.35rem;
     text-align: center;
   }
-  
+
   .Target-icon {
     width: 100%;
     position: static;
