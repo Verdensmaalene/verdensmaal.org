@@ -29,7 +29,8 @@ try {
   module.exports = app.mount('body')
 } catch (err) {
   if (typeof window !== 'undefined') {
-    document.documentElement.classList.remove('has-js')
+    document.documentElement.removeAttribute('scripting-enabled')
+    document.documentElement.setAttribute('scripting-initial-only', '')
   }
 }
 
