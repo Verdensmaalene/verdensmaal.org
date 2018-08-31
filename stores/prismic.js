@@ -11,6 +11,7 @@ function prismicStore (opts) {
   var cache
   if (typeof opts.lru === 'number') cache = new LRU(opts.lru)
   else cache = opts.lru || new LRU(100)
+  var middleware = opts.middleware
 
   return function (state, emitter) {
     var init = Prismic.getApi(opts.repository, Object.assign({
@@ -42,12 +43,20 @@ function prismicStore (opts) {
     // query prismic endpoint with given predicate(s)
     // (str|arr, obj?, fn) -> any
     function get (predicates, opts, callback) {
+      assert(predicates, 'choo-prismic: predicates should be type array or string')
+
+      predicates = Array.isArray(predicates) ? predicates : [predicates]
       callback = typeof opts === 'function' ? opts : callback
       opts = typeof opts === 'function' ? {} : opts
 
       assert(typeof callback === 'function', 'choo-prismic: callback should be type function')
 
-      var key = Array.isArray(predicates) ? predicates.join(',') : predicates
+      if (typeof middleware === 'function') {
+        // pass input through middleware
+        middleware(predicates, opts)
+      }
+
+      var key = predicates.join(',')
       var optkeys = Object.keys(opts).sort()
       for (var i = 0, len = optkeys.length; i < len; i++) {
         key += (',' + optkeys[i] + '=' + JSON.stringify(opts[optkeys[i]]))

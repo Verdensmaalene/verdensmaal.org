@@ -77,12 +77,12 @@ class GoalPage extends View {
     function targets (data) {
       return {
         title: asText(data.targets_title),
-        description: asElement(data.targets_description),
+        description: asElement(data.targets_description, state.docs.resolve),
         goal: data.number,
         targets: data.targets.map(function (target) {
           return Object.assign({}, target, {
             title: asText(target.title),
-            body: asElement(target.body)
+            body: asElement(target.body, state.docs.resolve)
           })
         })
       }

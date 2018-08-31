@@ -52,7 +52,7 @@ function goal (state, emit) {
       switch (slice.slice_type) {
         case 'text': return html`
           <div class="Text u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-            ${asElement(slice.primary.text)}
+            ${asElement(slice.primary.text, state.docs.resolve)}
           </div>
         `
         case 'news':
@@ -107,7 +107,7 @@ function goal (state, emit) {
             ${slice.items.map((item) => html`
               <details>
                 <summary>${asText(item.heading)}</summary>
-                ${asElement(item.text)}
+                ${asElement(item.text, state.docs.resolve)}
               </details>
             `)}
           </div>
@@ -115,7 +115,7 @@ function goal (state, emit) {
         case 'quote': return html`
           <figure class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
             <blockquote>
-              ${asElement(slice.primary.quote)}
+              ${asElement(slice.primary.quote, state.docs.resolve)}
             </blockquote>
             ${slice.primary.author ? html`<figcaption>${slice.primary.author}</figcaption>` : null}
           </figure>

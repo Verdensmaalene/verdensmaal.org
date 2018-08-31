@@ -49,7 +49,7 @@ function createView (view, meta) {
       }
       emit('meta', next)
     } catch (err) {
-      if (state.throw) throw err
+      if (state.throw && err.status === state.throw) throw err
       err.status = err.status || 500
       children = error(err)
       emit('meta', { title: `${text`Oops`} | ${DEFAULT_TITLE}` })

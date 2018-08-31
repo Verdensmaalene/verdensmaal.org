@@ -46,7 +46,7 @@ function article (state, emit) {
               </time>
               <h1 class="u-colorGray">${asText(doc.data.title)}</h1>
               <p>${asText(doc.data.description)}</p>
-              ${asElement(doc.data.body)}
+              ${asElement(doc.data.body, state.docs.resolve)}
             </div>
           </div>
         </article>

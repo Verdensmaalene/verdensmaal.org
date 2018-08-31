@@ -11,7 +11,11 @@ if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
 }
 
 app.use(require('choo-service-worker')('/sw.js'))
-app.use(require('./stores/prismic')({ repository: REPOSITORY }))
+app.use(require('./stores/prismic')({
+  repository: REPOSITORY,
+  middleware: prismicMiddleware,
+  resolve: require('./lib/resolve')
+}))
 app.use(require('./stores/navigation'))
 app.use(require('./stores/geoip'))
 app.use(require('./stores/meta'))
@@ -34,6 +38,19 @@ try {
   }
 }
 
+// middleware for prismic requests
+// (arr, obj) -> void
+function prismicMiddleware (predicates, opts) {
+  if (opts.fetchLinks) {
+    if (!opts.fetchLinks.includes('goal.number')) {
+      if (Array.isArray(opts.fetchLinks)) opts.fetchLinks.push('goal.number')
+      else opts.fetchLinks = [opts.fetchLinks, 'goal.number']
+    }
+  } else {
+    opts.fetchLinks = 'goal.number'
+  }
+}
+
 // custom waterfall routing goal/sector -> page -> 404
 // (obj, fn) -> HTMLElement
 function catchall (state, emit) {
@@ -41,20 +58,20 @@ function catchall (state, emit) {
   var view = isGoalPage ? require('./views/goal') : require('./views/sector')
   let res
   try {
-    state.throw = true
+    state.throw = 404
     res = view(state, emit)
-    state.throw = false
+    state.throw = null
     return res
   } catch (err) {
     if (isGoalPage) {
       try {
         view = require('./views/sector')
         res = view(state, emit)
-        state.throw = false
+        state.throw = null
         return res
       } catch (err) {}
     }
-    state.throw = false
+    state.throw = null
     view = require('./views/page')
     res = view(state, emit)
     return res
