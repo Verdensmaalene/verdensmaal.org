@@ -164,7 +164,7 @@
   word-spacing: var(--heading-word-spacing);
 }
 
-.Text h1
+.Text h1,
 .Text-h1 {
   font-size: 3rem;
   line-height: 1;

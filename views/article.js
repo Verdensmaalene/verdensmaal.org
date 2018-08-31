@@ -44,7 +44,7 @@ function article (state, emit) {
               <time class="u-colorGray u-colorCurrent" datetime="${date}">
                 ${text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`}
               </time>
-              <h1 class="u-colorGray">${asText(doc.data.title)}</h1>
+              <h1>${asText(doc.data.title)}</h1>
               <p>${asText(doc.data.description)}</p>
               ${asElement(doc.data.body, state.docs.resolve)}
             </div>

@@ -59,7 +59,7 @@ function event (state, emit) {
               <time class="u-colorGray u-colorCurrent" datetime="${date}">
                 ${date}
               </time>
-              <h1 class="u-colorGray">${asText(doc.data.title)}</h1>
+              <h1>${asText(doc.data.title)}</h1>
               <p>${asText(doc.data.description)}</p>
             </div>
           </div>
