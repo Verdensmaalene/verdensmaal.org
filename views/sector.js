@@ -29,16 +29,18 @@ function goal (state, emit) {
       `
     }
 
-    var title = asText(doc.data.title)
-    var body = asText(doc.data.description)
-    var image = Object.assign({ src: doc.data.image.url }, doc.data.image.dimensions)
+    var data = doc.data
+    var title = asText(data.title)
+    var body = asText(data.description)
+    var image = Object.assign({ src: data.image.url }, data.image.dimensions)
+    var shortcuts = data.slices.filter((slice) => slice.primary.shortcut_name)
 
     return html`
       <main class="View-container">
         ${hero({ title, body, image })}
         <div class="u-container">
           <div class="Text u-spaceV6">
-            ${text`Shortcuts`}: ${doc.data.slices.filter((slice) => slice.primary.shortcut_name).map((slice, index, list) => html`
+            ${text`Shortcuts`}: ${shortcuts.map((slice, index, list) => html`
               <span>
                 <a href="#${slugify(slice.primary.shortcut_name)}">${slice.primary.shortcut_name}</a>${index < (list.length - 1) ? ', ' : null}
               </span>
