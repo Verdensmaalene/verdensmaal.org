@@ -168,7 +168,7 @@ button {
  */
 
 :focus-visible {
-  outline: rgb(var(--color-gray-dark)) solid 0.4rem;
+  outline: rgb(var(--focus-ring-color)) solid var(--focus-ring-width);
 }
 
 /**

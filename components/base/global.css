@@ -21,6 +21,8 @@
   --color-text-meta: 221, 221, 221;
 
   --max-width: 1800px;
+  --focus-ring-width: 0.4rem;
+  --focus-ring-color: var(--color-gray-dark);
 
   /* Easing curves */
 
