@@ -119,7 +119,7 @@
  */
 
 .Header-logo {
-  display: inline-block;
+  display: flex;
   height: 3rem;
   padding: 1rem 0.5rem 1rem 0;
   margin-right: auto;
