@@ -9,6 +9,20 @@
   user-select: none;
 }
 
+/**
+ * Clearfix
+ */
+
+.GoalGrid::before,
+.GoalGrid::after {
+  content: " ";
+  display: table;
+}
+
+.GoalGrid::after {
+  clear: both;
+}
+
 @media print {
   .GoalGrid {
     display: none;
@@ -87,6 +101,11 @@
 
 @supports (display: grid) {
   @media (min-width: 900px) {
+    .GoalGrid::before,
+    .GoalGrid::after {
+      content: none;
+    }
+
     :root[scripting-enabled] .GoalGrid--layout .GoalGrid-animation {
       display: block;
       overflow: hidden;
