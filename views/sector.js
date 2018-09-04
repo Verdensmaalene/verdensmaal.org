@@ -160,7 +160,7 @@ function goal (state, emit) {
         case 'link_text': return html`
           <div class="Text u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
             <h3 class="u-spaceB0">
-              <span class="Text-h2 Text-gray">${asText(slice.primary.heading)}</span>
+              <span class="Text-h2 Text-muted">${asText(slice.primary.heading)}</span>
             </h3>
             <div class="Text-h2 u-spaceT0">${asElement(slice.primary.text, state.docs.resolve)}</div>
           </div>

@@ -10,8 +10,8 @@
   max-width: 38em;
 }
 
-.Text-gray {
-  --current-color: var(--color-text-meta);
+.Text-muted {
+  --current-color: var(--color-text-muted);
 }
 
 .Text:first-child {
