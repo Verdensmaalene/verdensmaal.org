@@ -4,8 +4,9 @@ var asElement = require('prismic-element')
 var splitRequire = require('split-require')
 var View = require('../components/view')
 var Goal = require('../components/goal')
-var targetGrid = require('../components/target-grid')
 var { i18n } = require('../components/base')
+var Engager = require('../components/engager')
+var targetGrid = require('../components/target-grid')
 
 var text = i18n()
 var backgrounds = [
@@ -114,10 +115,27 @@ class GoalPage extends View {
               </div>
             </div>
           `)}
-
           <div class="u-container" id="targets">
             ${targetGrid(targets(doc.data))}
           </div>
+          <section class="u-container u-spaceV8">
+            ${state.cache(Engager, 'home-cta').render([
+              { id: 'my-tab1', label: 'Noget inhold', content: () => html`<p>Nullam eget mattis nibh. Fusce sit amet feugiat massa, eu tincidunt orci.</p>` },
+              { id: 'my-tab2', label: 'Mere inhold at se', content: () => html`<p>Integer ut eros velit. Nulla pharetra id magna ut congue. Phasellus non varius nisi, nec porta ligula.</p>` },
+              { id: 'my-tab3', label: 'Indhold for alle', content: () => html`<p>Ut sodales sit amet lorem molestie porttitor. Donec vel neque fringilla magna fringilla cursus ac vitae diam.</p>` },
+              { id: 'my-tab4', label: 'Endu en', content: () => html`<p>Aenean vitae felis purus. Aliquam lobortis neque nec ante aliquam, vitae finibus enim posuere.</p>` }
+            ])}
+          </section>
+          ${doc.data.interlink_heading && doc.data.interlink_heading.length ? html`
+            <div class="u-container u-spaceV8">
+              <div class="Text">
+                <h3 class="u-spaceB0">
+                  <span class="Text-h2 Text-gray">${asText(doc.data.interlink_heading)}</span>
+                </h3>
+                <div class="Text-h2 u-spaceT0">${asElement(doc.data.interlink_text, state.docs.resolve)}</div>
+              </div>
+            </div>
+          ` : null}
         </main>
       `
     }

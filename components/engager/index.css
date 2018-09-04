@@ -1,0 +1,334 @@
+/* @define Engager */
+
+@import "../base";
+@import "../tablist";
+
+@media (min-width: 600px) {
+  .Engager {
+    margin-bottom: -1.6rem;
+  }
+
+  .Engager.is-expanded {
+    margin-bottom: 0;
+  }
+}
+
+/**
+ * Clearfix
+ */
+
+.Engager::before,
+.Engager::after {
+  content: " ";
+  display: table;
+}
+
+.Engager::after {
+  clear: both;
+}
+
+@media print {
+  .Engager {
+    display: none;
+  }
+}
+
+/**
+ * 1. Prevent next sibling element peeking into view during transition
+ */
+
+.Engager.in-transition {
+  min-height: 100vh; /* 1 */
+}
+
+/**
+ * Large button
+ */
+
+.Engager-button {
+  float: left;
+  padding: 0.55em 4.5rem 0.45em 0.8em;
+  margin: 0 0.55em 0.55em 0;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  font-size: 1.625rem;
+  line-height: 1;
+  color: #fff;
+  font-weight: bold;
+  font-family: var(--heading-font-family);
+  word-spacing: var(--heading-word-spacing);
+  background-color: rgb(var(--color-link));
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+  transform-origin: 0 0;
+  will-change: opacity, transform;
+  transition: background-color 180ms var(--ease-out);
+}
+
+.Engager-button:hover {
+  background-color: rgb(var(--color-link-shaded));
+}
+
+@media (min-width: 400px) {
+  .Engager-button {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Engager-button {
+    padding: 0.25em 6rem 0.15em 0.5em;
+    margin: 0 0.35em 0.35em 0;
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Engager-button {
+    font-size: 4.5rem;
+  }
+}
+
+/**
+ * Align button with tab bottom border
+ */
+
+.Engager-button.is-clone {
+  position: absolute;
+}
+
+.Engager-button.is-clone:not(.is-flat) {
+  background-color: rgb(var(--color-link-shaded));
+}
+
+.Engager-button.is-flat {
+  color: transparent;
+}
+
+.Engager-button.is-flat::after,
+.Engager-button.is-flat::before {
+  opacity: 0;
+}
+
+/**
+ * The "+"
+ */
+
+.Engager-button::after,
+.Engager-button::before {
+  content: "";
+  width: 2px;
+  height: 1.6rem;
+  position: absolute;
+  top: 50%;
+  right: 2.35rem;
+  background: #fff;
+  transform: translateY(-50%);
+  transition:
+    opacity 90ms var(--ease-in),
+    transform 180ms var(--ease-out);
+}
+
+@media (min-width: 1000px) {
+  .Engager-button::after,
+  .Engager-button::before {
+    right: 3.05rem;
+  }
+}
+
+.Engager-tablist.is-slow .Engager-button::after,
+.Engager-tablist.is-slow .Engager-button::before {
+  transition:
+    opacity 90ms var(--ease-in),
+    transform 180ms var(--ease-out);
+}
+
+.Engager-button::after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.Engager-button.is-expanded::before {
+  opacity: 0;
+}
+
+@media (min-width: 1200px) {
+  .Engager-button::after,
+  .Engager-button::before {
+    height: 2.4rem;
+  }
+}
+
+/**
+ * Wide
+ */
+
+.Engager-button--row {
+  float: none;
+  padding: 0.55em 1em 0.45em 0.7em;
+  margin-right: 0;
+  flex-grow: 1;
+}
+
+.Engager-button--row.is-expanded {
+  margin-bottom: 0;
+}
+
+@media (min-width: 700px) {
+  .Engager-button--row {
+    display: none;
+  }
+}
+
+/**
+ * Tablist wrapper
+ */
+
+.Engager-tabs {
+  display: none;
+  position: relative;
+}
+
+@media (min-width: 700px) {
+  .Engager-tabs {
+    display: block;
+  }
+}
+
+/**
+ * 1. Override selector height to sync the transition from button to tablist
+ */
+
+.Engager-tablist {
+  --Tablist-selector-height: 4px; /* 1 */
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Engager-tab {
+  display: block;
+  transition:
+    opacity 200ms linear,
+    transform 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  will-change: opacity, transform;
+}
+
+.Engager-tablist.is-hidden .Engager-tab {
+  opacity: 0;
+  transform: translateX(200px);
+}
+
+.Engager-target {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/**
+ * All buttons but the one in transition disappear
+ */
+
+.Engager-tabs.in-transition .Engager-button {
+  transition:
+    opacity 175ms linear,
+    transform 350ms cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.Engager-tabs.in-transition .Engager-button:not(.is-clone) {
+  opacity: 0;
+  transform: translateY(200%);
+}
+
+.Engager-tabs.in-transition .Engager-button.is-clone {
+  transition:
+    color 200ms linear,
+    background-color 200ms linear,
+    transform 340ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.Engager-tabs.in-transition.is-slow .Engager-button.is-clone {
+  transition:
+    color 275ms linear,
+    background-color 275ms linear,
+    transform 450ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+/**
+ * Block – container of button and panel pair
+ */
+
+.Engager-block {
+  display: flex;
+  flex-wrap: wrap;
+  clear: both;
+}
+
+/**
+ * Panel
+ */
+
+.Engager-panel {
+  display: none;
+  flex-basis: 100%;
+  padding: 1.5rem 0;
+  opacity: 0;
+}
+
+@media (min-width: 1200px) {
+  .Engager-panel {
+    padding-top: 2rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .Engager-panel {
+    padding-top: 3rem;
+  }
+}
+
+.Engager-panel:target {
+  display: block;
+  animation: Engager-panel--appear 350ms var(--ease-out) forwards;
+}
+
+:root[scripting-enabled] .Engager-panel.is-expanded {
+  display: block;
+  animation: Engager-panel--appear 500ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+_:-ms-input-placeholder, :root[scripting-enabled] .Engager-panel.is-expanded {
+  opacity: 1;
+}
+
+:root[scripting-enabled] .Engager-panel.is-hidden {
+  animation: Engager-panel--hide 200ms var(--ease-in) forwards;
+}
+
+@keyframes Engager-panel--appear {
+  0% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes Engager-panel--hide {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+}
