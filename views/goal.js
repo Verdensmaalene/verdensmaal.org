@@ -6,7 +6,7 @@ var View = require('../components/view')
 var Goal = require('../components/goal')
 var { i18n } = require('../components/base')
 var Engager = require('../components/engager')
-var targetGrid = require('../components/target-grid')
+var TargetGrid = require('../components/target-grid')
 
 var text = i18n()
 var backgrounds = [
@@ -73,23 +73,11 @@ class GoalPage extends View {
     var [, num, uid] = state.params.wildcard.match(/^(\d{1,2})-(.+)$/)
     var background = this.background(+num)
 
-    return state.docs.getByUID('goal', uid, render)
+    return state.docs.getByUID('goal', uid, onresponse)
 
-    function targets (data) {
-      return {
-        title: asText(data.targets_title),
-        description: asElement(data.targets_description, state.docs.resolve),
-        goal: data.number,
-        targets: data.targets.map(function (target) {
-          return Object.assign({}, target, {
-            title: asText(target.title),
-            body: asElement(target.body, state.docs.resolve)
-          })
-        })
-      }
-    }
-
-    function render (err, doc) {
+    // handle goal document response
+    // (Error, obj) -> HTMLElement
+    function onresponse (err, doc) {
       if (err) throw err
 
       var goal = state.cache(Goal, state.params.wildcard)
@@ -105,6 +93,13 @@ class GoalPage extends View {
       props.number = doc.data.number
       props.label = asText(doc.data.label)
 
+      var targets = doc.data.targets.map((target) => {
+        return Object.assign({}, target, {
+          title: asText(target.title),
+          body: asElement(target.body, state.docs.resolve)
+        })
+      })
+
       return html`
         <main class="View-main">
           ${goal.render(props, html`
@@ -115,9 +110,13 @@ class GoalPage extends View {
               </div>
             </div>
           `)}
-          <div class="u-container" id="targets">
-            ${targetGrid(targets(doc.data))}
+          <section class="u-container u-spaceT8" id="targets">
+            <div class="Text u-spaceB4">
+              <h2>${asText(doc.data.targets_title)}</h2>
+              ${asElement(doc.data.targets_description, state.docs.resolve)}
           </div>
+            ${state.cache(TargetGrid, `${doc.data.number}-targets`).render(doc.data.number, targets)}
+          </section>
           <section class="u-container u-spaceV8">
             ${state.cache(Engager, 'home-cta').render([
               { id: 'my-tab1', label: 'Noget inhold', content: () => html`<p>Nullam eget mattis nibh. Fusce sit amet feugiat massa, eu tincidunt orci.</p>` },

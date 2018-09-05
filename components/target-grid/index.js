@@ -1,32 +1,28 @@
 var html = require('choo/html')
+var Component = require('choo/component')
 var Target = require('../target')
 
-module.exports = targetGrid
+module.exports = class TargetGrid extends Component {
+  constructor (id, state, emit) {
+    super(id)
+    this.cache = state.cache
+  }
 
-function targetGrid (opts = {}) {
-  return html`
-    <section class="TargetGrid">
-      ${opts.title || opts.description ? html`
-        <div class="TargetGrid-intro">
-          <div class="Text">
-            ${opts.title ? html`
-              <h1>${opts.title}</h1>
-            ` : null}
-            ${opts.description}
-          </div>
-        </div>
-      ` : null}
-      <div class="TargetGrid-container">
-        ${opts.targets.map(cell)}
-      </div>
-    </section>
-  `
+  update () {
+    return true
+  }
 
-  function cell (data) {
+  createElement (goal, targets) {
     return html`
-      <div class="TargetGrid-cell">
-        ${new Target(data.id, Object.assign({}, data, { goal: opts.goal })).render()}
-      </div>
+      <section class="TargetGrid">
+        <div class="TargetGrid-container">
+          ${targets.map((data) => html`
+            <div class="TargetGrid-cell">
+              ${this.cache(Target, `${goal}-${data.id}`).render(Object.assign({ goal }, data))}
+            </div>
+          `)}
+        </div>
+      </section>
     `
   }
 }

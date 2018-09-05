@@ -143,12 +143,12 @@
 }
 
 :root[scripting-enabled] .Target.is-collapsed .Target-body,
-:root:not([scripting-enav]) .Target:not(:target) .Target-body {
+:root:not([scripting-enabled]) .Target:not(:target) .Target-body {
   position: absolute;
 }
 
 :root[scripting-enabled] .Target.is-collapsed .Target-content,
-:root:not([scripting-enav]) .Target:not(:target) .Target-content {
+:root:not([scripting-enabled]) .Target:not(:target) .Target-content {
   position: relative;
   width: 100%;
 }
@@ -180,6 +180,6 @@
   z-index: 1;
 }
 
-:root:not([scripting-enav]) .Target:target .Target-fade {
+:root:not([scripting-enabled]) .Target:target .Target-fade {
   display: none;
 }
