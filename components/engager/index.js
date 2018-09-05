@@ -13,13 +13,17 @@ module.exports = class Engager extends Component {
     this.local = state.components[id] = {
       id: id,
       tabs: null,
-      expanded: null,
+      selected: null,
       inTransition: false
     }
   }
 
   update () {
     return true
+  }
+
+  unload () {
+    this.local.selected = null
   }
 
   select (id) {

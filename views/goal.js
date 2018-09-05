@@ -119,7 +119,7 @@ class GoalPage extends View {
           </section>
           <section class="u-container u-spaceV8">
             ${/* eslint-disable indent */
-            state.cache(Engager, 'home-cta').render([
+            state.cache(Engager, 'goal-cta').render([
               { id: 'my-tab1', label: 'Noget inhold', content: () => html`<p>Nullam eget mattis nibh. Fusce sit amet feugiat massa, eu tincidunt orci.</p>` },
               { id: 'my-tab2', label: 'Mere inhold at se', content: () => html`<p>Integer ut eros velit. Nulla pharetra id magna ut congue. Phasellus non varius nisi, nec porta ligula.</p>` },
               { id: 'my-tab3', label: 'Indhold for alle', content: () => html`<p>Ut sodales sit amet lorem molestie porttitor. Donec vel neque fringilla magna fringilla cursus ac vitae diam.</p>` },
