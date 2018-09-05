@@ -13,7 +13,6 @@
   height: var(--height);
   contain: size layout style;
   position: relative;
-  z-index: 1;
 }
 
 .Header--static {

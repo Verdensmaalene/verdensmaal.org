@@ -1,5 +1,5 @@
 var html = require('choo/html')
-var Component = require('nanocomponent')
+var Component = require('choo/component')
 
 var SIZES = [ 'small', 'medium' ]
 var SPEEDS = [ 45000, 35000, 25000 ]

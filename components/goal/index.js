@@ -3,11 +3,10 @@ var Component = require('choo/component')
 var { vw, vh, className } = require('../base')
 var icon = require('./icon')
 
-var PRESS_SCALE_FACTOR = 0.97 // Hardcoded in CSS, see ./index.css
-
-module.exports = class Link extends Component {
+module.exports = class Goal extends Component {
   constructor (id, state, emit) {
     super(id)
+    this.emit = emit
     this.local = state.components[id] = {
       id: id,
       blank: false,
@@ -19,52 +18,67 @@ module.exports = class Link extends Component {
 
   update (props = {}) {
     if (this.local.inTransition) return false
+    if (props.label !== this.local.label) return true
     if (props.format !== this.local.format) return true
     if (!props.blank && !this.local.isInitialized) return true
     return false
   }
 
-  // afterupdate (element) {
-  //   if (this.doc && !this.isInitialized) this.init(element)
-  // }
+  load (element) {
+    var local = this.local
+    local.inTransition = false
+    if (local.href && local.label && !local.isInitialized && !local.static) {
+      this.init(element)
+    }
+  }
 
-  // load (element) {
-  //   if (this.doc && !this.isInitialized) this.init(element)
-  // }
+  afterupdate (element) {
+    this.load(element)
+  }
+
+  unload () {
+    this.local.isInitialized = false
+  }
 
   init (element) {
-    const { state, emit, goal } = this
+    this.local.isInitialized = true
 
-    this.isInitialized = true
+    var self = this
+    var start = null
+    var isPressed = false
+    var isAborted = false
 
-    let start = null
-    let isPressed = false
-    let isAborted = false
-
+    element.addEventListener('mousedown', onpress, { passive: true })
     element.addEventListener('touchstart', onpress, { passive: true })
     element.addEventListener('touchend', onrelease, { passive: true })
-    element.addEventListener('mousedown', onpress, { passive: true })
     element.addEventListener('mouseup', onrelease, { passive: true })
     element.addEventListener('dragstart', abort, { passive: true })
-    element.addEventListener('touchmove', function ontouchmove (event) {
-      if (start && event.touches) {
-        const touch = event.touches.item(0)
-        const deltaX = Math.abs(touch.clientX - start.clientX)
-        const deltaY = Math.abs(touch.clientY, start.clientY)
+    element.addEventListener('touchmove', ontouchmove, { passive: true })
+    element.addEventListener('click', onclick, true)
 
-        if (deltaX > 9 || deltaY > 9) {
-          abort()
-        }
+    // prevent navigation on click
+    function onclick (event) {
+      if (typeof self.local.onclick === 'function') {
+        self.local.onclick(event)
+        // respect upstream defaultPrevented and abort animation
+        if (event.defaultPrevented) abort()
       }
-    }, { passive: true })
-    element.addEventListener('click', function onclick (event) {
-      const inTransition = state.transitions.includes('takeover')
 
-      if (isAborted || isPressed || inTransition) {
+      if (isAborted || isPressed || self.local.inTransition) {
         event.preventDefault()
       }
-    })
+    }
 
+    // abort transition if detecting scroll
+    function ontouchmove (event) {
+      if (!start || !event.touches) return
+      var touch = event.touches.item(0)
+      var deltaX = Math.abs(touch.clientX - start.clientX)
+      var deltaY = Math.abs(touch.clientY, start.clientY)
+      if (deltaX > 9 || deltaY > 9) abort()
+    }
+
+    // abort any ongoing transition
     function abort () {
       if (isPressed) {
         element.classList.remove('is-pressed')
@@ -77,27 +91,28 @@ module.exports = class Link extends Component {
       window.removeEventListener('scroll', abort, { passive: true })
     }
 
+    // bort on escape
     function onescape (event) {
-      if (event.key === 'Escape') {
-        abort()
-      }
+      if (event.key === 'Escape') abort()
     }
 
+    // utility for preventing default input behavior
     function preventDefault (event) {
       event.preventDefault()
     }
 
+    // set up for transition to start
     function onpress (e) {
       if ((e.which && e.which === 3) || (e.button && e.button !== 0) ||
         e.ctrlKey || e.metaKey || e.altKey || e.shiftKey ||
-        state.transitions.includes('takeover')) return
+        self.local.inTransition) return
 
       isPressed = true
       isAborted = false
       element.classList.add('is-pressed')
 
       if (e.touches) {
-        const touch = e.touches.item(0)
+        let touch = e.touches.item(0)
         start = { clientX: touch.clientX, clientY: touch.clientY }
       }
 
@@ -105,10 +120,10 @@ module.exports = class Link extends Component {
       window.addEventListener('scroll', abort, { passive: true })
     }
 
+    // start transition on release
     function onrelease () {
-      if (isAborted || !isPressed || state.transitions.includes('takeover')) {
-        return
-      }
+      if (isAborted || !isPressed || self.local.inTransition) return
+      self.local.inTransition = true
 
       start = null
       isAborted = false
@@ -118,146 +133,120 @@ module.exports = class Link extends Component {
       window.addEventListener('touchmove', preventDefault)
       window.addEventListener('wheel', preventDefault)
 
-      /**
-       * Broadcast transition start
-       */
-
-      emit('transitions:start', 'takeover')
-
-      /**
-       * Create layers
-       */
-
-      const takeover = html`<div class="View-takeover View-takeover--${goal} u-bg${goal}"></div>`
-      const hero = {} // (new Hero(Hero.identity(doc), state, emit, { background: false })).render(doc)
-
-      /**
-       * Avoid transitions while calculating layout
-       */
-
-      hero.classList.add('no-transition')
-
-      /**
-       * Extrapolate origin location (where to animate from)
-       */
-
-      const figure = element.querySelector('.js-figure').getBoundingClientRect()
-      const box = element.getBoundingClientRect()
-
-      /**
-       * Transform takeover into position
-       */
-
-      const factor = ((1 - PRESS_SCALE_FACTOR) / 2)
-      takeover.style.transform = `
-        translate(${box.left + (box.width * factor)}px, ${box.top + (box.height * factor)}px)
-        scaleX(${(box.width * PRESS_SCALE_FACTOR) / vw()})
-        scaleY(${(box.height * PRESS_SCALE_FACTOR) / vh()})
+      // the label to be transformed into place
+      var label = html`
+        <div class="Goal Goal--${self.local.number} Goal--transition is-hidden">
+          ${icon.label(self.local.number, self.local.label)}
+        </div>
       `
 
-      window.requestAnimationFrame(() => {
-        document.body.appendChild(hero)
+      // the background to cover the page
+      var takeover = html`
+        <div class="Goal Goal--takeover Goal--fullscreen Goal--${self.local.number} ${self.local.number === 7 ? 'Goal--light' : ''} is-hidden">
+          <div class="Goal-container" style="visibility: hidden;">
+            <div class="Goal-label">
+              ${icon.label(self.local.number, self.local.label)}
+            </div>
+            ${self.children ? html`
+              <div class="Goal-content" style="--offset: ${icon.offset(self.local.number, self.local.label)}">
+                ${self.children()}
+              </div>
+            ` : null}
+          </div>
+        </div>
+      `
 
-        /**
-         * Create a clone of the title element that we'll be animating
-         */
+      // figure out origin location (where to animate from)
+      var origin = element.querySelector('.js-label').getBoundingClientRect()
+      var box = element.getBoundingClientRect()
 
-        const title = hero.querySelector('.js-title')
-        const clone = title.cloneNode(true)
+      window.requestAnimationFrame(function () {
+        document.body.appendChild(takeover)
 
-        clone.classList.add('is-clone')
-        title.parentElement.appendChild(clone)
+        // figure out where to animate to
+        var target = takeover.querySelector('.js-label').getBoundingClientRect()
 
-        /**
-         * Render hero in place and read title location (where to animate to)
-         */
+        // put the label in place *on top of the actual label*
+        label.style.setProperty('height', `${target.height}px`)
+        label.style.setProperty('width', `${target.width}px`)
+        label.style.setProperty('left', `${target.left}px`)
+        label.style.setProperty('top', `${target.top}px`)
+        label.style.setProperty('--translateX', `${origin.left - target.left}px`)
+        label.style.setProperty('--translateY', `${origin.top - target.top}px`)
+        label.style.setProperty('--scale', origin.width / target.width)
 
-        document.body.insertBefore(takeover, hero)
-        const target = title.getBoundingClientRect()
+        // move takeover into position
+        takeover.style.setProperty('--vh', vh())
+        takeover.style.setProperty('--vw', vw())
+        takeover.style.setProperty('--height', box.height)
+        takeover.style.setProperty('--width', box.width)
+        takeover.style.setProperty('--left', box.left)
+        takeover.style.setProperty('--top', box.top)
 
-        /**
-         * Put the clone in position on top of the icon label
-         */
+        document.body.appendChild(label)
 
-        Object.assign(clone.style, {
-          height: `${target.height}px`,
-          width: `${target.width}px`,
-          left: `${target.left}px`,
-          top: `${target.top}px`,
-          transform: `
-            translate(${figure.left - target.left}px, ${figure.top - target.top}px)
-            scale(${figure.width / target.width})
-          `
-        })
-
-        /**
-         * Navigate when clone is in place
-         */
-
-        clone.addEventListener('transitionend', function ontransitionend (event) {
-          if (event.target === clone) {
-            clone.removeEventListener('transitionend', ontransitionend)
-            next()
+        // clean up and pushState when label is in place
+        label.addEventListener('transitionend', function ontransitionend (event) {
+          if (event.target === label) {
+            window.removeEventListener('touchmove', preventDefault)
+            window.removeEventListener('wheel', preventDefault)
+            self.emit('pushState', self.local.href)
           }
         })
 
-        /**
-         * Cleanup and push state
-         */
-
-        let timeout
-        function next () {
-          window.clearTimeout(timeout)
-          window.removeEventListener('touchmove', preventDefault)
-          window.removeEventListener('wheel', preventDefault)
-          element.classList.remove('is-pressed')
-          emit('transitions:pushstate', element.href)
-        }
-
-        /**
-         * Let em' loose
-         */
-
-        window.requestAnimationFrame(() => {
-          // Fallback in case the transition never finish
-          timeout = window.setTimeout(next, 2000)
-          hero.classList.remove('no-transition')
-          clone.classList.add('in-transition')
-          takeover.style.transform = 'translate(0px, 0px) scaleX(1) scaleY(1)'
-          clone.style.transform = 'translate(0px, 0px) scale(1)'
+        // let em' loose
+        window.requestAnimationFrame(function () {
+          label.classList.remove('is-hidden')
+          takeover.classList.remove('is-hidden')
+          takeover.classList.add('in-transition')
+          label.classList.add('in-transition')
         })
       })
     }
   }
 
-  createElement (props = {}, children = null) {
-    this.local.blank = props.blank
-    var format = this.local.format = props.format || 'square'
-    var classes = className(`Goal Goal--${format}`, {
+  createElement (props = {}, children) {
+    this.children = children
+    props = Object.assign(this.local, props, {
+      format: props.format || 'square'
+    })
+    var classes = className(`Goal Goal--${props.format}`, {
       [`Goal--${props.number}`]: !props.blank,
       'Goal--light': props.number === 7,
       'Goal--blank': props.blank
     })
 
+    var content = html`
+      <div class="Goal-container">
+        ${!props.blank && props.format !== 'fullscreen' ? html`
+          <div class="Goal-cell">
+            ${icon(props.number, props.label)}
+          </div>
+        ` : null}
+        ${props.number && props.label && props.format === 'fullscreen' ? html`
+          <div class="Goal-label">
+            ${icon.label(props.number, props.label)}
+          </div>
+        ` : null}
+        ${props.number && props.label && children ? html`
+          <div class="Goal-content" style="--offset: ${icon.offset(props.number, props.label)}">
+            ${children()}
+          </div>
+        ` : null}
+      </div>
+    `
+
+    if (props.href) {
+      return html`
+        <a class="${classes}" id="${this.local.id}" href="${props.href}" title="${props.label ? props.label.replace(/\n/, ' ') : ''}">
+          ${content}
+        </a>
+      `
+    }
+
     return html`
       <div class="${classes}" id="${this.local.id}">
-        <div class="Goal-container">
-          ${!props.blank && format !== 'fullscreen' ? html`
-            <div class="Goal-cell">
-              ${icon(props.number, props.label)}
-            </div>
-          ` : null}
-          ${props.number && props.label && format === 'fullscreen' ? html`
-            <div class="Goal-label">
-              ${icon.label(props.number, props.label)}
-            </div>
-          ` : null}
-          ${props.number && props.label && children ? html`
-            <div class="Goal-content" style="--offset: ${icon.offset(props.number, props.label)}">
-              ${children}
-            </div>
-          ` : null}
-        </div>
+        ${content}
       </div>
     `
   }

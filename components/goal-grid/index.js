@@ -41,18 +41,12 @@ var LAYOUTS = [ // [<landscape>, <portrait>]
 module.exports = class GoalGrid extends Component {
   constructor (id, state, emit) {
     super(id)
+    this.emit = emit
     this.backgrounds = []
     this.cache = state.cache
     this.local = state.components[id] = {
-      id: id,
-      inTransition: false
+      id: id
     }
-  }
-
-  update (goals = [], layout) {
-    if (this.local.inTransition) return false
-    if (this.local.layout !== layout) return true
-    return this.local.goals !== goals.map((goal) => goal.number).join()
   }
 
   background (num, opts) {
@@ -71,12 +65,19 @@ module.exports = class GoalGrid extends Component {
     })
   }
 
+  update (goals = [], layout) {
+    if (this.local.layout !== layout) return true
+    if (this.local.goals.length !== goals.length) return true
+    for (let i = 0, len = this.local.goals.length; i < len; i++) {
+      if (this.local.goals[i].href !== goals[i].href) return true
+    }
+    return false
+  }
+
   createElement (goals = [], layout = null, slot = Function.prototype) {
     var self = this
     this.local.layout = layout
-    this.local.goals = goals.map((goal) => goal.number).join()
-
-    var cache = this.cache
+    this.local.goals = goals.slice()
 
     var cells = []
     for (let i = 0; i < TOTAL_GOALS; i++) {
@@ -85,10 +86,10 @@ module.exports = class GoalGrid extends Component {
       let goal = goals.find((goal) => goal.number === num)
       let format = pair.includes(num) ? ['landscape', 'portrait'][pair.indexOf(num)] : 'square'
       let props = Object.assign({ format: format, blank: !goal }, goal)
-      cells.push(child(props, i + 1))
+      cells.push(cell(props, i + 1))
       if (format !== 'square') {
         // augument a square goal for each landscape/portrait
-        cells.push(child(Object.assign({}, props, { format: 'square' }), i + 1))
+        cells.push(cell(Object.assign({}, props, { format: 'square' }), i + 1))
       }
     }
 
@@ -105,23 +106,30 @@ module.exports = class GoalGrid extends Component {
 
     // create grid child cell
     // (obj, num) -> HTMLElement
-    function child (props, num) {
-      var goal = cache(Goal, `goalgrid-${num}-${props.format}`)
+    function cell (props, num) {
+      var id = `goal-${num}-${props.format}`
+      var goal = self.cache(Goal, id)
+      var hasChildren = !props.blank && props.format !== 'square'
+
       return html`
-        <a class="GoalGrid-item GoalGrid-item--${num} GoalGrid-item--${props.format}" href="${props.href}" title="${props.label ? props.label.replace(/\n/, ' ') : ''}">
-          ${goal.render(props, !props.blank && props.format !== 'square' ? html`
-            <div class="GoalGrid-content">
-              <p class="GoalGrid-description ${props.description.length > 120 ? 'GoalGrid-description--long' : ''}">${props.description}</p>
-              <span class="GoalGrid-button">${text`Explore goal`}</span>
-              ${props.format !== 'square' ? html`
-                <div class="GoalGrid-background">
-                  ${self.background(props.number, { size: 'small' })}
-                </div>
-              ` : null}
-            </div>
-          ` : null)}
-        </a>
+        <div class="GoalGrid-item GoalGrid-item--${num} GoalGrid-item--${props.format}">
+          ${goal.render(props, hasChildren ? children : null)}
+        </div>
       `
+
+      function children () {
+        return html`
+          <div class="GoalGrid-content">
+            <p class="GoalGrid-description ${props.description.length > 120 ? 'GoalGrid-description--long' : ''}">${props.description}</p>
+            <span class="GoalGrid-button">${text`Explore goal`}</span>
+            ${props.format !== 'square' ? html`
+              <div class="GoalGrid-background">
+                ${self.background(props.number, { size: 'small' })}
+              </div>
+            ` : null}
+          </div>
+        `
+      }
     }
   }
 }

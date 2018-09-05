@@ -9,9 +9,23 @@
   width: 100%;
   position: relative;
   z-index: 0;
-  transition: background-color 150ms var(--ease-out);
   background: var(--current-background);
   color: var(--current-color);
+  transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+.Goal:hover {
+  background: var(--current-background);
+}
+
+.Goal.is-hidden {
+  visibility: hidden;
+  transition: none;
+}
+
+.Goal.is-pressed {
+  transform: scale(0.97)
 }
 
 .Goal::before {
@@ -52,7 +66,9 @@
   transition: opacity 180ms var(--ease-out);
 }
 
-.Goal--fullscreen::after {
+.Goal--fullscreen::after,
+.Goal--takeover::after,
+.Goal--transition::after {
   content: none;
 }
 
@@ -170,6 +186,7 @@
   height: auto;
   min-height: 0;
   margin-top: 8%;
+  z-index: 1;
   color: currentColor;
   font-family: var(--heading-font-family);
   line-height: var(--heading-line-height);
@@ -191,6 +208,15 @@
   margin-top: -4%;
 }
 
+.Goal[href] .Goal-glyph {
+  transition: transform 180ms var(--ease-out);
+  will-change: transform;
+}
+
+.Goal[href]:hover .Goal-glyph {
+  transform: scale(1.08);
+}
+
 /**
  * Content container
  */
@@ -206,10 +232,11 @@
 }
 
 /**
- * Fullscreen
+ * Fullscreen/takeover
  */
 
-.Goal--fullscreen {
+.Goal--fullscreen,
+.Goal--takeover {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -217,9 +244,44 @@
   width: 100vw;
   height: 100vh;
   min-height: 27rem;
-  /* padding-top: var(--Goal-padding);
-  margin-top: calc(var(--Goal-padding) * -1); */
   overflow: hidden;
+}
+
+.Goal--takeover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transform-origin: 0 0;
+  transform:
+    translateX(calc(1px * (var(--left) + var(--width) * (1 - var(--shrink, 1)) / 2)))
+    translateY(calc(1px * (var(--top) + var(--height) * (1 - var(--shrink, 1)) / 2)))
+    scaleX(calc((var(--width) * var(--shrink, 1)) / var(--vw)))
+    scaleY(calc((var(--height) * var(--shrink, 1)) / var(--vh)));
+}
+
+.Goal--takeover.in-transition {
+  transition: transform 300ms var(--ease-in);
+  transform: translateX(0px) translateY(0px) scaleX(1) scaleY(1);
+}
+
+.Goal--transition {
+  position: fixed;
+  height: var(--height);
+  width: var(--width);
+  left: var(--left);
+  top: var(--top);
+  z-index: 1;
+  background: transparent;
+  transform-origin: 0 0;
+  transform:
+    translateX(var(--translateX))
+    translateY(var(--translateY)) scale(var(--scale));
+}
+
+.Goal--transition.in-transition {
+  transition: transform 330ms 150ms var(--ease);
+  transform: translateX(0px) translateY(0px) scale(1);
 }
 
 .Goal--fullscreen .Goal-container {
@@ -271,20 +333,94 @@
   }
 }
 
-.Goal--1.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-1-shaded)); }
-.Goal--2.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-2-shaded)); }
-.Goal--3.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-3-shaded)); }
-.Goal--4.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-4-shaded)); }
-.Goal--5.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-5-shaded)); }
-.Goal--6.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-6-shaded)); }
-.Goal--7.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-7-shaded)); }
-.Goal--8.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-8-shaded)); }
-.Goal--9.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-9-shaded)); }
-.Goal--10.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-10-shaded)); }
-.Goal--11.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-11-shaded)); }
-.Goal--12.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-12-shaded)); }
-.Goal--13.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-13-shaded)); }
-.Goal--14.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-14-shaded)); }
-.Goal--15.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-15-shaded)); }
-.Goal--16.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-16-shaded)); }
-.Goal--17.Goal--fullscreen .Goal-number { color: rgb(var(--color-goal-17-shaded)); }
+.Goal--fullscreen .Goal-label,
+.Goal--transition .Goal-label,
+.Goal--takeover .Goal-label {
+  margin: 0;
+}
+
+.Goal--1.Goal--fullscreen .Goal-number,
+.Goal--1.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-1-shaded));
+}
+
+.Goal--2.Goal--fullscreen .Goal-number,
+.Goal--2.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-2-shaded));
+}
+
+.Goal--3.Goal--fullscreen .Goal-number,
+.Goal--3.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-3-shaded));
+}
+
+.Goal--4.Goal--fullscreen .Goal-number,
+.Goal--4.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-4-shaded));
+}
+
+.Goal--5.Goal--fullscreen .Goal-number,
+.Goal--5.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-5-shaded));
+}
+
+.Goal--6.Goal--fullscreen .Goal-number,
+.Goal--6.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-6-shaded));
+}
+
+.Goal--7.Goal--fullscreen .Goal-number,
+.Goal--7.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-7-shaded));
+}
+
+.Goal--8.Goal--fullscreen .Goal-number,
+.Goal--8.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-8-shaded));
+}
+
+.Goal--9.Goal--fullscreen .Goal-number,
+.Goal--9.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-9-shaded));
+}
+
+.Goal--10.Goal--fullscreen .Goal-number,
+.Goal--10.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-10-shaded));
+}
+
+.Goal--11.Goal--fullscreen .Goal-number,
+.Goal--11.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-11-shaded));
+}
+
+.Goal--12.Goal--fullscreen .Goal-number,
+.Goal--12.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-12-shaded));
+}
+
+.Goal--13.Goal--fullscreen .Goal-number,
+.Goal--13.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-13-shaded));
+}
+
+.Goal--14.Goal--fullscreen .Goal-number,
+.Goal--14.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-14-shaded));
+}
+
+.Goal--15.Goal--fullscreen .Goal-number,
+.Goal--15.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-15-shaded));
+}
+
+.Goal--16.Goal--fullscreen .Goal-number,
+.Goal--16.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-16-shaded));
+}
+
+.Goal--17.Goal--fullscreen .Goal-number,
+.Goal--17.Goal--transition .Goal-number {
+  color: rgb(var(--color-goal-17-shaded));
+}
+

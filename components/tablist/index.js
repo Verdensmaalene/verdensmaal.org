@@ -1,6 +1,6 @@
 var assert = require('assert')
 var html = require('choo/html')
-var Component = require('nanocomponent')
+var Component = require('choo/component')
 var { className } = require('../base')
 
 module.exports = class Tablist extends Component {

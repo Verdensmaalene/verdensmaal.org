@@ -65,8 +65,8 @@ class GoalPage extends View {
     })
   }
 
-  update () {
-    return true
+  update (state, emit) {
+    return !state.ui.transitions.includes('goal-page')
   }
 
   createElement (state, emit) {
@@ -81,7 +81,7 @@ class GoalPage extends View {
       if (err) throw err
 
       var goal = state.cache(Goal, state.params.wildcard)
-      var props = { format: 'fullscreen', number: +num }
+      var props = { format: 'fullscreen', number: +num, static: true }
       if (!doc) {
         return html`
           <main class="View-main">
@@ -102,7 +102,7 @@ class GoalPage extends View {
 
       return html`
         <main class="View-main">
-          ${goal.render(props, html`
+          ${goal.render(props, () => html`
             <div>
               ${background}
               <div class="Text u-slideUp">
@@ -114,16 +114,18 @@ class GoalPage extends View {
             <div class="Text u-spaceB4">
               <h2>${asText(doc.data.targets_title)}</h2>
               ${asElement(doc.data.targets_description, state.docs.resolve)}
-          </div>
+            </div>
             ${state.cache(TargetGrid, `${doc.data.number}-targets`).render(doc.data.number, targets)}
           </section>
           <section class="u-container u-spaceV8">
-            ${state.cache(Engager, 'home-cta').render([
+            ${/* eslint-disable indent */
+            state.cache(Engager, 'home-cta').render([
               { id: 'my-tab1', label: 'Noget inhold', content: () => html`<p>Nullam eget mattis nibh. Fusce sit amet feugiat massa, eu tincidunt orci.</p>` },
               { id: 'my-tab2', label: 'Mere inhold at se', content: () => html`<p>Integer ut eros velit. Nulla pharetra id magna ut congue. Phasellus non varius nisi, nec porta ligula.</p>` },
               { id: 'my-tab3', label: 'Indhold for alle', content: () => html`<p>Ut sodales sit amet lorem molestie porttitor. Donec vel neque fringilla magna fringilla cursus ac vitae diam.</p>` },
               { id: 'my-tab4', label: 'Endu en', content: () => html`<p>Aenean vitae felis purus. Aliquam lobortis neque nec ante aliquam, vitae finibus enim posuere.</p>` }
-            ])}
+            ])
+            /* eslint-enable indent */}
           </section>
           ${doc.data.interlink_heading && doc.data.interlink_heading.length ? html`
             <div class="u-container u-spaceV8">

@@ -1,6 +1,6 @@
 var css = require('sheetify')
 var html = require('choo/html')
-var Component = require('nanocomponent')
+var Component = require('choo/component')
 css('./index.css')
 
 var OPEN_EYE = 'M566 566c208.03 0 396.36-94.17 565-282.5C962.36 95.17 774.03 1 566 1 357.97 1 169.64 95.17 1 283.5 169.64 471.83 357.97 566 566 566z'

@@ -3,6 +3,7 @@ module.exports = ui
 function ui (state, emitter) {
   state.ui = state.ui || {}
   state.ui.isLoading = false
+  state.ui.transitions = []
   state.ui.hasOverlay = false
   state.ui.gridLayout = state.ui.gridLayout || Math.ceil(Math.random() * 9)
 
@@ -15,6 +16,22 @@ function ui (state, emitter) {
   emitter.prependListener('navigate', function () {
     state.hasOverlay = false
     document.documentElement.classList.remove('has-overlay')
+  })
+
+  emitter.on('transition:start', function (name, data) {
+    if (name === 'goal-page') {
+      state.docs.getByUID('goal', data.uid, Function.prototype)
+    }
+    state.ui.transitions.push(name)
+  })
+
+  emitter.on('transition:end', function (name) {
+    var next = state.ui.transitions.filter((transition) => transition !== name)
+    state.ui.transitions = next
+  })
+
+  emitter.on('navigate', function () {
+    state.ui.transitions = []
   })
 
   var requests = 0

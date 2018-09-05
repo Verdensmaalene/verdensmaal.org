@@ -42,9 +42,9 @@ module.exports.offset = offset
 // (num, str, str?) -> HTMLElement
 function icon (num, title, lang) {
   return html`
-    <div class="Goal-icon Goal-icon--${num}">
+    <div class="Goal-icon Goal-icon--${num} js-icon">
       ${draw(num, title, lang)}
-      <div class="Goal-glyph">${icons[num - 1]()}</div>
+      <div class="Goal-glyph js-glyph">${icons[num - 1]()}</div>
     </div>
   `
 }
@@ -63,7 +63,7 @@ function loading (num, lang) {
           <text class="Goal-number" font-size="59.4" fill="currentColor" text-anchor="middle" alignment-baseline="hanging">
             <tspan x="${digitPos}" y="41" letter-spacing="-0.1" text-anchor="middle">${translate(num, lang)}</tspan>
           </text>
-          <g y="0" class="Icon-text Hero-iconText">
+          <g y="0" class="Goal-text">
             <rect x="57" y="0.5" width="120" height="16.5" fill="rgba(255, 255, 255, 0.5)" />
             <rect x="57" y="24.5" width="90" height="16.5" fill="rgba(255, 255, 255, 0.5)" />
           </g>
@@ -88,7 +88,7 @@ function label (num, title, lang) {
 function glyph (num) {
   return html`
     <div class="Goal-icon Goal-icon--${num}">
-      <div class="Goal-glyph">${icons[num - 1]()}</div>
+      <div class="Goal-glyph js-glyph">${icons[num - 1]()}</div>
     </div>
   `
 }
@@ -102,7 +102,7 @@ function draw (number, text, lang = 'en') {
   var height = lines.length === 1 ? 48 : (lines.length * 24)
   var longerLine = lines.find(line => line.length > (multiplier * 17))
 
-  // Deduct 5% on long lines for extra measure
+  // deduct 5% on long lines for extra measure
   if (longerLine) multiplier -= 0.05
 
   var textPos = 57 + offset(number, text, lang)
@@ -113,7 +113,7 @@ function draw (number, text, lang = 'en') {
   if (isArabic) digitPos = 200 - digitPos
 
   return html`
-    <svg role="presentational" aria-hidden="true" class="${className('Goal-label', { 'u-rtl': isArabic })}" height="${height * 0.92}" viewBox="0 0 200 ${height}" style="-ms-flex: 1 1 ${height}px;" preserveAspectRatio="xMidYMin meet">
+    <svg role="presentational" aria-hidden="true" class="${className('Goal-label js-label', { 'u-rtl': isArabic })}" height="${height * 0.92}" viewBox="0 0 200 ${height}" style="-ms-flex: 1 1 ${height}px;" preserveAspectRatio="xMidYMin meet">
       <g transform="scale(0.94)">
         <text class="Goal-number" font-size="59.4" fill="currentColor" text-anchor="middle" alignment-baseline="hanging">
           <tspan x="${digitPos}" y="41" letter-spacing="${isArabic ? '-0.1' : ''}" text-anchor="middle">
@@ -121,12 +121,14 @@ function draw (number, text, lang = 'en') {
           </tspan>
         </text>
         <text class="Goal-text" font-size="${multiplier * 24}" y="-7" fill="currentColor" text-anchor="start" alignment-baseline="hanging">
-          ${lines.map((line) => {
-    var styles = lineStyles(line, lang)
-    return html`
-              <tspan x="${textPos}" dy="24" word-spacing="${!isArabic ? styles.wordSpacing : ''}" letter-spacing="${!isArabic ? styles.letterSpacing : ''}" text-anchor="start">${line}</tspan>
-            `
-  })}
+          ${/* eslint-disable indent */
+            lines.map((line) => {
+              var styles = lineStyles(line, lang)
+              return html`
+                <tspan x="${textPos}" dy="24" word-spacing="${!isArabic ? styles.wordSpacing : ''}" letter-spacing="${!isArabic ? styles.letterSpacing : ''}" text-anchor="start">${line}</tspan>
+              `
+            })
+          /* eslint-enable indent */}
         </text>
       </g>
     </svg>

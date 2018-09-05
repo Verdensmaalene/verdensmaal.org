@@ -11,7 +11,7 @@
 module.exports = function createPath (follow, step = 15, amplitude = 4, side = -1) {
   var pathLen = follow.getTotalLength()
 
-  // Adjust step so that there are a whole number of steps along the path
+  // adjust step so that there are a whole number of steps along the path
   var numSteps = Math.round(pathLen / step)
 
   var pos = follow.getPointAtLength(0)
@@ -27,31 +27,31 @@ module.exports = function createPath (follow, step = 15, amplitude = 4, side = -
     // This point will be the control point of the quadratic curve forming the
     // squiggle step.
 
-    // The vector from the last point to this one
+    // the vector from the last point to this one
     let vector = {
       x: (pos.x - last.x),
       y: (pos.y - last.y)
     }
-    // The length of this vector
+    // the length of this vector
     let vectorLen = Math.sqrt(vector.x * vector.x + vector.y * vector.y)
-    // The point halfwasy between last point and tis one
+    // the point halfwasy between last point and tis one
     let half = {
       x: (last.x + vector.x / 2),
       y: (last.y + vector.y / 2)
     }
-    // The vector that is perpendicular to 'vector'
+    // the vector that is perpendicular to 'vector'
     let perpVector = {
       x: -(amplitude * vector.y / vectorLen),
       y: (amplitude * vector.x / vectorLen)
     }
-    // No calculate the control point position
+    // now calculate the control point position
     let controlPoint = {
       x: (half.x + perpVector.x * side),
       y: (half.y + perpVector.y * side)
     }
 
     newPath += ('Q' + [controlPoint.x, controlPoint.y, pos.x, pos.y].join(','))
-    // Switch the side (for next step)
+    // switch the side (for next step)
     side = -side
   }
 
