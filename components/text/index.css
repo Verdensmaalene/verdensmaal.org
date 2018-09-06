@@ -65,34 +65,6 @@
   background: rgb(var(--color-gray-light));
 }
 
-.Text ul {
-  list-style-type: none;
-}
-
-.Text ol {
-  list-style-type: decimal;
-  padding-left: 22px;
-}
-
-.Text ul li {
-  padding-left: 23px;
-  position: relative;
-}
-
-.Text ol li {
-  padding-left: 8px;
-}
-
-.Text ul li::before {
-  content: "–";
-  position: absolute;
-  left: 0;
-}
-
-.Text li + li {
-  padding-top: 16px;
-}
-
 .Text pre {
   font-size: 12px;
   overflow: auto;
@@ -102,12 +74,46 @@
 }
 
 /**
+ * Lists
+ */
+
+.Text ul {
+  list-style-type: none;
+}
+
+.Text ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+}
+
+.Text ul li {
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.Text ol li {
+  padding-left: 0.5rem;
+}
+
+.Text ul li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+  color: var(--color-theme)
+}
+
+.Text li + li {
+  padding-top: 1rem;
+}
+
+/**
  * 1. Maintain 16/9 aspect ratio for embedded content
  */
 
 .Text iframe {
   width: 100vw;
-  height: calc(100vw * 9/16); /* 1 */
+  height: calc(100% * 9/16); /* 1 */
   max-width: 100%;
   vertical-align: top;
   user-select: none;
@@ -173,7 +179,7 @@
 .Text h2,
 .Text-h2 {
   font-size: 2rem;
-  line-height: 1.05;
+  line-height: 1.1;
 }
 
 .Text h3,

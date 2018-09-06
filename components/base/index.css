@@ -1,4 +1,5 @@
 @import "normalize.css";
+@import "./theme";
 @import "./global";
 @import "./utilities/colors";
 @import "./utilities/display";
