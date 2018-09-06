@@ -595,77 +595,11 @@
   }
 }
 
-.Header:not(.is-fromGoalGrid):not(.is-following) {
-  opacity: 1 !important; /* 1 */
-}
-
-/**
- * 1. Hide the white fill background
- * 2. Prevent it from following along scroll before it getts the `.is-following` state class
- * 3. We are not animating shrink/expand on goal pages
- */
-
-.Header--goalPage:not(.is-following):not(.is-open):not(:target) .Header-fill {
-  display: none; /* 1 */
-}
-
-.Header--goalPage:not(.is-following):not(.is-open):not(:target) .Header-bar {
-  position: absolute; /* 2 */
-  color: currentColor;
-}
-
-.Header--goalPage:not(.is-following) :matches(.Header-fill, .Header-logo, .Header-content, .Header-list, .Header-button--back) {
-  will-change: unset; /* 3 */
-}
-
-.Header.is-fromGoalGrid:not(.is-following) .Header-button--back {
-  display: block;
-}
-
-.Header.is-fromGoalGrid:matches(.is-open, :target) .Header-button--back {
-  display: none;
-}
-
-.Header.is-fromGoalGrid:not(.is-following) .Header-logo {
-  display: none;
-}
-
-.Header.is-fromGoalGrid:not(.is-following) .Header-logo {
-  display: none;
-}
-
-.Header.is-fromGoalGrid:not(.is-following):matches(.is-open, :target) .Header-logo {
-  display: inline-block;
-}
-
-/**
- * Default to expanded header on wider viewports
- */
-
-@media (max-width: 700px) {
-  .Header :matches(.Header-fill, .Header-logo, .Header-content, .Header-list) {
-    /* transform: none !important; */
-    will-change: unset;
-  }
-}
-
-@media (max-width: 1300px) {
-  .Header--goalPage :matches(.Header-fill, .Header-logo, .Header-content, .Header-list) {
-    /* transform: none !important; */
-    will-change: unset;
-  }
-}
-
-.Header--goalPage.is-following :matches(.Header-fill, .Header-logo, .Header-content, .Header-list) {
-  /* transform: none !important; */
-  will-change: unset;
-}
-
 /**
  * Tooltip
  */
 
-.Header-tooltip {
+/* .Header-tooltip {
   font-family: var(--font-family-body);
   font-weight: normal;
   font-size: 11px;
@@ -706,4 +640,4 @@
   .Header-tooltip {
     display: none;
   }
-}
+} */
