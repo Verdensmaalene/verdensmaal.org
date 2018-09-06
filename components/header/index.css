@@ -575,10 +575,9 @@
 
 /**
  * Fade in on goal pages
- * 1. Except if the user landed hard on the goal page
  */
 
-.Header.is-fromGoalGrid:not(.is-following) {
+.Header.is-fadeIn {
   opacity: 0;
   will-change: opacity;
   animation: Header-in 600ms 100ms var(--ease) forwards;

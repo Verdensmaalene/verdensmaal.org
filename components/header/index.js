@@ -75,8 +75,15 @@ module.exports = class Header extends Component {
       event.preventDefault()
     }
 
+    var classes = className('Header', {
+      [`Header--${opts.theme}`]: opts.theme,
+      'Header--static': opts.static,
+      'is-open': isOpen,
+      'is-fadeIn': opts.fadeIn
+    })
+
     return html`
-      <header class="${className('Header', { [`Header--${opts.theme}`]: opts.theme, 'Header--static': opts.static, 'is-open': isOpen })}" style="--scroll: ${this.local.scroll}" id="${id}">
+      <header class="${classes}" style="--scroll: ${this.local.scroll}" id="${id}">
         <div class="Header-bar">
           <div class="Header-fill"></div>
           <div class="Header-content u-container">

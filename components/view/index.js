@@ -63,6 +63,7 @@ function createView (view, meta) {
       let [, goal] = (state.params.wildcard.match(/^(\d{1,2})-.+$/) || [])
       if (goal) {
         opts.theme = +goal === 7 ? 'black' : 'white'
+        opts.fadeIn = true
         opts.static = true
         if (state.referrer === '') {
           opts.back = { text: text`Back to Goals`, href: '/' }
