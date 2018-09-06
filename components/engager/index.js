@@ -37,9 +37,11 @@ module.exports = class Engager extends Component {
     return html`
       <div class="Engager ${this.local.selected ? 'is-expanded' : ''}" id="${this.local.id}">
         <div class="Engager-tabs js-tabs">
-          ${this.local.selected ? html`
-              ${this.tablist.render(tabs.slice().reverse().sort((tab) => tab.id === this.local.selected ? -1 : 1), this.local.selected, (id) => this.select(id))}
-          ` : tabs.map(button)}
+          ${/* eslint-disable indent */
+            this.local.selected
+              ? this.tablist.render(tabs.slice().reverse().sort((tab) => tab.id === this.local.selected ? -1 : 1), this.local.selected, (id) => this.select(id))
+              : tabs.map(button)
+          /* eslint-enable indent */}
         </div>
         ${tabs.map(accordion)}
       </div>
