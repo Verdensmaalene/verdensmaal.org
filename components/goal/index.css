@@ -395,7 +395,12 @@
 
 .Goal--7.Goal--fullscreen .Goal-number,
 .Goal--7.Goal--transition .Goal-number {
-  color: rgb(var(--color-goal-7-shaded));
+  color: #fff;
+}
+.Goal--7.Goal--fullscreen .Goal-text,
+.Goal--7.Goal--transition .Goal-text,
+.Goal--7.Goal--fullscreen .Goal-content {
+  color: #000;
 }
 
 .Goal--8.Goal--fullscreen .Goal-number,
