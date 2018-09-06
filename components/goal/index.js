@@ -291,7 +291,7 @@ module.exports = class Goal extends Component {
       'Goal--blank': props.blank
     })
 
-    if (props.href) {
+    if (props.href && !isFullscreen) {
       return html`
         <a class="${classes}" id="${this.local.id}" href="${props.href}" title="${props.label ? props.label.replace(/\n/, ' ') : ''}">
           ${content}
