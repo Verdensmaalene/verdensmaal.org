@@ -1,7 +1,6 @@
 var html = require('choo/html')
 var { asText } = require('prismic-richtext')
 var asElement = require('prismic-element')
-var splitRequire = require('split-require')
 var View = require('../components/view')
 var Goal = require('../components/goal')
 var { i18n } = require('../components/base')
@@ -9,25 +8,6 @@ var Engager = require('../components/engager')
 var TargetGrid = require('../components/target-grid')
 
 var text = i18n()
-var backgrounds = [
-  (callback) => splitRequire('../components/goal/background/1', callback),
-  (callback) => splitRequire('../components/goal/background/2', callback),
-  (callback) => splitRequire('../components/goal/background/3', callback),
-  (callback) => splitRequire('../components/goal/background/4', callback),
-  (callback) => splitRequire('../components/goal/background/5', callback),
-  (callback) => splitRequire('../components/goal/background/6', callback),
-  (callback) => splitRequire('../components/goal/background/7', callback),
-  (callback) => splitRequire('../components/goal/background/8', callback),
-  (callback) => splitRequire('../components/goal/background/9', callback),
-  (callback) => splitRequire('../components/goal/background/10', callback),
-  (callback) => splitRequire('../components/goal/background/11', callback),
-  (callback) => splitRequire('../components/goal/background/12', callback),
-  (callback) => splitRequire('../components/goal/background/13', callback),
-  (callback) => splitRequire('../components/goal/background/14', callback),
-  (callback) => splitRequire('../components/goal/background/15', callback),
-  (callback) => splitRequire('../components/goal/background/16', callback),
-  (callback) => splitRequire('../components/goal/background/17', callback)
-]
 
 class GoalPage extends View {
   constructor (id) {
@@ -49,29 +29,12 @@ class GoalPage extends View {
     })
   }
 
-  background (num, opts) {
-    if (typeof window === 'undefined') return null
-
-    var index = num - 1
-    var background = this.backgrounds[index]
-    if (background) return background.render(opts)
-
-    background = backgrounds[index]
-    background((err, Background) => {
-      if (err) background = { render () { throw err } }
-      else background = new Background(`background-${num}`)
-      this.backgrounds[index] = background
-      this.rerender()
-    })
-  }
-
   update (state, emit) {
     return !state.ui.transitions.includes('goal-page')
   }
 
   createElement (state, emit) {
     var [, num, uid] = state.params.wildcard.match(/^(\d{1,2})-(.+)$/)
-    var background = this.background(+num)
 
     return state.docs.getByUID('goal', uid, onresponse)
 
@@ -85,13 +48,14 @@ class GoalPage extends View {
       if (!doc) {
         return html`
           <main class="View-main">
-            ${goal.render(props, background)}
+            ${goal.render(props)}
           </main>
         `
       }
 
       props.number = doc.data.number
       props.label = asText(doc.data.label)
+      props.description = asText(doc.data.description)
 
       var targets = doc.data.targets.map((target) => {
         return Object.assign({}, target, {
@@ -102,14 +66,7 @@ class GoalPage extends View {
 
       return html`
         <main class="View-main">
-          ${goal.render(props, () => html`
-            <div>
-              ${background}
-              <div class="Text u-slideUp">
-                <p><strong>${asText(doc.data.description)}</strong></p>
-              </div>
-            </div>
-          `)}
+          ${goal.render(props)}
           <section class="u-container u-spaceT8" id="targets">
             <div class="Text u-spaceB4">
               <h2>${asText(doc.data.targets_title)}</h2>

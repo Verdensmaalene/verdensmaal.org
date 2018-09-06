@@ -308,7 +308,7 @@
 .GoalGrid-button {
   display: inline-block;
   padding: 0.65em 1em 0.55em;
-  margin-top: 0.5rem;
+  margin-top: 0.5em;
   color: transparent;
   font-size: 1.5rem;
   font-family: var(--heading-font-family);
@@ -338,18 +338,3 @@
 .GoalGrid-item--15:hover .GoalGrid-button { color: rgba(var(--color-goal-15-shaded), 0.13); }
 .GoalGrid-item--16:hover .GoalGrid-button { color: rgba(var(--color-goal-16-shaded), 0.13); }
 .GoalGrid-item--17:hover .GoalGrid-button { color: rgba(var(--color-goal-17-shaded), 0.13); }
-
-/**
- * Background
- */
-
-.GoalGrid-background {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-}

@@ -1,7 +1,28 @@
 var html = require('choo/html')
 var Component = require('choo/component')
+var splitRequire = require('split-require')
 var { vw, vh, className } = require('../base')
 var icon = require('./icon')
+
+var backgrounds = [
+  (callback) => splitRequire('./background/1', callback),
+  (callback) => splitRequire('./background/2', callback),
+  (callback) => splitRequire('./background/3', callback),
+  (callback) => splitRequire('./background/4', callback),
+  (callback) => splitRequire('./background/5', callback),
+  (callback) => splitRequire('./background/6', callback),
+  (callback) => splitRequire('./background/7', callback),
+  (callback) => splitRequire('./background/8', callback),
+  (callback) => splitRequire('./background/9', callback),
+  (callback) => splitRequire('./background/10', callback),
+  (callback) => splitRequire('./background/11', callback),
+  (callback) => splitRequire('./background/12', callback),
+  (callback) => splitRequire('./background/13', callback),
+  (callback) => splitRequire('./background/14', callback),
+  (callback) => splitRequire('./background/15', callback),
+  (callback) => splitRequire('./background/16', callback),
+  (callback) => splitRequire('./background/17', callback)
+]
 
 module.exports = class Goal extends Component {
   constructor (id, state, emit) {
@@ -14,6 +35,21 @@ module.exports = class Goal extends Component {
       inTransition: false,
       isInitialized: false
     }
+  }
+
+  background (num, opts) {
+    if (typeof window === 'undefined') return null
+
+    var index = num - 1
+    var background = backgrounds[index]
+    background((err, Background) => {
+      if (err) background = { render () { throw err } }
+      else background = new Background(`background-${num}`)
+      this.background = (num, opts) => background.render(opts)
+      this.rerender()
+    })
+
+    return null
   }
 
   update (props = {}) {
@@ -147,11 +183,13 @@ module.exports = class Goal extends Component {
             <div class="Goal-label">
               ${icon.label(self.local.number, self.local.label)}
             </div>
-            ${self.children ? html`
-              <div class="Goal-content" style="--offset: ${icon.offset(self.local.number, self.local.label)}">
-                ${self.children()}
-              </div>
-            ` : null}
+            <div class="Goal-content" style="--offset: ${icon.offset(self.local.number, self.local.label)}">
+              ${self.local.description ? html`
+                <div class="Text u-slideUp">
+                  <p><strong>${self.local.description}</strong></p>
+                </div>
+              ` : null}
+            </div>
           </div>
         </div>
       `
@@ -210,31 +248,48 @@ module.exports = class Goal extends Component {
     props = Object.assign(this.local, props, {
       format: props.format || 'square'
     })
+    var isFullscreen = props.format === 'fullscreen'
+    var hasBackground = !props.blank && props.format !== 'square'
+
+    var content = html`
+      <div class="Goal-container">
+        ${!props.blank && !isFullscreen ? html`
+          <div class="Goal-cell">
+            ${icon(props.number, props.label)}
+          </div>
+        ` : null}
+        ${props.number && props.label && isFullscreen ? html`
+          <div class="Goal-label">
+            ${icon.label(props.number, props.label)}
+          </div>
+        ` : null}
+        ${props.number && props.label && ((isFullscreen && props.description) || children) ? html`
+          <div class="Goal-content ${isFullscreen ? 'u-slideUp' : ''}" style="--offset: ${icon.offset(props.number, props.label)}">
+            ${props.description && isFullscreen ? html`
+              <div class="Text">
+                <p><strong>${props.description}</strong></p>
+              </div>
+            ` : null}
+            ${children ? html`
+              <div class="Goal-children">
+                ${typeof children === 'function' ? children() : children}
+              </div>
+            ` : null}
+          </div>
+        ` : null}
+        ${hasBackground ? html`
+          <div class="Goal-background">
+            ${this.background(props.number, { size: isFullscreen ? 'large' : 'small' })}
+          </div>
+        ` : null}
+      </div>
+    `
+
     var classes = className(`Goal Goal--${props.format}`, {
       [`Goal--${props.number}`]: !props.blank,
       'Goal--light': props.number === 7,
       'Goal--blank': props.blank
     })
-
-    var content = html`
-      <div class="Goal-container">
-        ${!props.blank && props.format !== 'fullscreen' ? html`
-          <div class="Goal-cell">
-            ${icon(props.number, props.label)}
-          </div>
-        ` : null}
-        ${props.number && props.label && props.format === 'fullscreen' ? html`
-          <div class="Goal-label">
-            ${icon.label(props.number, props.label)}
-          </div>
-        ` : null}
-        ${props.number && props.label && children ? html`
-          <div class="Goal-content" style="--offset: ${icon.offset(props.number, props.label)}">
-            ${children()}
-          </div>
-        ` : null}
-      </div>
-    `
 
     if (props.href) {
       return html`
