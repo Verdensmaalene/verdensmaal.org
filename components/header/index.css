@@ -120,12 +120,13 @@
 .Header-logo {
   display: flex;
   height: 3rem;
-  padding: 1rem 0.5rem 1rem 0;
+  padding: 1rem 0.5rem 1rem 0.5rem;
   margin-right: auto;
+  margin-left: -0.5rem;
   position: relative;
   vertical-align: top;
   z-index: 1;
-  left: -1px; /* 1 */
+  left: -0.06rem; /* 1 */
   box-sizing: content-box;
 }
 
@@ -153,6 +154,7 @@
 
   .Header-logo {
     height: 3.8rem;
+    font-size: 1.2em;
   }
 
   /**
@@ -162,7 +164,7 @@
 
   .Header:not(.Header--static) .Header-list,
   .Header:not(.Header--static) .Header-back {
-    margin-top: 5px; /* 1 */
+    margin-top: 0.5rem; /* 1 */
   }
 }
 
@@ -213,16 +215,16 @@
 .Header-button--toggle {
   display: flex;
   align-items: center;
-  padding-right: 13px;
+  padding-right: 0.8rem;
   position: absolute;
-  right: 8px;
-  top: 15px;
+  right: 0.3rem;
+  top: 1rem;
   text-align: right;
 }
 
 @media (min-width: 500px) {
   .Header-button--toggle {
-    right: 1rem;
+    right: 0.7rem;  
   }
 }
 
@@ -266,17 +268,17 @@
 
 .Header.is-open .Header-burger,
 .Header:target .Header-burger {
-  transform: translateX(-5px);
+  transform: translateX(-0.3125rem);
 }
 
 .Header.is-open .Header-burger::before,
 .Header:target .Header-burger::before {
-  transform: rotate(-45deg) translate(1px, -1px) scaleX(1.49);
+  transform: rotate(-45deg) translate(0.0625rem, -0.0625rem) scaleX(1.49);
 }
 
 .Header.is-open .Header-burger::after,
 .Header:target .Header-burger::after {
-  transform: rotate(45deg) translate(2px, 0px) scaleX(1.74);
+  transform: rotate(45deg) translate(0.125rem, 0rem) scaleX(1.74);
 }
 
 .Header.is-open .Header-beanPatty,
@@ -290,21 +292,21 @@
  */
 
 .Header-button--back {
-  padding-left: 29px;
+  padding-left: 1.75rem;
 }
 
 .Header-button--link {
-  padding-right: 29px;
+  padding-right: 1.75rem;
 }
 
 .Header-arrow {
   position: absolute;
   border-style: solid;
   border-color: currentColor;
-  width: 10px;
-  height: 10px;
-  border-width: 1px 1px 0 0;
-  top: 50%;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-width: 0.0625rem 0.0625rem 0 0;
+  top: 49%;
   left: 1rem;
   transform: translateY(-50%) rotate(-135deg);
   transition: left 140ms var(--ease-out), right 140ms var(--ease-out);
@@ -313,56 +315,19 @@
 .Header-button--link .Header-arrow {
   transform: translateY(-50%) rotate(45deg);
   left: auto;
-  right: 15px;
+  right: 1rem;
 }
 
 .Header-button--back:hover .Header-arrow {
-  left: 14px;
+  left: 0.875rem;
 }
 
 .Header-button--link:hover .Header-arrow {
-  right: 13px;
+  right: 0.875rem;
 }
 
 /**
- * External arrow
- */
-
-.Header-external {
-  width: 21px;
-  height: 21px;
-  fill: currentColor;
-  position: absolute;
-  top: 27px;
-  right: 14px;
-  transition: top 140ms var(--ease-out), right 140ms var(--ease-out);
-}
-
-.Header-external--small {
-  width: 13px;
-  height: 13px;
-  top: 18px;
-  right: 9px;
-  display: none;
-}
-
-.Header-button--external:hover .Header-external--small {
-  top: 16.5px;
-  right: 7.5px;
-}
-
-@media (min-width: 1200px) {
-  .Header-external {
-    display: none;
-  }
-
-  .Header-external--small {
-    display: block;
-  }
-}
-
-/**
- * Narrow viewports with vertical navigation
+ * Narrow viewports with vertical navigation. Note the max-width query.
  */
 
 @media (max-width: 1000px) {
@@ -385,7 +350,7 @@
   }
 
   /**
-   * The fill is used as background for the full page navigation
+   * The ”fill” is reused used as background for the full page navigation
    */
 
   .Header.is-open .Header-bar,
@@ -450,22 +415,6 @@
     right: 19px;
   }
 
-  .Header-button--external {
-    padding-right: 45px;
-  }
-
-  .Header-external {
-    width: 15px;
-    height: 15px;
-    top: 18px;
-    right: 15px;
-  }
-
-  .Header-button--external:hover .Header-external {
-    top: 1rem;
-    right: 13px;
-  }
-
   .Header-langIcon {
     top: -15px;
     height: 25px;
@@ -482,6 +431,10 @@
     background: rgba(var(--color-gray-light), 0.05);
   }
 }
+
+/**
+ * Give the items in the vertical navigation a bit more space when possible.
+ */
 
 @media (max-width: 1000px) and (min-height: 600px) {
   .Header-button--link {
@@ -503,26 +456,6 @@
   .Header-button--link:hover .Header-arrow {
     right: 18px;
   }
-
-  .Header-button--external {
-    padding-right: 53px;
-  }
-
-  /**
-   * Todo: refactor this reduntant stuff
-   */
-
-  .Header-external {
-    width: 21px;
-    height: 21px;
-    top: 29px;
-    right: 17px;
-  }
-
-  .Header-button--external:hover .Header-external {
-    top: 27px;
-    right: 15px;
-  }
 }
 
 /**
@@ -537,6 +470,8 @@
 
   .Header-nav {
     flex: 1 0 auto;
+    position: relative;
+    right: -1rem;
   }
 
   .Header-list {
