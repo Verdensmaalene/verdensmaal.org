@@ -18,6 +18,7 @@ module.exports = class Header extends Component {
     }
 
     var self = this
+    var preventScroll = (event) => event.preventDefault()
     this.toggle = function (next = !self.local.isOpen) {
       self.local.isOpen = next
       self.rerender()
@@ -25,6 +26,14 @@ module.exports = class Header extends Component {
       window.requestAnimationFrame(function () {
         self.element.querySelector('.js-toggle').focus()
       })
+
+      if (next) {
+        window.addEventListener('wheel', preventScroll)
+        window.addEventListener('touchmove', preventScroll)
+      } else {
+        window.removeEventListener('wheel', preventScroll)
+        window.removeEventListener('touchmove', preventScroll)
+      }
     }
   }
 
@@ -43,9 +52,6 @@ module.exports = class Header extends Component {
   }
 
   load (el) {
-    var preventScroll = (event) => {
-      if (this.local.isOpen) event.preventDefault()
-    }
     var onscroll = nanoraf(() => {
       var scroll = window.scrollY
       var range = Math.min(Math.max(scroll - SCROLL_MIN, 0), SCROLL_MAX)
@@ -54,8 +60,6 @@ module.exports = class Header extends Component {
     })
 
     onscroll()
-    window.addEventListener('wheel', preventScroll)
-    window.addEventListener('touchmove', preventScroll)
     window.addEventListener('scroll', onscroll, { passive: true })
     this.unload = () => window.removeEventListener('scroll', onscroll)
   }
