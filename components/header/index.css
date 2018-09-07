@@ -107,9 +107,11 @@
   list-style: none;
 }
 
-.Header:not(.Header--static) .Header-list {
-  transform-origin: center right;
-  transform: scale(calc(1.2 - (0.2 * var(--scroll, 0))));
+@media (min-width: 1200px) {
+  .Header:not(.Header--static) .Header-list {
+    transform-origin: center right;
+    transform: scale(calc(1.2 - (0.2 * var(--scroll, 0))));
+  }
 }
 
 /**
