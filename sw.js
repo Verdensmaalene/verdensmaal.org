@@ -4,7 +4,11 @@ var TRACKING_REGEX = /https?:\/\/((www|ssl)\.)?google-analytics\.com/
 var IS_DEVELOPMENT = process.env.NODE_ENV === 'development'
 var CACHE_KEY = getCacheKey()
 var FILES = [
-  '/'
+  '/',
+  '/favicon.ico',
+  '/manifest.json',
+  '/icon.png',
+  '/tile.png'
 ]
 
 self.addEventListener('install', function oninstall (event) {
@@ -26,7 +30,8 @@ self.addEventListener('fetch', function onfetch (event) {
   var isSameOrigin = self.location.origin === url.origin
   var isHTML = req.headers.get('accept').includes('text/html')
 
-  if (url.pathname === '/' && !/layout=/.test(url.search)) {
+  // proxy requests for start page with a random layout query
+  if (url.pathname === '/' && !/layout=\d+/.test(url.search)) {
     let layout = Math.ceil(Math.random() * 9)
     let query = `${url.search ? '&' : '?'}layout=${layout}`
     url = new self.URL(url.href + query)

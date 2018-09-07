@@ -3,12 +3,13 @@
 @import "../base";
 
 .Footer {
-  margin: 0 -0.5rem;
+  overflow: hidden;
 }
 
 .Footer-content {
   display: flex;
   flex-wrap: wrap;
+  margin: 0 -0.5rem;
 }
 
 .Footer-section {
@@ -138,7 +139,7 @@
   .Footer-content {
     justify-content: flex-end;
   }
-  
+
   .Footer-section {
     flex-basis: calc((100% / 4) - 1rem);
   }
