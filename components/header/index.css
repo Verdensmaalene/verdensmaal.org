@@ -15,10 +15,6 @@
   position: relative;
 }
 
-.Header--static {
-  display: flex;
-}
-
 .Header--white {
   --current-color: #fff;
 }
@@ -40,13 +36,6 @@
   left: 0;
   z-index: 10;
   user-select: none;
-}
-
-.Header--static .Header-bar {
-  flex: 1 0 100%;
-  display: flex;
-  align-items: center;
-  position: relative;
 }
 
 :root[scripting-enabled] .Header:not(.Header--static) .Header-bar {
@@ -82,10 +71,18 @@
     transform: translateY(calc((-1 * var(--displace)) * var(--scroll, 0)));
     will-change: transform;
   }
+
+  .Header--static .Header-fill {
+    transform-origin: top center;
+    transform: translateY(calc((-1 * var(--displace)) * 0));
+  }
 }
 
 .Header-content {
   display: flex;
+  height: var(--height);
+  position: relative;
+  top: calc((var(--displace) / 2) * -1);
   flex: 1 0 100%;
   align-items: center;
   position: relative;
@@ -96,6 +93,10 @@
   .Header:not(.Header--static) .Header-content {
     transform: translateY(calc((var(--displace, 1) / 2) * (1 - var(--scroll, 0))));
     will-change: transform;
+  }
+
+  .Header--static .Header-content {
+    transform: translateY(calc((var(--displace, 1) / 2) * (1 - 0)));
   }
 }
 
@@ -112,6 +113,16 @@
     transform-origin: center right;
     transform: scale(calc(1.2 - (0.2 * var(--scroll, 0))));
   }
+
+  .Header--static .Header-list {
+    transform-origin: center right;
+    transform: scale(calc(1.2 - (0.2 * 0)));
+  }
+
+  .Header-button--back {
+    transform-origin: center left;
+    transform: scale(calc(1.2 - (0.2 * 0)));
+  }
 }
 
 /**
@@ -121,8 +132,7 @@
 
 .Header-logo {
   display: flex;
-  height: 3rem;
-  padding: 1rem 0.5rem 1rem 0.5rem;
+  padding: 0.5rem;
   margin-right: auto;
   margin-left: -0.5rem;
   position: relative;
@@ -155,18 +165,7 @@
   }
 
   .Header-logo {
-    height: 3.8rem;
     font-size: 1.2em;
-  }
-
-  /**
-   * TODO
-   * 1. Compensate for Header-list transform offset
-   */
-
-  .Header:not(.Header--static) .Header-list,
-  .Header:not(.Header--static) .Header-back {
-    margin-top: 0.5rem; /* 1 */
   }
 }
 
@@ -189,10 +188,6 @@
   white-space: nowrap;
   text-transform: uppercase;
   transition: background-color 180ms var(--ease-out);
-}
-
-.Header--static .Header-button {
-  font-size: 1.8rem; /* TODO? */
 }
 
 .Header-button:hover { background: rgba(var(--color-gray-light), 0.6); }
@@ -220,7 +215,6 @@
   padding-right: 0.8rem;
   position: absolute;
   right: 0.3rem;
-  top: 1rem;
   text-align: right;
 }
 
@@ -311,7 +305,7 @@
   top: 49%;
   left: 1rem;
   transform: translateY(-50%) rotate(-135deg);
-  transition: left 140ms var(--ease-out), right 140ms var(--ease-out);
+  transition: left 140ms var(--ease-out), right 100ms var(--ease-out);
 }
 
 .Header-button--link .Header-arrow {
