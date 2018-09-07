@@ -1,5 +1,4 @@
 var html = require('choo/html')
-var { className } = require('../base')
 
 module.exports = grid
 
