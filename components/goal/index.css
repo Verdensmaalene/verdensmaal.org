@@ -17,7 +17,8 @@
   will-change: transform;
 }
 
-.Goal:hover {
+.Goal:hover,
+.Goal:active {
   background: var(--current-background);
 }
 
