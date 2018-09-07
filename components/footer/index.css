@@ -38,6 +38,11 @@
 .Footer-link {
   padding: 0.5em;
   margin: -0.5em;
+  transition: background-color 140ms var(--ease-out);
+}
+
+.Footer-link:hover {
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 .Footer-logo {
@@ -95,13 +100,17 @@
 }
 
 .Footer-credit .Footer-link {
-  width: 90%;
+  width: 95%;
   height: 100%;
   padding: 0;
   margin: 0;
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.Footer-credit .Footer-link:hover {
+  background-color: transparent;
 }
 
 .Footer-sub {
