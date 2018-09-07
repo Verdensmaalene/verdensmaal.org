@@ -5,6 +5,7 @@
 
 .GoalGrid {
   --gutter: 0.625rem;
+  --supports-layout: 0;
   margin: calc((var(--gutter, 0) / 2) * -1);
   user-select: none;
 }
@@ -100,6 +101,10 @@
 
 @supports (display: grid) {
   @media (min-width: 900px) {
+    .GoalGrid {
+      --supports-layout: 1;
+    }
+
     .GoalGrid::before,
     .GoalGrid::after {
       content: none;

@@ -34,6 +34,15 @@ function goal (state, emit) {
     var body = asText(data.description)
     var image = Object.assign({ src: data.image.url }, data.image.dimensions)
     var shortcuts = data.slices.filter((slice) => slice.primary.shortcut_name)
+    var slices = doc.data.slices.map(fromSlice)
+
+    if (state.prefetch) {
+      // concat and await all nested requests during prefetch
+      return Promise.all(slices.reduce(function (all, slice) {
+        if (slice instanceof Promise) all.push(slice)
+        return all
+      }, []))
+    }
 
     return html`
       <main class="View-container">
@@ -46,7 +55,7 @@ function goal (state, emit) {
               </span>
             `)}
           </div>
-          ${doc.data.slices.map(fromSlice)}
+          ${slices}
         </div>
       </main>
     `
@@ -86,21 +95,25 @@ function goal (state, emit) {
           }
 
           // fetch the lates news with mathing tags
-          let docs = state.docs.get(predicates, opts, function (err, response) {
+          var result = state.docs.get(predicates, opts, function (err, response) {
             if (err) throw err
+            var cells = []
             if (!response) {
-              var cells = []
               for (let i = 0; i < opts.pageSize; i++) cells.push(card.loading())
-              return cells
+            } else {
+              cells = response.results.map(render)
             }
-            return response.results.map(render)
+
+            return html`
+              <div class="u-spaceT8" id="${slugify(slice.primary.shortcut_name || '')}">
+                ${grid({ size: '1of3' }, featured.concat(cells))}
+              </div>
+            `
           })
 
-          return html`
-            <div class="u-spaceT8" id="${slugify(slice.primary.shortcut_name || '')}">
-              ${grid({ size: '1of3' }, featured.concat(docs))}
-            </div>
-          `
+          // capture and expose all requests during prefetch
+          if (state.prefetch) return Promise.all(featured.concat(result))
+          return result
         }
         case 'heading': return html`
           <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
@@ -285,19 +298,13 @@ function eventCard (doc) {
 }
 
 function meta (state) {
-  var image = state.docs.getSingle('website', function (err, doc) {
-    if (err) throw err
-    if (!doc) return state.meta['og:image']
-    return doc.data.default_social_image.url
-  })
-
   return state.docs.getByUID('sector', state.params.wildcard, function (err, doc) {
     if (err) throw err
     if (!doc) return { title: text`LOADING_TEXT_SHORT` }
     return {
       title: asText(doc.data.title),
       description: asText(doc.data.description),
-      'og:image': doc.data.image.url || image
+      'og:image': doc.data.image.url
     }
   })
 }

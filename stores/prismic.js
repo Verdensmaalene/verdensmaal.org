@@ -64,27 +64,33 @@ function prismicStore (opts) {
       var cached = cache.get(key)
 
       var result
-      if (!cached) result = callback(null)
+      if (!cached && !state.prefetch) result = callback(null)
       else if (cached instanceof Error) return callback(cached)
       else if (cached instanceof Promise) return callback(null, null)
       else if (cached) return callback(null, cached)
 
       var request = init.then(function (api) {
         return api.query(predicates, opts).then(function (response) {
-          emitter.emit('prismic:response', response)
           cache.set(key, response)
+          emitter.emit('prismic:response', response)
+          emitter.emit('render')
+          return response
         })
       }).catch(function (err) {
-        emitter.emit('prismic:error', err)
         cache.set(key, err)
-      }).then(function () {
+        emitter.emit('prismic:error', err)
         emitter.emit('render')
       })
 
-      if (state.prefetch) state.prefetch.push(request)
       emitter.emit('prismic:request', request)
       cache.set(key, request)
-
+      if (state.prefetch) {
+        let queue = request.then(function (response) {
+          return callback(null, response)
+        })
+        state.prefetch.push(queue)
+        return queue
+      }
       return result
     }
 
@@ -155,7 +161,7 @@ function prismicStore (opts) {
 // pluck out first document from result
 // fn -> fn
 function first (callback) {
-  return function (err, response) {
+  return function onresponse (err, response) {
     if (err) return callback(err)
     if (!response) return callback(null)
     if (!response.results || !response.results.length) {

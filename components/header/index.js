@@ -41,7 +41,7 @@ module.exports = class Header extends Component {
     return this.element.offsetHeight
   }
 
-  update (data, href, opts) {
+  update (links, href, opts) {
     if (href !== this.local.href) {
       this.local.isOpen = false
       return true
@@ -64,7 +64,7 @@ module.exports = class Header extends Component {
     this.unload = () => window.removeEventListener('scroll', onscroll)
   }
 
-  createElement (data, href, opts = {}) {
+  createElement (links, href, opts = {}) {
     this.local.opts = opts
     this.local.href = href.replace(/\/$/, '')
 
@@ -102,10 +102,10 @@ module.exports = class Header extends Component {
               <span class="Header-toggleText"><span class="u-hiddenVisually">${isOpen ? text`Hide menu` : text`Show menu`}</span> ${isOpen ? text`Close` : text`Menu`}</span>
             </a>
 
-            <h1 class="u-hiddenVisually">${data.title}</h1>
+            <strong class="u-hiddenVisually">${text`Menu`}</strong>
             <nav class="Header-nav" id="${id}-navigation">
               <ul class="Header-list">
-                ${data.links.map((item) => typeof item === 'function' ? html`
+                ${links.map((item) => typeof item === 'function' ? html`
                   <li class="Header-item">${item()}</li>
                 ` : html`
                   <li class="Header-item">

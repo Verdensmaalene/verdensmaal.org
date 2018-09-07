@@ -22,8 +22,12 @@ function news (state, emit) {
 
     var news = []
     for (let i = 0; i < num; i++) {
-      if (news.length < num * PAGE_SIZE + 2) news.push(...page(i + 1))
+      if (news.length < num * PAGE_SIZE + 2) {
+        news = news.concat(page(i + 1))
+      }
     }
+
+    if (state.prefetch) return Promise.all(news)
 
     var latest = news.slice(0, 2)
     var first = news.slice(2, PAGE_SIZE + 2)

@@ -25,11 +25,11 @@
   "Published on %s %s, %s": "Udgivet den %s %s, %s",
   "Back to Goals": "Tilbage til målene",
   "News": "Nyheder",
-  "Nothing to see here": "Nothing to see here",
+  "Nothing to see here": "Intet at se her",
   "Show more": "Vis mere",
   "Events": "Events",
-  "%s logo in black and white": "%s logo in black and white",
-  "Visit website": "Visit website",
-  "Content information": "Content information",
-  "Shortcuts": "Genveje"
+  "%s logo in black and white": "%s logo i sort / hvid",
+  "Visit website": "Besøg hjemmesiden",
+  "Shortcuts": "Genveje",
+  "Page does not exist": "Siden kunne ikke findes"
 }

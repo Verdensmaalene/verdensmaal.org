@@ -15,8 +15,9 @@ function geoip (state, emitter) {
         state.country = geoip.country
         emitter.emit('render')
       })
-    }).catch(function () {
+    }).catch(function (err) {
       state.country = 'DK'
+      emitter.emit('error', err)
       emitter.emit('render')
     })
   })

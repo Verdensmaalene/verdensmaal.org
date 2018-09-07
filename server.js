@@ -85,52 +85,6 @@ app.use(route.get('/', function (ctx, next) {
   return next()
 }))
 
-// Since a bunch of different types of pages live at the root we have to
-// prefetch them in the order goal -> sector -> page to figure out which one
-// has a matching uid.
-// By exposing it on `state.docs` the app will have an easier time during ssr.
-// This has the added benefit of letting us fetch two levels deep during ssr.
-app.use(route.get('/:wildcard/', async function (ctx, wildcard, next) {
-  if (!ctx.accepts('html')) return next()
-
-  // exit if the path has an explicit route
-  var routes = Object.keys(app.getAllRoutes())
-  if (routes.includes(ctx.path)) return next()
-
-  var isGoalPage = /^(\d{1,2})-(.+)$/.test(wildcard)
-  var api = await Prismic.api(REPOSITORY, { req: ctx.req })
-  var docs = ctx.state.docs = ctx.state.docs || {}
-
-  try {
-    let response
-    if (isGoalPage) {
-      let [, uid] = wildcard.match(/^\d{1,2}-(.+)$/)
-      response = await getByUID('goal', uid)
-    }
-    if (!response || response instanceof Error) response = await getByUID('sector', wildcard)
-    if (response instanceof Error) response = await getByUID('page', wildcard)
-    if (response instanceof Error) throw response
-  } catch (err) {
-    ctx.status = 404
-  }
-
-  // get doc by uid and cache response in docs
-  async function getByUID (type, uid) {
-    var predicate = Prismic.Predicates.at(`my.${type}.uid`, uid)
-    var opts = { fetchLinks: 'goal.number' }
-    var response = await api.query(predicate, opts)
-    if (!response.results_size) {
-      response = new Error('Page not found')
-      response.status = 404
-    }
-    // simulate the way in which the prismic store constructs cache keys
-    docs[`${predicate},fetchLinks="goal.number"`] = response
-    return response
-  }
-
-  return next()
-}))
-
 // set cache headers
 app.use(function (ctx, next) {
   if (!ctx.accepts('html')) return next()

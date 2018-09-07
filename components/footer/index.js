@@ -7,20 +7,17 @@ var text = i18n(require('./lang.json'))
 module.exports = footer
 
 function footer (data) {
-  var i = 1
-
   return html`
     <footer class="Footer">
       <div class="Footer-content u-container">
-        <h1 class="u-hiddenVisually">${text`Content information`}</h1>
         <div class="Footer-section Footer-section--logo">
           <div class="Footer-logo">
             ${logo({ vertical: true })}
           </div>
         </div>
-        ${data.navigation.map((nav) => html`
-          <section class="Footer-section Footer-section--${i++}">
-            <h1 class="Footer-title">${nav.title}</h1>
+        ${data.navigation.map((nav, index) => html`
+          <section class="Footer-section Footer-section--${index + 1}">
+            <h2 class="Footer-title">${nav.title}</h2>
             <nav>
               <ul class="Footer-list">
                 ${nav.links.map(item)}
@@ -30,7 +27,7 @@ function footer (data) {
         `)}
         ${data.credits ? html`
           <section class="Footer-section Footer-section--credits">
-            <h1 class="Footer-title">${data.credits.title}</h1>
+            <h2 class="Footer-title">${data.credits.title}</h2>
             ${data.credits.companies.map(credit)}
           </section>
         ` : null}

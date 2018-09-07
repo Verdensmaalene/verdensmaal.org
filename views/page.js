@@ -8,26 +8,34 @@ var text = i18n()
 module.exports = view(goal, meta)
 
 function goal (state, emit) {
-  return html`
-    <main class="View-container">
-    </main>
-  `
+  return state.docs.getByUID('page', state.params.wildcard, function (err, doc) {
+    if (err) throw err
+    return html`
+      <main class="View-container">
+      </main>
+    `
+  })
 }
 
 function meta (state) {
-  var image = state.docs.getSingle('website', function (err, doc) {
-    if (err) throw err
-    if (!doc) return state.meta['og:image']
-    return doc.data.default_social_image.url
-  })
-
   return state.docs.getByUID('page', state.params.wildcard, function (err, doc) {
     if (err) throw err
     if (!doc) return { title: text`LOADING_TEXT_SHORT` }
-    return {
+    var attrs = {
       title: asText(doc.data.title),
       description: asText(doc.data.description),
-      'og:image': doc.data.social_image.url || image
+      'og:image': doc.data.social_image.url
     }
+
+    if (!attrs['og:image']) {
+      return state.docs.getSingle('website', function (err, doc) {
+        if (err) throw err
+        if (!doc) return state.meta['og:image']
+        attrs['og:image'] = doc.data.default_social_image.url
+        return attrs
+      })
+    }
+
+    return attrs
   })
 }

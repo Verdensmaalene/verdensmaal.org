@@ -1,4 +1,6 @@
+var LRU = require('nanolru')
 var html = require('choo/html')
+var nanoraf = require('nanoraf')
 var Component = require('choo/component')
 var Goal = require('../goal')
 var { i18n } = require('../base')
@@ -21,14 +23,25 @@ var LAYOUTS = [ // [<landscape>, <portrait>]
 module.exports = class GoalGrid extends Component {
   constructor (id, state, emit) {
     super(id)
-    this.cache = state.cache
+    this.cache = state.cache || createCache(state, emit)
     this.local = state.components[id] = {
-      id: id
+      id: id,
+      supportsLayout: true
+    }
+
+    if (typeof window !== 'undefined') {
+      let element = html`<div class="GoalGrid" style="display: none;"></div>`
+      document.body.appendChild(element)
+      let styles = window.getComputedStyle(element)
+      let layoutBinary = styles.getPropertyValue('--supports-layout')
+      this.local.supportsLayout = (+layoutBinary === 1)
+      document.body.removeChild(element)
     }
 
     var self = this
     this.GoalCell = class GoalCell extends Goal {
       background (num, opts) {
+        if (!self.local.supportsLayout) return null
         if (typeof self.background === 'function') {
           return self.background(num, opts)
         }
@@ -44,6 +57,28 @@ module.exports = class GoalGrid extends Component {
       if (this.local.goals[i].href !== goals[i].href) return true
     }
     return false
+  }
+
+  load (element) {
+    if (!this.local.layout) return
+
+    var onresize = nanoraf(() => {
+      let styles = window.getComputedStyle(element)
+      let layoutBinary = styles.getPropertyValue('--supports-layout')
+      var prev = this.local.supportsLayout
+      var next = (+layoutBinary === 1)
+      this.local.supportsLayout = next
+      if (next && prev !== next) {
+        let [landscape, portrait] = LAYOUTS[this.local.layout - 1]
+        this.cache(this.GoalCell, `goal-${landscape}-landscape`).rerender()
+        this.cache(this.GoalCell, `goal-${portrait}-portrait`).rerender()
+      }
+    })
+
+    window.addEventListener('resize', onresize)
+    this.unload = function () {
+      window.removeEventListener('resize', onresize)
+    }
   }
 
   createElement (goals = [], layout = null, slot = Function.prototype) {
@@ -98,5 +133,17 @@ module.exports = class GoalGrid extends Component {
         `
       }
     }
+  }
+}
+
+// create a LRU cache wrapper
+function createCache (state, emit) {
+  var cache = new LRU(17)
+  return function (Component, id, ...args) {
+    var component = cache.get(id)
+    if (component) return component
+    component = new Component(id, state, emit, ...args)
+    cache.set(id, component)
+    return component
   }
 }

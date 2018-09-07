@@ -22,24 +22,25 @@ function events (state, emit) {
       orderings: '[my.event.datetime]'
     }
 
-    return html`
-      <main class="View-main">
-        <div class="u-container">
-          ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
-          ${state.docs.get(predicate, opts, onresponse)}
-        </div>
-      </main>
-    `
+    return state.docs.get(predicate, opts, function (err, response) {
+      if (err) throw err
+      return html`
+        <main class="View-main">
+          <div class="u-container">
+            ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
+            ${content(response)}
+          </div>
+        </main>
+      `
+    })
   })
 
-  // handle events result
-  // (Error, obj) -> HTMLElement
-  function onresponse (err, response) {
-    if (err) throw err
+  // render page content
+  // obj -> HTMLElement
+  function content (response) {
     var cells = []
     var locations = []
     var bounds = state.bounds[state.country] || state.bounds['DK']
-
     if (!response) {
       for (let i = 0; i < 6; i++) cells.push(card.loading())
     } else if (!response.results.length) {
