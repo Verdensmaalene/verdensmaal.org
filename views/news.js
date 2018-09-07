@@ -35,9 +35,9 @@ function news (state, emit) {
           ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
           ${news.length ? html`
             <section>
-              ${grid({ size: '1of2' }, latest.map(withLoading))}
-              ${grid({ size: '1of3' }, first.map(withLoading))}
-              ${grid({ size: '1of3', appear: true }, rest.map(newsCard))}
+              ${grid({ size: { sm: '1of2' } }, latest.map(withLoading))}
+              ${grid({ size: { sm: '1of2', lg: '1of3' } }, first.map(withLoading))}
+              ${grid({ size: { sm: '1of2', lg: '1of3' }, appear: true }, rest.map(newsCard))}
             </section>
           ` : html`
             <div class="Text u-textCenter u-sizeFull">

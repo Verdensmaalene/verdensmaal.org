@@ -58,7 +58,7 @@ function events (state, emit) {
         <div class="u-spaceB5">
           ${state.cache(Map, 'events-map').render(locations, bounds)}
         </div>
-        ${grid({ size: '1of3' }, cells)}
+        ${grid({ size: { sm: '1of2', lg: '1of3' } }, cells)}
       </div>
     `
   }
