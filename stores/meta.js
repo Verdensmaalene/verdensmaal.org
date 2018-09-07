@@ -18,7 +18,8 @@ function meta (state, emitter, app) {
     Object.keys(tags).forEach(function (key) {
       state.meta[key] = tags[key].replace(/^\//, ROOT + '/')
       if (typeof window === 'undefined') return
-      var el = document.head.querySelector(`meta[property="${key}"]`)
+      var attribute = key.substr(0, 3) === 'og:' ? 'property' : 'name'
+      var el = document.head.querySelector(`meta[${attribute}="${key}"]`)
       if (el) el.setAttribute('content', state.meta[key])
     })
 
