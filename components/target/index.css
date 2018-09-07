@@ -97,8 +97,8 @@
 
   .Target-caption,
   .Target-icon {
-    color: var(--current-color, #fff);
-    background: var(--current-background, #000);
+    color: rgb(var(--current-color, 255, 255, 255));
+    background: rgb(var(--current-background, 0, 0, 0));
   }
 
   .Target-caption {
