@@ -54,7 +54,7 @@ function item (item) {
 function credit (item) {
   var alt = item.alt ? item.alt : text`${item.title} logo in black and white`
   return html`
-    <p class="Footer-credit">
+    <div class="Footer-credit">
       <figure class="Footer-figure">
         <img class="Footer-img" src="${item.logo.url}" alt="${alt}">
       </figure>
@@ -65,6 +65,6 @@ function credit (item) {
           <span class="u-hiddenVisually">${text`Visit website`}</span>
         </a>
       ` : null}
-    </p>
+    </div>
   `
 }
