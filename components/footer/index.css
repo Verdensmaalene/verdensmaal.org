@@ -50,7 +50,7 @@
 }
 
 .Footer-section--4 {
-  padding: 1.7rem 0 2.2rem;
+  padding: 1.7rem 0 1.4rem;
   margin-top: 2rem;
   border-top: 1px solid rgb(var(--color-gray-light));
   flex-basis: 100% !important;
@@ -58,13 +58,15 @@
 }
 
 .Footer-section--4 .Footer-list {
-  max-width: 25rem;
+  max-width: 33rem;
   margin: 0;
 }
 
 .Footer-section--4 .Footer-item {
-  display: inline;
+  display: inline-block;
+  white-space: nowrap;
   margin-right: 1.6rem;
+  margin-top: 0.2rem;
   font-size: 0.9rem;
 }
 
@@ -162,7 +164,7 @@
   }
 
   .Footer-section--4 {
-    padding: 1.5rem 0 1.7rem;
+    padding: 1.5rem 0 1.3rem;
   }
 
   .Footer-section--4 .Footer-list {
