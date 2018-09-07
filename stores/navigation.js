@@ -18,4 +18,16 @@ function navigation (state, emitter) {
       maintainScroll = false
     })
   })
+
+  emitter.on('DOMContentLoaded', function () {
+    window.addEventListener('click', function (event) {
+      var link = event.target
+      while (link && link.localName !== 'a') {
+        link = link.parentNode
+      }
+      if (link && link.href === window.location.href) {
+        document.body.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    })
+  })
 }
