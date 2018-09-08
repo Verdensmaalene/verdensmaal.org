@@ -166,7 +166,7 @@ function first (callback) {
     if (!response) return callback(null)
     if (!response.results || !response.results.length) {
       err = new Error(
-        response.results.length ? 'An error occured' : 'Document not found'
+        response.results ? 'Document not found' : 'An error occured'
       )
       err.status = response.status || 404
       return callback(err)
