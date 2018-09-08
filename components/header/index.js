@@ -78,7 +78,6 @@ module.exports = class Header extends Component {
     var classes = className('Header', {
       [`Header--${opts.theme}`]: opts.theme,
       'Header--static': opts.static,
-      'Header--fadeIn': opts.fadeIn,
       'is-open': isOpen
     })
 

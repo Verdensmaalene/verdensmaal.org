@@ -14,6 +14,27 @@
   z-index: 2;
 }
 
+/**
+ * Fade in
+ */
+
+.View-header--appear {
+  opacity: 0;
+  will-change: opacity;
+  animation: View-header--appearing 600ms 100ms var(--ease) forwards;
+}
+
+@keyframes View-header--appearing {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    will-change: unset;
+  }
+}
+
 .View-header--stuck {
   width: 100%;
   position: absolute;

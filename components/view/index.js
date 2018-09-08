@@ -75,7 +75,6 @@ function createView (view, meta) {
         if (isGoal) {
           opts.theme = +num === 7 ? 'black' : 'white'
           opts.static = true
-          opts.fadeIn = true
           if (state.referrer === '') {
             opts.back = { href: '/', text: text`Back to Goals` }
           }
@@ -116,7 +115,7 @@ function createView (view, meta) {
 
       return html`
         <body class="View" id="app-view">
-          <div class="View-header ${opts.static ? 'View-header--stuck' : ''}">
+          <div class="View-header ${opts.static ? 'View-header--stuck View-header--appear' : ''}">
             ${doc ? state.cache(Header, 'header').render(data.navigation[0].links, state.href, opts) : null}
           </div>
           ${children}

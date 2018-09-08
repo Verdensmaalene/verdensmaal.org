@@ -220,7 +220,7 @@
 
 @media (min-width: 500px) {
   .Header-button--toggle {
-    right: 0.7rem;  
+    right: 0.7rem;
   }
 }
 
@@ -506,27 +506,6 @@
 
 .Header--black:not(.is-open) .Header-logo path {
   fill: #000;
-}
-
-/**
- * Fade in
- */
-
-.Header--fadeIn {
-  opacity: 0;
-  will-change: opacity;
-  animation: Header-in 600ms 100ms var(--ease) forwards;
-}
-
-@keyframes Header-in {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-    will-change: unset;
-  }
 }
 
 /**
