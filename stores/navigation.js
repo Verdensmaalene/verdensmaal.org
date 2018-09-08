@@ -28,6 +28,6 @@ function navigation (state, emitter) {
       if (link && link.href === window.location.href) {
         document.body.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }
-    })
+    }, true)
   })
 }
