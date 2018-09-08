@@ -1,10 +1,11 @@
 var assert = require('assert')
 var html = require('choo/html')
 var Component = require('choo/component')
+var { asText } = require('prismic-richtext')
 var error = require('./error')
-var { i18n, isSameDomain } = require('../base')
 var Header = require('../header')
 var footer = require('../footer')
+var { i18n, isSameDomain } = require('../base')
 
 var text = i18n()
 
@@ -81,55 +82,63 @@ function createView (view, meta) {
         }
       }
 
-      var data = {}
-
-      if (doc) {
-        data.navigation = [{
-          title: doc.data.navigation_title_first,
-          links: doc.data.navigation_first
-        }, {
-          title: doc.data.navigation_title_second,
-          links: doc.data.navigation_second
-        }, {
-          title: doc.data.navigation_title_third,
-          links: doc.data.navigation_third
-        }, {
-          title: doc.data.navigation_title_forth,
-          links: doc.data.navigation_forth
-        }].map((nav) => ({
-          title: nav.title,
-          links: nav.links.map(function (item) {
-            return Object.assign({}, {
-              title: item.title,
-              href: href(item.link),
-              external: !isSameDomain(item.link.url)
-            })
+      var menu = doc && doc.data.main_menu.map(link)
+      var parts = doc && {
+        shortcuts: [{
+          links: menu,
+          heading: asText(doc.data.main_menu_label)
+        }].concat(doc.data.shortcuts.map(shortcut).filter(Boolean)),
+        credits: {
+          heading: asText(doc.data.credits_label),
+          links: doc.data.credits.map(function (item) {
+            return Object.assign({ logo: item.logo }, link(item))
           })
-        }))
-        data.credits = {
-          title: doc.data.credits_title,
-          companies: doc.data.companies
-        }
-        data.social = doc.data.accounts
+        },
+        social: doc.data.social_networks.map(function (item) {
+          return {
+            type: item.type,
+            href: resolve(item.link)
+          }
+        })
       }
 
       return html`
         <body class="View" id="app-view">
           <div class="View-header ${opts.static ? 'View-header--stuck View-header--appear' : ''}">
-            ${doc ? state.cache(Header, 'header').render(data.navigation[0].links, state.href, opts) : null}
+            ${doc ? state.cache(Header, 'header').render(menu, state.href, opts) : null}
           </div>
           ${children}
           <div class="View-footer">
-            ${doc ? footer(data, state.href) : null}
+            ${doc ? footer(parts, state.href) : null}
           </div>
         </body>
       `
     })
-  }
-}
 
-function href (link) {
-  if (link.url) return link.url
-  if (link.type === 'homepage') return '/'
-  return '/' + link.slug
+    function shortcut (slice) {
+      if (slice.slice_type !== 'shortcuts') return null
+      return {
+        heading: asText(slice.primary.heading),
+        links: slice.items.map(link)
+      }
+    }
+
+    function link (item) {
+      var href = resolve(item.link)
+      return {
+        href: href,
+        title: item.title,
+        external: !isSameDomain(href)
+      }
+    }
+
+    function resolve (link) {
+      switch (link.link_type) {
+        case 'Document': return state.docs.resolve(link)
+        case 'Web':
+        case 'Media':
+        default: return link.url
+      }
+    }
+  }
 }

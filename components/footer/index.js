@@ -6,29 +6,29 @@ var text = i18n(require('./lang.json'))
 
 module.exports = footer
 
-function footer (data) {
+function footer (props) {
   return html`
     <footer class="Footer">
       <div class="Footer-content u-container">
         <div class="Footer-section Footer-section--logo">
-          <div class="Footer-logo">
+          <a href="/" rel="home" class="Footer-logo">
             ${logo({ vertical: true })}
-          </div>
+          </a>
         </div>
-        ${data.navigation.map((nav, index) => html`
+        ${props.shortcuts.map((group, index) => html`
           <section class="Footer-section Footer-section--${index + 1}">
-            <h2 class="Footer-title">${nav.title}</h2>
+            <h2 class="Footer-title">${group.heading}</h2>
             <nav>
               <ul class="Footer-list">
-                ${nav.links.map(item)}
+                ${group.links.map(link)}
               </ul>
             </nav>
           </section>
         `)}
-        ${data.credits ? html`
+        ${props.credits ? html`
           <section class="Footer-section Footer-section--credits">
-            <h2 class="Footer-title">${data.credits.title}</h2>
-            ${data.credits.companies.map(credit)}
+            <h2 class="Footer-title">${props.credits.heading}</h2>
+            ${props.credits.links.map(credit)}
           </section>
         ` : null}
       </div>
@@ -36,29 +36,37 @@ function footer (data) {
   `
 }
 
-function item (item) {
-  var attrs = { href: item.href }
-  if (item.external) attrs.target = '_blank'
-  if (item.external) attrs.rel = 'noopener noreferrer'
+function link (props) {
+  var attrs = { href: props.href }
+  if (props.external) {
+    attrs.target = '_blank'
+    attrs.rel = 'noopener noreferrer'
+  }
 
   return html`
     <li class="Footer-item">
-      <a class="Footer-link" ${attrs}>${item.title}</a>
+      <a class="Footer-link" ${attrs}>${props.title}</a>
     </li>
   `
 }
 
-function credit (item) {
-  var alt = item.alt ? item.alt : text`${item.title} logo in black and white`
+function credit (props) {
+  var alt = props.alt || text`${props.title} logo in black and white`
+  var attrs = {}
+  if (props.external) {
+    attrs.target = '_blank'
+    attrs.rel = 'noopener noreferrer'
+  }
+
   return html`
     <div class="Footer-credit">
       <figure class="Footer-figure">
-        <img class="Footer-img" src="${item.logo.url}" alt="${alt}">
+        <img class="Footer-img" src="${props.logo.url}" alt="${alt}">
       </figure>
-      <span class="Footer-sub">${item.role}<span class="u-hiddenVisually">:</span></span>
-      ${item.title}
-      ${item.href ? html`
-        <a class="Footer-link" href="${item.href}" target="_bank" rel="noopener noreferrer">
+      <span class="Footer-sub">${props.role}<span class="u-hiddenVisually">:</span></span>
+      ${props.title}
+      ${props.href ? html`
+        <a class="Footer-link" href="${props.href}" ${attrs}>
           <span class="u-hiddenVisually">${text`Visit website`}</span>
         </a>
       ` : null}
