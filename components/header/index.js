@@ -81,6 +81,29 @@ module.exports = class Header extends Component {
       'is-open': isOpen
     })
 
+    var toggleAttrs = {
+      class: className('Header-button Header-button--toggle js-toggle', {
+        'Header-button--close': isOpen
+      }),
+      href: '#' + isOpen ? '' : id,
+      role: 'button',
+      draggable: false,
+      onclick: toggle,
+      'aria-controls': id + '-navigation',
+      'aria-expanded': isOpen ? 'true' : 'false'
+    }
+
+    var linkAttrs = function (item) {
+      return {
+        class: className('Header-button Header-button--link', {
+          'is-current': item.href.replace(/\/$/, '') === href
+        }),
+        href: item.href,
+        target: item.external ? '_blank' : null,
+        rel: item.external ? 'noopener noreferrer' : null
+      }
+    }
+
     return html`
       <header class="${classes}" style="--scroll: ${this.local.scroll}" id="${id}">
         <div class="Header-bar">
@@ -96,9 +119,14 @@ module.exports = class Header extends Component {
                 ${logo()}
               </a>
             `}
-            <a class="${className('Header-button Header-button--toggle js-toggle', { 'Header-button--close': isOpen })}" href="#${isOpen ? '' : id}" draggable="false" onclick=${toggle} role="button" aria-controls="${id}-navigation" aria-expanded="${isOpen ? 'true' : 'false'}">
-              <div class="${className('Header-burger', { 'Header-burger--cross': isOpen })}"><div class="Header-beanPatty"></div></div>
-              <span class="Header-toggleText"><span class="u-hiddenVisually">${isOpen ? text`Hide menu` : text`Show menu`}</span> ${isOpen ? text`Close` : text`Menu`}</span>
+            <a ${toggleAttrs}>
+              <div class="${className('Header-burger', { 'Header-burger--cross': isOpen })}">
+                <div class="Header-beanPatty"></div>
+              </div>
+              <span class="Header-toggleText">
+                <span class="u-hiddenVisually">${isOpen ? text`Hide menu` : text`Show menu`}</span>
+                ${isOpen ? text`Close` : text`Menu`}
+              </span>
             </a>
 
             <strong class="u-hiddenVisually">${text`Menu`}</strong>
@@ -108,9 +136,13 @@ module.exports = class Header extends Component {
                   <li class="Header-item">${item()}</li>
                 ` : html`
                   <li class="Header-item">
-                    <a class="Header-button Header-button--link ${item.href.replace(/\/$/, '') === href ? 'is-current' : ''}" target="${item.external ? '_blank' : '_self'}" rel="${item.external ? 'noopener noreferrer' : ''}" href="${item.href}">
+                    <a ${linkAttrs(item)}>
                       ${item.title}
-                      ${item.external ? html`<span class="Header-tooltip">${item.description ? text`Go to ${item.description}` : text`Opens in new tab`}</span>` : null}
+                      ${item.external ? html`
+                        <span class="Header-tooltip">
+                          ${item.description ? text`Go to ${item.description}` : text`Opens in new tab`}
+                        </span>
+                      ` : null}
                       <div class="Header-arrow"></div>
                     </a>
                   </li>
