@@ -7,10 +7,22 @@ module.exports = intro
 module.exports.loading = loading
 
 function intro (opts) {
+  var body = opts.body
+  if (typeof window === 'undefined') {
+    if (Array.isArray(body) || body[0] === '<') html`<div class="Intro-body">${body}</div>`
+    else body = html`<p class="Intro-body">${body}</p>`
+  } else if (Array.isArray(body) || body instanceof window.HTMLElement) {
+    body = html`<div class="Intro-body">${body}</div>`
+  } else {
+    body = html`<p class="Intro-body">${body}</p>`
+  }
+
   return html`
     <div class="Intro">
       <h1 class="Intro-title">${opts.title}</h1>
-      <p class="Intro-body">${opts.body}</p>
+      <div class="Text u-sizeFull">
+        ${body}
+      </div>
     </div>
   `
 }

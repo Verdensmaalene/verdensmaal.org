@@ -26,6 +26,7 @@ app.route('/nyheder', require('./views/news'))
 app.route('/nyheder/:uid', require('./views/article'))
 app.route('/events', require('./views/events'))
 app.route('/events/:uid', require('./views/event'))
+app.route('/materialer', require('./views/resources'))
 app.route('/*', require('./views/catchall'))
 
 try {

@@ -5,13 +5,13 @@ var { i18n } = require('../components/base')
 
 var text = i18n()
 
-module.exports = view(goal, meta)
+module.exports = view(page, meta)
 
-function goal (state, emit) {
+function page (state, emit) {
   return state.docs.getByUID('page', state.params.wildcard, function (err, doc) {
     if (err) throw err
     return html`
-      <main class="View-container">
+      <main class="View-main">
       </main>
     `
   })

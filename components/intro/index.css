@@ -30,6 +30,10 @@
   max-width: 39em;
 }
 
+.Intro-body p:not(:last-child) {
+  margin-bottom: 1em;
+}
+
 @media (min-width: 1000px) {
   .Intro {
     margin-bottom: 4rem;

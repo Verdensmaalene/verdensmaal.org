@@ -2,6 +2,20 @@ var fs = require('fs')
 var path = require('path')
 var common = require('./lang.json')
 
+if (typeof window !== 'undefined') {
+  require('smoothscroll-polyfill').polyfill()
+  let scrollIntoView = window.Element.prototype.scrollIntoView
+  window.Element.prototype.scrollIntoView = function (opts) {
+    if (typeof opts === 'boolean') {
+      if (opts) opts = { block: 'start', inline: 'nearest' }
+      else opts = { block: 'end', inline: 'nearest' }
+    }
+    opts = opts || {}
+    opts.behavior = opts.behavior || 'smooth'
+    return scrollIntoView.call(this, opts)
+  }
+}
+
 // initialize translation utility with given language file
 // obj -> str
 exports.i18n = i18n
@@ -146,4 +160,16 @@ function pluck (src, ...keys) {
     if (src[key]) obj[key] = src[key]
     return obj
   }, {})
+}
+
+// compose reduce middlewares that boils down list ot truthy values
+// (arr, ...fn) -> arr
+exports.reduce = reduce
+function reduce (list) {
+  var middleware = Array.prototype.slice.call(arguments, 1)
+  return list.reduce(function (list, initial, i, len) {
+    var val = middleware.reduce((val, fn) => val && fn(val, i, len), initial)
+    if (val) list.push(val)
+    return list
+  }, [])
 }

@@ -23,7 +23,7 @@ function goal (state, emit) {
     if (err) throw err
     if (!doc) {
       return html`
-        <main class="View-container">
+        <main class="View-main">
           ${hero.loading()}
         </main>
       `
@@ -45,7 +45,7 @@ function goal (state, emit) {
     }
 
     return html`
-      <main class="View-container">
+      <main class="View-main">
         ${hero({ title, body, image })}
         <div class="u-container">
           <div class="Text u-spaceV6">
