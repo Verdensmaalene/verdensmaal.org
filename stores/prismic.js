@@ -82,9 +82,10 @@ function prismicStore (opts) {
         emitter.emit('render')
       })
 
-      emitter.emit('prismic:request', request)
       cache.set(key, request)
+      emitter.emit('prismic:request', request)
       if (state.prefetch) {
+        // defer to callback to allow for nested API calls
         let queue = request.then(function (response) {
           return callback(null, response)
         })
