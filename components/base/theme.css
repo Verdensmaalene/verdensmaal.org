@@ -6,3 +6,8 @@
   --color-theme: 229, 36, 59;
   --color-theme-shaded: 212, 30, 55;
 }
+
+.u-highContrast {
+  --color-theme: 125, 0, 28;
+  --color-theme-shaded: 97, 0, 17;
+}

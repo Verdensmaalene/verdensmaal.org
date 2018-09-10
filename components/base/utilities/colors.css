@@ -108,3 +108,44 @@
 .u-bg17shaded { --current-background: var(--color-goal-17-shaded) !important; }
 .u-color17 { --current-color: var(--color-goal-17) !important; }
 .u-color17shaded { --current-color: var(--color-goal-17-shaded) !important; }
+
+/**
+ * High contrast mode
+ * 1. Restore browsers prefered text rendering
+ */
+
+.u-highContrast {
+  -webkit-font-smoothing: auto !important; /* 1 */
+  -moz-osx-font-smoothing: auto !important; /* 1 */
+
+  --color-text-muted: var(--default-color);
+  
+  /* --color-gray-light: 241, 241, 241;
+  --color-gray: 170, 170, 170;
+  --color-gray-dark: 26, 26, 26; */
+
+  --color-twitter: 26, 26, 26;
+  --color-facebook: 26, 26, 26;
+  --color-youtube: 26, 26, 26;
+  --color-instagram: 26, 26, 26;
+  --color-weibo: 26, 26, 26;
+  --color-vk: 26, 26, 26;
+
+  --color-goal-1: var(--color-goal-1-shaded);
+  --color-goal-2: var(--color-goal-2-shaded);
+  --color-goal-3: var(--color-goal-3-shaded);
+  --color-goal-4: var(--color-goal-4-shaded);
+  --color-goal-5: var(--color-goal-5-shaded);
+  --color-goal-6: var(--color-goal-6-shaded);
+  --color-goal-7: var(--color-goal-7-shaded);
+  --color-goal-8: var(--color-goal-8-shaded);
+  --color-goal-9: var(--color-goal-9-shaded);
+  --color-goal-10: var(--color-goal-10-shaded);
+  --color-goal-11: var(--color-goal-11-shaded);
+  --color-goal-12: var(--color-goal-12-shaded);
+  --color-goal-13: var(--color-goal-13-shaded);
+  --color-goal-14: var(--color-goal-14-shaded);
+  --color-goal-15: var(--color-goal-15-shaded);
+  --color-goal-16: var(--color-goal-16-shaded);
+  --color-goal-17: var(--color-goal-17-shaded);
+}

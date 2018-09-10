@@ -13,6 +13,13 @@ function ui (state, emitter) {
     emitter.emit('render')
   })
 
+  emitter.on('header:toggleContrast', function (isContrastRich) {
+    state.isContrastRich = isContrastRich
+    var root = document.documentElement
+    root.classList[isContrastRich ? 'add' : 'remove']('u-highContrast')
+    emitter.emit('render')
+  })
+
   emitter.prependListener('navigate', function () {
     state.hasOverlay = false
     document.documentElement.classList.remove('has-overlay')

@@ -296,6 +296,37 @@
 }
 
 /**
+ * High contrast button
+ */
+
+.Header-contrast {
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 0.15625rem solid currentColor;
+  position: relative;
+  transition: transform 300ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  border-radius: 50%;
+  font-size: 0;
+  will-change: transform;
+  margin-left: 1.25rem;
+}
+
+.Header-contrast::after {
+  content: "";
+  width: calc(50% - 0.15625rem);
+  background: currentColor;
+  height: calc(100% - 0.3125rem);
+  position: absolute;
+  top: 0.15625rem;
+  right: 0.15625rem;
+  border-radius: 0px 2rem 2rem 0;
+}
+
+.Header-contrast.is-active {
+  transform: rotate(180deg);
+}
+
+/**
  * The arrows for the links and back button
  */
 

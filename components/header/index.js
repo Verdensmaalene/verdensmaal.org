@@ -14,7 +14,8 @@ module.exports = class Header extends Component {
     this.local = state.components[id] = {
       id: id,
       scroll: 0,
-      isOpen: false
+      isOpen: false,
+      isContrastRich: false
     }
 
     var self = this
@@ -34,6 +35,12 @@ module.exports = class Header extends Component {
         window.removeEventListener('wheel', preventScroll)
         window.removeEventListener('touchmove', preventScroll)
       }
+    }
+
+    this.toggleContast = function (next = !self.local.isContrastRich) {
+      self.local.isContrastRich = next
+      self.rerender()
+      emit('header:toggleContrast', next)
     }
   }
 
@@ -68,10 +75,15 @@ module.exports = class Header extends Component {
     this.local.opts = opts
     this.local.href = href.replace(/\/$/, '')
 
-    var { id, isOpen } = this.local
+    var { id, isOpen, isContrastRich } = this.local
 
     var toggle = (event) => {
       this.toggle()
+      event.preventDefault()
+    }
+
+    var toggleContast = (event) => {
+      this.toggleContast()
       event.preventDefault()
     }
 
@@ -147,6 +159,13 @@ module.exports = class Header extends Component {
                     </a>
                   </li>
                 `)}
+                <li class="Header-item">
+                  <button class="Header-contrast ${isContrastRich ? 'is-active' : ''}" role="button" onclick=${toggleContast}>
+                    <span class="Header-tooltip">
+                      ${isContrastRich ? text`Turn off high contrast` : text`Turn on high contrast`}
+                    </span>
+                  </button>
+                </li>
                 ${opts.slot ? html`
                   <li>
                     <div class="Header-slot">
