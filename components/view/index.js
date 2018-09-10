@@ -52,13 +52,14 @@ function createView (view, meta) {
       try {
         children = view.call(this, state, emit)
         let next = meta.call(this, state)
+
+        // forward nested promises for deep prefetching to work
+        if (state.prefetch) return Promise.all([children, next])
+
         if (next.title !== DEFAULT_TITLE) {
           next.title = `${next.title} | ${DEFAULT_TITLE}`
         }
         emit('meta', next)
-
-        // forward nested promises for deep prefetching to work
-        if (state.prefetch) return Promise.all([children, next])
       } catch (err) {
         if (state.prefetch) throw err
         err.status = err.status || 500
