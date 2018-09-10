@@ -17,6 +17,11 @@
   margin: 3rem 0.5rem 0;
 }
 
+.Footer-section--logo,
+.Footer-section--credits {
+  flex: 0 1 calc(50% - 1rem);
+}
+
 .Footer-title {
   flex-basis: 100%;
   font-size: 1.5rem;
