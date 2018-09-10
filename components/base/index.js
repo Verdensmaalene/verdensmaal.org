@@ -173,3 +173,13 @@ function reduce (list) {
     return list
   }, [])
 }
+
+// compose srcset attribute from url for given sizes
+// (str, arr) -> str
+exports.srcset = srcset
+function srcset (url, sizes) {
+  var parts = url.split('/')
+  return sizes.map(function (size) {
+    return `/media/fetch/w_${size}/${parts[parts.length - 1]} ${size}w`
+  }).join(', ')
+}

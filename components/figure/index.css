@@ -43,6 +43,6 @@
 .Figure::after {
   content: "";
   display: block;
-  padding-top: 81%;
+  padding-top: calc(100% * 3/4);
   height: 0;
 }

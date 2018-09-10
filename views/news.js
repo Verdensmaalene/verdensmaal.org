@@ -5,7 +5,7 @@ var view = require('../components/view')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var intro = require('../components/intro')
-var { i18n } = require('../components/base')
+var { i18n, srcset } = require('../components/base')
 var button = require('../components/button')
 
 var text = i18n()
@@ -39,8 +39,8 @@ function news (state, emit) {
           ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
           ${news.length ? html`
             <section>
-              ${grid({ size: { sm: '1of2' } }, latest.map(withLoading))}
-              ${grid({ size: { sm: '1of2', lg: '1of3' } }, first.map(withLoading))}
+              ${grid({ size: { sm: '1of2' } }, latest.map((item) => item ? newsCard(item, 2) : card.loading({ date: true })))}
+              ${grid({ size: { sm: '1of2', lg: '1of3' } }, first.map((item) => item ? newsCard(item) : card.loading({ date: true })))}
               ${grid({ size: { sm: '1of2', lg: '1of3' }, appear: true }, rest.map(newsCard))}
             </section>
           ` : html`
@@ -57,13 +57,6 @@ function news (state, emit) {
       </main>
     `
   })
-
-  // render doc as card, fallback to loading while fetching doc
-  // obj -> HTMLElement
-  function withLoading (doc) {
-    if (doc) return newsCard(doc)
-    return card.loading({ date: true })
-  }
 
   // fetch page by number
   // num -> arr
@@ -96,14 +89,19 @@ function news (state, emit) {
 
 // render document as card
 // obj -> HTMLElement
-function newsCard (doc) {
+function newsCard (doc, cols = 3) {
   var date = new Date(doc.first_publication_date)
+  var sizes = '(min-width: 400px) 50vw, 100vw'
+  if (cols === 3) sizes = '(min-width: 1000px) 30vw, ' + sizes
+
   return card({
     title: asText(doc.data.title),
     body: asText(doc.data.description),
     figure: {
       alt: doc.data.image.alt,
-      src: doc.data.image.url,
+      sizes: sizes,
+      srcset: srcset(doc.data.image.url, [400, 600, 900, 1800]),
+      src: `/media/fetch/${doc.data.image.url}`,
       caption: doc.data.image.copyright
     },
     date: {

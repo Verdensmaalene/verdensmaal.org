@@ -6,7 +6,7 @@ var grid = require('../components/grid')
 var card = require('../components/card')
 var view = require('../components/view')
 var intro = require('../components/intro')
-var { i18n } = require('../components/base')
+var { i18n, srcset } = require('../components/base')
 
 var text = i18n()
 
@@ -98,7 +98,9 @@ function eventCard (doc) {
     body: asText(doc.data.description),
     figure: doc.data.image.url ? {
       alt: doc.data.image.alt,
-      src: doc.data.image.url,
+      sizes: '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw',
+      srcset: srcset(doc.data.image.url, [400, 600, 900, 1800]),
+      src: `/media/fetch/${doc.data.image.url}`,
       caption: doc.data.image.copyright
     } : null,
     date: {

@@ -3,6 +3,7 @@ if (!process.env.NOW) require('dotenv/config')
 var REPOSITORY = 'https://verdensmaalene.cdn.prismic.io/api/v2'
 
 var url = require('url')
+var https = require('https')
 var jalla = require('jalla')
 var dedent = require('dedent')
 var body = require('koa-body')
@@ -14,6 +15,31 @@ var purge = require('./lib/purge')
 var resolvePreview = require('./lib/resolve')
 
 var app = jalla('index.js', { sw: 'sw.js' })
+
+// proxy cloudinary on-demand-transform API
+app.use(route.get('/media/:type/:transform/:uri', async function (ctx, type, transform, uri) {
+  if (!/^(?:https?:)?\/\//.test(uri)) {
+    uri = `https://verdensmaalene.cdn.prismic.io/verdensmaalene/${uri}`
+  }
+
+  var res = await new Promise(function (resolve, reject) {
+    var url = `https://res.cloudinary.com/dykmd8idd/image/${type}`
+    if (transform) url += `/${transform}`
+    url += `/${uri}`
+
+    https.get(url, function onresponse (res) {
+      if (res.statusCode >= 400) {
+        var err = new Error(res.statusMessage)
+        err.status = res.statusCode
+        return reject(err)
+      }
+      resolve(res)
+    })
+  })
+
+  ctx.body = res
+  ctx.set('Cache-Control', `s-maxage=${60 * 60 * 24 * 365}, max-age=${60}`)
+}))
 
 // disallow robots anywhere but live URL
 app.use(route.get('/robots.txt', function (ctx, next) {
