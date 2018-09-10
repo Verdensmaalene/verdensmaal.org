@@ -33,43 +33,6 @@
   --current-background: var(--default-background-color);
   --current-color: var(--default-color);
 
-  /* Brand colors */
-
-  --color-blue: 10, 151, 217;
-  --color-blue-shaded: 0, 53, 112;
-  --color-bright-blue: 38, 189, 226;
-  --color-bright-blue-shaded: 1, 83, 121;
-  --color-burgundy-red: 162, 25, 66;
-  --color-burgundy-red-shaded: 64, 0, 42;
-  --color-dark-green: 63, 126, 68;
-  --color-dark-green-shaded: 0, 48, 31;
-  --color-dark-mustard: 191, 139, 46;
-  --color-dark-mustard-shaded: 91, 50, 3;
-  --color-dark-red: 197, 25, 45;
-  --color-dark-red-shaded: 91, 1, 4;
-  --color-golden-yellow: 253, 157, 36;
-  --color-golden-yellow-shaded: 148, 64, 9;
-  --color-kelly-green: 76, 159, 56;
-  --color-kelly-green-shaded: 13, 59, 6;
-  --color-lime-green: 86, 192, 43;
-  --color-lime-green-shaded: 16, 87, 2;
-  --color-magenta: 221, 19, 103;
-  --color-magenta-shaded: 110, 0, 53;
-  --color-mustard: 221, 166, 58;
-  --color-mustard-shaded: 119, 72, 4;
-  --color-navy-blue: 25, 72, 106;
-  --color-navy-blue-shaded: 0, 19, 46;
-  --color-orange: 253, 105, 37;
-  --color-orange-shaded: 135, 38, 0;
-  --color-red-orange: 255, 58, 33;
-  --color-red-orange-shaded: 128, 5, 1;
-  --color-red: 229, 36, 59;
-  --color-red-shaded: 117, 0, 31;
-  --color-royal-blue: 0, 104, 157;
-  --color-royal-blue-shaded: 0, 27, 60;
-  --color-yellow: 252, 195, 11;
-  --color-yellow-shaded: 206, 131, 7;
-
   /** Grays */
 
   --color-gray-light: 241, 241, 241;
@@ -85,40 +48,40 @@
   --color-weibo: 225, 22, 44;
   --color-vk: 74, 116, 165;
 
-  /* Map colors to goals */
+  /* Goal colors */
 
-  --color-goal-1: var(--color-red);
-  --color-goal-1-shaded: var(--color-red-shaded);
-  --color-goal-2: var(--color-mustard);
-  --color-goal-2-shaded: var(--color-mustard-shaded);
-  --color-goal-3: var(--color-kelly-green);
-  --color-goal-3-shaded: var(--color-kelly-green-shaded);
-  --color-goal-4: var(--color-dark-red);
-  --color-goal-4-shaded: var(--color-dark-red-shaded);
-  --color-goal-5: var(--color-red-orange);
-  --color-goal-5-shaded: var(--color-red-orange-shaded);
-  --color-goal-6: var(--color-bright-blue);
-  --color-goal-6-shaded: var(--color-bright-blue-shaded);
-  --color-goal-7: var(--color-yellow);
-  --color-goal-7-shaded: var(--color-yellow-shaded);
-  --color-goal-8: var(--color-burgundy-red);
-  --color-goal-8-shaded: var(--color-burgundy-red-shaded);
-  --color-goal-9: var(--color-orange);
-  --color-goal-9-shaded: var(--color-orange-shaded);
-  --color-goal-10: var(--color-magenta);
-  --color-goal-10-shaded: var(--color-magenta-shaded);
-  --color-goal-11: var(--color-golden-yellow);
-  --color-goal-11-shaded: var(--color-golden-yellow-shaded);
-  --color-goal-12: var(--color-dark-mustard);
-  --color-goal-12-shaded: var(--color-dark-mustard-shaded);
-  --color-goal-13: var(--color-dark-green);
-  --color-goal-13-shaded: var(--color-dark-green-shaded);
-  --color-goal-14: var(--color-blue);
-  --color-goal-14-shaded: var(--color-blue-shaded);
-  --color-goal-15: var(--color-lime-green);
-  --color-goal-15-shaded: var(--color-lime-green-shaded);
-  --color-goal-16: var(--color-royal-blue);
-  --color-goal-16-shaded: var(--color-royal-blue-shaded);
-  --color-goal-17: var(--color-navy-blue);
-  --color-goal-17-shaded: var(--color-navy-blue-shaded);
+  --color-goal-1: 229, 36, 59;
+  --color-goal-1-shaded: 117, 0, 31;
+  --color-goal-2: 221, 166, 58;
+  --color-goal-2-shaded: 119, 72, 4;
+  --color-goal-3: 76, 159, 56;
+  --color-goal-3-shaded: 13, 59, 6;
+  --color-goal-4: 197, 25, 45;
+  --color-goal-4-shaded: 91, 1, 4;
+  --color-goal-5: 255, 58, 33;
+  --color-goal-5-shaded: 128, 5, 1;
+  --color-goal-6: 38, 189, 226;
+  --color-goal-6-shaded: 1, 83, 121;
+  --color-goal-7: 252, 195, 11;
+  --color-goal-7-shaded: 123, 74, 0;
+  --color-goal-8: 162, 25, 66;
+  --color-goal-8-shaded: 64, 0, 42;
+  --color-goal-9: 253, 105, 37;
+  --color-goal-9-shaded: 135, 38, 0;
+  --color-goal-10: 221, 19, 103;
+  --color-goal-10-shaded: 110, 0, 53;
+  --color-goal-11: 253, 157, 36;
+  --color-goal-11-shaded: 148, 64, 9;
+  --color-goal-12: 191, 139, 46;
+  --color-goal-12-shaded: 91, 50, 3;
+  --color-goal-13: 63, 126, 68;
+  --color-goal-13-shaded: 0, 48, 31;
+  --color-goal-14: 10, 151, 217;
+  --color-goal-14-shaded: 0, 53, 112;
+  --color-goal-15: 86, 192, 43;
+  --color-goal-15-shaded: 16, 87, 2;
+  --color-goal-16: 0, 104, 157;
+  --color-goal-16-shaded: 0, 27, 60;
+  --color-goal-17: 25, 72, 106;
+  --color-goal-17-shaded: 0, 19, 46;
 }
