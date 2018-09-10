@@ -1,0 +1,44 @@
+/* @define Border */
+
+@import "../base/";
+
+.Border {
+  padding: 0 16px;
+  margin-bottom: 24px;
+  margin-top: 70px;
+  background-color: rgb(var(--current-color));
+  color: rgb(var(--current-background));
+}
+
+@media print {
+  .Border {
+    color: rgb(var(--current-color));
+    background-color: rgb(var(--current-background));
+  }
+}
+
+.Border.is-loading {
+  background-color: rgba(var(--color-gray-light), 0.6) !important;
+  color: transparent;
+}
+
+.Border-text {
+  color: inherit;
+  font-size: 1.5rem;
+  line-height: 1.8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: var(--heading-font-family);
+  word-spacing: var(--heading-word-spacing);
+  white-space: nowrap;
+}
+
+@media (min-width: 1000px) {
+  .Border {
+    padding: 0 1em;
+  }
+
+  .Border-text {
+    line-height: 2.7;
+  }
+}
