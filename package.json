@@ -60,7 +60,7 @@
   "homepage": "https://github.com/codeandconspire/dk.globalgoals.org#readme",
   "dependencies": {
     "autoprefixer": "^9.1.1",
-    "cccpurge": "^1.4.0",
+    "cccpurge": "^2.0.0",
     "choo": "^6.13.0",
     "choo-service-worker": "^2.4.0",
     "dedent": "^0.7.0",
