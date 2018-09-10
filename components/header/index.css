@@ -25,6 +25,10 @@
   }
 }
 
+.Header-slot {
+  display: none;
+}
+
 /**
  * The thing that is following along on scroll
  */
@@ -76,13 +80,17 @@
     transform-origin: top center;
     transform: translateY(calc((-1 * var(--displace)) * 0));
   }
+
+  .Header-slot {
+    display: block;
+    margin-left: 2.5rem;
+  }
 }
 
 .Header-content {
   display: flex;
   height: var(--height);
   position: relative;
-  top: calc((var(--displace) / 2) * -1);
   flex: 1 0 100%;
   align-items: center;
   position: relative;
@@ -90,6 +98,10 @@
 }
 
 @media (min-width: 700px) {
+  .Header-content {
+    top: calc((var(--displace) / 2) * -1);
+  }
+  
   .Header:not(.Header--static) .Header-content {
     transform: translateY(calc((var(--displace, 1) / 2) * (1 - var(--scroll, 0))));
     will-change: transform;
@@ -466,16 +478,15 @@
 
   .Header-nav {
     flex: 1 0 auto;
-    position: relative;
-    right: -1rem;
   }
 
   .Header-list {
+    display: flex;
+    align-items: center;
     float: right;
   }
 
   .Header-item {
-    float: left;
     margin-left: 12px;
   }
 }

@@ -3,6 +3,7 @@ var html = require('choo/html')
 var Component = require('choo/component')
 var { asText } = require('prismic-richtext')
 var error = require('./error')
+var Flag = require('../flag')
 var Header = require('../header')
 var footer = require('../footer')
 var { i18n, isSameDomain } = require('../base')
@@ -67,54 +68,81 @@ function createView (view, meta) {
         emit('meta', { title: `${text`Oops`} | ${DEFAULT_TITLE}` })
       }
 
-      var opts = {}
-      if (state.params.wildcard) {
-        let [, num, uid] = (state.params.wildcard.match(GOAL_SLUG) || [])
-        let isGoal = num && state.docs.getByUID('goal', uid, function (err) {
-          if (err) return null
-          return num
-        })
-        if (isGoal) {
-          opts.theme = +num === 7 ? 'black' : 'white'
-          opts.static = true
-          if (state.referrer === '') {
-            opts.back = { href: '/', text: text`Back to Goals` }
-          }
-        }
-      }
-
       var menu = doc && doc.data.main_menu.map(link)
-      var parts = doc && {
-        shortcuts: [{
-          links: menu,
-          heading: asText(doc.data.main_menu_label)
-        }].concat(doc.data.shortcuts.map(shortcut).filter(Boolean)).slice(0, 3),
-        credits: {
-          heading: asText(doc.data.credits_label),
-          links: doc.data.credits.map(function (item) {
-            return Object.assign({ logo: item.logo }, link(item))
-          })
-        },
-        social: doc.data.social_networks.map(function (item) {
-          return {
-            type: item.type,
-            href: resolve(item.link)
-          }
-        })
-      }
 
       return html`
         <body class="View" id="app-view">
-          <div class="View-header ${opts.static ? 'View-header--stuck View-header--appear' : ''}">
-            ${doc ? state.cache(Header, 'header').render(menu, state.href, opts) : null}
-          </div>
+          ${doc ? getHeader() : null}
           ${children}
-          <div class="View-footer">
-            ${doc ? footer(parts, state.href) : null}
-          </div>
+          ${doc ? getFooter() : null}
         </body>
       `
+
+      function getHeader () {
+        var opts = { slot: getFlag('header') }
+        if (state.params.wildcard) {
+          let [, num, uid] = (state.params.wildcard.match(GOAL_SLUG) || [])
+          let isGoal = num && state.docs.getByUID('goal', uid, function (err) {
+            if (err) return null
+            return num
+          })
+          if (isGoal) {
+            opts.theme = +num === 7 ? 'black' : 'white'
+            opts.static = true
+            if (state.referrer === '') {
+              opts.back = { href: '/', text: text`Back to Goals` }
+            }
+          }
+        }
+
+        return html`
+          <div class="View-header ${opts.static ? 'View-header--stuck View-header--appear' : ''}">
+            ${state.cache(Header, 'header').render(menu, state.href, opts)}
+          </div>
+        `
+      }
+
+      function getFooter () {
+        var opts = doc && {
+          slot: getFlag('footer', true),
+          shortcuts: [{
+            links: menu,
+            heading: asText(doc.data.main_menu_label)
+          }].concat(doc.data.shortcuts.map(shortcut).filter(Boolean)).slice(0, 3),
+          credits: {
+            heading: asText(doc.data.credits_label),
+            links: doc.data.credits.map(function (item) {
+              return Object.assign({ logo: item.logo }, link(item))
+            })
+          },
+          social: doc.data.social_networks.map(function (item) {
+            return {
+              type: item.type,
+              href: resolve(item.link)
+            }
+          })
+        }
+
+        return html`
+          <div class="View-footer">
+            ${footer(opts, state.href)}
+          </div>
+        `
+      }
     })
+
+    function getFlag (id, vertical = false) {
+      return state.cache(Flag, `${id}-flag`).render({
+        figure: html`
+          <svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 192 128">
+            <path fill="#E81C35" fill-rule="nonzero" d="M0 76h52v52H0V76zM0 0h52v52H0V0zm192 52H76V0h116v52zm0 76H76V76h116v52z"/>
+          </svg>
+        `,
+        title: text`Denmark`,
+        text: text`Greenland, Faroe Islands`,
+        vertical: vertical
+      })
+    }
 
     function shortcut (slice) {
       if (slice.slice_type !== 'shortcuts') return null

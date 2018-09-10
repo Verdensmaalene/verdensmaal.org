@@ -1,0 +1,65 @@
+/* @define Flag */
+
+@import "../base/global";
+
+.Flag {
+  display: flex;
+  align-items: center;
+  text-align: right;
+  line-height: 1;
+}
+
+.Flag-figure {
+  flex: 0 0 3rem;
+  width: 3rem;
+  margin-left: 1rem;
+  order: 1;
+  position: relative;
+  border-radius: 0.0625rem;
+  overflow: hidden;
+}
+
+.Flag-figure > * {
+  display: block;
+}
+
+/**
+ * Pseudo element acting like a inner shadow
+ */
+
+.Flag-figure::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 0.0625rem;
+}
+
+.Flag-body {
+  flex: 1 1 auto;
+}
+
+.Flag-title {
+  display: block;
+  font-weight: bold;
+  font-size: 0.875rem;
+}
+
+.Flag-sub {
+  font-size: 0.6875rem;
+}
+
+.Flag--vertical {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.Flag--vertical .Flag-figure {
+  flex: 0 0 auto;
+  order: 0;
+  margin: 0 0 0.5rem;
+}

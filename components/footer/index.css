@@ -75,7 +75,8 @@
   font-size: 0.9rem;
 }
 
-.Footer-section--logo {
+.Footer-section--logo,
+.Footer-slot {
   display: none;
 }
 
@@ -162,6 +163,11 @@
 
   .Footer-section--logo {
     display: block;
+  }
+
+  .Footer-slot {
+    display: inline-block;
+    margin-top: 2rem;
   }
 
   .Footer-section--credits {

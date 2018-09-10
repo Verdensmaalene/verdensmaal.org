@@ -115,6 +115,13 @@ module.exports = class Header extends Component {
                     </a>
                   </li>
                 `)}
+                ${opts.slot ? html`
+                  <li>
+                    <div class="Header-slot">
+                      ${opts.slot}
+                    </div>
+                  </li>
+                ` : null}
               </ul>
             </nav>
           </div>

@@ -14,6 +14,12 @@ function footer (props) {
           <a href="/" rel="home" class="Footer-logo">
             ${logo({ vertical: true })}
           </a>
+
+          ${props.slot ? html`
+            <div class="Footer-slot">
+              ${props.slot}
+            </div>
+          ` : null}
         </div>
         ${props.shortcuts.map((group, index) => html`
           <section class="Footer-section Footer-section--${index + 1}">
@@ -63,6 +69,7 @@ function credit (props) {
       <figure class="Footer-figure">
         <img class="Footer-img" src="${props.logo.url}" alt="${alt}">
       </figure>
+      
       <span class="Footer-sub">${props.role}<span class="u-hiddenVisually">:</span></span>
       ${props.title}
       ${props.href ? html`
