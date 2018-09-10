@@ -14,10 +14,11 @@ function link (opts = {}) {
   opts.external = opts.external ? opts.external : !isSameDomain(opts.href)
 
   var attrs = { class: 'Link', href: opts.href }
-  if (opts.external) attrs.target = '_blank'
-  if (opts.external) attrs.rel = 'noopener noreferrer'
-  if (opts.file) attrs.download = 'true'
-  if (opts.external) attrs.target = '_blank'
+  if (opts.external && !opts.file) {
+    attrs.rel = 'noopener noreferrer'
+    attrs.target = '_blank'
+  }
+  if (opts.file) attrs.download = ''
   attrs.class = className('Link', {
     'Link--block': opts.block,
     'Link--silent': opts.silent,
