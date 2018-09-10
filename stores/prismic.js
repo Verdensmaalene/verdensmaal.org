@@ -66,8 +66,10 @@ function prismicStore (opts) {
       var result
       if (!cached && !state.prefetch) result = callback(null)
       else if (cached instanceof Error) return callback(cached)
-      else if (cached instanceof Promise) return callback(null, null)
-      else if (cached) return callback(null, cached)
+      else if (cached instanceof Promise) {
+        if (state.prefetch) return cached
+        return callback(null, null)
+      } else if (cached) return callback(null, cached)
 
       var request = init.then(function (api) {
         return api.query(predicates, opts).then(function (response) {
