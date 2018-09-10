@@ -7,7 +7,9 @@ module.exports = class Flag extends Component {
   }
 
   createElement (opts = {}) {
-    var className = `Flag ${opts.vertical ? 'Flag--vertical' : ''}`
+    var className = 'Flag'
+    if (opts.vertical) className += ' Flag--vertical'
+    if (opts.white) className += ' Flag--white'
 
     var body = html`
       <div class="Flag-body">

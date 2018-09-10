@@ -79,10 +79,11 @@ function createView (view, meta) {
       `
 
       function getHeader () {
-        var opts = { slot: getFlag('header') }
+        var opts = {}
+        var isGoal
         if (state.params.wildcard) {
           let [, num, uid] = (state.params.wildcard.match(GOAL_SLUG) || [])
-          let isGoal = num && state.docs.getByUID('goal', uid, function (err) {
+          isGoal = num && state.docs.getByUID('goal', uid, function (err) {
             if (err) return null
             return num
           })
@@ -95,6 +96,8 @@ function createView (view, meta) {
           }
         }
 
+        opts.slot = getFlag({ id: `header${isGoal ? '-white' : ''}}`, white: isGoal })
+
         return html`
           <div class="View-header ${opts.static ? 'View-header--stuck View-header--appear' : ''}">
             ${state.cache(Header, 'header').render(menu, state.href, opts)}
@@ -104,7 +107,7 @@ function createView (view, meta) {
 
       function getFooter () {
         var opts = doc && {
-          slot: getFlag('footer', true),
+          slot: getFlag({ id: 'footer', vertical: true }),
           shortcuts: [{
             links: menu,
             heading: asText(doc.data.main_menu_label)
@@ -130,8 +133,8 @@ function createView (view, meta) {
         `
       }
 
-      function getFlag (id, vertical = false) {
-        return state.cache(Flag, `${id}-flag`).render({
+      function getFlag (opts) {
+        return state.cache(Flag, `${opts.id}-flag`).render({
           figure: html`
             <svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 192 128">
               <path fill="#E81C35" fill-rule="nonzero" d="M0 76h52v52H0V76zM0 0h52v52H0V0zm192 52H76V0h116v52zm0 76H76V76h116v52z"/>
@@ -140,7 +143,8 @@ function createView (view, meta) {
           href: doc && doc.data.about_page ? doc.data.about_page.uid : false,
           title: text`Denmark`,
           text: text`Greenland, Faroe Islands`,
-          vertical: vertical
+          vertical: opts.vertical,
+          white: opts.white
         })
       }
     })

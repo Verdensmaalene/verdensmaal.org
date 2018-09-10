@@ -40,6 +40,14 @@
   border-radius: 0.0625rem;
 }
 
+.Flag--white path {
+  fill: #fff;
+}
+
+.Flag--white::after {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
 .Flag-body {
   flex: 1 1 auto;
 }
