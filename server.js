@@ -17,8 +17,8 @@ var resolvePreview = require('./lib/resolve')
 var app = jalla('index.js', { sw: 'sw.js' })
 
 // proxy cloudinary on-demand-transform API
-app.use(route.get('/media/:type/:transform/:uri', async function (ctx, type, transform, uri) {
-  if (!/^(?:https?:)?\/\//.test(uri)) {
+app.use(route.get('/media/:type/:transform/:uri(.+)', async function (ctx, type, transform, uri) {
+  if (type === 'fetch' && !/^(?:https?:)?\/\//.test(uri)) {
     uri = `https://verdensmaalene.cdn.prismic.io/verdensmaalene/${uri}`
   }
 
@@ -37,8 +37,10 @@ app.use(route.get('/media/:type/:transform/:uri', async function (ctx, type, tra
     })
   })
 
+  var headers = ['etag', 'last-modified', 'content-length', 'content-type']
+  headers.forEach((header) => ctx.set(header, res.headers[header]))
+  ctx.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 365}`)
   ctx.body = res
-  ctx.set('Cache-Control', `s-maxage=${60 * 60 * 24 * 365}, max-age=${60}`)
 }))
 
 // disallow robots anywhere but live URL
