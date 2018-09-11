@@ -91,18 +91,6 @@ module.exports = class Header extends Component {
       'is-open': isOpen
     })
 
-    var toggleAttrs = {
-      class: className('Header-button Header-button--toggle js-toggle', {
-        'Header-button--close': isOpen
-      }),
-      href: '#' + isOpen ? '' : id,
-      role: 'button',
-      draggable: false,
-      onclick: toggle,
-      'aria-controls': id + '-navigation',
-      'aria-expanded': isOpen ? 'true' : 'false'
-    }
-
     return html`
       <header class="${classes}" style="--scroll: ${this.local.scroll}" id="${id}">
         <div class="Header-bar">
@@ -118,7 +106,14 @@ module.exports = class Header extends Component {
                 ${logo()}
               </a>
             `}
-            <a ${toggleAttrs}>
+            <a
+              class="${className('Header-button Header-button--toggle js-toggle', { 'Header-button--close': isOpen })}"
+              href="#${isOpen ? '' : id}"
+              role="button"
+              draggable="false"
+              onclick=${toggle}
+              aria-controls="${id}-navigation"
+              aria-expanded="${isOpen ? 'true' : 'false'}">
               <div class="${className('Header-burger', { 'Header-burger--cross': isOpen })}">
                 <div class="Header-beanPatty"></div>
               </div>
@@ -135,7 +130,11 @@ module.exports = class Header extends Component {
                   <li class="Header-item">${item()}</li>
                 ` : html`
                   <li class="Header-item">
-                    <a ${linkAttrs(item)}>
+                    <a
+                      href="${item.href}"
+                      target="${item.external ? '_blank' : ''}"
+                      rel="${item.external ? 'noopener noreferrer' : ''}"
+                      class="${className('Header-button Header-button--link', { 'is-current': item.href.replace(/\/$/, '') === href })}">
                       ${item.title}
                       ${item.external ? html`
                         <span class="Header-tooltip">
@@ -168,22 +167,6 @@ module.exports = class Header extends Component {
         </div>
       </header>
     `
-
-    function linkAttrs (item) {
-      var attrs = {
-        href: item.href,
-        class: className('Header-button Header-button--link', {
-          'is-current': item.href.replace(/\/$/, '') === href
-        })
-      }
-
-      if (item.external) {
-        attrs.target = '_blank'
-        attrs.rel = 'noopener noreferrer'
-      }
-
-      return attrs
-    }
 
     function onback (event) {
       window.history.back()
