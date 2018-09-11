@@ -8,20 +8,20 @@ function ui (state, emitter) {
   state.ui.gridLayout = state.ui.gridLayout || Math.ceil(Math.random() * 9)
 
   emitter.on('header:toggle', function (isOpen) {
-    state.hasOverlay = isOpen
+    state.ui.hasOverlay = isOpen
     document.documentElement.classList[isOpen ? 'add' : 'remove']('has-overlay')
     emitter.emit('render')
   })
 
-  emitter.on('header:toggleContrast', function (isContrastRich) {
-    state.isContrastRich = isContrastRich
+  emitter.on('contrast:toggle', function (isHighContrast) {
+    state.ui.isHighContrast = isHighContrast
     var root = document.documentElement
-    root.classList[isContrastRich ? 'add' : 'remove']('u-highContrast')
+    root.classList[isHighContrast ? 'add' : 'remove']('u-highContrast')
     emitter.emit('render')
   })
 
   emitter.prependListener('navigate', function () {
-    state.hasOverlay = false
+    state.ui.hasOverlay = false
     document.documentElement.classList.remove('has-overlay')
   })
 

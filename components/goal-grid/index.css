@@ -1,6 +1,7 @@
 /* @define GoalGrid */
 
 @import "../base";
+@import "../goal";
 @import "../text";
 
 .GoalGrid {
@@ -303,6 +304,10 @@
   }
 }
 
+/**
+ * 1. Tap into contextual goal color
+ */
+
 .GoalGrid-button {
   display: inline-block;
   padding: 0.65em 1em 0.55em;
@@ -316,7 +321,7 @@
   text-transform: uppercase;
   white-space: nowrap;
   background: #fff;
-  text-shadow: 0 0 var(--current-background);
+  text-shadow: 0 0 var(--Goal-background); /* 1 */
 }
 
 .GoalGrid-item--1:hover .GoalGrid-button { color: rgba(var(--color-goal-1-shaded), 0.13); }

@@ -1,3 +1,4 @@
+var theme = require('../components/theme')
 var favicon = require('../components/favicon')
 
 module.exports = meta
@@ -25,16 +26,10 @@ function meta (state, emitter, app) {
 
     if (typeof window !== 'undefined') {
       var link = document.head.querySelector(`link[rel="shortcut icon"]`)
-      var root = document.documentElement
       var attrs = favicon(next.goal || null)
-      var rootClass = root.getAttribute('class') || ''
-
+      theme(document.documentElement, next.goal || null)
       link.setAttribute('type', attrs.type)
       link.setAttribute('href', attrs.icon)
-
-      rootClass = rootClass.replace(/u-bg.+?(?:\s|$)/g, '')
-      if (next.goal) rootClass = rootClass + `u-bg${next.goal} u-bgCurrent`
-      root.className = rootClass
     }
   })
 }

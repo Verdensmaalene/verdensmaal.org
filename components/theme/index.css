@@ -1,0 +1,23 @@
+/* @define Theme */
+
+.Theme {
+  background-color: rgb(var(--current-background));
+}
+
+.Theme--1 { background-color: rgb(var(--color-goal-1)); }
+.Theme--2 { background-color: rgb(var(--color-goal-2)); }
+.Theme--3 { background-color: rgb(var(--color-goal-3)); }
+.Theme--4 { background-color: rgb(var(--color-goal-4)); }
+.Theme--5 { background-color: rgb(var(--color-goal-5)); }
+.Theme--6 { background-color: rgb(var(--color-goal-6)); }
+.Theme--7 { background-color: rgb(var(--color-goal-7)); }
+.Theme--8 { background-color: rgb(var(--color-goal-8)); }
+.Theme--9 { background-color: rgb(var(--color-goal-9)); }
+.Theme--10 { background-color: rgb(var(--color-goal-10)); }
+.Theme--11 { background-color: rgb(var(--color-goal-11)); }
+.Theme--12 { background-color: rgb(var(--color-goal-12)); }
+.Theme--13 { background-color: rgb(var(--color-goal-13)); }
+.Theme--14 { background-color: rgb(var(--color-goal-14)); }
+.Theme--15 { background-color: rgb(var(--color-goal-15)); }
+.Theme--16 { background-color: rgb(var(--color-goal-16)); }
+.Theme--17 { background-color: rgb(var(--color-goal-17)); }

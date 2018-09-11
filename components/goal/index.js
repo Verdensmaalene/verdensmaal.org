@@ -266,9 +266,7 @@ module.exports = class Goal extends Component {
         ${props.number && props.label && ((isFullscreen && props.description) || children) ? html`
           <div class="Goal-content ${isFullscreen ? 'u-slideUp' : ''}" style="--offset: ${icon.offset(props.number, props.label)}">
             ${props.description && isFullscreen ? html`
-              <div class="Text">
-                <p><strong>${props.description}</strong></p>
-              </div>
+              <p><strong>${props.description}</strong></p>
             ` : null}
             ${children ? html`
               <div class="Goal-children">

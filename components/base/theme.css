@@ -7,7 +7,10 @@
   --color-theme-shaded: 212, 30, 55;
 }
 
-.u-highContrast {
+.u-highContrast,
+.u-highContrast *,
+.u-highContrast *::before,
+.u-highContrast *::after  {
   --color-theme: 189, 26, 45;
   --color-theme-shaded: 164, 20, 37;
 }

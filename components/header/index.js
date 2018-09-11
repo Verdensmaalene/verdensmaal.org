@@ -15,12 +15,12 @@ module.exports = class Header extends Component {
       id: id,
       scroll: 0,
       isOpen: false,
-      isContrastRich: false
+      isHighContrast: false
     }
 
     var self = this
     var preventScroll = (event) => event.preventDefault()
-    this.toggle = function (next = !self.local.isOpen) {
+    this.toggle = function (next = !'self'.local.isOpen) {
       self.local.isOpen = next
       self.rerender()
       emit('header:toggle', next)
@@ -37,10 +37,8 @@ module.exports = class Header extends Component {
       }
     }
 
-    this.toggleContast = function (next = !self.local.isContrastRich) {
-      self.local.isContrastRich = next
-      self.rerender()
-      emit('header:toggleContrast', next)
+    this.toggleContast = function (next) {
+      emit('contrast:toggle', next)
     }
   }
 
@@ -75,7 +73,7 @@ module.exports = class Header extends Component {
     this.local.opts = opts
     this.local.href = href.replace(/\/$/, '')
 
-    var { id, isOpen, isContrastRich } = this.local
+    var { id, isOpen } = this.local
 
     var toggle = (event) => {
       this.toggle()
@@ -83,7 +81,7 @@ module.exports = class Header extends Component {
     }
 
     var toggleContast = (event) => {
-      this.toggleContast()
+      this.toggleContast(!opts.isHighContrast)
       event.preventDefault()
     }
 
@@ -103,17 +101,6 @@ module.exports = class Header extends Component {
       onclick: toggle,
       'aria-controls': id + '-navigation',
       'aria-expanded': isOpen ? 'true' : 'false'
-    }
-
-    var linkAttrs = function (item) {
-      return {
-        class: className('Header-button Header-button--link', {
-          'is-current': item.href.replace(/\/$/, '') === href
-        }),
-        href: item.href,
-        target: item.external ? '_blank' : null,
-        rel: item.external ? 'noopener noreferrer' : null
-      }
     }
 
     return html`
@@ -160,10 +147,10 @@ module.exports = class Header extends Component {
                   </li>
                 `)}
                 <li class="Header-item">
-                  <button class="Header-contrast ${isContrastRich ? 'is-active' : ''}" role="button" onclick=${toggleContast}>
+                  <button class="Header-contrast ${opts.isHighContrast ? 'is-active' : ''}" role="button" onclick=${toggleContast}>
                     <span class="Header-switch">
                       <span class="Header-tooltip">
-                        ${isContrastRich ? text`Turn off high contrast` : text`Turn on high contrast`}
+                        ${opts.isHighContrast ? text`Turn off high contrast` : text`Turn on high contrast`}
                       </span>
                     </span>
                   </button>
@@ -181,6 +168,22 @@ module.exports = class Header extends Component {
         </div>
       </header>
     `
+
+    function linkAttrs (item) {
+      var attrs = {
+        href: item.href,
+        class: className('Header-button Header-button--link', {
+          'is-current': item.href.replace(/\/$/, '') === href
+        })
+      }
+
+      if (item.external) {
+        attrs.target = '_blank'
+        attrs.rel = 'noopener noreferrer'
+      }
+
+      return attrs
+    }
 
     function onback (event) {
       window.history.back()

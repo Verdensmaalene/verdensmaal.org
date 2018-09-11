@@ -4,7 +4,7 @@
 
 .Intro {
   margin-bottom: 2rem;
-  color: var(--current-color);
+  color: rgb(var(--current-color));
 }
 
 .Intro::before {

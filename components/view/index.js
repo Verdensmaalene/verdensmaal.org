@@ -79,7 +79,7 @@ function createView (view, meta) {
       `
 
       function getHeader () {
-        var opts = {}
+        var opts = { isHighContrast: state.ui.isHighContrast }
         var isGoal
         if (state.params.wildcard) {
           let [, num, uid] = (state.params.wildcard.match(GOAL_SLUG) || [])

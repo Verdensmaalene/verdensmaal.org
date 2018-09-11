@@ -111,40 +111,68 @@
 
 /**
  * High contrast mode
- * 1. Restore browsers prefered text rendering
+ * 1. Overwrite child selector colors
+ * 2. Restore browsers prefered text rendering
  */
 
-.u-highContrast {
-  -webkit-font-smoothing: auto !important; /* 1 */
-  -moz-osx-font-smoothing: auto !important; /* 1 */
+.u-highContrast,
+.u-highContrast *, /* 1 */
+.u-highContrast *::before, /* 1 */
+.u-highContrast *::after /* 1 */ {
+  -webkit-font-smoothing: auto !important; /* 2 */
+  -moz-osx-font-smoothing: auto !important; /* 2 */
 
-  --color-gray: var(--default-color);
-  --color-gray-dark: var(--default-color);
+  --high-contrast-light: var(--default-background-color) !important;
+  --high-contrast-dark: var(--default-color) !important;
 
-  --color-text-muted: var(--default-color);
+  --color-text-muted: var(--default-color) !important;
 
-  --color-twitter: var(--default-color);
-  --color-facebook: var(--default-color);
-  --color-youtube: var(--default-color);
-  --color-instagram: var(--default-color);
-  --color-weibo: var(--default-color);
-  --color-vk: var(--default-color);
+  --current-background: var(--default-background-color) !important;
+  --current-color: var(--default-color) !important;
 
-  --color-goal-1: var(--default-color);
-  --color-goal-2: var(--default-color);
-  --color-goal-3: var(--default-color);
-  --color-goal-4: var(--default-color);
-  --color-goal-5: var(--default-color);
-  --color-goal-6: var(--default-color);
-  --color-goal-7: var(--default-color);
-  --color-goal-8: var(--default-color);
-  --color-goal-9: var(--default-color);
-  --color-goal-10: var(--default-color);
-  --color-goal-11: var(--default-color);
-  --color-goal-12: var(--default-color);
-  --color-goal-13: var(--default-color);
-  --color-goal-14: var(--default-color);
-  --color-goal-15: var(--default-color);
-  --color-goal-16: var(--default-color);
-  --color-goal-17: var(--default-color);
+  --color-gray: var(--default-color) !important;
+  --color-gray-dark: var(--default-color) !important;
+
+  --color-twitter: var(--default-color) !important;
+  --color-facebook: var(--default-color) !important;
+  --color-youtube: var(--default-color) !important;
+  --color-instagram: var(--default-color) !important;
+  --color-weibo: var(--default-color) !important;
+  --color-vk: var(--default-color) !important;
+
+  --color-goal-1: var(--default-color) !important;
+  --color-goal-2: var(--default-color) !important;
+  --color-goal-3: var(--default-color) !important;
+  --color-goal-4: var(--default-color) !important;
+  --color-goal-5: var(--default-color) !important;
+  --color-goal-6: var(--default-color) !important;
+  --color-goal-7: var(--default-color) !important;
+  --color-goal-8: var(--default-color) !important;
+  --color-goal-9: var(--default-color) !important;
+  --color-goal-10: var(--default-color) !important;
+  --color-goal-11: var(--default-color) !important;
+  --color-goal-12: var(--default-color) !important;
+  --color-goal-13: var(--default-color) !important;
+  --color-goal-14: var(--default-color) !important;
+  --color-goal-15: var(--default-color) !important;
+  --color-goal-16: var(--default-color) !important;
+  --color-goal-17: var(--default-color) !important;
+
+  --color-goal-1-shaded: var(--default-color) !important;
+  --color-goal-2-shaded: var(--default-color) !important;
+  --color-goal-3-shaded: var(--default-color) !important;
+  --color-goal-4-shaded: var(--default-color) !important;
+  --color-goal-5-shaded: var(--default-color) !important;
+  --color-goal-6-shaded: var(--default-color) !important;
+  --color-goal-7-shaded: var(--default-color) !important;
+  --color-goal-8-shaded: var(--default-color) !important;
+  --color-goal-9-shaded: var(--default-color) !important;
+  --color-goal-10-shaded: var(--default-color) !important;
+  --color-goal-11-shaded: var(--default-color) !important;
+  --color-goal-12-shaded: var(--default-color) !important;
+  --color-goal-13-shaded: var(--default-color) !important;
+  --color-goal-14-shaded: var(--default-color) !important;
+  --color-goal-15-shaded: var(--default-color) !important;
+  --color-goal-16-shaded: var(--default-color) !important;
+  --color-goal-17-shaded: var(--default-color) !important;
 }
