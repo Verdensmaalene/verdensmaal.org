@@ -93,14 +93,16 @@ function asLocation (doc) {
 // obj -> HTMLElement
 function eventCard (doc) {
   var date = new Date(doc.data.datetime)
+  var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
+
   return card({
     title: asText(doc.data.title),
     body: asText(doc.data.description),
     figure: doc.data.image.url ? {
       alt: doc.data.image.alt,
       sizes: '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw',
-      srcset: srcset(doc.data.image.url, [400, 600, 900, 1800]),
-      src: `/media/fetch/${doc.data.image.url}`,
+      srcset: srcset(doc.data.image.url, [400, 600, 900, 1800], opts),
+      src: `/media/fetch/w_900/${doc.data.image.url}`,
       caption: doc.data.image.copyright
     } : null,
     date: {

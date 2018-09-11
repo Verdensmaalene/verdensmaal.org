@@ -1,5 +1,6 @@
 var fs = require('fs')
 var path = require('path')
+var assert = require('assert')
 var common = require('./lang.json')
 
 if (typeof window !== 'undefined') {
@@ -175,11 +176,29 @@ function reduce (list) {
 }
 
 // compose srcset attribute from url for given sizes
-// (str, arr) -> str
+// (str, arr, obj?) -> str
 exports.srcset = srcset
-function srcset (url, sizes) {
-  var parts = url.split('/')
+function srcset (url, sizes, opts) {
+  var transforms = opts.transforms
+  if (!transforms) transforms = 'c_fill,f_auto,q_auto'
+  if (!/c_/.test(transforms)) transforms += ',c_fill'
+  if (!/f_/.test(transforms)) transforms += ',f_auto'
+  if (!/q_/.test(transforms)) transforms += ',q_auto'
+
+  var uri = url.split('verdensmaalene.cdn.prismic.io/verdensmaalene/')[1]
+  assert(uri, 'srcset: url should be a prismic media asset')
+
   return sizes.map(function (size) {
-    return `/media/fetch/w_${size}/${parts[parts.length - 1]} ${size}w`
+    var transform = transforms
+    if (Array.isArray(size)) {
+      transform = size[1]
+      if (!/c_/.test(transform)) transform += ',c_fill'
+      if (!/f_/.test(transform)) transform += ',f_auto'
+      if (!/q_/.test(transform)) transform += ',q_auto'
+      size = size[0]
+    }
+    if (opts.aspect) transform += `,h_${Math.floor(size * opts.aspect)}`
+
+    return `/media/fetch/${transform},w_${size}/${uri} ${size}w`
   }).join(', ')
 }

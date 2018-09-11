@@ -93,6 +93,8 @@ function newsCard (doc, cols = 3) {
   var date = new Date(doc.first_publication_date)
   var sizes = '(min-width: 400px) 50vw, 100vw'
   if (cols === 3) sizes = '(min-width: 1000px) 30vw, ' + sizes
+  var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
+  if (cols === 2) opts.aspect = 9 / 16
 
   return card({
     title: asText(doc.data.title),
@@ -100,8 +102,8 @@ function newsCard (doc, cols = 3) {
     figure: {
       alt: doc.data.image.alt,
       sizes: sizes,
-      srcset: srcset(doc.data.image.url, [400, 600, 900, 1800]),
-      src: `/media/fetch/${doc.data.image.url}`,
+      srcset: srcset(doc.data.image.url, [400, 600, 900, 1800], opts),
+      src: `/media/fetch/w_900/${doc.data.image.url}`,
       caption: doc.data.image.copyright
     },
     date: {
