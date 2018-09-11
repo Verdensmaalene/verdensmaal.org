@@ -118,34 +118,33 @@
   -webkit-font-smoothing: auto !important; /* 1 */
   -moz-osx-font-smoothing: auto !important; /* 1 */
 
+  --color-gray: var(--default-color);
+  --color-gray-dark: var(--default-color);
+
   --color-text-muted: var(--default-color);
-  
-  /* --color-gray-light: 241, 241, 241;
-  --color-gray: 170, 170, 170;
-  --color-gray-dark: 26, 26, 26; */
 
-  --color-twitter: 26, 26, 26;
-  --color-facebook: 26, 26, 26;
-  --color-youtube: 26, 26, 26;
-  --color-instagram: 26, 26, 26;
-  --color-weibo: 26, 26, 26;
-  --color-vk: 26, 26, 26;
+  --color-twitter: var(--default-color);
+  --color-facebook: var(--default-color);
+  --color-youtube: var(--default-color);
+  --color-instagram: var(--default-color);
+  --color-weibo: var(--default-color);
+  --color-vk: var(--default-color);
 
-  --color-goal-1: var(--color-goal-1-shaded);
-  --color-goal-2: var(--color-goal-2-shaded);
-  --color-goal-3: var(--color-goal-3-shaded);
-  --color-goal-4: var(--color-goal-4-shaded);
-  --color-goal-5: var(--color-goal-5-shaded);
-  --color-goal-6: var(--color-goal-6-shaded);
-  --color-goal-7: var(--color-goal-7-shaded);
-  --color-goal-8: var(--color-goal-8-shaded);
-  --color-goal-9: var(--color-goal-9-shaded);
-  --color-goal-10: var(--color-goal-10-shaded);
-  --color-goal-11: var(--color-goal-11-shaded);
-  --color-goal-12: var(--color-goal-12-shaded);
-  --color-goal-13: var(--color-goal-13-shaded);
-  --color-goal-14: var(--color-goal-14-shaded);
-  --color-goal-15: var(--color-goal-15-shaded);
-  --color-goal-16: var(--color-goal-16-shaded);
-  --color-goal-17: var(--color-goal-17-shaded);
+  --color-goal-1: var(--default-color);
+  --color-goal-2: var(--default-color);
+  --color-goal-3: var(--default-color);
+  --color-goal-4: var(--default-color);
+  --color-goal-5: var(--default-color);
+  --color-goal-6: var(--default-color);
+  --color-goal-7: var(--default-color);
+  --color-goal-8: var(--default-color);
+  --color-goal-9: var(--default-color);
+  --color-goal-10: var(--default-color);
+  --color-goal-11: var(--default-color);
+  --color-goal-12: var(--default-color);
+  --color-goal-13: var(--default-color);
+  --color-goal-14: var(--default-color);
+  --color-goal-15: var(--default-color);
+  --color-goal-16: var(--default-color);
+  --color-goal-17: var(--default-color);
 }
