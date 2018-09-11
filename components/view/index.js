@@ -2,10 +2,11 @@ var assert = require('assert')
 var html = require('choo/html')
 var Component = require('choo/component')
 var { asText } = require('prismic-richtext')
-var error = require('./error')
 var Flag = require('../flag')
+var error = require('./error')
 var Header = require('../header')
 var footer = require('../footer')
+var player = require('../embed/player')
 var { i18n, isSameDomain } = require('../base')
 
 var text = i18n()
@@ -75,6 +76,7 @@ function createView (view, meta) {
           ${doc ? getHeader() : null}
           ${children}
           ${doc ? getFooter() : null}
+          ${player.render(null)}
         </body>
       `
 

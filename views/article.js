@@ -2,8 +2,9 @@ var html = require('choo/html')
 var { asText } = require('prismic-richtext')
 var asElement = require('prismic-element')
 var view = require('../components/view')
-var { i18n } = require('../components/base')
 var banner = require('../components/banner')
+var { i18n, srcset } = require('../components/base')
+var serialize = require('../components/text/serialize')
 
 var text = i18n()
 
@@ -33,12 +34,11 @@ function article (state, emit) {
       `
     }
 
-    var img = doc.data.image
     var date = new Date(doc.first_publication_date)
     return html`
       <main class="View-main">
         <article>
-          ${banner({ width: img.dimensions.width, height: img.dimensions.height, src: img.url, alt: img.alt })}
+          ${banner(image(doc.data.image))}
           <div class="u-container">
             <div class="Text">
               <time class="u-colorGray u-colorCurrent" datetime="${date}">
@@ -46,12 +46,29 @@ function article (state, emit) {
               </time>
               <h1>${asText(doc.data.title)}</h1>
               <p>${asText(doc.data.description)}</p>
-              ${asElement(doc.data.body, state.docs.resolve)}
+              ${asElement(doc.data.body, state.docs.resolve, serialize)}
             </div>
           </div>
         </article>
       </main>
     `
+  }
+}
+
+// construct image properties
+// obj -> obj
+function image (props) {
+  return {
+    width: props.dimensions.width,
+    height: props.dimensions.height,
+    alt: props.alt,
+    src: props.url,
+    sizes: '100vw',
+    srcset: srcset(
+      props.url,
+      [400, 600, 900, 1800, [3000, 'q_60']],
+      { aspect: 9 / 16 }
+    )
   }
 }
 
