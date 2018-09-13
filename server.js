@@ -1,6 +1,9 @@
 if (!process.env.NOW) require('dotenv/config')
 
 var REPOSITORY = 'https://verdensmaalene.cdn.prismic.io/api/v2'
+var LAYOUTS = [
+  [1, 6], [3, 8], [17, 7], [13, 2], [9, 16], [10, 11], [1, 12], [15, 5], [14, 4]
+]
 
 var url = require('url')
 var https = require('https')
@@ -95,6 +98,17 @@ app.use(route.get('/:num(\\d{1,2})', async function (ctx, num) {
   ctx.redirect(`/${num}-${doc.uid}`)
 }))
 
+// push goal background bundle
+app.use(route.get('/:num(\\d{1,2})-:uid', function (ctx, num, uid, next) {
+  if (process.env.NODE_ENV === 'development') return next()
+  var reg = new RegExp(`bundle-\\d+-(${num})\\.js`)
+  var key = Object.keys(ctx.assets).find((key) => reg.test(key))
+  if (key) {
+    ctx.append('Link', `<${ctx.assets[key].url}>; rel=preload; as=script`)
+  }
+  return next()
+}))
+
 // loopkup user location by ip
 app.use(route.get('/geoip', function (ctx, next) {
   ctx.set('Cache-Control', 'max-age=0')
@@ -110,6 +124,16 @@ app.use(route.get('/', function (ctx, next) {
   if (!layout) layout = Math.ceil(Math.random() * 9)
   ctx.state.ui = ctx.state.ui || {}
   ctx.state.ui.gridLayout = layout
+
+  // push layout background bundles
+  if (process.env.NODE_ENV !== 'development') {
+    var reg = new RegExp(`bundle-\\d+-(${LAYOUTS[layout].join('|')})\\.js`)
+    ctx.append('Link', Object.keys(ctx.assets)
+      .filter((key) => reg.test(key))
+      .map((key) => `<${ctx.assets[key].url}>; rel=preload; as=script`)
+    )
+  }
+
   return next()
 }))
 

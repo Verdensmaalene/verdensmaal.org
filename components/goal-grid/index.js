@@ -9,15 +9,7 @@ var text = i18n(require('./lang.json'))
 
 var TOTAL_GOALS = 17
 var LAYOUTS = [ // [<landscape>, <portrait>]
-  [1, 6],
-  [3, 8],
-  [17, 7],
-  [13, 2],
-  [9, 16],
-  [10, 11],
-  [1, 12],
-  [15, 5],
-  [14, 4]
+  [1, 6], [3, 8], [17, 7], [13, 2], [9, 16], [10, 11], [1, 12], [15, 5], [14, 4]
 ]
 
 module.exports = class GoalGrid extends Component {

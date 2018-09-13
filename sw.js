@@ -9,7 +9,7 @@ var FILES = [
   '/manifest.json',
   '/icon.png',
   '/tile.png'
-]
+].concat(process.env.ASSET_LIST).filter(Boolean)
 
 self.addEventListener('install', function oninstall (event) {
   event.waitUntil(
