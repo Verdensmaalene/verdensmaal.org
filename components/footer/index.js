@@ -6,7 +6,7 @@ var text = i18n(require('./lang.json'))
 
 module.exports = footer
 
-function footer (props) {
+function footer (props, slot) {
   return html`
     <footer class="Footer">
       <div class="Footer-content u-container">
@@ -15,9 +15,9 @@ function footer (props) {
             ${logo({ vertical: true })}
           </a>
 
-          ${props.slot ? html`
+          ${slot ? html`
             <div class="Footer-slot">
-              ${props.slot}
+              ${slot()}
             </div>
           ` : null}
         </div>
@@ -69,7 +69,7 @@ function credit (props) {
       <figure class="Footer-figure">
         <img class="Footer-img" src="${props.logo.url}" alt="${alt}">
       </figure>
-      
+
       <span class="Footer-sub">${props.role}<span class="u-hiddenVisually">:</span></span>
       ${props.title}
       ${props.href ? html`

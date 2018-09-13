@@ -98,7 +98,12 @@ function createView (view, meta) {
           }
         }
 
-        opts.slot = getFlag({ id: `header${isGoal ? '-white' : ''}}`, white: isGoal })
+        opts.slot = function () {
+          return getFlag({
+            white: isGoal,
+            id: `header${isGoal ? '-white' : ''}}`
+          })
+        }
 
         return html`
           <div class="View-header ${opts.static ? 'View-header--stuck View-header--appear' : ''}">
@@ -109,7 +114,6 @@ function createView (view, meta) {
 
       function getFooter () {
         var opts = doc && {
-          slot: getFlag({ id: 'footer', vertical: true }),
           shortcuts: [{
             links: menu,
             heading: asText(doc.data.main_menu_label)
@@ -130,7 +134,7 @@ function createView (view, meta) {
 
         return html`
           <div class="View-footer">
-            ${footer(opts, state.href)}
+            ${footer(opts, () => getFlag({ id: 'footer', vertical: true }))}
           </div>
         `
       }

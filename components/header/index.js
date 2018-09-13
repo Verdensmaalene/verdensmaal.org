@@ -157,7 +157,7 @@ module.exports = class Header extends Component {
                 ${opts.slot ? html`
                   <li>
                     <div class="Header-slot">
-                      ${opts.slot}
+                      ${opts.slot()}
                     </div>
                   </li>
                 ` : null}
