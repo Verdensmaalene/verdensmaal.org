@@ -127,6 +127,7 @@ class GoalPage extends View {
           })
         })
 
+        var headerVisible = state.ui.hasOverlay ? 1 : self.local.headerVisible
         var opts = { isHighContrast: isHighContrast, slot: flag, static: true }
         var header = state.cache(Header, 'secondary-header')
         var links = website.data.main_menu.map(menuLink)
@@ -138,8 +139,8 @@ class GoalPage extends View {
               hidden
               aria-hidden="true"
               id="secondary-header-container"
-              class="${className('View-header View-header--secondary js-header', { 'is-visible': self.local.headerVisible })}"
-              style="--View-header-visible: ${self.local.headerVisible}">
+              class="${className('View-header View-header--secondary js-header', { 'is-visible': headerVisible })}"
+              style="--View-header-visible: ${headerVisible}">
               <div class="View-headerWrapper">
                 ${typeof window !== 'undefined' ? header.render(links, state.href, opts) : null}
               </div>

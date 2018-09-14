@@ -213,7 +213,7 @@
 .Header-button.Header-button--back:hover { background: rgba(0, 0, 0, 0.16); }
 
 .Header.is-open .Header-button:hover,
-.Header:target .Header-button:hover {
+:root:not([scripting-enabled]) .Header:target .Header-button:hover {
   background: rgba(var(--color-gray-light), 0.05);
 }
 
@@ -232,6 +232,18 @@
   position: absolute;
   right: 0.3rem;
   text-align: right;
+}
+
+.Header-button--noscript {
+  display: none;
+}
+
+:root:not([scripting-enabled]) .Header:target .Header-button--toggle {
+  display: none;
+}
+
+:root:not([scripting-enabled]) .Header:target .Header-button--noscript {
+  display: flex;
 }
 
 @media (min-width: 500px) {
@@ -279,36 +291,41 @@
 }
 
 .Header.is-open .Header-burger,
-.Header:target .Header-burger {
+:root:not([scripting-enabled]) .Header:target .Header-burger {
   transform: translateX(-0.3125rem);
 }
 
 .Header.is-open .Header-burger::before,
-.Header:target .Header-burger::before {
+:root:not([scripting-enabled]) .Header:target .Header-burger::before {
   transform: rotate(-45deg) translate(0.0625rem, -0.0625rem) scaleX(1.49);
 }
 
 .Header.is-open .Header-burger::after,
-.Header:target .Header-burger::after {
+:root:not([scripting-enabled]) .Header:target .Header-burger::after {
   transform: rotate(45deg) translate(0.125rem, 0rem) scaleX(1.74);
 }
 
 .Header.is-open .Header-beanPatty,
-.Header:target .Header-beanPatty {
+:root:not([scripting-enabled]) .Header:target .Header-beanPatty {
   transform: scaleX(0);
   opacity: 0;
 }
 
 /**
  * High contrast button
+ * 1. Sync with Heder-button--link line height
  */
 
 .Header-contrast {
-  display: block;
+  display: none;
+  height: 4.75rem; /* 1 */
   padding: 0.5rem;
   margin: -0.5rem;
   margin-left: 0.75rem;
+}
 
+:root[scripting-enabled] .Header-contrast {
+  display: block;
 }
 
 .Header-switch {
@@ -329,7 +346,7 @@
   position: absolute;
   top: 0.15625rem;
   right: 0.15625rem;
-  border-radius: 0px 2rem 2rem 0;
+  border-radius: 0 2rem 2rem 0;
 }
 
 .Header-contrast.is-active .Header-switch {
@@ -403,13 +420,13 @@
    */
 
   .Header.is-open .Header-bar,
-  .Header:target .Header-bar {
+  :root:not([scripting-enabled]) .Header:target .Header-bar {
     position: fixed;
     color: #fff;
   }
 
   .Header.is-open .Header-fill,
-  .Header:target .Header-fill {
+  :root:not([scripting-enabled]) .Header:target .Header-fill {
     position: fixed;
     top: 0;
     left: 0;
@@ -421,7 +438,7 @@
   }
 
   .Header.is-open .Header-nav,
-  .Header:target .Header-nav {
+  :root:not([scripting-enabled]) .Header:target .Header-nav {
     visibility: visible;
     width: 100%;
     height: calc(100vh - 15px);
@@ -442,26 +459,26 @@
 
   .Header-button--link {
     height: auto;
-    padding: 2px 43px 0 1rem;
+    padding: 2px 2.7rem 0 1rem;
     color: inherit;
     font-size: 2rem;
-    line-height: 48px;
+    line-height: 3rem;
   }
 
   .Header-button--link .Header-arrow {
-    width: 12px;
-    height: 12px;
+    width: 0.75rem;
+    height: 0.75rem;
     top: 50%;
-    right: 21px;
+    right: 1.3125rem;
     transform: translateY(-50%) rotate(45deg);
   }
 
   .Header-button--link:hover .Header-arrow {
-    right: 19px;
+    right: 1.1875rem;
   }
 
   .Header-button--link:hover .Header-arrow {
-    right: 19px;
+    right: 1.1875rem;
   }
 
   .Header-langIcon {
@@ -487,9 +504,9 @@
 
 @media (max-width: 1000px) and (min-height: 600px) {
   .Header-button--link {
-    font-size: 48px;
-    line-height: 76px;
-    height: 74px;
+    font-size: 3rem;
+    line-height: 4.75rem;
+    height: 4.625rem;
   }
 
   .Header-list {
@@ -497,13 +514,13 @@
   }
 
   .Header-button--link .Header-arrow {
-    width: 18px;
-    height: 18px;
-    right: 20px;
+    width: 1.125rem;
+    height: 1.125rem;
+    right: 1.25rem;
   }
 
   .Header-button--link:hover .Header-arrow {
-    right: 18px;
+    right: 1.125rem;
   }
 }
 
@@ -528,7 +545,7 @@
   }
 
   .Header-item {
-    margin-left: 12px;
+    margin-left: 0.75rem;
   }
 }
 

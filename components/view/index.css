@@ -52,8 +52,14 @@
   width: 100%;
   height: 0;
   top: 0;
-  margin-bottom: 6rem;
+  margin-bottom: 5rem;
   position: sticky;
+}
+
+@media (min-width: 1000px) {
+  .View-header--secondary {
+    margin-bottom: 8rem;
+  }
 }
 
 :root[scripting-enabled] .View-header--secondary {

@@ -142,6 +142,15 @@ module.exports = class Header extends Component {
                 ${isOpen ? text`Close` : text`Menu`}
               </span>
             </a>
+            <a class="Header-button Header-button--toggle Header-button--noscript Header-button--close" href="#" role="button">
+              <div class="Header-burger Header-burger--cross">
+                <div class="Header-beanPatty"></div>
+              </div>
+              <span class="Header-toggleText">
+                <span class="u-hiddenVisually">${text`Hide menu`}</span>
+                ${text`Close`}
+              </span>
+            </a>
 
             <strong class="u-hiddenVisually">${text`Menu`}</strong>
             <nav class="Header-nav" id="${id}-navigation">
