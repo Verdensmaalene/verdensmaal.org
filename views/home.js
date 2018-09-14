@@ -53,10 +53,7 @@ class Home extends View {
             number: link.data.number,
             label: asText(link.data.label),
             description: asText(link.data.description),
-            href: `/${link.data.number}-${link.uid}`,
-            onclick (event) {
-              emit('transition:start', 'goal-page', link)
-            }
+            href: `/${link.data.number}-${link.uid}`
           }
         })
       } else {
@@ -67,6 +64,7 @@ class Home extends View {
             number: i + 1,
             href: `/${i + 1}`,
             onclick (event) {
+              // do a hard page load if we don't have the complete url
               window.location = event.currentTarget.href
               event.preventdefault()
             }

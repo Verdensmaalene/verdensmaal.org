@@ -1,6 +1,7 @@
 var html = require('choo/html')
-var { asText } = require('prismic-richtext')
 var asElement = require('prismic-element')
+var { asText } = require('prismic-richtext')
+var { Predicates } = require('prismic-javascript')
 var View = require('../components/view')
 var Goal = require('../components/goal')
 var { i18n } = require('../components/base')
@@ -22,10 +23,12 @@ class GoalPage extends View {
   }
 
   meta (state) {
-    var [, uid] = state.params.wildcard.match(/^\d{1,2}-(.+)$/)
-    return state.docs.getByUID('goal', uid, function (err, doc) {
+    var [, num] = state.params.wildcard.match(/^(\d{1,2})-.+$/)
+    var predicate = Predicates.at('my.goal.number', +num)
+    return state.docs.get(predicate, function (err, response) {
       if (err) throw err
-      if (!doc) return { title: text`LOADING_TEXT_SHORT` }
+      if (!response) return { title: text`LOADING_TEXT_SHORT` }
+      var doc = response.results[0]
       return {
         title: asText(doc.data.title),
         description: asText(doc.data.description),
@@ -40,13 +43,13 @@ class GoalPage extends View {
   }
 
   createElement (state, emit) {
-    var [, num, uid] = state.params.wildcard.match(/^(\d{1,2})-(.+)$/)
-
-    return state.docs.getByUID('goal', uid, onresponse)
+    var [, num] = state.params.wildcard.match(/^(\d{1,2})-.+$/)
+    var predicate = Predicates.at('my.goal.number', +num)
+    return state.docs.get(predicate, onresponse)
 
     // handle goal document response
     // (Error, obj) -> HTMLElement
-    function onresponse (err, doc) {
+    function onresponse (err, response) {
       if (err) throw err
 
       var isHighContrast = state.ui.isHighContrast
@@ -54,13 +57,15 @@ class GoalPage extends View {
       var id = state.params.wildcard + (isHighContrast ? 'high-contrast' : '')
       var goal = state.cache(GoalClass, id)
       var props = { format: 'fullscreen', number: +num, static: true }
-      if (!doc) {
+      if (!response) {
         return html`
           <main class="View-main">
             ${goal.render(props)}
           </main>
         `
       }
+
+      var doc = response.results[0]
 
       props.number = doc.data.number
       props.label = asText(doc.data.label)

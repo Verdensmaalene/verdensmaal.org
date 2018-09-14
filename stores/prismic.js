@@ -48,13 +48,17 @@ function prismicStore (opts) {
       predicates = Array.isArray(predicates) ? predicates : [predicates]
       callback = typeof opts === 'function' ? opts : callback
       opts = typeof opts === 'function' ? {} : opts
-
-      assert(typeof callback === 'function', 'choo-prismic: callback should be type function')
+      callback = callback || Function.prototype
 
       if (typeof middleware === 'function') {
         // pass input through middleware
         middleware(predicates, opts)
       }
+
+      // pluck out prefetch from opts
+      var prefetch = state.prefetch || opts.prefetch
+      opts = Object.assign({}, opts)
+      delete opts.prefetch
 
       var key = predicates.join(',')
       var optkeys = Object.keys(opts).sort()
@@ -64,10 +68,10 @@ function prismicStore (opts) {
       var cached = cache.get(key)
 
       var result
-      if (!cached && !state.prefetch) result = callback(null)
+      if (!cached && !prefetch) result = callback(null)
       else if (cached instanceof Error) return callback(cached)
       else if (cached instanceof Promise) {
-        if (state.prefetch) return cached
+        if (prefetch) return cached
         return callback(null, null)
       } else if (cached) return callback(null, cached)
 
@@ -75,23 +79,23 @@ function prismicStore (opts) {
         return api.query(predicates, opts).then(function (response) {
           cache.set(key, response)
           emitter.emit('prismic:response', response)
-          emitter.emit('render')
+          if (!prefetch) emitter.emit('render')
           return response
         })
       }).catch(function (err) {
         cache.set(key, err)
         emitter.emit('prismic:error', err)
-        emitter.emit('render')
+        if (!prefetch) emitter.emit('render')
       })
 
       cache.set(key, request)
       emitter.emit('prismic:request', request)
-      if (state.prefetch) {
+      if (prefetch) {
         // defer to callback to allow for nested API calls
         let queue = request.then(function (response) {
           return callback(null, response)
         })
-        state.prefetch.push(queue)
+        if (Array.isArray(prefetch)) prefetch.push(queue)
         return queue
       }
       return result
@@ -164,6 +168,8 @@ function prismicStore (opts) {
 // pluck out first document from result
 // fn -> fn
 function first (callback) {
+  // return no-op in place of callback
+  if (!callback) return Function.prototype
   return function onresponse (err, response) {
     if (err) return callback(err)
     if (!response) return callback(null)

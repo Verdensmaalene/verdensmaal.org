@@ -20,15 +20,20 @@ function ui (state, emitter) {
     emitter.emit('render')
   })
 
+  emitter.prependListener('goal:start', function (id) {
+    emitter.emit('transition:start', 'goal-page')
+  })
+
+  emitter.prependListener('goal:end', function (id) {
+    emitter.emit('transition:end', 'goal-page')
+  })
+
   emitter.prependListener('navigate', function () {
     state.ui.hasOverlay = false
     document.documentElement.classList.remove('has-overlay')
   })
 
-  emitter.on('transition:start', function (name, data) {
-    if (name === 'goal-page') {
-      state.docs.getByUID('goal', data.uid, Function.prototype)
-    }
+  emitter.on('transition:start', function (name) {
     state.ui.transitions.push(name)
   })
 

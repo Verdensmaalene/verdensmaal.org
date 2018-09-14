@@ -146,6 +146,7 @@ module.exports = class Goal extends Component {
       isPressed = true
       isAborted = false
       element.classList.add('is-pressed')
+      self.emit('goal:press', self.local.id)
 
       if (e.touches) {
         let touch = e.touches.item(0)
@@ -160,6 +161,7 @@ module.exports = class Goal extends Component {
     function onrelease () {
       if (isAborted || !isPressed || self.local.inTransition) return
       self.local.inTransition = true
+      self.emit('goal:start', self.local.id)
 
       start = null
       isAborted = false
@@ -228,7 +230,7 @@ module.exports = class Goal extends Component {
           if (event.target === label) {
             window.removeEventListener('touchmove', preventDefault)
             window.removeEventListener('wheel', preventDefault)
-            self.emit('pushState', self.local.href)
+            self.emit('goal:end', self.local.id)
           }
         })
 

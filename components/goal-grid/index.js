@@ -32,6 +32,10 @@ module.exports = class GoalGrid extends Component {
 
     var self = this
     this.GoalCell = class GoalCell extends Goal {
+      static id (num, format) {
+        return `${id}-goal-${num}-${format}`
+      }
+
       background (num, opts) {
         if (!self.local.supportsLayout) return null
         if (typeof self.background === 'function') {
@@ -62,8 +66,8 @@ module.exports = class GoalGrid extends Component {
       this.local.supportsLayout = next
       if (next && prev !== next) {
         let [landscape, portrait] = LAYOUTS[this.local.layout - 1]
-        this.cache(this.GoalCell, `goal-${landscape}-landscape`).rerender()
-        this.cache(this.GoalCell, `goal-${portrait}-portrait`).rerender()
+        this.cache(this.GoalCell, this.GoalCell.id(landscape, 'landscape')).rerender()
+        this.cache(this.GoalCell, this.GoalCell.id(portrait, 'portrait')).rerender()
       }
     })
 
@@ -106,8 +110,7 @@ module.exports = class GoalGrid extends Component {
     // create grid child cell
     // (obj, num) -> HTMLElement
     function cell (props, num) {
-      var id = `${self.local.id}-goal-${num}-${props.format}`
-      var goal = self.cache(self.GoalCell, id)
+      var goal = self.cache(self.GoalCell, self.GoalCell.id(num, props.format))
       var hasChildren = !props.blank && props.format !== 'square'
 
       return html`

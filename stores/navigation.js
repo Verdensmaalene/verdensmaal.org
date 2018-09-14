@@ -1,3 +1,5 @@
+var { Predicates } = require('prismic-javascript')
+
 module.exports = navigation
 
 function navigation (state, emitter) {
@@ -17,6 +19,35 @@ function navigation (state, emitter) {
       if (!maintainScroll) window.scrollTo(0, 0)
       maintainScroll = false
     })
+  })
+
+  var fetching = {}
+  emitter.on('goal:press', function (id) {
+    var number = state.components[id].number
+    var predicate = Predicates.at('my.goal.number', number)
+    // preemptively fetch goal doc
+    fetching[id] = state.docs.get(predicate, { prefetch: true })
+  })
+
+  emitter.on('goal:end', function (id) {
+    if (!(fetching[id] instanceof Promise)) return navigate()
+
+    // defer navigation until prefetch is done preventing scroll in the meantime
+    window.addEventListener('wheel', preventScroll)
+    window.addEventListener('touchmove', preventScroll)
+    fetching[id].then(function () {
+      window.removeEventListener('wheel', preventScroll)
+      window.removeEventListener('touchmove', preventScroll)
+      navigate()
+    })
+
+    function navigate () {
+      emitter.emit('pushState', state.components[id].href)
+    }
+
+    function preventScroll (event) {
+      event.preventDefault()
+    }
   })
 
   emitter.on('DOMContentLoaded', function () {

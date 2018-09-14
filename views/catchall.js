@@ -1,22 +1,27 @@
+var { Predicates } = require('prismic-javascript')
+
 module.exports = catchall
 
 // custom waterfall routing goal/sector -> page -> throw 404
 // (obj, fn) -> HTMLElement
 function catchall (state, emit) {
-  var goalParams = state.params.wildcard.match(/^\d{1,2}-(.+)$/)
-  var uid = goalParams ? goalParams[1] : state.params.wildcard
-  var type = goalParams ? 'goal' : 'sector'
+  var wildcard = state.params.wildcard
+  var goalParams = wildcard.match(/^(\d{1,2})-.+$/)
+
+  var predicate
+  if (goalParams) predicate = Predicates.at('my.goal.number', +goalParams[1])
+  else predicate = Predicates.at('my.sector.uid', wildcard)
 
   // lookup goal or sector
-  return state.docs.getByUID(type, uid, function (err, doc) {
+  return state.docs.get(predicate, function (err, response) {
     if (!err) {
       var view = goalParams ? require('./goal') : require('./sector')
       return view(state, emit)
     }
 
     // fallback to sector or page
-    type = goalParams ? 'sector' : 'page'
-    return state.docs.getByUID(type, uid, function (err, doc) {
+    var type = goalParams ? 'sector' : 'page'
+    return state.docs.getByUID(type, wildcard, function (err, doc) {
       if (!err) {
         view = goalParams ? require('./sector') : require('./page')
         return view(state, emit)
@@ -27,7 +32,7 @@ function catchall (state, emit) {
 
       // fallback to page
       type = 'page'
-      return state.docs.getByUID(type, uid, function (err, doc) {
+      return state.docs.getByUID(type, wildcard, function (err, doc) {
         if (err) {
           view = require('./404')
         } else {

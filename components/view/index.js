@@ -2,6 +2,7 @@ var assert = require('assert')
 var html = require('choo/html')
 var Component = require('choo/component')
 var { asText } = require('prismic-richtext')
+var { Predicates } = require('prismic-javascript')
 var Flag = require('../flag')
 var error = require('./error')
 var Header = require('../header')
@@ -84,11 +85,9 @@ function createView (view, meta) {
         var opts = { isHighContrast: state.ui.isHighContrast }
         var isGoal
         if (state.params.wildcard) {
-          let [, num, uid] = (state.params.wildcard.match(GOAL_SLUG) || [])
-          isGoal = num && state.docs.getByUID('goal', uid, function (err) {
-            if (err) return null
-            return num
-          })
+          let [, num] = (state.params.wildcard.match(GOAL_SLUG) || [])
+          var predicate = Predicates.at('my.goal.number', +num)
+          isGoal = num && state.docs.get(predicate, (err) => !err)
           if (isGoal) {
             opts.theme = +num === 7 ? 'black' : 'white'
             opts.static = true
