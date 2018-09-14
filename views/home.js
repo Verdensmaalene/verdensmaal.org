@@ -53,7 +53,8 @@ class Home extends View {
             number: link.data.number,
             label: asText(link.data.label),
             description: asText(link.data.description),
-            href: `/${link.data.number}-${link.uid}`
+            href: `/${link.data.number}-${link.uid}`,
+            onclick: null
           }
         })
       } else {
@@ -66,7 +67,7 @@ class Home extends View {
             onclick (event) {
               // do a hard page load if we don't have the complete url
               window.location = event.currentTarget.href
-              event.preventdefault()
+              event.preventDefault()
             }
           })
         }
