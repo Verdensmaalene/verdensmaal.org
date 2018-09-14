@@ -19,6 +19,12 @@ var opts = {
   ]
 }
 
+class HighContrastGoalGrid extends GoalGrid {
+  background () {
+    return null
+  }
+}
+
 class Home extends View {
   meta (state) {
     return state.docs.getSingle('website', function (err, doc) {
@@ -68,7 +74,10 @@ class Home extends View {
         }
       }
 
-      var grid = state.cache(GoalGrid, 'homepage-goalgrid')
+      var isHighContrast = state.ui.isHighContrast
+      var Grid = isHighContrast ? HighContrastGoalGrid : GoalGrid
+      var id = 'homepage-goalgrid' + (isHighContrast ? '-high-contrast' : '')
+      var grid = state.cache(Grid, id)
       return html`
         <main class="View-main">
           <div class="u-container">

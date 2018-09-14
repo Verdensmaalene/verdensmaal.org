@@ -106,7 +106,7 @@ module.exports = class GoalGrid extends Component {
     // create grid child cell
     // (obj, num) -> HTMLElement
     function cell (props, num) {
-      var id = `goal-${num}-${props.format}`
+      var id = `${self.local.id}-goal-${num}-${props.format}`
       var goal = self.cache(self.GoalCell, id)
       var hasChildren = !props.blank && props.format !== 'square'
 

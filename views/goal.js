@@ -9,6 +9,12 @@ var TargetGrid = require('../components/target-grid')
 
 var text = i18n()
 
+class HighContrastGoal extends Goal {
+  background () {
+    return null
+  }
+}
+
 class GoalPage extends View {
   constructor (id) {
     super(id)
@@ -43,7 +49,10 @@ class GoalPage extends View {
     function onresponse (err, doc) {
       if (err) throw err
 
-      var goal = state.cache(Goal, state.params.wildcard)
+      var isHighContrast = state.ui.isHighContrast
+      var GoalClass = isHighContrast ? HighContrastGoal : Goal
+      var id = state.params.wildcard + (isHighContrast ? 'high-contrast' : '')
+      var goal = state.cache(GoalClass, id)
       var props = { format: 'fullscreen', number: +num, static: true }
       if (!doc) {
         return html`
