@@ -29,9 +29,7 @@ function resources (state, emit) {
       `
     }
 
-    var body = [
-      asElement(doc.data.description),
-      html`
+    var shortcuts = html`
         <p>
           ${text`Shortcuts`}: ${reduce(doc.data.slices, shortcut).map((shortcut, index, list) => html`
             <span>
@@ -40,19 +38,33 @@ function resources (state, emit) {
           `)}
         </p>
       `
-    ]
 
     return html`
       <main class="View-main">
         <div class="u-container">
           <div class="u-spaceB4">
-            ${intro({ title: asText(doc.data.title), body: body })}
+            ${intro({ title: asText(doc.data.title), body: [asElement(doc.data.description), shortcuts] })}
           </div>
           ${grid({ size: '1of3' }, reduce(doc.data.slices, group))}
+          ${reduce(doc.data.slices, interlink)}
         </div>
       </main>
     `
   })
+
+  // render interlink slice
+  // obj -> Element
+  function interlink (slice) {
+    if (slice.slice_type !== 'interlink_navigation') return null
+    return html`
+      <div class="Text u-spaceV8">
+        <h3 class="u-spaceB0">
+          <span class="Text-h2 Text-muted">${asText(slice.primary.heading)}</span>
+        </h3>
+        <div class="Text-h2 u-spaceT0">${asElement(slice.primary.text, state.docs.resolve)}</div>
+      </div>
+    `
+  }
 }
 
 // render collection of resources
