@@ -127,9 +127,6 @@
 
   --color-text-muted: var(--default-color) !important;
 
-  --current-background: var(--default-background-color) !important;
-  --current-color: var(--default-color) !important;
-
   --color-gray: var(--default-color) !important;
   --color-gray-dark: var(--default-color) !important;
 
