@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var nanoraf = require('nanoraf')
 var Component = require('choo/component')
 var splitRequire = require('split-require')
 var { vw, vh, className } = require('../base')
@@ -62,18 +63,29 @@ module.exports = class Goal extends Component {
 
   load (element) {
     var local = this.local
+    var isFullscreen = local.format = 'fullscreen'
+
     local.inTransition = false
-    if (local.href && local.label && !local.isInitialized && !local.static) {
+    if (local.href && local.label && !local.isInitialized && !isFullscreen) {
       this.init(element)
+    }
+
+    if (isFullscreen) {
+      var onresize = nanoraf(function () {
+        element.style.height = `${vh()}px`
+      })
+      onresize()
+      window.addEventListener('resize', onresize)
+    }
+
+    this.unload = function () {
+      local.isInitialized = false
+      if (isFullscreen) window.removeEventListener('resize', onresize)
     }
   }
 
   afterupdate (element) {
     this.load(element)
-  }
-
-  unload () {
-    this.local.isInitialized = false
   }
 
   init (element) {
