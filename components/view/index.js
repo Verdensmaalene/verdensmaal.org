@@ -116,7 +116,7 @@ function createView (view, meta) {
           shortcuts: [{
             links: menu,
             heading: asText(doc.data.main_menu_label)
-          }].concat(doc.data.shortcuts.map(shortcut).filter(Boolean)).slice(0, 3),
+          }].concat(doc.data.shortcuts.map(shortcut).filter(Boolean)).slice(0, 4),
           credits: {
             heading: asText(doc.data.credits_label),
             links: doc.data.credits.map(function (item) {
