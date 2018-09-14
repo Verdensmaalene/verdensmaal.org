@@ -20,7 +20,7 @@ module.exports = class Header extends Component {
 
     var self = this
     var preventScroll = (event) => event.preventDefault()
-    this.toggle = function (next = !'self'.local.isOpen) {
+    this.toggle = function (next = !self.local.isOpen) {
       self.local.isOpen = next
       self.rerender()
       emit('header:toggle', next)
@@ -38,6 +38,7 @@ module.exports = class Header extends Component {
     }
 
     this.toggleContast = function (next) {
+      self.toggle(false)
       emit('contrast:toggle', next)
     }
   }

@@ -100,7 +100,7 @@ class GoalPage extends View {
       var GoalClass = isHighContrast ? HighContrastGoal : Goal
       var id = state.params.wildcard + (isHighContrast ? 'high-contrast' : '')
       var goal = state.cache(GoalClass, id)
-      var props = { format: 'fullscreen', number: +num, static: true }
+      var props = { format: 'fullscreen', number: +num }
 
       // fetch website details document for secondary menu
       return state.docs.getSingle('website', function (err, website) {
