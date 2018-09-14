@@ -125,7 +125,7 @@
 
 .Footer-sub {
   display: block;
-  color: rgba(var(--color-gray));
+  color: rgb(var(--color-gray));
 }
 
 .Footer-credit .Footer-figure {

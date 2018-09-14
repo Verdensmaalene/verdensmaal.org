@@ -121,7 +121,7 @@ function createView (view, meta) {
           credits: {
             heading: asText(doc.data.credits_label),
             links: doc.data.credits.map(function (item) {
-              return Object.assign({ logo: item.logo }, link(item))
+              return Object.assign({ logo: item.logo, role: item.role }, link(item))
             })
           },
           social: doc.data.social_networks.map(function (item) {
