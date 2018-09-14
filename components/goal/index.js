@@ -63,7 +63,7 @@ module.exports = class Goal extends Component {
 
   load (element) {
     var local = this.local
-    var isFullscreen = local.format = 'fullscreen'
+    var isFullscreen = local.format === 'fullscreen'
 
     local.inTransition = false
     if (local.href && local.label && !local.isInitialized && !isFullscreen) {
