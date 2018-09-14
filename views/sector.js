@@ -61,7 +61,7 @@ function goal (state, emit) {
     `
 
     // render slice as element
-    // obj -> HTMLElement
+    // obj -> Element
     function fromSlice (slice, index) {
       switch (slice.slice_type) {
         case 'text': return html`
@@ -235,7 +235,7 @@ function goal (state, emit) {
 }
 
 // render video embed
-// obj -> HTMLElement
+// obj -> Element
 function video (props) {
   let embed = props.html
   if (props.provider_name === 'YouTube') {
@@ -254,7 +254,7 @@ function slugify (str) {
 }
 
 // render document as card
-// obj -> HTMLElement
+// obj -> Element
 function newsCard (doc) {
   var date = new Date(doc.first_publication_date)
   return card({
@@ -276,7 +276,7 @@ function newsCard (doc) {
 }
 
 // render document as card
-// obj -> HTMLElement
+// obj -> Element
 function eventCard (doc) {
   var date = new Date(doc.data.datetime)
   return card({

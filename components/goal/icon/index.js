@@ -39,7 +39,7 @@ module.exports.loading = loading
 module.exports.offset = offset
 
 // render complete icon, label + glyph
-// (num, str, str?) -> HTMLElement
+// (num, str, str?) -> Element
 function icon (num, title, lang) {
   return html`
     <div class="Goal-icon Goal-icon--${num} js-icon">
@@ -50,7 +50,7 @@ function icon (num, title, lang) {
 }
 
 // render icon loading state
-// (num, str?) -> HTMLElement
+// (num, str?) -> Element
 function loading (num, lang) {
   var height = 48
   var digitPos = 30
@@ -74,7 +74,7 @@ function loading (num, lang) {
 }
 
 // render text (num + title) section of icon
-// (num, str, str?) -> HTMLElement
+// (num, str, str?) -> Element
 function label (num, title, lang) {
   return html`
     <div class="Goal-icon Goal-icon--${num}">
@@ -84,7 +84,7 @@ function label (num, title, lang) {
 }
 
 // render glyph section of icon
-// num -> HTMLElement
+// num -> Element
 function glyph (num) {
   return html`
     <div class="Goal-icon Goal-icon--${num}">
@@ -94,7 +94,7 @@ function glyph (num) {
 }
 
 // construct text section as svg element
-// (num, str, str) -> HTMLElement
+// (num, str, str) -> Element
 function draw (number, text, lang = 'en') {
   var lines = text.split('\n')
   var isArabic = AR_LANGREG.test(lang)

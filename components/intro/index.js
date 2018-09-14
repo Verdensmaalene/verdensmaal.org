@@ -11,7 +11,7 @@ function intro (opts) {
   if (typeof window === 'undefined') {
     if (Array.isArray(body) || body[0] === '<') html`<div class="Intro-body">${body}</div>`
     else body = html`<p class="Intro-body">${body}</p>`
-  } else if (Array.isArray(body) || body instanceof window.HTMLElement) {
+  } else if (Array.isArray(body) || body instanceof window.Element) {
     body = html`<div class="Intro-body">${body}</div>`
   } else {
     body = html`<p class="Intro-body">${body}</p>`

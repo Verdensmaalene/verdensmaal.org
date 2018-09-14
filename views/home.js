@@ -112,7 +112,7 @@ class Home extends View {
 module.exports = View.createClass(Home, 'homepage')
 
 // render slot by type
-// str -> HTMLElement
+// str -> Element
 function slot (type) {
   switch (type) {
     case 'square': return center(logo({ vertical: true }), type)

@@ -48,7 +48,7 @@ module.exports = class Engager extends Component {
     `
 
     // render accordion tab + panel combo (doubles as noscript fallback)
-    // obj -> HTMLElement
+    // obj -> Element
     function accordion (props) {
       var isSelected = props.id === self.local.selected
 
@@ -94,7 +94,7 @@ module.exports = class Engager extends Component {
     }
 
     // render huge tab button
-    // obj -> HTMLElement
+    // obj -> Element
     function button (props) {
       var isSelected = props.id === self.local.selected
 

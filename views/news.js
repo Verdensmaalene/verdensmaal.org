@@ -88,7 +88,7 @@ function news (state, emit) {
 }
 
 // render document as card
-// obj -> HTMLElement
+// obj -> Element
 function newsCard (doc, cols = 3) {
   var date = new Date(doc.first_publication_date)
   var sizes = '(min-width: 400px) 50vw, 100vw'

@@ -48,7 +48,7 @@ class GoalPage extends View {
     return state.docs.get(predicate, onresponse)
 
     // handle goal document response
-    // (Error, obj) -> HTMLElement
+    // (Error, obj) -> Element
     function onresponse (err, response) {
       if (err) throw err
 

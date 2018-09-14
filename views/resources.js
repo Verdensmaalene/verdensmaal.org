@@ -30,14 +30,14 @@ function resources (state, emit) {
     }
 
     var shortcuts = html`
-        <p>
-          ${text`Shortcuts`}: ${reduce(doc.data.slices, shortcut).map((shortcut, index, list) => html`
-            <span>
-              ${shortcut}${index < (list.length - 1) ? ', ' : null}
-            </span>
-          `)}
-        </p>
-      `
+      <p>
+        ${text`Shortcuts`}: ${reduce(doc.data.slices, shortcut).map((shortcut, index, list) => html`
+          <span>
+            ${shortcut}${index < (list.length - 1) ? ', ' : null}
+          </span>
+        `)}
+      </p>
+    `
 
     return html`
       <main class="View-main">
@@ -68,7 +68,7 @@ function resources (state, emit) {
 }
 
 // render collection of resources
-// obj -> HTMLElement
+// obj -> Element
 function group (slice) {
   if (slice.slice_type !== 'resource_group') return null
   var heading = asText(slice.primary.heading)
@@ -82,7 +82,7 @@ function group (slice) {
 }
 
 // render individual resource grid cell
-// obj -> HTMLElement
+// obj -> Element
 function cell (item) {
   return card({
     title: asText(item.title),
@@ -99,7 +99,7 @@ function cell (item) {
 }
 
 // compose shortcut link for applicable slices
-// obj -> HTMLElement
+// obj -> Element
 function shortcut (slice) {
   var slug = slice.primary.shortcut_name
   if (slice.slice_type === 'resource_group') {

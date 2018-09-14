@@ -36,7 +36,7 @@ function events (state, emit) {
   })
 
   // render page content
-  // obj -> HTMLElement
+  // obj -> Element
   function content (response) {
     var cells = []
     var locations = []
@@ -90,7 +90,7 @@ function asLocation (doc) {
 }
 
 // render document as card
-// obj -> HTMLElement
+// obj -> Element
 function eventCard (doc) {
   var date = new Date(doc.data.datetime)
   var opts = { transforms: 'c_thumb', aspect: 3 / 4 }

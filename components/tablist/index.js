@@ -123,7 +123,7 @@ module.exports = class Tablist extends Component {
     `
 
     // render tablist element
-    // obj -> HTMLElement
+    // obj -> Element
     function tab (props) {
       var isSelected = self.local.selected === props.id
       return html`

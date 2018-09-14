@@ -13,7 +13,7 @@ function event (state, emit) {
   return state.docs.getByUID('event', state.params.uid, onresponse)
 
   // handle response
-  // (Error, obj) -> HTMLElement
+  // (Error, obj) -> Element
   function onresponse (err, doc) {
     if (err) throw err
     if (!doc) {

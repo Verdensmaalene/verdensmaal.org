@@ -69,7 +69,7 @@ function loading (props = {}) {
 }
 
 // cut off text at max length
-// str -> HTMLElement
+// str -> Element
 function snippet (str) {
   if (str.length < 170) return str
   var words = str.split(' ')

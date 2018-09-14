@@ -3,7 +3,7 @@ var { Predicates } = require('prismic-javascript')
 module.exports = catchall
 
 // custom waterfall routing goal/sector -> page -> throw 404
-// (obj, fn) -> HTMLElement
+// (obj, fn) -> Element
 function catchall (state, emit) {
   var wildcard = state.params.wildcard
   var goalParams = wildcard.match(/^(\d{1,2})-.+$/)
