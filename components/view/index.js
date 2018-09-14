@@ -48,13 +48,15 @@ function createClass (Class, id) {
 
 function createView (view, meta) {
   return function (state, emit) {
+    var self = this
+
     return state.docs.getSingle('website', function (err, doc) {
       if (err) throw err
 
       var children
       try {
-        children = view.call(this, state, emit)
-        let next = meta.call(this, state)
+        children = view.call(self, state, emit)
+        let next = meta.call(self, state)
 
         // forward nested promises for deep prefetching to work
         if (state.prefetch) return Promise.all([children, next])
@@ -139,18 +141,16 @@ function createView (view, meta) {
       }
 
       function getFlag (opts) {
-        return state.cache(Flag, `${opts.id}-flag`).render({
-          figure: html`
-            <svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 192 128">
-              <path fill="#E81C35" fill-rule="nonzero" d="M0 76h52v52H0V76zM0 0h52v52H0V0zm192 52H76V0h116v52zm0 76H76V76h116v52z"/>
-            </svg>
-          `,
+        opts = Object.assign({
           href: doc && doc.data.about_page ? doc.data.about_page.uid : false,
           title: text`Denmark`,
-          text: text`Greenland, Faroe Islands`,
-          vertical: opts.vertical,
-          white: opts.white
-        })
+          text: text`Greenland, Faroe Islands`
+        }, opts)
+        return state.cache(Flag, `${opts.id}-flag`).render(html`
+          <svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 192 128">
+            <path fill="#E81C35" fill-rule="nonzero" d="M0 76h52v52H0V76zM0 0h52v52H0V0zm192 52H76V0h116v52zm0 76H76V76h116v52z"/>
+          </svg>
+        `, opts)
       }
     })
 

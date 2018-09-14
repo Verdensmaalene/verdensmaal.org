@@ -20,7 +20,7 @@
   --max-width: 2000px;
 
   --focus-ring-width: 0.2rem;
-  --focus-ring-color: rbg(var(--color-gray-dark));
+  --focus-ring-color: var(--color-gray-dark);
 
   /* Easing curves */
 

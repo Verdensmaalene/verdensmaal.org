@@ -13,6 +13,7 @@
   height: var(--height);
   contain: size layout style;
   position: relative;
+  overflow: hidden;
 }
 
 .Header--white {
@@ -70,16 +71,19 @@
 }
 
 @media (min-width: 700px) {
-  .Header:not(.Header--static) .Header-fill {
+  .Header-fill {
     transform-origin: top center;
-    transform: translateY(calc((-1 * var(--displace)) * var(--scroll, 0)));
+    transform: translateY(calc((-1 * var(--displace)) * (1 - var(--Header-size, 1))));
+  }
+
+  .Header:not(.Header--static) .Header-fill {
     will-change: transform;
   }
 
-  .Header--static .Header-fill {
+  /* .Header--static .Header-fill {
     transform-origin: top center;
     transform: translateY(calc((-1 * var(--displace)) * 0));
-  }
+  } */
 
   .Header-slot {
     display: block;
@@ -102,14 +106,14 @@
     top: calc((var(--displace) / 2) * -1);
   }
 
-  .Header:not(.Header--static) .Header-content {
-    transform: translateY(calc((var(--displace, 1) / 2) * (1 - var(--scroll, 0))));
+  .Header-content {
+    transform: translateY(calc((var(--displace, 1) / 2) * var(--Header-size, 1)));
     will-change: transform;
   }
 
-  .Header--static .Header-content {
+  /* .Header--static .Header-content {
     transform: translateY(calc((var(--displace, 1) / 2) * (1 - 0)));
-  }
+  } */
 }
 
 .Header-nav {
@@ -121,15 +125,15 @@
 }
 
 @media (min-width: 1200px) {
-  .Header:not(.Header--static) .Header-list {
+  .Header-list {
     transform-origin: center right;
-    transform: scale(calc(1.2 - (0.2 * var(--scroll, 0))));
+    transform: scale(calc(1.2 - (0.2 * (1 - var(--Header-size, 1)))));
   }
 
-  .Header--static .Header-list {
+  /* .Header--static .Header-list {
     transform-origin: center right;
     transform: scale(calc(1.2 - (0.2 * 0)));
-  }
+  } */
 
   .Header-button--back {
     transform-origin: center left;
@@ -155,8 +159,8 @@
 }
 
 @media (min-width: 700px) {
-  .Header:not(.Header--static) .Header-logo {
-    transform: scale(calc(1 + (0.25 * (1 - var(--scroll)))));
+  .Header .Header-logo {
+    transform: scale(calc(1 + (0.25 * var(--Header-size, 1))));
     transform-origin: center left;
   }
 }

@@ -42,6 +42,42 @@
   left: 0;
 }
 
+/**
+ * 1. Override nested header `--size`
+ */
+
+.View-header--secondary {
+  --Header-size: 0; /* 1 */
+  display: block;
+  width: 100%;
+  height: 0;
+  top: 0;
+  margin-bottom: 6rem;
+  position: sticky;
+}
+
+:root[scripting-enabled] .View-header--secondary {
+  visibility: hidden;
+}
+
+:root[scripting-enabled] .View-header--secondary.is-visible {
+  visibility: visible;
+  opacity: var(--View-header-visible, 0);
+  will-change: opacity;
+}
+
+.View-header--secondary.is-visible .View-headerWrapper {
+  width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+@supports (position: sticky) {
+  .View-header--secondary.is-visible .View-headerWrapper {
+    position: static;
+  }
+}
+
 .View-main {
   flex-grow: 1;
 }

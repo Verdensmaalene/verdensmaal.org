@@ -23,6 +23,21 @@
 }
 
 /**
+ * Positioning
+ */
+
+.u-posStatic { position: static !important; }
+.u-posRelative { position: relative !important; }
+.u-posAbsolute { position: absolute !important; }
+.u-posFixed { position: fixed !important; }
+.u-posSticky { position: sticky !important; }
+
+.u-top { top: 0 !important; }
+.u-right { right: 0 !important; }
+.u-bottom { bottom: 0 !important; }
+.u-left { left: 0 !important; }
+
+/**
  * Centered page container
  */
 

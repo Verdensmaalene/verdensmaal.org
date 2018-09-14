@@ -13,7 +13,7 @@ module.exports = class Header extends Component {
     super(id)
     this.local = state.components[id] = {
       id: id,
-      scroll: 0,
+      size: 1,
       isOpen: false,
       isHighContrast: false
     }
@@ -56,17 +56,30 @@ module.exports = class Header extends Component {
     }, false)
   }
 
-  load (el) {
+  load (element) {
+    if (this.local.opts.static) return
+
+    var top
     var onscroll = nanoraf(() => {
       var scroll = window.scrollY
-      var range = Math.min(Math.max(scroll - SCROLL_MIN, 0), SCROLL_MAX)
-      this.local.scroll = (range / 150).toFixed(3)
-      this.element.style.setProperty('--scroll', this.local.scroll)
+      var range = Math.min(Math.max(scroll - top - SCROLL_MIN, 0), SCROLL_MAX)
+      this.local.size = 1 - (range / SCROLL_MAX).toFixed(3)
+      element.style.setProperty('--Header-size', this.local.size)
+    })
+    var onresize = nanoraf(function () {
+      top = element.offsetTop
+      var parent = element
+      while ((parent = parent.parentElement)) top += parent.offsetTop
     })
 
+    onresize()
     onscroll()
+    window.addEventListener('resize', onresize)
     window.addEventListener('scroll', onscroll, { passive: true })
-    this.unload = () => window.removeEventListener('scroll', onscroll)
+    this.unload = function () {
+      window.removeEventListener('resize', onresize)
+      window.removeEventListener('scroll', onscroll)
+    }
   }
 
   createElement (links, href, opts = {}) {
@@ -81,18 +94,24 @@ module.exports = class Header extends Component {
     }
 
     var toggleContast = (event) => {
+      var target = event.currentTarget
       this.toggleContast(!opts.isHighContrast)
+      window.requestAnimationFrame(function () {
+        target.focus()
+      })
       event.preventDefault()
     }
 
-    var classes = className('Header', {
+    var attrs = { id }
+    if (!opts.static) attrs.style = `--Header-size: ${this.local.size}`
+    attrs.class = className('Header', {
       [`Header--${opts.theme}`]: opts.theme,
       'Header--static': opts.static,
       'is-open': isOpen
     })
 
     return html`
-      <header class="${classes}" style="--scroll: ${this.local.scroll}" id="${id}">
+      <header ${attrs}>
         <div class="Header-bar">
           <div class="Header-fill"></div>
           <div class="Header-content u-container">

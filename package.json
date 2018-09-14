@@ -77,7 +77,6 @@
     "nanolru": "^1.0.0",
     "nanoraf": "^3.1.0",
     "normalize.css": "^8.0.0",
-    "postcss-clean": "^1.1.0",
     "postcss-focus-visible": "^3.0.0",
     "prismic-element": "^1.0.0",
     "prismic-javascript": "^1.5.0",

@@ -2,7 +2,7 @@
 @import "./theme";
 @import "./global";
 @import "./utilities/colors";
-@import "./utilities/display";
+@import "./utilities/layout";
 @import "./utilities/loading";
 @import "./utilities/size";
 @import "./utilities/space";
