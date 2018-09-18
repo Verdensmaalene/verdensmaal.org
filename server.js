@@ -127,7 +127,7 @@ app.use(route.get('/', function (ctx, next) {
 
   // push layout background bundles
   if (app.env !== 'development') {
-    var reg = new RegExp(`bundle-\\d+-(${LAYOUTS[layout].join('|')})\\.js`)
+    var reg = new RegExp(`bundle-\\d+-(${LAYOUTS[layout - 1].join('|')})\\.js`)
     ctx.append('Link', Object.keys(ctx.assets)
       .filter((key) => reg.test(key))
       .map((key) => `<${ctx.assets[key].url}>; rel=preload; as=script`)
