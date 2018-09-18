@@ -202,7 +202,7 @@ class GoalPage extends View {
         var yesterday = subDays(new Date(), 1)
         var date = [
           yesterday.getFullYear(),
-          ('0' + yesterday.getMonth()).substr(-2),
+          ('0' + (yesterday.getMonth() + 1)).substr(-2),
           ('0' + yesterday.getDate()).substr(-2)
         ].join('-')
 
