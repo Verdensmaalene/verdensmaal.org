@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var subDays = require('date-fns/sub_days')
 var { asText } = require('prismic-richtext')
 var { Predicates } = require('prismic-javascript')
 var Map = require('../components/map')
@@ -16,9 +17,15 @@ function events (state, emit) {
   return state.docs.getSingle('events_listing', function render (err, doc) {
     if (err) throw err
 
+    var yesterday = subDays(new Date(), 1)
+    var date = [
+      yesterday.getFullYear(),
+      ('0' + yesterday.getMonth()).substr(-2),
+      ('0' + yesterday.getDate()).substr(-2)
+    ].join('-')
     var predicates = [
       Predicates.at('document.type', 'event'),
-      Predicates.dateAfter('my.event.datetime', new Date())
+      Predicates.dateAfter('my.event.datetime', date)
     ]
     var opts = {
       pageSize: 100,
