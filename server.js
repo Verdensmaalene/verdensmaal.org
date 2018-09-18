@@ -61,11 +61,13 @@ app.use(route.post('/prismic-hook', compose([body(), function (ctx) {
   var secret = ctx.request.body && ctx.request.body.secret
   ctx.assert(secret === process.env.PRISMIC_VERDENSMAALENE_SECRET, 403, 'Secret mismatch')
   return new Promise(function (resolve, reject) {
-    purge(function (err, response) {
-      if (err) return reject(err)
-      ctx.type = 'application/json'
-      ctx.body = {}
-      resolve()
+    queried().then(function (urls) {
+      purge(urls, function (err, response) {
+        if (err) return reject(err)
+        ctx.type = 'application/json'
+        ctx.body = {}
+        resolve()
+      })
     })
   })
 }])))
@@ -155,9 +157,11 @@ app.use(function (ctx, next) {
 })
 
 if (process.env.NOW && app.env === 'production') {
-  purge(['/sw.js'], function (err) {
-    if (err) throw err
-    start()
+  queried().then(function (urls) {
+    purge(['/sw.js', ...urls], function (err) {
+      if (err) throw err
+      start()
+    })
   })
 } else {
   start()
@@ -167,4 +171,27 @@ if (process.env.NOW && app.env === 'production') {
 // () -> void
 function start () {
   app.listen(process.env.PORT || 8080)
+}
+
+// get urls for all queried pages
+// () -> Promise
+function queried () {
+  return Prismic.api(REPOSITORY).then(async function (api) {
+    var urls = await api.query(
+      Prismic.Predicates.at('document.type', 'news'),
+      { pageSize: 6 }
+    ).then(function (response) {
+      var urls = []
+      for (let i = 0; i < response.total_pages; i++) {
+        urls.push(`/nyheder?page=${i + 1}`)
+      }
+      return urls
+    })
+
+    for (let i = 0, len = LAYOUTS.length; i < len; i++) {
+      urls.push(`/?layout=${i + 1}`)
+    }
+
+    return urls
+  })
 }
