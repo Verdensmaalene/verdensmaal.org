@@ -8,7 +8,11 @@ function reset (state, emitter) {
   })
 
   // prevent leaking component state in-between renders
-  state.components = {}
+  state.components = Object.create({
+    toJSON () {
+      return {}
+    }
+  })
 
   // ensure document language
   state.language = 'dn'

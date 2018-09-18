@@ -85,35 +85,35 @@ function news (state, emit) {
     if (!state.ui.isLoading) emit('pushState', event.target.href, true)
     event.preventDefault()
   }
-}
 
-// render document as card
-// obj -> Element
-function newsCard (doc, cols = 3) {
-  var date = new Date(doc.first_publication_date)
-  var sizes = '(min-width: 400px) 50vw, 100vw'
-  if (cols === 3) sizes = '(min-width: 1000px) 30vw, ' + sizes
-  var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
-  if (cols === 2) opts.aspect = 9 / 16
+  // render document as card
+  // obj -> Element
+  function newsCard (doc, cols = 3) {
+    var date = new Date(doc.first_publication_date)
+    var sizes = '(min-width: 400px) 50vw, 100vw'
+    if (cols === 3) sizes = '(min-width: 1000px) 30vw, ' + sizes
+    var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
+    if (cols === 2) opts.aspect = 9 / 16
 
-  return card({
-    title: asText(doc.data.title),
-    body: asText(doc.data.description),
-    figure: {
-      alt: doc.data.image.alt,
-      sizes: sizes,
-      srcset: srcset(doc.data.image.url, [400, 600, 900, 1800], opts),
-      src: `/media/fetch/w_900/${doc.data.image.url}`,
-      caption: doc.data.image.copyright
-    },
-    date: {
-      datetime: date,
-      text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
-    },
-    link: {
-      href: `/nyheder/${doc.uid}`
-    }
-  })
+    return card({
+      title: asText(doc.data.title),
+      body: asText(doc.data.description),
+      figure: {
+        alt: doc.data.image.alt,
+        sizes: sizes,
+        srcset: srcset(doc.data.image.url, [400, 600, 900, 1800], opts),
+        src: `/media/fetch/w_900/${doc.data.image.url}`,
+        caption: doc.data.image.copyright
+      },
+      date: {
+        datetime: date,
+        text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
+      },
+      link: {
+        href: state.docs.resolve(doc)
+      }
+    })
+  }
 }
 
 function meta (state) {

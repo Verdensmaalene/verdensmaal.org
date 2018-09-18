@@ -80,7 +80,7 @@ app.use(route.get('/prismic-preview', async function (ctx) {
   var token = ctx.query.token
   var api = await Prismic.api(REPOSITORY, { req: ctx.req })
   var href = await api.previewSession(token, resolvePreview, '/')
-  var expires = process.env.NODE_ENV === 'development'
+  var expires = app.env === 'development'
     ? new Date(Date.now() + (1000 * 60 * 60 * 12))
     : new Date(Date.now() + (1000 * 60 * 30))
 
@@ -100,7 +100,7 @@ app.use(route.get('/:num(\\d{1,2})', async function (ctx, num) {
 
 // push goal background bundle
 app.use(route.get('/:num(\\d{1,2})-:uid', function (ctx, num, uid, next) {
-  if (process.env.NODE_ENV === 'development') return next()
+  if (app.env === 'development') return next()
   var reg = new RegExp(`bundle-\\d+-(${num})\\.js`)
   var key = Object.keys(ctx.assets).find((key) => reg.test(key))
   if (key) {
@@ -126,7 +126,7 @@ app.use(route.get('/', function (ctx, next) {
   ctx.state.ui.gridLayout = layout
 
   // push layout background bundles
-  if (process.env.NODE_ENV !== 'development') {
+  if (app.env !== 'development') {
     var reg = new RegExp(`bundle-\\d+-(${LAYOUTS[layout].join('|')})\\.js`)
     ctx.append('Link', Object.keys(ctx.assets)
       .filter((key) => reg.test(key))
@@ -147,14 +147,14 @@ app.use(function (ctx, next) {
   } else {
     ctx.state.ref = null
   }
-  var allowCache = process.env.NODE_ENV !== 'development'
+  var allowCache = app.env !== 'development'
   if (!previewCookie && allowCache && ctx.path !== '/prismic-preview') {
     ctx.set('Cache-Control', `s-maxage=${60 * 60 * 24 * 7}, max-age=${60}`)
   }
   return next()
 })
 
-if (process.env.NOW && process.env.NODE_ENV === 'production') {
+if (process.env.NOW && app.env === 'production') {
   purge(['/sw.js'], function (err) {
     if (err) throw err
     start()

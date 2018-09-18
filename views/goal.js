@@ -1,15 +1,18 @@
 var html = require('choo/html')
 var nanoraf = require('nanoraf')
+var subDays = require('date-fns/sub_days')
 var asElement = require('prismic-element')
 var { asText } = require('prismic-richtext')
 var { Predicates } = require('prismic-javascript')
 var View = require('../components/view')
+var card = require('../components/card')
+var grid = require('../components/grid')
 var Goal = require('../components/goal')
 var Flag = require('../components/flag')
 var Header = require('../components/header')
 var Engager = require('../components/engager')
 var TargetGrid = require('../components/target-grid')
-var { i18n, isSameDomain, className } = require('../components/base')
+var { i18n, isSameDomain, className, reduce, srcset } = require('../components/base')
 
 var text = i18n()
 var SCROLL_MIN = 0
@@ -52,6 +55,7 @@ class GoalPage extends View {
   load (element) {
     var top
     var header = element.querySelector('.js-header')
+    if (!header) return
 
     // expose header visibility ratio as a custom property for CSS
     var onscroll = nanoraf(() => {
@@ -96,86 +100,230 @@ class GoalPage extends View {
     function onresponse (err, response) {
       if (err) throw err
 
+      var doc = response && response.results[0]
       var isHighContrast = state.ui.isHighContrast
       var GoalClass = isHighContrast ? HighContrastGoal : Goal
       var id = state.params.wildcard + (isHighContrast ? 'high-contrast' : '')
       var goal = state.cache(GoalClass, id)
       var props = { format: 'fullscreen', number: +num }
 
-      // fetch website details document for secondary menu
-      return state.docs.getSingle('website', function (err, website) {
-        if (err) throw err
+      var featured = getFeatured()
+      var header = state.docs.getSingle('website', getHeader)
 
-        if (!response || !website) {
-          return html`
-            <main class="View-main">
-              ${goal.render(props)}
-            </main>
-          `
+      if (state.prefetch) {
+        // exit early during prefetch
+        return Promise.all([featured, header])
+      } else if (!response) {
+        return html`
+          <main class="View-main">
+            ${goal.render(props)}
+          </main>
+        `
+      }
+
+      props.number = doc.data.number
+      props.label = asText(doc.data.label)
+      props.description = asText(doc.data.description)
+
+      var targets = doc.data.targets.map((target) => {
+        return Object.assign({}, target, {
+          title: asText(target.title),
+          body: asElement(target.body, state.docs.resolve)
+        })
+      })
+
+      return html`
+        <main class="View-main">
+          ${goal.render(props)}
+          ${header}
+          <section class="u-spaceV8">
+            <div class="u-container">
+              <div class="Text u-spaceB4">
+                <h2 class="Text-h1">${asText(doc.data.featured_heading)}</h2>
+                ${asElement(doc.data.featured_text, state.docs.resolve)}
+              </div>
+            </div>
+            <div class="u-md-container">
+              ${grid({ size: { md: '1of2', lg: '1of3' }, carousel: true }, featured)}
+            </div>
+          </section>
+          <section class="u-container u-spaceV8" id="targets">
+            <div class="Text u-spaceB4">
+              <h2 class="Text-h1">${asText(doc.data.targets_title)}</h2>
+              ${asElement(doc.data.targets_description, state.docs.resolve)}
+            </div>
+            ${state.cache(TargetGrid, `${doc.data.number}-targets`).render(doc.data.number, targets)}
+          </section>
+          <section class="u-container u-spaceV8">
+            ${/* eslint-disable indent */
+            state.cache(Engager, 'goal-cta').render([
+              { id: 'my-tab1', label: 'Noget inhold', content: () => html`<p>Nullam eget mattis nibh. Fusce sit amet feugiat massa, eu tincidunt orci.</p>` },
+              { id: 'my-tab2', label: 'Mere inhold at se', content: () => html`<p>Integer ut eros velit. Nulla pharetra id magna ut congue. Phasellus non varius nisi, nec porta ligula.</p>` },
+              { id: 'my-tab3', label: 'Indhold for alle', content: () => html`<p>Ut sodales sit amet lorem molestie porttitor. Donec vel neque fringilla magna fringilla cursus ac vitae diam.</p>` },
+              { id: 'my-tab4', label: 'Endu en', content: () => html`<p>Aenean vitae felis purus. Aliquam lobortis neque nec ante aliquam, vitae finibus enim posuere.</p>` }
+            ])
+            /* eslint-enable indent */}
+          </section>
+          ${doc.data.interlink_heading && doc.data.interlink_heading.length ? html`
+            <div class="u-container u-spaceV8">
+              <div class="Text">
+                <h3 class="u-spaceB0">
+                  <span class="Text-h2 Text-muted">${asText(doc.data.interlink_heading)}</span>
+                </h3>
+                <div class="Text-h2 u-spaceT0">${asElement(doc.data.interlink_text, state.docs.resolve)}</div>
+              </div>
+            </div>
+          ` : null}
+        </main>
+      `
+
+      function getNews (num = 3) {
+        var opts = {
+          pageSize: num,
+          orderings: '[document.first_publication_date desc]'
         }
 
-        var doc = response.results[0]
+        return state.docs.get([
+          Predicates.at('document.type', 'news'),
+          Predicates.any('document.tags', doc.tags)
+        ], opts, featureFiller(num))
+      }
 
-        props.number = doc.data.number
-        props.label = asText(doc.data.label)
-        props.description = asText(doc.data.description)
+      function getEvents (num = 3) {
+        var opts = {
+          pageSize: num,
+          orderings: '[my.event.datetime]'
+        }
+        var yesterday = subDays(new Date(), 1)
+        var date = [
+          yesterday.getFullYear(),
+          ('0' + yesterday.getMonth()).substr(-2),
+          ('0' + yesterday.getDate()).substr(-2)
+        ].join('-')
 
-        var targets = doc.data.targets.map((target) => {
-          return Object.assign({}, target, {
-            title: asText(target.title),
-            body: asElement(target.body, state.docs.resolve)
-          })
-        })
+        return state.docs.get([
+          Predicates.at('document.type', 'event'),
+          Predicates.any('document.tags', doc.tags),
+          Predicates.dateAfter('my.event.datetime', date)
+        ], opts, featureFiller(num))
+      }
+
+      function featureFiller (num) {
+        return function (err, response) {
+          if (err) throw err
+          var cells = []
+          if (!response) {
+            for (let i = 0; i < num; i++) cells.push(card.loading())
+          } else if (response.results.length) {
+            cells.push(...reduce(response.results, asSlice, asFeatured))
+          }
+          return cells
+        }
+      }
+
+      // get featured link cards populated with news and events
+      // () -> Element
+      function getFeatured () {
+        var cards = doc.data.featured_links.map(asFeatured)
+
+        if (cards.length < 3) {
+          let news = getNews(3)
+          let events = getEvents(1)
+
+          // expose nested fetch during ssr
+          if (state.prefetch) return Promise.all([news, events])
+
+          if (events.length) cards.push(events[0])
+          cards.push.apply(cards, news.slice(0, 3 - cards.length))
+        }
+
+        return cards
+      }
+
+      // augument doc as slice for interoperability with featured slices
+      // obj -> obj
+      function asSlice (doc) {
+        return {
+          slice_type: doc.type,
+          primary: {
+            link: doc
+          },
+          items: []
+        }
+      }
+
+      // render slice as card
+      // obj -> Element
+      function asFeatured (slice) {
+        var data = slice.primary.link ? slice.primary.link.data : slice.primary
+        var date = new Date(doc.first_publication_date)
+        var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
+        var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
+        var props = {
+          title: asText(data.title),
+          body: asText(data.description),
+          figure: {
+            alt: data.image.alt,
+            sizes: sizes,
+            srcset: srcset(data.image.url, [400, 600, 900, 1800], opts),
+            src: `/media/fetch/w_900/${data.image.url}`,
+            caption: data.image.copyright
+          }
+        }
+
+        switch (slice.slice_type) {
+          case 'resource': return card(Object.assign({
+            link: {
+              href: slice.primary.file.url
+            }
+          }, props))
+          case 'event': return card(Object.assign({
+            link: {
+              href: state.docs.resolve(slice.primary.link)
+            }
+          }, props))
+          case 'news': return card(Object.assign({
+            date: {
+              datetime: date,
+              text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
+            },
+            link: {
+              href: state.docs.resolve(slice.primary.link)
+            }
+          }, props))
+          default: return null
+        }
+      }
+
+      // render secondary menu
+      // (Error, obj) -> Element
+      function getHeader (err, website) {
+        if (err) throw err
+
+        if (!website) {
+          return html`<div hidden aria-hidden="true" id="secondary-header-container"></div>`
+        }
 
         var headerVisible = state.ui.hasOverlay ? 1 : self.local.headerVisible
         var opts = { isHighContrast: isHighContrast, slot: flag, static: true }
         var header = state.cache(Header, 'secondary-header')
         var links = website.data.main_menu.map(menuLink)
-
         return html`
-          <main class="View-main">
-            ${goal.render(props)}
-            <div
-              hidden
-              aria-hidden="true"
-              id="secondary-header-container"
-              class="${className('View-header View-header--secondary js-header', { 'is-visible': headerVisible })}"
-              style="--View-header-visible: ${headerVisible}">
-              <div class="View-headerWrapper">
-                ${typeof window !== 'undefined' ? header.render(links, state.href, opts) : null}
-              </div>
+          <div
+            hidden
+            aria-hidden="true"
+            id="secondary-header-container"
+            class="${className('View-header View-header--secondary js-header', { 'is-visible': headerVisible })}"
+            style="--View-header-visible: ${headerVisible}">
+            <div class="View-headerWrapper">
+              ${typeof window !== 'undefined' ? header.render(links, state.href, opts) : null}
             </div>
-            <section class="u-container u-spaceT8" id="targets">
-              <div class="Text u-spaceB4">
-                <h2>${asText(doc.data.targets_title)}</h2>
-                ${asElement(doc.data.targets_description, state.docs.resolve)}
-              </div>
-              ${state.cache(TargetGrid, `${doc.data.number}-targets`).render(doc.data.number, targets)}
-            </section>
-            <section class="u-container u-spaceV8">
-              ${/* eslint-disable indent */
-              state.cache(Engager, 'goal-cta').render([
-                { id: 'my-tab1', label: 'Noget inhold', content: () => html`<p>Nullam eget mattis nibh. Fusce sit amet feugiat massa, eu tincidunt orci.</p>` },
-                { id: 'my-tab2', label: 'Mere inhold at se', content: () => html`<p>Integer ut eros velit. Nulla pharetra id magna ut congue. Phasellus non varius nisi, nec porta ligula.</p>` },
-                { id: 'my-tab3', label: 'Indhold for alle', content: () => html`<p>Ut sodales sit amet lorem molestie porttitor. Donec vel neque fringilla magna fringilla cursus ac vitae diam.</p>` },
-                { id: 'my-tab4', label: 'Endu en', content: () => html`<p>Aenean vitae felis purus. Aliquam lobortis neque nec ante aliquam, vitae finibus enim posuere.</p>` }
-              ])
-              /* eslint-enable indent */}
-            </section>
-            ${doc.data.interlink_heading && doc.data.interlink_heading.length ? html`
-              <div class="u-container u-spaceV8">
-                <div class="Text">
-                  <h3 class="u-spaceB0">
-                    <span class="Text-h2 Text-muted">${asText(doc.data.interlink_heading)}</span>
-                  </h3>
-                  <div class="Text-h2 u-spaceT0">${asElement(doc.data.interlink_text, state.docs.resolve)}</div>
-                </div>
-              </div>
-            ` : null}
-          </main>
+          </div>
         `
-      })
+      }
 
+      // render menu link item
+      // obj -> obj
       function menuLink (item) {
         var href = resolve(item.link)
         return {
@@ -185,6 +333,8 @@ class GoalPage extends View {
         }
       }
 
+      // resolve menu link
+      // obj -> str
       function resolve (link) {
         switch (link.link_type) {
           case 'Document': return state.docs.resolve(link)
@@ -194,6 +344,8 @@ class GoalPage extends View {
         }
       }
 
+      // render header flag
+      // () -> Element
       function flag () {
         var opts = {
           href: '/mission',

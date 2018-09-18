@@ -129,12 +129,12 @@
 .Text h4,
 .Text h5,
 .Text h6,
-.Text-h1,
-.Text-h2,
-.Text-h3,
-.Text-h4,
-.Text-h5,
-.Text-h6 {
+.Text .Text-h1,
+.Text .Text-h2,
+.Text .Text-h3,
+.Text .Text-h4,
+.Text .Text-h5,
+.Text .Text-h6 {
   margin: 0;
   color: rgb(var(--current-color));
 }
@@ -145,12 +145,12 @@
 .Text h4:not(:first-child),
 .Text h5:not(:first-child),
 .Text h6:not(:first-child),
-.Text-h1:not(:first-child),
-.Text-h2:not(:first-child),
-.Text-h3:not(:first-child),
-.Text-h4:not(:first-child),
-.Text-h5:not(:first-child),
-.Text-h6:not(:first-child) {
+.Text .Text-h1:not(:first-child),
+.Text .Text-h2:not(:first-child),
+.Text .Text-h3:not(:first-child),
+.Text .Text-h4:not(:first-child),
+.Text .Text-h5:not(:first-child),
+.Text .Text-h6:not(:first-child) {
   margin-top: 1em;
 }
 
@@ -158,10 +158,10 @@
 .Text h2,
 .Text h3,
 .Text h4,
-.Text-h1,
-.Text-h2,
-.Text-h3,
-.Text-h4 {
+.Text .Text-h1,
+.Text .Text-h2,
+.Text .Text-h3,
+.Text .Text-h4 {
   margin: 0 0 -0.25em;
   font-weight: bold;
   text-transform: uppercase;
@@ -171,21 +171,21 @@
 }
 
 .Text h1,
-.Text-h1 {
+.Text .Text-h1 {
   font-size: 3rem;
   line-height: 1;
 }
 
 .Text h2,
-.Text-h2 {
+.Text .Text-h2 {
   font-size: 2rem;
   line-height: 1.1;
 }
 
 .Text h3,
 .Text h4,
-.Text-h3,
-.Text-h4 {
+.Text .Text-h3,
+.Text .Text-h4 {
   font-size: 1.5rem;
   line-height: 1.15;
   margin-bottom: -0.625em;
@@ -193,8 +193,8 @@
 
 .Text h5,
 .Text h6,
-.Text-h5,
-.Text-h6 {
+.Text .Text-h5,
+.Text .Text-h6 {
   margin: 1.3em 0;
   font-weight: bold;
   font-size: inherit;
@@ -205,10 +205,10 @@
 .Text h2 a,
 .Text h3 a,
 .Text h4 a,
-.Text-h1 a,
-.Text-h2 a,
-.Text-h3 a,
-.Text-h4 a {
+.Text .Text-h1 a,
+.Text .Text-h2 a,
+.Text .Text-h3 a,
+.Text .Text-h4 a {
   background: rgb(var(--color-link));
   color: rgb(var(--current-background));
   padding: 0.15em 0.18em 0.08em;
@@ -222,10 +222,10 @@
 .Text h2 a:hover,
 .Text h3 a:hover,
 .Text h4 a:hover,
-.Text-h1 a:hover,
-.Text-h2 a:hover,
-.Text-h3 a:hover,
-.Text-h4 a:hover {
+.Text .Text-h1 a:hover,
+.Text .Text-h2 a:hover,
+.Text .Text-h3 a:hover,
+.Text .Text-h4 a:hover {
   background: rgb(var(--color-link-shaded));
   color: #fff;
 }
@@ -235,31 +235,31 @@
   .Text h2:not(:first-child),
   .Text h3:not(:first-child),
   .Text h4:not(:first-child),
-  .Text-h1:not(:first-child),
-  .Text-h2:not(:first-child),
-  .Text-h3:not(:first-child),
-  .Text-h4:not(:first-child) {
+  .Text .Text-h1:not(:first-child),
+  .Text .Text-h2:not(:first-child),
+  .Text .Text-h3:not(:first-child),
+  .Text .Text-h4:not(:first-child) {
     margin-top: 4.5rem;
   }
 
   .Text h1,
-  .Text-h1 {
+  .Text .Text-h1 {
     font-size: 4.5rem;
   }
 
   .Text h2,
-  .Text-h2 {
+  .Text .Text-h2 {
     font-size: 3rem;
   }
 
   .Text h3,
-  .Text-h3 {
+  .Text .Text-h3 {
     font-size: 2rem;
     line-height: 1.05;
   }
 
   .Text h4,
-  .Text-h4 {
+  .Text .Text-h4 {
     font-size: 1.5rem;
     line-height: 1.05;
   }
