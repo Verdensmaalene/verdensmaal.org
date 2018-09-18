@@ -18,6 +18,7 @@ var text = i18n()
 var SCROLL_MIN = 0
 var SCROLL_MAX = 50
 
+// override goal background method in high contrast mode
 class HighContrastGoal extends Goal {
   background () {
     return null
@@ -111,7 +112,7 @@ class GoalPage extends View {
       var header = state.docs.getSingle('website', getHeader)
 
       if (state.prefetch) {
-        // exit early during prefetch
+        // exit early during prefetch exposing async elements
         return Promise.all([featured, header])
       } else if (!response) {
         return html`
@@ -177,6 +178,8 @@ class GoalPage extends View {
         </main>
       `
 
+      // get latest news with similar tags
+      // (num?) -> arr
       function getNews (num = 3) {
         var opts = {
           pageSize: num,
@@ -189,6 +192,8 @@ class GoalPage extends View {
         ], opts, featureFiller(num))
       }
 
+      // get upcoming events with similar tags
+      // (num?) -> arr
       function getEvents (num = 3) {
         var opts = {
           pageSize: num,
@@ -208,6 +213,8 @@ class GoalPage extends View {
         ], opts, featureFiller(num))
       }
 
+      // handle related content response rendering loading cards in place
+      // num -> arr
       function featureFiller (num) {
         return function (err, response) {
           if (err) throw err
@@ -222,7 +229,7 @@ class GoalPage extends View {
       }
 
       // get featured link cards populated with news and events
-      // () -> Element
+      // () -> arr
       function getFeatured () {
         var cards = doc.data.featured_links.map(asFeatured)
 

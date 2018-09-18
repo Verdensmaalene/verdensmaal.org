@@ -19,6 +19,7 @@ var opts = {
   ]
 }
 
+// override GoalGrid background method in high contrast mode
 class HighContrastGoalGrid extends GoalGrid {
   background () {
     return null
