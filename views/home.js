@@ -205,7 +205,6 @@ class Home extends View {
       // obj -> Element
       function asFeatured (slice) {
         var data = slice.primary.link ? slice.primary.link.data : slice.primary
-        var date = new Date(slice.primary.link.first_publication_date)
         var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
         var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
         var props = {
