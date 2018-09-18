@@ -149,7 +149,7 @@ app.use(function (ctx, next) {
   }
   var allowCache = app.env !== 'development'
   if (!previewCookie && allowCache && ctx.path !== '/prismic-preview') {
-    ctx.set('Cache-Control', `s-maxage=${60 * 60 * 24 * 7}, max-age=${60}`)
+    ctx.set('Cache-Control', `s-maxage=${60 * 60 * 12}, max-age=${60}`)
   }
   return next()
 })
