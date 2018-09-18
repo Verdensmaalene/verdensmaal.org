@@ -231,7 +231,7 @@ class GoalPage extends View {
       // get featured link cards populated with news and events
       // () -> arr
       function getFeatured () {
-        var cards = doc.data.featured_links.map(asFeatured)
+        var cards = doc ? doc.data.featured_links.map(asFeatured) : []
 
         if (cards.length < 3) {
           let news = getNews(3)
@@ -263,19 +263,18 @@ class GoalPage extends View {
       // obj -> Element
       function asFeatured (slice) {
         var data = slice.primary.link ? slice.primary.link.data : slice.primary
-        var date = new Date(doc.first_publication_date)
         var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
         var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
         var props = {
           title: asText(data.title),
           body: asText(data.description),
-          figure: {
+          figure: data.image.url ? {
             alt: data.image.alt,
             sizes: sizes,
             srcset: srcset(data.image.url, [400, 600, 900, 1800], opts),
             src: `/media/fetch/w_900/${data.image.url}`,
             caption: data.image.copyright
-          }
+          } : null
         }
 
         switch (slice.slice_type) {
@@ -289,15 +288,18 @@ class GoalPage extends View {
               href: state.docs.resolve(slice.primary.link)
             }
           }, props))
-          case 'news': return card(Object.assign({
-            date: {
-              datetime: date,
-              text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
-            },
-            link: {
-              href: state.docs.resolve(slice.primary.link)
-            }
-          }, props))
+          case 'news': {
+            let date = new Date(slice.primary.link.first_publication_date)
+            return card(Object.assign({
+              date: {
+                datetime: date,
+                text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
+              },
+              link: {
+                href: state.docs.resolve(slice.primary.link)
+              }
+            }, props))
+          }
           default: return null
         }
       }
