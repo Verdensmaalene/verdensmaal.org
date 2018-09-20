@@ -85,7 +85,6 @@ function calendar (entries, opts = {}) {
   }
 }
 
-
 // get HH:mm timestamp from date
 // Date -> str
 function timestamp (date) {
