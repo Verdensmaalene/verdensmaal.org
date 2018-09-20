@@ -102,10 +102,18 @@ module.exports = class Tablist extends Component {
         var el = document.getElementById(id)
         assert(el, `Tablist: no tabpanel for tab "${id}" found in document`)
         assert(el.getAttribute('role') === 'tabpanel', 'Tablist: tabpanel missing role="tabpanel"')
-        el.focus()
+        assert(el.getAttribute('tabindex'), 'Tablist: tabpanel missing tabindex')
       }
       if (typeof callback === 'function') callback(id)
     }
+  }
+
+  tab (attrs, props) {
+    return html`
+      <a href="#${props.id}" ${attrs}>
+        ${props.label}
+      </a>
+    `
   }
 
   createElement (tabs, selected, onselect) {
@@ -126,11 +134,22 @@ module.exports = class Tablist extends Component {
     // obj -> Element
     function tab (props) {
       var isSelected = self.local.selected === props.id
+      var attrs = {
+        class: className('Tablist-link js-tab', {
+          'is-active js-active': isSelected
+        }),
+        role: 'tab',
+        tabindex: isSelected ? 0 : -1,
+        'aria-controls': props.id,
+        // FIXME: add `aria-selected="${isSelected ? 'true' : 'false'}"` when
+        // nanohtml boolean attribute replacer is fixed
+        id: `${props.id}-tab`,
+        onclick: onclick
+      }
+
       return html`
         <li class="Tablist-tab">
-          <a href="#${props.id}" onclick=${onclick} id="${props.id}-tab" class="${className('Tablist-link js-tab', { 'is-active js-active': isSelected })}" role="tab" aria-selected="${isSelected ? 'true' : 'false'}" aria-controls="${props.id}">
-            ${props.label}
-          </a>
+          ${self.tab(attrs, props)}
         </li>
       `
 

@@ -65,12 +65,11 @@
   background-color: rgb(var(--focus-ring-color));
 }
 
-
-.Tablist-link.is-active {
+:root[scripting-enabled] .Tablist-link.is-active {
   color: rgb(var(--color-link));
 }
 
-.Tablist:not(.in-transition) .Tablist-link.is-active::after {
+:root[scripting-enabled] .Tablist:not(.in-transition) .Tablist-link.is-active::after {
   background-color: rgb(var(--color-link));
 }
 

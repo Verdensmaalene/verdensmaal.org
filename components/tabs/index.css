@@ -1,0 +1,26 @@
+@import "../base";
+
+/** @define Tabs */
+.Tabs {
+  position: relative;
+}
+
+.Tabs-toggle {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+}
+
+:root:not([scripting-enabled]) .Tabs-panel[hidden] {
+  display: block;
+}
+
+:root:not([scripting-enabled]) .Tabs-toggle:not(:checked) ~ .Tabs-panel {
+  display: none;
+}

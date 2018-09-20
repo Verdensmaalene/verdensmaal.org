@@ -11,6 +11,10 @@
   background-color: rgb(var(--color-gray-light));
 }
 
+:root:not([scripting-enabled]) .Map {
+  display: none;
+}
+
 @media (min-width: 600px) {
   .Map {
     height: 63vh;

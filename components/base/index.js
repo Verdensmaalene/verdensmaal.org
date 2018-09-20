@@ -168,10 +168,10 @@ function pluck (src, ...keys) {
 exports.reduce = reduce
 function reduce (list) {
   var middleware = Array.prototype.slice.call(arguments, 1)
-  return list.reduce(function (list, initial, i, len) {
-    var val = middleware.reduce((val, fn) => val && fn(val, i, len), initial)
-    if (val) list.push(val)
-    return list
+  return list.reduce(function (result, initial, i, from) {
+    var val = middleware.reduce((val, fn) => val && fn(val, i, from), initial)
+    if (val) result.push(val)
+    return result
   }, [])
 }
 

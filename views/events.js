@@ -1,12 +1,15 @@
 var html = require('choo/html')
+var parse = require('date-fns/parse')
 var subDays = require('date-fns/sub_days')
 var { asText } = require('prismic-richtext')
 var { Predicates } = require('prismic-javascript')
 var Map = require('../components/map')
+var Tabs = require('../components/tabs')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var view = require('../components/view')
 var intro = require('../components/intro')
+var calendar = require('../components/calendar')
 var { i18n, srcset } = require('../components/base')
 
 var text = i18n()
@@ -25,11 +28,11 @@ function events (state, emit) {
     ].join('-')
     var predicates = [
       Predicates.at('document.type', 'event'),
-      Predicates.dateAfter('my.event.datetime', date)
+      Predicates.dateAfter('my.event.end', date)
     ]
     var opts = {
       pageSize: 100,
-      orderings: '[my.event.datetime]'
+      orderings: '[my.event.start]'
     }
 
     return state.docs.get(predicates, opts, function (err, response) {
@@ -48,28 +51,42 @@ function events (state, emit) {
   // render page content
   // obj -> Element
   function content (response) {
-    var cells = []
     var locations = []
     var bounds = state.bounds[state.country] || state.bounds['DK']
-    if (!response) {
-      for (let i = 0; i < 6; i++) cells.push(card.loading())
-    } else if (!response.results.length) {
+    if (response && !response.results.length) {
       return html`
         <div class="Text u-textCenter u-sizeFull">
           <p>${text`Nothing to see here`}</p>
         </div>
       `
-    } else {
+    } else if (response) {
       locations = response.results.map(asLocation)
-      cells = response.results.map(eventCard)
     }
+
+    var tabs = [{
+      id: 'events-grid-panel',
+      label: text`List`,
+      children (isSelected) {
+        var cells = []
+        if (!response) for (let i = 0; i < 6; i++) cells.push(card.loading())
+        else cells = response.results.map(asCard)
+        return grid({ size: { sm: '1of2', lg: '1of3' }, appear: isSelected }, cells)
+      }
+    }, {
+      id: 'events-list-panel',
+      label: text`Calendar`,
+      children (isSelected) {
+        if (!response) return calendar.loading(6)
+        return calendar(response.results.map(asCalendar), { appear: isSelected })
+      }
+    }]
 
     return html`
       <div>
         <div class="u-spaceB5">
           ${state.cache(Map, 'events-map').render(locations, bounds)}
         </div>
-        ${grid({ size: { sm: '1of2', lg: '1of3' } }, cells)}
+        ${state.cache(Tabs, 'events-tabs', 'events-grid-panel').render(tabs)}
       </div>
     `
   }
@@ -77,7 +94,7 @@ function events (state, emit) {
   // format document for use in map
   // obj -> obj
   function asLocation (doc) {
-    var date = new Date(doc.data.datetime)
+    var date = parse(doc.data.datetime)
     return {
       id: doc.id,
       latitude: doc.data.location.latitude,
@@ -98,10 +115,21 @@ function events (state, emit) {
     }
   }
 
+  // format doc as calendar compatible object
+  // obj -> obj
+  function asCalendar (doc) {
+    return Object.assign({}, doc.data, {
+      title: asText(doc.data.title),
+      href: state.docs.resolve(doc),
+      start: parse(doc.data.start),
+      end: parse(doc.data.end)
+    })
+  }
+
   // render document as card
   // obj -> Element
-  function eventCard (doc) {
-    var date = new Date(doc.data.datetime)
+  function asCard (doc) {
+    var date = parse(doc.data.start)
     var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
 
     return card({

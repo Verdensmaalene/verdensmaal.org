@@ -141,7 +141,7 @@ class Home extends View {
       function getEvents (num = 3) {
         var opts = {
           pageSize: num,
-          orderings: '[my.event.datetime]'
+          orderings: '[my.event.start]'
         }
         var yesterday = subDays(new Date(), 1)
         var date = [
@@ -152,7 +152,7 @@ class Home extends View {
 
         return state.docs.get([
           Predicates.at('document.type', 'event'),
-          Predicates.dateAfter('my.event.datetime', date)
+          Predicates.dateAfter('my.event.end', date)
         ], opts, featureFiller(num))
       }
 
