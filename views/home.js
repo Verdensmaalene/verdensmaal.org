@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var parse = require('date-fns/parse')
 var subDays = require('date-fns/sub_days')
 var asElement = require('prismic-element')
 var { asText } = require('prismic-richtext')
@@ -226,7 +227,7 @@ class Home extends View {
             }
           }, props))
           case 'news': {
-            let date = new Date(slice.primary.link.first_publication_date)
+            let date = parse(slice.primary.link.first_publication_date)
             return card(Object.assign({
               date: {
                 datetime: date,

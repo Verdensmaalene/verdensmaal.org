@@ -1,9 +1,10 @@
 var html = require('choo/html')
+var parse = require('date-fns/parse')
 var { asText } = require('prismic-richtext')
 var Map = require('../components/map')
 var view = require('../components/view')
-var { i18n } = require('../components/base')
 var banner = require('../components/banner')
+var { i18n } = require('../components/base')
 
 var text = i18n()
 
@@ -33,7 +34,7 @@ function event (state, emit) {
       `
     }
 
-    var date = new Date(doc.first_publication_date)
+    var date = parse(doc.first_publication_date)
     var hero
     if (doc.data.image.url) {
       let img = doc.data.image

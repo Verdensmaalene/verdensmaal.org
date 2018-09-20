@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var parse = require('date-fns/parse')
 var { asText } = require('prismic-richtext')
 var { Predicates } = require('prismic-javascript')
 var view = require('../components/view')
@@ -89,7 +90,7 @@ function news (state, emit) {
   // render document as card
   // obj -> Element
   function newsCard (doc, cols = 3) {
-    var date = new Date(doc.first_publication_date)
+    var date = parse(doc.first_publication_date)
     var sizes = '(min-width: 400px) 50vw, 100vw'
     if (cols === 3) sizes = '(min-width: 1000px) 30vw, ' + sizes
     var opts = { transforms: 'c_thumb', aspect: 3 / 4 }

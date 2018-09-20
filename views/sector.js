@@ -1,5 +1,6 @@
 var html = require('choo/html')
 var raw = require('choo/html/raw')
+var parse = require('date-fns/parse')
 var asElement = require('prismic-element')
 var { asText } = require('prismic-richtext')
 var { Predicates } = require('prismic-javascript')
@@ -256,7 +257,7 @@ function slugify (str) {
 // render document as card
 // obj -> Element
 function newsCard (doc) {
-  var date = new Date(doc.first_publication_date)
+  var date = parse(doc.first_publication_date)
   return card({
     title: asText(doc.data.title),
     body: asText(doc.data.description),
@@ -278,7 +279,7 @@ function newsCard (doc) {
 // render document as card
 // obj -> Element
 function eventCard (doc) {
-  var date = new Date(doc.data.datetime)
+  var date = parse(doc.data.start)
   return card({
     title: asText(doc.data.title),
     body: asText(doc.data.description),

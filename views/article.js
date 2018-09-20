@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var parse = require('date-fns/parse')
 var { asText } = require('prismic-richtext')
 var asElement = require('prismic-element')
 var view = require('../components/view')
@@ -34,7 +35,7 @@ function article (state, emit) {
       `
     }
 
-    var date = new Date(doc.first_publication_date)
+    var date = parse(doc.first_publication_date)
     return html`
       <main class="View-main">
         <article>
