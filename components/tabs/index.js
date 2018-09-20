@@ -27,6 +27,10 @@ module.exports = class Tabs extends Component {
     }
   }
 
+  unload () {
+    this.local.hasChanged = false
+  }
+
   update () {
     return true
   }
