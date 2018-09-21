@@ -71,14 +71,16 @@ function calendar (entries, opts = {}) {
           <span class="Calendar-month">${text(`MONTH_${props.start.getMonth()}`)} ${props.start.getFullYear()}</span>
         ` : null}
         <div class="Calendar-content">
-          <time datetime="${JSON.stringify(props.start).replace(/"/g, '')}">
-            ${showDay ? html`<span class="Calendar-date">${props.start.getDate()}</span>` : null}
-            <span class="Calendar-datetime">
-              ${duration > 0 ? text`${duration} day event` : timestamp(props.start)} – ${timestamp(props.end)} ${text`in ${props.city}, ${props.country}`}
-            </span>
-          </time>
-          <a class="Calendar-link" href="${props.href}"><h3 class="Calendar-title">${props.title}</h3></a>
-          ${props.download ? html`<a class="Calendar-download" href="${props.download}">${text`Save to calendar`}</a>` : null}
+          <div class="Calendar-body">
+            <time datetime="${JSON.stringify(props.start).replace(/"/g, '')}">
+              ${showDay ? html`<span class="Calendar-date">${props.start.getDate()}</span>` : null}
+              <span class="Calendar-datetime">
+                ${duration > 0 ? text`${duration} day event` : timestamp(props.start)} – ${timestamp(props.end)} ${text`in ${props.city}, ${props.country}`}
+              </span>
+            </time>
+            <a class="Calendar-link" href="${props.href}"><h3 class="Calendar-title">${props.title}</h3></a>
+          </div>
+          ${props.download ? html`<a class="Calendar-download" href="${props.download}" download>${text`Save to calendar`}</a>` : null}
         </div>
       </li>
     `

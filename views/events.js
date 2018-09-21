@@ -132,11 +132,13 @@ function events (state, emit) {
   // format doc as calendar compatible object
   // obj -> obj
   function asCalendar (doc) {
+    var href = state.docs.resolve(doc)
     return Object.assign({}, doc.data, {
       title: asText(doc.data.title),
-      href: state.docs.resolve(doc),
+      href: href,
       start: parse(doc.data.start),
-      end: parse(doc.data.end)
+      end: parse(doc.data.end),
+      download: `${href.replace(/\/$/, '')}.ics`
     })
   }
 
