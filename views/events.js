@@ -65,20 +65,10 @@ function events (state, emit) {
 
     var tabs = [{
       id: 'events-grid-panel',
-      label: text`List`,
-      children (isSelected) {
-        var cells = []
-        if (!response) for (let i = 0; i < 6; i++) cells.push(card.loading())
-        else cells = response.results.map(asCard)
-        return grid({ size: { sm: '1of2', lg: '1of3' }, appear: isSelected }, cells)
-      }
+      label: text`List`
     }, {
       id: 'events-list-panel',
-      label: text`Calendar`,
-      children (isSelected) {
-        if (!response) return calendar.loading(6)
-        return calendar(response.results.map(asCalendar), { appear: isSelected })
-      }
+      label: text`Calendar`
     }]
 
     return html`
@@ -86,9 +76,33 @@ function events (state, emit) {
         <div class="u-spaceB5">
           ${state.cache(Map, 'events-map').render(locations, bounds)}
         </div>
-        ${state.cache(Tabs, 'events-tabs', 'events-grid-panel').render(tabs)}
+        ${state.cache(Tabs, 'events-tabs', 'events-grid-panel').render(tabs, panel, onselect)}
       </div>
     `
+
+    // track tab being selected
+    // () -> void
+    function onselect () {
+      emit('tick', 'event-tab-selected')
+    }
+
+    // render tab panel by id
+    // str -> Element
+    function panel (id) {
+      switch (id) {
+        case 'events-grid-panel': {
+          var cells = []
+          if (!response) for (let i = 0; i < 6; i++) cells.push(card.loading())
+          else cells = response.results.map(asCard)
+          return grid({ size: { sm: '1of2', lg: '1of3' }, appear: state.ui.clock['event-tab-selected'] }, cells)
+        }
+        case 'events-list-panel': {
+          if (!response) return calendar.loading(6)
+          return calendar(response.results.map(asCalendar), { appear: state.ui.clock['event-tab-selected'] })
+        }
+        default: return null
+      }
+    }
   }
 
   // format document for use in map
