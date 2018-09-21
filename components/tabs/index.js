@@ -19,30 +19,32 @@ class TablistWithLabels extends Tablist {
 module.exports = class Tabs extends Component {
   constructor (id, state, emit, selected) {
     super(id)
-    this.cache = state.cache
+    this.tablist = new TablistWithLabels(id + '-tablist')
     this.local = state.components[id] = {
       id: id,
-      hasChanged: false,
       selected: selected || null
     }
-  }
-
-  unload () {
-    this.local.hasChanged = false
   }
 
   update () {
     return true
   }
 
+  select (id, callback) {
+    this.tablist.select(id, () => {
+      if (typeof callback === 'function') callback()
+      this.local.selected = id
+      this.rerender()
+    })
+  }
+
   createElement (tabs, panel, callback) {
     var self = this
-    var tablist = this.cache(TablistWithLabels, this.local.id + '-tablist')
 
     return html`
       <div class="Tabs" id="${this.local.id}">
         <div class="u-spaceB6">
-          ${tablist.render(tabs, this.local.selected, onselect)}
+          ${this.tablist.render(tabs, this.local.selected, onselect)}
         </div>
         ${tabs.map(getPanel)}
       </div>
@@ -69,14 +71,13 @@ module.exports = class Tabs extends Component {
     // proxy change event for onselect
     // obj -> void
     function onchange (event) {
-      tablist.select(event.target.value, onselect)
+      self.tablist.select(event.target.value, onselect)
     }
 
     // handle tab selection
     // str -> void
     function onselect (id) {
       if (typeof callback === 'function') callback(id)
-      self.local.hasChanged = true
       self.local.selected = id
       self.rerender()
     }
