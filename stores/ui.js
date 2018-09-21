@@ -2,10 +2,20 @@ module.exports = ui
 
 function ui (state, emitter) {
   state.ui = state.ui || {}
-  state.ui.isLoading = false
   state.ui.transitions = []
+  state.ui.isLoading = false
   state.ui.hasOverlay = false
   state.ui.gridLayout = state.ui.gridLayout || Math.ceil(Math.random() * 9)
+  state.ui.clock = { ref: 1 }
+
+  // generic (optionally namespaced) vector clock for tracking changes
+  emitter.on('tick', function (key) {
+    state.ui.clock.ref++
+    if (key) {
+      if (!state.ui.clock[key]) state.ui.clock[key] = 1
+      else state.ui.clock[key]++
+    }
+  })
 
   emitter.on('header:toggle', function (isOpen) {
     state.ui.hasOverlay = isOpen
