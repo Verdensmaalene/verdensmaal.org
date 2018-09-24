@@ -53,7 +53,7 @@ function events (state, emit) {
   function content (response) {
     var locations = []
     var bounds = state.bounds[state.country] || state.bounds['DK']
-    if (response && !response.results.length) {
+    if (response && !response.results_size) {
       return html`
         <div class="Text u-textCenter u-sizeFull">
           <p>${text`Nothing to see here`}</p>

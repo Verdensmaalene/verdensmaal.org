@@ -37,7 +37,7 @@
 
 .Calendar-month {
   display: block;
-  margin: 3rem 0 0.5rem;
+  margin: 2.5rem 0 0.5rem;
   font-size: 2rem;
   font-family: var(--heading-font-family);
   line-height: var(--heading-line-height);
@@ -45,23 +45,111 @@
   text-transform: uppercase;
 }
 
+@media (min-width: 600px) {
+  .Calendar-month {
+    margin-top: 3rem;
+  }
+}
+
 .Calendar-item:first-child .Calendar-month {
   margin-top: 0;
 }
 
 .Calendar-content {
-  display: flex;
-  align-items: center;
   min-height: 4rem;
-  padding: 2rem 0 1.4rem;
+  padding: 1rem 0 0;
   position: relative;
 }
 
-.Calendar-item:not(.Calendar-item--firstOfDay) .Calendar-content {
-  padding-left: 5.5rem;
+@media (min-width: 600px) {
+  .Calendar-content {
+    padding: 2rem 0;
+  }
 }
 
-.Calendar-content::before {
+.Calendar-item:not(.Calendar-item--firstOfDay) .Calendar-content {
+  padding-left: 3.5rem;
+}
+
+@media (min-width: 600px) {
+  .Calendar-item:not(.Calendar-item--firstOfDay) .Calendar-content {
+    padding-left: 5.5rem;
+  }
+}
+
+.Calendar-content:not(:last-child) {
+  border-bottom: 1px solid rgba(var(--color-gray-light), 0.6);
+}
+
+.Calendar-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.Calendar-datetime {
+  display: block;
+  line-height: 1.4;
+  font-size: 0.8rem;
+  color: rgb(var(--color-gray));
+}
+
+@media (min-width: 600px) {
+  .Calendar-datetime {
+    font-size: 1rem;
+  }
+}
+
+.Calendar-date {
+  --current-color: 255, 255, 255;
+  display: flex;
+  justify-content: center;
+  float: left;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 1rem;
+  position: relative;
+  left: 0;
+  top: 0.1rem;
+  border-radius: 100%;
+  font-size: 1.25rem;
+  color: rgb(var(--current-color));
+  background: rgb(var(--high-contrast-dark, var(--color-theme)));
+  font-family: var(--heading-font-family);
+  line-height: 2.1;
+}
+
+@media (min-width: 600px) {
+  .Calendar-date {
+    width: 4rem;
+    height: 4rem;
+    margin-right: 1.5rem;
+    top: -0.3rem;
+    font-size: 2rem;
+  }
+}
+
+.Calendar-item.is-loading .Calendar-date {
+  background: rgba(var(--color-gray-light), 0.6);
+}
+
+.Calendar-title {
+  font-size: 0.875rem;
+}
+
+@media (min-width: 600px) {
+  .Calendar-title {
+    font-size: 1.25rem;
+  }
+}
+
+.Calendar-link {
+  display: block;
+  flex: 1 1 auto;
+}
+
+.Calendar-link::before {
   content: "";
   width: calc(100% + 2em);
   height: calc(100% + 1px);
@@ -75,75 +163,30 @@
   will-change: opacity;
 }
 
-.Calendar-content:hover::before {
+.Calendar-link:first-child:hover::before,
+.Calendar-download:not(:hover) + .Calendar-link:hover::before {
   opacity: 1;
 }
 
-.Calendar-content:not(:last-child) {
-  border-bottom: 1px solid rgba(var(--color-gray-light), 0.6);
-}
-
-.Calendar-body {
-  flex: 1 1 auto;
-}
-
-.Calendar-datetime {
-  color: rgb(var(--color-gray));
-}
-
-.Calendar-date {
-  --current-color: 255, 255, 255;
+.Calendar-download {
+  order: 1;
   display: flex;
-  justify-content: center;
-  float: left;
-  width: 4rem;
-  height: 4rem;
-  margin-right: 1.5rem;
+  align-items: center;
+  padding: 0.7em 1em 0.6em;
+  margin-top: 0.5em;
   position: relative;
-  left: 0;
+  left: -1em;
   top: -0.3rem;
-  border-radius: 100%;
-  font-size: 2rem;
-  color: rgb(var(--current-color));
-  background: rgb(var(--high-contrast-dark, var(--color-theme)));
-  font-family: var(--heading-font-family);
-  line-height: 4.1rem;
-}
-
-.Calendar-item.is-loading .Calendar-date {
-  background: rgba(var(--color-gray-light), 0.6);
-}
-
-@media (min-width: 600px) {
-  .Calendar-title {
-    font-size: 1.25rem;
-  }
-}
-
-.Calendar-link {
-  display: block;
-}
-
-.Calendar-link::before {
-  content: "";
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
+  font-size: 0.8rem;
+  color: rgb(var(--high-contrast-light, var(--color-gray)));
 }
 
 /**
- * 1. Compensate for normalize removeing link backgrounds on hover
+ * 1. Compensate for normalize removing link backgrounds on hover
  */
 
 .Calendar-download,
 .Calendar-download:hover /* 1 */ {
-  padding: 1em;
-  position: relative;
-  top: -0.3rem;
-  z-index: 1;
-  color: rgb(var(--high-contrast-light, var(--current-color)));
   background-color: rgba(var(--high-contrast-dark, 255, 255, 255, 0));
 }
 
@@ -156,11 +199,24 @@
   top: 0;
   opacity: 0;
   z-index: -1;
-  background-color: rgb(var(--high-contrast-dark, 255, 255, 255));
+  background-color: rgba(var(--high-contrast-dark, 0, 0, 0, 0.02));
   transition: opacity 175ms var(--ease-out);
   will-change: opacity;
 }
 
 .Calendar-download:hover::before {
   opacity: 1;
+}
+
+@media (min-width: 600px) {
+  .Calendar-download {
+    font-size: 1rem;
+  }
+}
+
+.Calendar-icon {
+  display: inline-block;
+  margin-right: 1ch;
+  position: relative;
+  top: -0.05em;
 }
