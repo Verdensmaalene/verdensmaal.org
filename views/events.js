@@ -8,6 +8,7 @@ var Tabs = require('../components/tabs')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var view = require('../components/view')
+var event = require('../components/event')
 var intro = require('../components/intro')
 var calendar = require('../components/calendar')
 var { i18n, srcset } = require('../components/base')
@@ -148,20 +149,26 @@ function events (state, emit) {
     var date = parse(doc.data.start)
     var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
 
-    return card({
-      title: asText(doc.data.title),
-      body: asText(doc.data.description),
-      figure: doc.data.image.url ? {
+    var figure
+    if (doc.data.image.url) {
+      figure = {
         alt: doc.data.image.alt,
         sizes: '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw',
         srcset: srcset(doc.data.image.url, [400, 600, 900, 1800], opts),
         src: `/media/fetch/w_900/${doc.data.image.url}`,
         caption: doc.data.image.copyright
-      } : null,
-      date: {
-        datetime: date,
-        text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
-      },
+      }
+    } else {
+      figure = () => event(Object.assign(Object.create(doc.data), {
+        start: date,
+        end: parse(doc.data.end)
+      }))
+    }
+
+    return card({
+      title: asText(doc.data.title),
+      body: asText(doc.data.description),
+      figure: figure,
       link: {
         href: state.docs.resolve(doc)
       }
