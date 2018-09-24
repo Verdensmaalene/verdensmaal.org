@@ -71,7 +71,7 @@ function prismicStore (opts) {
       if (!cached && !prefetch) result = callback(null)
       else if (cached instanceof Error) return callback(cached)
       else if (cached instanceof Promise) {
-        if (prefetch) return cached
+        if (prefetch) return chain(cached, callback)
         return callback(null, null)
       } else if (cached) return callback(null, cached)
 
@@ -92,9 +92,7 @@ function prismicStore (opts) {
       emitter.emit('prismic:request', request)
       if (prefetch) {
         // defer to callback to allow for nested API calls
-        let queue = request.then(function (response) {
-          return callback(null, response)
-        })
+        let queue = chain(request, callback)
         if (Array.isArray(prefetch)) prefetch.push(queue)
         return queue
       }
@@ -156,8 +154,10 @@ function prismicStore (opts) {
       getSingle: getSingle,
       toJSON () {
         var json = {}
-        for (var i = 0; i < cache.keys.length; i++) {
-          json[cache.keys[i]] = cache.get(cache.keys[i])
+        for (let i = 0, value; i < cache.keys.length; i++) {
+          value = cache.get(cache.keys[i])
+          // guard against unfinshed promises being stringified as empty object
+          if (!(value instanceof Promise)) json[cache.keys[i]] = value
         }
         return json
       }
@@ -182,4 +182,10 @@ function first (callback) {
     }
     return callback(null, response.results[0])
   }
+}
+
+// chain a callback function onto a promise
+// (Promise, fn) -> Promise
+function chain (promise, fn) {
+  return promise.then((value) => fn(null, value), fn)
 }
