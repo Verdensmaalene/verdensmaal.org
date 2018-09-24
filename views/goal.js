@@ -126,12 +126,12 @@ class GoalPage extends View {
       props.label = asText(doc.data.label)
       props.description = asText(doc.data.description)
 
-      var targets = doc.data.targets.map((target) => {
-        return Object.assign({}, target, {
+      var targets = doc.data.targets
+        .filter((target) => target.title.length && target.body.length)
+        .map((target) => Object.assign({}, target, {
           title: asText(target.title),
           body: asElement(target.body, state.docs.resolve)
-        })
-      })
+        }))
 
       return html`
         <main class="View-main">
@@ -148,13 +148,15 @@ class GoalPage extends View {
               ${grid({ size: { md: '1of2', lg: '1of3' }, carousel: true }, featured)}
             </div>
           </section>
-          <section class="u-container u-spaceV8" id="targets">
-            <div class="Text u-spaceB4">
-              <h2 class="Text-h1">${asText(doc.data.targets_title)}</h2>
-              ${asElement(doc.data.targets_description, state.docs.resolve)}
-            </div>
-            ${state.cache(TargetGrid, `${doc.data.number}-targets`).render(doc.data.number, targets)}
-          </section>
+          ${targets.length ? html`
+            <section class="u-container u-spaceV8" id="targets">
+              <div class="Text u-spaceB4">
+                <h2 class="Text-h1">${asText(doc.data.targets_title)}</h2>
+                ${asElement(doc.data.targets_description, state.docs.resolve)}
+              </div>
+              ${state.cache(TargetGrid, `${doc.data.number}-targets`).render(doc.data.number, targets)}
+            </section>
+          ` : null}
           <section class="u-container u-spaceV8">
             <!-- TODO: insert engager here -->
           </section>
