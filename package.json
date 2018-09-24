@@ -71,7 +71,7 @@
     "hstream": "^1.2.0",
     "ics": "^2.7.2",
     "intune": "^1.0.0",
-    "jalla": "^0.7.2",
+    "jalla": "^0.7.4",
     "koa-body": "^4.0.4",
     "koa-compose": "^4.1.0",
     "koa-route": "^3.2.0",
