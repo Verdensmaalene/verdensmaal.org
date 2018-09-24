@@ -11,7 +11,6 @@ var grid = require('../components/grid')
 var Goal = require('../components/goal')
 var Flag = require('../components/flag')
 var Header = require('../components/header')
-var Engager = require('../components/engager')
 var TargetGrid = require('../components/target-grid')
 var { i18n, isSameDomain, className, reduce, srcset } = require('../components/base')
 
@@ -157,14 +156,7 @@ class GoalPage extends View {
             ${state.cache(TargetGrid, `${doc.data.number}-targets`).render(doc.data.number, targets)}
           </section>
           <section class="u-container u-spaceV8">
-            ${/* eslint-disable indent */
-            state.cache(Engager, 'goal-cta').render([
-              { id: 'my-tab1', label: 'Noget inhold', content: () => html`<p>Nullam eget mattis nibh. Fusce sit amet feugiat massa, eu tincidunt orci.</p>` },
-              { id: 'my-tab2', label: 'Mere inhold at se', content: () => html`<p>Integer ut eros velit. Nulla pharetra id magna ut congue. Phasellus non varius nisi, nec porta ligula.</p>` },
-              { id: 'my-tab3', label: 'Indhold for alle', content: () => html`<p>Ut sodales sit amet lorem molestie porttitor. Donec vel neque fringilla magna fringilla cursus ac vitae diam.</p>` },
-              { id: 'my-tab4', label: 'Endu en', content: () => html`<p>Aenean vitae felis purus. Aliquam lobortis neque nec ante aliquam, vitae finibus enim posuere.</p>` }
-            ])
-            /* eslint-enable indent */}
+            <!-- TODO: insert engager here -->
           </section>
           ${doc.data.interlink_heading && doc.data.interlink_heading.length ? html`
             <div class="u-container u-spaceV8">

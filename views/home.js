@@ -9,7 +9,6 @@ var card = require('../components/card')
 var grid = require('../components/grid')
 var logo = require('../components/logo')
 var intro = require('../components/intro')
-var Engager = require('../components/engager')
 var GoalGrid = require('../components/goal-grid')
 var { i18n, reduce, srcset } = require('../components/base')
 var center = require('../components/goal-grid/slots/center')
@@ -102,14 +101,7 @@ class Home extends View {
             </div>
           </section>
           <section class="u-spaceV8 u-container">
-            ${/* eslint-disable indent */
-              state.cache(Engager, 'home-cta').render([
-                { id: 'my-tab1', label: 'Noget inhold', content: () => html`<p>Nullam eget mattis nibh. Fusce sit amet feugiat massa, eu tincidunt orci.</p>` },
-                { id: 'my-tab2', label: 'Mere inhold at se', content: () => html`<p>Integer ut eros velit. Nulla pharetra id magna ut congue. Phasellus non varius nisi, nec porta ligula.</p>` },
-                { id: 'my-tab3', label: 'Indhold for alle', content: () => html`<p>Ut sodales sit amet lorem molestie porttitor. Donec vel neque fringilla magna fringilla cursus ac vitae diam.</p>` },
-                { id: 'my-tab4', label: 'Endu en', content: () => html`<p>Aenean vitae felis purus. Aliquam lobortis neque nec ante aliquam, vitae finibus enim posuere.</p>` }
-              ])
-            /* eslint-enable indent */}
+            <!-- TODO: insert engager here -->
           </section>
           ${doc && doc.data.interlink_heading.length ? html`
             <div class="u-container">
