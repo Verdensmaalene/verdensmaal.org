@@ -10,7 +10,8 @@ module.exports = class Target extends Component {
     super(id)
     this.local = state.components[id] = {
       clicked: false,
-      collapsed: true
+      collapsed: true,
+      isInitialized: false
     }
   }
 
@@ -18,7 +19,9 @@ module.exports = class Target extends Component {
     return false
   }
 
-  load (element) {
+  init () {
+    this.local.isInitialized = true
+    var element = this.element
     var resize = nanoraf(() => {
       var styles = window.getComputedStyle(element)
       var collapse = Number(styles.getPropertyValue('--collapse-body'))
@@ -58,7 +61,7 @@ module.exports = class Target extends Component {
           <figure class="Target-figure ${color} ${bg}">
             <div class="js-figure">
               <figcaption class="Target-caption u-textHeading">${text`Target`} ${opts.id}</figcaption>
-              <img class="Target-icon" src="${opts.icon.url}" alt="${text`Target`} ${opts.id}" />
+              <img class="Target-icon" src="${opts.icon.url}" alt="${text`Target`} ${opts.id}" onload=${() => this.init()} />
             </div>
           </figure>
         ` : null}
