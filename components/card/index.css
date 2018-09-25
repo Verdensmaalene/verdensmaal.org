@@ -1,9 +1,6 @@
-/* @define Card */
-
 @import "../base";
-@import "../figure";
-@import "../link";
 
+/* @define Card */
 .Card {
   display: flex;
   flex-direction: column;
@@ -127,7 +124,7 @@
 }
 
 .Card--bg {
-  background: rgb(var(--color-gray));
+  background-color: rgb(var(--Card-background-color, var(--current-background)));
 }
 
 .Card--dark {
@@ -137,3 +134,265 @@
 .Card--bg .Card-content {
   padding: 1rem 1rem 0;
 }
+
+/**
+ * Figure
+ */
+
+.Card-figure {
+  margin: 0;
+  position: relative;
+  max-height: 420px;
+  overflow: hidden;
+  background-color: rgba(var(--color-gray-light), 0.6);
+}
+
+.Card-figure::before {
+  content: "";
+  display: block;
+  height: 0;
+  padding-top: calc(100% * 3/4);
+}
+
+.Card-figure.is-loading {
+  background-color: rgba(var(--color-gray-light), 0.6);
+}
+
+.Card-caption {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.Card-image {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-height: 100%;
+  width: auto;
+  transform: translate(-50%, -50%);
+}
+
+@supports (object-fit: cover) {
+  .Card-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    transform: none;
+  }
+}
+
+/**
+ * Placeholder
+ */
+
+.Card-figure--placeholder {
+  color: rgb(var(--high-contrast-light, 255, 255, 255));
+  background-color: rgb(var(--high-contrast-dark, var(--color-theme)));
+}
+
+.Card-shape {
+  position: absolute;
+  will-change: transform;
+  transition: transform 600ms var(--ease-out);
+}
+
+.Card:hover .Card-shape {
+  transition: transform 400ms var(--ease-out);
+}
+
+.Card-shape::before {
+  content: "";
+  display: block;
+  height: 0;
+  padding-top: 100%;
+}
+
+.Card-shape--big {
+  width: 100%;
+  left: -75%;
+  top: 25%;
+  transform: rotate(-20deg);
+  transform-origin: 100% 0;
+  background-color: rgb(var(--high-contrast-dark, 253, 105, 37));
+}
+
+.Card:hover .Card-shape--big {
+  transform: translateX(-5%) rotate(5deg);
+}
+
+.Card-shape--small {
+  width: 42%;
+  right: -35%;
+  top: 30%;
+  transform: rotate(40deg);
+  transform-origin: 0 0;
+  background-color: #C5192D;
+  background-color: rgb(var(--high-contrast-dark, 197, 25, 45));
+}
+
+.Card:hover .Card-shape--small {
+  transform: translateX(8%) rotate(15deg);
+}
+
+.Card-shape--circle {
+  width: 30%;
+  right: -6%;
+  top: 10%;
+  border-radius: 100%;
+  transform-origin: 50% 50%;
+  background-color: rgb(var(--high-contrast-dark, 255, 58, 33));
+}
+
+.Card:hover .Card-shape--circle {
+  transform: translate(10%, -20%);
+}
+
+/**
+ * Link
+ */
+
+.Card-link {
+  display: inline-block;
+  line-height: 52px;
+  font-size: 1.5rem;
+  color: rgb(var(--color-link));
+  text-transform: uppercase;
+  font-family: var(--heading-font-family);
+  font-weight: bold;
+  white-space: nowrap;
+  word-spacing: var(--heading-word-spacing);
+  user-select: none;
+  transition: 140ms var(--ease-out);
+  transition-property: background-color, color;
+}
+
+.Card-link:not(.Card-link--silent) {
+  margin: 3px 0 -23px -14px;
+  padding: 0 16px 0 14px;
+}
+
+@media (min-width: 500px) {
+  .Card-link:not(.Card-link--silent) {
+    padding: 0 16px 0 14px;
+    margin: 8px 0 0 -14px;
+  }
+}
+
+.Card-link--block::after {
+  content: "";
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+}
+
+.Card-link:not(.Card-link--silent):hover {
+  background: rgba(var(--current-background, 0, 0, 0), 0.04);
+  color: rgb(var(--color-link-shaded));
+}
+
+.Card-link--inherit,
+.Card-link--inherit:hover {
+  color: inherit;
+}
+
+/* .Card-link-arrow {
+  border-style: solid;
+  width: 10px;
+  height: 10px;
+  margin-left: 5px;
+  border-width: 1px 1px 0 0;
+  transform: rotate(45deg);
+  transition: transform 180ms cubic-bezier(0, 0, .2, 1);
+}
+
+.Card-link:hover .Card-link-arrow {
+  transform: rotate(45deg) translate(2px, -2px);
+}
+
+.Card-link-download {
+  display: block;
+  margin-left: 8px;
+  height: 18px;
+  position: relative;
+  top: -1px;
+  right: -2px;
+}
+
+.Card-link-downloadArrow {
+  transform: translateY(1px);
+  transition: transform 180ms cubic-bezier(0, 0, .2, 1);
+}
+
+.Card-link:hover .Card-link-downloadArrow {
+  transform: translateY(2px);
+} */
+
+/**
+ * 1. Fix text rendering jumping in Safari on hover
+ */
+
+/* .Card-link-external {
+  display: block;
+  margin-left: 11px;
+  height: 15px;
+  width: 15px;
+  overflow: visible !important;
+}
+
+.Card-link-externalArrow {
+  will-change: transform;
+  transition: transform 180ms cubic-bezier(0, 0, .2, 1);
+}
+
+.Card-link:hover .Card-link-externalArrow {
+  transform: translate(2px, -2px);
+} */
+
+/**
+ * Tweak the global focus states a little bit
+ */
+
+/*
+
+.Card-link--fill .Card-link {
+  padding: 0;
+  width: 100%;
+  margin: 4px 0 -23px;
+}
+
+@media (min-width: 400px) {
+  .Card-link--fill .Card-link {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 5px;
+    margin: 34px 0 -26px;
+  }
+}
+
+.Card-link--light .Card-link {
+  border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+.Card-link--fill .Card-link,
+.Card-link--fill .Card-link:hover,
+:root.has-js .Card-link--fill:hover .Card-link {
+  color: #fff;
+}
+
+:root.has-js .Card-link--linked:not(.is-loading):hover .Card-link-content::before {
+  opacity: 1;
+}
+
+.Card-link--light .Card-link-content,
+.Card-link--light .Card-link-meta,
+.Card-link--light .Card-link,
+.Card-link--light .Card-link:hover,
+:root.has-js .Card-link--light:hover .Card-link {
+  color: rgba(0, 0, 0, 0.9);
+} */

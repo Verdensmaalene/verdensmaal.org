@@ -10,7 +10,6 @@ var hero = require('../components/hero')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var intro = require('../components/intro')
-var figure = require('../components/figure')
 var { i18n } = require('../components/base')
 
 var text = i18n()
@@ -155,11 +154,12 @@ function goal (state, emit) {
         case 'gallery': {
           let items = slice.items.map(function (item) {
             if (item.image.url) {
-              return figure(Object.assign({
-                src: item.image.url,
-                alt: item.image.alt,
-                caption: item.image.copyright
-              }, item.image.dimensions))
+              return html`
+                <figure>
+                  <img src="${item.image.url}" alt="${item.image.alt || ''}">
+                  ${item.image.copyright ? html`<figcaption>${item.image.copyright}</figcaption>` : null}
+                </figure>
+              `
             }
             if (item.video.html) return video(item.video)
             return null
@@ -261,7 +261,7 @@ function newsCard (doc) {
   return card({
     title: asText(doc.data.title),
     body: asText(doc.data.description),
-    figure: {
+    image: {
       alt: doc.data.image.alt,
       src: doc.data.image.url,
       caption: doc.data.image.copyright
@@ -283,7 +283,7 @@ function eventCard (doc) {
   return card({
     title: asText(doc.data.title),
     body: asText(doc.data.description),
-    figure: doc.data.image.url ? {
+    image: doc.data.image.url ? {
       alt: doc.data.image.alt,
       src: doc.data.image.url,
       caption: doc.data.image.copyright

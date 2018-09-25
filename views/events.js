@@ -148,10 +148,16 @@ function events (state, emit) {
   function asCard (doc) {
     var date = parse(doc.data.start)
     var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
+    var props = {
+      title: asText(doc.data.title),
+      body: asText(doc.data.description),
+      link: {
+        href: state.docs.resolve(doc)
+      }
+    }
 
-    var figure
     if (doc.data.image.url) {
-      figure = {
+      props.image = {
         alt: doc.data.image.alt,
         sizes: '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw',
         srcset: srcset(doc.data.image.url, [400, 600, 900, 1800], opts),
@@ -159,20 +165,13 @@ function events (state, emit) {
         caption: doc.data.image.copyright
       }
     } else {
-      figure = () => event(Object.assign(Object.create(doc.data), {
+      props.placeholder = event(Object.assign(Object.create(doc.data), {
         start: date,
         end: parse(doc.data.end)
       }))
     }
 
-    return card({
-      title: asText(doc.data.title),
-      body: asText(doc.data.description),
-      figure: figure,
-      link: {
-        href: state.docs.resolve(doc)
-      }
-    })
+    return card(props)
   }
 }
 

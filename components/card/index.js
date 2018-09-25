@@ -1,7 +1,8 @@
+var assert = require('assert')
 var html = require('choo/html')
-var figure = require('../figure')
-var { luma, i18n } = require('../base')
-var link = require('../link')
+var { luma, i18n, hexToRgb } = require('../base')
+var figure = require('./figure')
+var link = require('./link')
 
 var text = i18n(require('./lang.json'))
 
@@ -10,6 +11,8 @@ card.loading = loading
 
 function card (props = {}) {
   var bg = props.color || null
+
+  assert(!bg || /^#/.test(bg), 'Card: props.color should be hex string color code')
 
   if (props.link) {
     props.link.block = true
@@ -21,11 +24,11 @@ function card (props = {}) {
   if (props.link && bg) attrs.class += ' Card--interactive'
   if (bg && luma(bg) < 185) attrs.class += ' Card--dark'
   if (bg) attrs.class += ' Card--bg'
-  if (bg) attrs.style = `background-color: ${bg}`
+  if (bg) attrs.style = `--Card-background-color: ${hexToRgb(bg).join(', ')}`
 
   var cover
-  if (typeof props.figure === 'function') cover = props.figure()
-  else if (props.figure) cover = figure(props.figure)
+  if (props.image) cover = figure(props.image)
+  else if (props.placeholder) cover = figure.placeholder(props.placeholder)
   else cover = figure.placeholder()
 
   return html`

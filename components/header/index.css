@@ -32,6 +32,7 @@
 
 /**
  * The thing that is following along on scroll
+ * 1. Prevent capturing clicks on transformed area, override with links
  */
 
 .Header-bar {
@@ -41,6 +42,7 @@
   left: 0;
   z-index: 10;
   user-select: none;
+  pointer-events: none; /* 1 */
 }
 
 :root[scripting-enabled] .Header:not(.Header--static) .Header-bar {
@@ -118,6 +120,7 @@
 
 .Header-nav {
   flex: 1 0 auto;
+  pointer-events: auto;
 }
 
 .Header-list {
@@ -147,15 +150,16 @@
  */
 
 .Header-logo {
+  box-sizing: content-box;
   display: flex;
   padding: 0.5rem;
   margin-right: auto;
   margin-left: -0.5rem;
   position: relative;
-  vertical-align: top;
-  z-index: 1;
   left: -0.06rem; /* 1 */
-  box-sizing: content-box;
+  vertical-align: top;
+  pointer-events: auto;
+  z-index: 1;
 }
 
 @media (min-width: 700px) {
@@ -195,6 +199,7 @@
   padding: 0 1rem;
   position: relative;
   z-index: 1;
+  pointer-events: auto;
   line-height: 2.05em;
   font-weight: bold;
   font-size: 1.5rem;
@@ -257,6 +262,7 @@
   height: 0.875rem;
   margin-right: 0.4em;
   position: relative;
+  pointer-events: auto;
   transition: transform 250ms var(--ease-out);
   will-change: transform;
 }

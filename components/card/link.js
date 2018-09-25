@@ -13,21 +13,21 @@ function link (opts = {}) {
   opts.file = opts.file ? opts.file : filetype(opts.href)
   opts.external = opts.external ? opts.external : !isSameDomain(opts.href)
 
-  var attrs = { class: 'Link', href: opts.href }
+  var attrs = { class: 'Card-link', href: opts.href }
   if (opts.external && !opts.file) {
     attrs.rel = 'noopener noreferrer'
     attrs.target = '_blank'
   }
   if (opts.file) attrs.download = ''
-  attrs.class = className('Link', {
-    'Link--block': opts.block,
-    'Link--silent': opts.silent,
-    'Link--inherit': opts.inherit
+  attrs.class = className('Card-link', {
+    'Card-link--block': opts.block,
+    'Card-link--silent': opts.silent,
+    'Card-link--inherit': opts.inherit
   })
 
   return html`
     <a ${attrs}>
-      <span class="Link-text">${label(opts)}</span>
+      ${label(opts)}
       ${icon(opts)}
     </a>
   `
@@ -46,7 +46,7 @@ function label (opts) {
 
 function icon (opts) {
   if (opts.icon) return opts.icon
-  if (opts.file) return html`<span class="Link-file"></span>`
-  if (opts.external) return html`<span class="Link-external"></span>`
-  return html`<span class="Link-arrow"></span>`
+  if (opts.file) return html`<span class="Card-icon Card-icon--file"></span>`
+  if (opts.external) return html`<span class="Card-icon Card-icon--external"></span>`
+  return html`<span class="Card-icon Card-icon--arrow"></span>`
 }

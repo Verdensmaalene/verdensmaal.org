@@ -87,7 +87,7 @@ function cell (item) {
   return card({
     title: asText(item.title),
     body: asText(item.description),
-    figure: item.image.url ? {
+    image: item.image.url ? {
       alt: item.image.alt,
       src: item.image.url,
       caption: item.image.copyright

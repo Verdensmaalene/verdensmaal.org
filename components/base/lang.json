@@ -36,5 +36,6 @@
   "Denmark": "Denmark",
   "Greenland, Faroe Islands": "Grønland, Færøerne",
   "List": "Listvisning",
-  "Calendar": "Kalender"
+  "Calendar": "Kalender",
+  "MONTH_NaN": "MONTH_NaN"
 }

@@ -203,7 +203,7 @@ class Home extends View {
         var props = {
           title: asText(data.title),
           body: asText(data.description),
-          figure: data.image.url ? {
+          image: data.image.url ? {
             alt: data.image.alt,
             sizes: sizes,
             srcset: srcset(data.image.url, [400, 600, 900, 1800], opts),

@@ -13,8 +13,8 @@ function figure (props = {}) {
   attrs.alt = attrs.alt || ''
 
   return html`
-    <figure class="Figure u-hoverTriggerTarget">
-      <img class="Figure-item" ${attrs} src="${src}" />
+    <figure class="Card-figure u-hoverTriggerTarget">
+      <img class="Card-image" ${attrs} src="${src}" />
       ${props.caption ? caption(props.caption) : null}
     </figure>
   `
@@ -22,16 +22,23 @@ function figure (props = {}) {
 
 function caption (content) {
   html`
-    <figcaption class="Figure-caption">
+    <figcaption class="Card-caption">
       <p>${content}</p>
     </figcaption>
   `
 }
 
 function loading (props = {}) {
-  return html`<div class="Figure is-loading"></div>`
+  return html`<div class="Card-figure is-loading"></div>`
 }
 
-function placeholder (props = {}) {
-  return html`<div class="Figure is-loading"></div>`
+function placeholder (children) {
+  return html`
+    <div class="Card-figure Card-figure--placeholder">
+      <div class="Card-shape Card-shape--circle"></div>
+      <div class="Card-shape Card-shape--big"></div>
+      <div class="Card-shape Card-shape--small"></div>
+      ${typeof children === 'function' ? children() : children}
+    </div>
+  `
 }

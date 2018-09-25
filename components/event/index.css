@@ -2,21 +2,11 @@
 
 /** @define Event */
 .Event {
-  color: rgb(var(--high-contrast-light, 255, 255, 255));
-  background-color: rgb(var(--color-theme));
-  overflow: hidden;
-}
-
-.Event-content {
-  display: flex;
-  position: relative;
-}
-
-.Event-content::before {
-  content: "";
-  display: block;
-  height: 0;
-  padding-top: calc(100% * 3/4);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .Event-icon {
@@ -25,7 +15,6 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  z-index: 1;
   transform: translate(-50%, -50%);
 }
 
@@ -59,39 +48,4 @@
 .Event-location {
   display: block;
   line-height: 0.9;
-}
-
-.Event-shape {
-  position: absolute;
-}
-
-.Event-shape::before {
-  content: "";
-  display: block;
-  height: 0;
-  padding-top: 100%;
-}
-
-.Event-shape--big {
-  width: 100%;
-  left: -55%;
-  top: 45%;
-  transform: rotate(-20deg);
-  background-color: #FD6925;
-}
-
-.Event-shape--small {
-  width: 42%;
-  right: -15%;
-  top: 40%;
-  transform: rotate(40deg);
-  background-color: #C5192D;
-}
-
-.Event-shape--circle {
-  width: 30%;
-  right: -6%;
-  top: 10%;
-  border-radius: 100%;
-  background-color: #FF3A21;
 }

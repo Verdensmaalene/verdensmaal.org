@@ -99,7 +99,7 @@ function news (state, emit) {
     return card({
       title: asText(doc.data.title),
       body: asText(doc.data.description),
-      figure: {
+      image: {
         alt: doc.data.image.alt,
         sizes: sizes,
         srcset: srcset(doc.data.image.url, [400, 600, 900, 1800], opts),
