@@ -10,7 +10,7 @@ var hero = require('../components/hero')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var intro = require('../components/intro')
-var { i18n } = require('../components/base')
+var { i18n, srcset } = require('../components/base')
 
 var text = i18n()
 
@@ -32,7 +32,18 @@ function goal (state, emit) {
     var data = doc.data
     var title = asText(data.title)
     var body = asText(data.description)
-    var image = Object.assign({ src: data.image.url }, data.image.dimensions)
+    var image = {
+      src: `/media/fetch/w_900/${doc.data.image.url}`,
+      height: doc.data.image.dimensions.height,
+      width: doc.data.image.dimensions.width,
+      alt: data.image.alt,
+      sizes: '100w',
+      srcset: srcset(
+        doc.data.image.url,
+        [400, 600, 900, 1800, [3600, 'q_30']],
+        { aspect: 9 / 16 }
+      )
+    }
     var shortcuts = data.slices.filter((slice) => slice.primary.shortcut_name)
     var slices = doc.data.slices.map(fromSlice)
 
@@ -156,7 +167,7 @@ function goal (state, emit) {
             if (item.image.url) {
               return html`
                 <figure>
-                  <img src="${item.image.url}" alt="${item.image.alt || ''}">
+                  <img src="${item.image.url}" alt="${item.image.alt || ''}" style="max-width: 100%;">
                   ${item.image.copyright ? html`<figcaption>${item.image.copyright}</figcaption>` : null}
                 </figure>
               `

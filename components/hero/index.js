@@ -1,5 +1,4 @@
 var html = require('choo/html')
-var intro = require('../intro')
 var { i18n, pluck } = require('../base')
 
 var text = i18n()
@@ -17,8 +16,9 @@ function hero (props) {
       <figure class="Hero-figure">
         <img class="Hero-image" ${imgattrs} src=${src}>
       </figure>
-      <div class="Hero-body">
-        <div class="u-container">${intro(props)}</div>
+      <div class="Hero-content">
+        <h1 class="Hero-title">${props.title}</h1>
+        <p class="Hero-body">${props.body}</p>
       </div>
     </div>
   `
