@@ -40,7 +40,7 @@
   bottom: 0;
   right: 0;
   visibility: hidden;
-  font-weight: bold;
+  font-weight: 600;
   color: rgb(var(--color-goal-4));
   background-color: #fff;
   text-transform: uppercase;

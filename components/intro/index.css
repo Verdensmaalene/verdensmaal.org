@@ -19,7 +19,7 @@
   margin: 0 0 0.2em;
   font-size: 4rem;
   line-height: .95;
-  font-weight: bold;
+  font-weight: 600;
   text-transform: uppercase;
   font-family: var(--heading-font-family);
   word-spacing: var(--heading-word-spacing);

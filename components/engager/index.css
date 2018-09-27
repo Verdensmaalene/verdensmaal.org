@@ -55,7 +55,7 @@
   font-size: 1.625rem;
   line-height: 1;
   color: #fff;
-  font-weight: bold;
+  font-weight: 600;
   font-family: var(--heading-font-family);
   word-spacing: var(--heading-word-spacing);
   background-color: rgb(var(--color-link));

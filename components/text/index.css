@@ -99,7 +99,7 @@
   content: "–";
   position: absolute;
   left: 0;
-  font-weight: bold;
+  font-weight: 600;
   color: var(--color-theme)
 }
 
@@ -163,7 +163,7 @@
 .Text .Text-h3,
 .Text .Text-h4 {
   margin: 0 0 -0.25em;
-  font-weight: bold;
+  font-weight: 600;
   text-transform: uppercase;
   font-family: var(--heading-font-family);
   line-height: var(--heading-line-height);
@@ -196,7 +196,7 @@
 .Text .Text-h5,
 .Text .Text-h6 {
   margin: 1.3em 0;
-  font-weight: bold;
+  font-weight: 600;
   font-size: inherit;
   line-height: inherit;
 }

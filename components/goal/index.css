@@ -211,7 +211,7 @@
   font-family: var(--heading-font-family);
   line-height: var(--heading-line-height);
   word-spacing: var(--heading-word-spacing);
-  font-weight: bold;
+  font-weight: 600;
   text-transform: uppercase;
   white-space: nowrap;
   overflow: visible !important; /* 1 */

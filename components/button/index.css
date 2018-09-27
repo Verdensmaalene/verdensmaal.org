@@ -11,7 +11,7 @@
   color: rgb(var(--default-color));
   background-color: rgba(var(--color-gray), 0.12);
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 600;
   white-space: nowrap;
   user-select: none;
   font-family: var(--heading-font-family);

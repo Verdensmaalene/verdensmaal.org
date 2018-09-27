@@ -16,7 +16,7 @@
 @font-face {
   font-family: "Giorgio Sans Bold";
   font-style: normal;
-  font-weight: bold;
+  font-weight: 600;
   src: url("./fonts/giorgio-sans-bold.woff") format("woff");
 }
 
@@ -75,6 +75,14 @@ img,
 video,
 iframe {
   vertical-align: bottom;
+}
+
+/**
+ * Inline elements
+ */
+
+strong {
+  font-weight: 600;
 }
 
 /*

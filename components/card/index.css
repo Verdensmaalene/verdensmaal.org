@@ -77,7 +77,7 @@
 .Card-title {
   font-size: 1.5rem;
   line-height: 1.15;
-  font-weight: bold;
+  font-weight: 600;
   text-transform: uppercase;
   font-family: var(--heading-font-family);
   line-height: var(--heading-line-height);
@@ -261,7 +261,7 @@
   color: rgb(var(--color-link));
   text-transform: uppercase;
   font-family: var(--heading-font-family);
-  font-weight: bold;
+  font-weight: 600;
   white-space: nowrap;
   word-spacing: var(--heading-word-spacing);
   user-select: none;

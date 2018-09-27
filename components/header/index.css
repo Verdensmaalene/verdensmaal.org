@@ -201,7 +201,7 @@
   z-index: 1;
   pointer-events: auto;
   line-height: 2.05em;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 1.5rem;
   font-family: var(--heading-font-family);
   word-spacing: var(--heading-word-spacing);
@@ -319,12 +319,11 @@
 
 /**
  * High contrast button
- * 1. Sync with Heder-button--link line height
  */
 
 .Header-contrast {
   display: none;
-  height: 4.75rem; /* 1 */
+  height: 3rem;
   padding: 0.5rem;
   margin: -0.5rem;
   margin-left: 0.75rem;

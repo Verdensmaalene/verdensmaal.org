@@ -36,7 +36,7 @@
   position: relative;
   line-height: 1.6;
   color: currentColor;
-  font-weight: bold;
+  font-weight: 600;
   font-family: var(--heading-font-family);
   word-spacing: var(--heading-word-spacing);
   text-transform: uppercase;
