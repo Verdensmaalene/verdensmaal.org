@@ -17,8 +17,7 @@
  */
 
 .Banner-figure {
-  flex: 999 1 25rem; /* 1 */
-  max-height: 700px;
+  flex: 999 1 35rem; /* 1 */
   overflow: hidden;
 }
 
@@ -32,7 +31,7 @@
 
 @media (min-width: 600px) {
   .Banner {
-    height: 63vh;
+    min-height: 63vh;
   }
 }
 

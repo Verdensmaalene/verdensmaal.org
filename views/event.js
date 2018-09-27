@@ -3,6 +3,7 @@ var parse = require('date-fns/parse')
 var { asText } = require('prismic-richtext')
 var Map = require('../components/map')
 var view = require('../components/view')
+var ticket = require('../components/ticket')
 var banner = require('../components/banner')
 var { i18n } = require('../components/base')
 
@@ -33,6 +34,17 @@ function event (state, emit) {
       `
     }
 
+    function slot () {
+      var href = state.docs.resolve(doc)
+      return ticket({
+        title: asText(doc.data.title),
+        href: href,
+        start: parse(doc.data.start),
+        end: parse(doc.data.end),
+        download: `${href.replace(/\/$/, '')}.ics`
+      })
+    }
+
     var date = parse(doc.first_publication_date)
     var hero
     if (doc.data.image.url) {
@@ -42,9 +54,7 @@ function event (state, emit) {
         height: img.dimensions.height,
         src: img.url,
         alt: img.alt
-      }, html`
-        <aside>Meta data goes here</aside>
-      `)
+      }, slot())
     } else {
       let location = doc.data.location
       let country = Object.keys(state.bounds).find(function (key) {
