@@ -9,8 +9,11 @@
 }
 
 .Banner-slot {
+  display: flex;
   flex: 1 1 22rem;
-  background: rgb(var(--color-gray-light));
+  background: rgb(var(--high-contrast-light, var(--color-gray-light)));
+  border: 0.2rem solid;
+  border-color: rgba(var(--high-contrast-dark, 0, 0, 0, 0));
 }
 
 /**

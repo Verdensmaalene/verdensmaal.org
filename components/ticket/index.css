@@ -1,3 +1,48 @@
 .Ticket {
+  display: flex;
+  flex-direction: column;
   padding: 1.5rem 1.25rem 0;
+  justify-content: space-between;
+}
+
+.Ticket-date {
+  padding: 0.4rem 1.25rem;
+  margin-right: 1.25rem;
+  color: #fff;
+  font-size: 3rem;
+  background: rgba(var(--color-theme));
+}
+
+.Ticket-main {
+  display: flex;
+  flex-wrap: wrap-reverse;
+}
+
+.Ticket-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Ticket-time {
+  font-size: 2rem;
+}
+
+.Ticket-location {
+  margin-top: -0.3rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.Ticket-info {
+  margin: 1.5rem 0;
+  font-size: 0.875rem;
+}
+
+.Ticket-action {
+  display: block;
+  padding: 1.1rem 0;
+  border-top: 1px solid rgb(228, 228, 228);
+  font-weight: 600;
+  color: rgb(148, 148, 148);
 }

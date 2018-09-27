@@ -39,5 +39,6 @@
   "Calendar": "Kalender",
   "MONTH_NaN": "MONTH_NaN",
   "Save event to calendar": "Save event to calendar",
-  "RSVP to this event": "RSVP to this event"
+  "RSVP to this event": "RSVP to this event",
+  "Taking place at %s.": "Taking place at %s."
 }

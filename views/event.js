@@ -41,6 +41,9 @@ function event (state, emit) {
         title: asText(doc.data.title),
         href: href,
         start: parse(doc.data.start),
+        venue: doc.data.venue,
+        city: doc.data.city,
+        country: doc.data.country,
         end: parse(doc.data.end),
         download: `${href.replace(/\/$/, '')}.ics`
       })
@@ -91,7 +94,7 @@ function event (state, emit) {
     }
 
     if (doc.data.image.url) {
-      linkedData.image = `/media/fetch/w_900/${doc.data.image.url}`,
+      linkedData.image = `/media/fetch/w_900/${doc.data.image.url}`
     }
 
     return html`

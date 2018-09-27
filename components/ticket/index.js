@@ -8,27 +8,34 @@ module.exports = ticket
 
 function ticket (props) {
   var duration = Math.abs(differenceInDays(props.start, props.end))
+  var info
+  if (props.venue && props.organizer) info = text`Taking place at ${props.venue} and being organized by ${props.organizer}.`
+  if (props.venue) info = text`Taking place at ${props.venue}.`
+  if (props.organizer) info = text`This event is being organized by ${props.organizer}.`
 
   return html`
     <div class="Ticket">
-      <p>
-        <span class="Ticket-date">
-          ${('0' + props.start.getDate()).substr(-2)} ${text(`MONTH_${props.start.getMonth()}`).substr(0, 3)}
-        </span>
-        <span class="Ticket-details">
-          <span class="Ticket-time">${duration > 0 ? text`${duration} day event` : timestamp(props.start)} – ${timestamp(props.end)}</span>
-          <span class="Ticket-location">${[props.venue, props.city, props.country].filter(Boolean).join(', ')}</span>
-        </span>
-      </p>
-      <p>
-        details…
-      </p>
+      <div>
+        <p class="Ticket-main">
+          <span class="Ticket-date u-textHeading">
+            ${('0' + props.start.getDate()).substr(-2)} ${text(`MONTH_${props.start.getMonth()}`).substr(0, 3)}
+          </span>
+          <span class="Ticket-details">
+            <span class="Ticket-time u-textHeading">${duration > 0 ? text`${duration} day event` : timestamp(props.start)} – ${timestamp(props.end)}</span>
+            <br class="u-hidden">
+            <span class="Ticket-location">${[props.city, props.country].filter(Boolean).join(', ')}</span>
+          </span>
+        </p>
+        <p class="Ticket-info">
+          ${info}
+        </p>
+      </div>
       <ul class="Ticket-list">
         <li class="Ticket-item">
-          <a class="Ticket-link" download href="${props.download}">${text`Save event to calendar`}</a>
+          <a class="Ticket-action" download href="${props.download}">${text`Save event to calendar`}</a>
         </li>
         <li class="Ticket-item">
-          <a class="Ticket-link" href="${props.download}">${text`RSVP to this event`}</a>
+          <a class="Ticket-action" href="${props.download}">${text`RSVP to this event`}</a>
         </li>
       </ul>
     </div>
