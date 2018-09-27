@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var raw = require('choo/html/raw')
 var parse = require('date-fns/parse')
 var { asText } = require('prismic-richtext')
 var Map = require('../components/map')
@@ -67,17 +68,44 @@ function event (state, emit) {
       hero = state.cache(Map, `map-${state.params.uid}`).render([location], state.bounds[country])
     }
 
+    var title = asText(doc.data.title)
+    var description = asText(doc.data.description)
+
+    var linkedData = {
+      '@context': 'http://schema.org',
+      '@type': 'Event',
+      name: title,
+      description: description,
+      startDate: parse(doc.data.start),
+      endDate: parse(doc.data.end),
+      location: {
+        '@type': doc.data.venue ? 'Place' : 'PostalAddress',
+        name: doc.data.venue ? doc.data.venue : null,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: doc.data.street_address ? doc.data.street_address : null,
+          addressLocality: doc.data.city ? doc.data.city : null,
+          postalCode: doc.data.zip_code ? doc.data.zip_code : null
+        }
+      }
+    }
+
+    if (doc.data.image.url) {
+      linkedData.image = `/media/fetch/w_900/${doc.data.image.url}`,
+    }
+
     return html`
       <main class="View-main">
         <article>
           <div class="u-container">
             ${hero}
             <div class="Text">
-              <h1>${asText(doc.data.title)}</h1>
-              <p>${asText(doc.data.description)}</p>
+              <h1>${title}</h1>
+              <p>${description}</p>
             </div>
           </div>
         </article>
+        <script type="application/ld+json">${raw(JSON.stringify(linkedData))}</script>
       </main>
     `
   }
