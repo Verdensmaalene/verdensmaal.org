@@ -5,6 +5,7 @@ function ui (state, emitter) {
   state.ui.transitions = []
   state.ui.isLoading = false
   state.ui.hasOverlay = false
+  state.ui.isHighContrast = false
   state.ui.gridLayout = state.ui.gridLayout || Math.ceil(Math.random() * 9)
   state.ui.clock = { ref: 1 }
 
