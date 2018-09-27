@@ -106,9 +106,24 @@ function createView (view, meta) {
           })
         }
 
+        // determine selected menu item by caluclating href match
+        var scores = [] // href match score [<score>, <index>]
+        var segments = state.href.split('/')
+        for (let i = 0, len = menu.length; i < len; i++) {
+          let href = menu[i].href.replace(/\/$/, '')
+          scores.push([href.split('/').reduce(function (score, segment, index) {
+            return segments[index] === segment ? score + 1 : score
+          }, 0), i])
+        }
+
+        // sort scores and pick out top score
+        var topscore = scores.sort(([a], [b]) => a > b ? -1 : 1)[0]
+        var links = menu.slice()
+        links[topscore[1]].selected = true
+
         return html`
           <div class="View-header ${opts.static ? 'View-header--stuck View-header--appear' : ''}">
-            ${state.cache(Header, 'header').render(menu, state.href, opts)}
+            ${state.cache(Header, 'header').render(links, state.href, opts)}
           </div>
         `
       }

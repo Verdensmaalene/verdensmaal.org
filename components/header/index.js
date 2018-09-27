@@ -88,6 +88,7 @@ module.exports = class Header extends Component {
     this.local.href = href.replace(/\/$/, '')
 
     var { id, isOpen } = this.local
+    var selected = links.find((item) => item.selected)
 
     var toggle = (event) => {
       this.toggle()
@@ -163,7 +164,7 @@ module.exports = class Header extends Component {
                       href="${item.href}"
                       target="${item.external ? '_blank' : ''}"
                       rel="${item.external ? 'noopener noreferrer' : ''}"
-                      class="${className('Header-button Header-button--link', { 'is-current': item.href.replace(/\/$/, '') === href })}">
+                      class="${className('Header-button Header-button--link', { 'is-current': selected ? item.selected : item.href.replace(/\/$/, '') === href })}">
                       ${item.title}
                       ${item.external ? html`
                         <span class="Header-tooltip">
