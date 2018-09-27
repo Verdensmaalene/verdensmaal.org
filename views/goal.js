@@ -357,7 +357,7 @@ class GoalPage extends View {
           text: text`Greenland, Faroe Islands`
         }
         return state.cache(Flag, 'secondary-header-flag').render(html`
-          <svg xmlns="http://www.w3.org/2000/svg" version="1" viewBox="0 0 192 128">
+          <svg viewBox="0 0 192 128">
             <path fill="#E81C35" fill-rule="nonzero" d="M0 76h52v52H0V76zM0 0h52v52H0V0zm192 52H76V0h116v52zm0 76H76V76h116v52z"/>
           </svg>
         `, opts)

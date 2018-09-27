@@ -175,7 +175,7 @@ module.exports = class Header extends Component {
                   </li>
                 `)}
                 <li class="Header-item">
-                  <button class="Header-contrast ${opts.isHighContrast ? 'is-active' : ''}" role="button" onclick=${toggleContast}>
+                  <button class="Header-contrast ${opts.isHighContrast ? 'is-active' : ''}" onclick=${toggleContast}>
                     <span class="Header-switch">
                       <span class="Header-tooltip">
                         ${opts.isHighContrast ? text`Turn off high contrast` : text`Turn on high contrast`}
