@@ -1,5 +1,4 @@
 var html = require('choo/html')
-var nanoraf = require('nanoraf')
 var Component = require('choo/component')
 var splitRequire = require('split-require')
 var { vw, vh, className } = require('../base')
@@ -61,31 +60,31 @@ module.exports = class Goal extends Component {
     return false
   }
 
-  load (element) {
-    var local = this.local
-    var isFullscreen = local.format === 'fullscreen'
+  beforerender (element) {
+    if (this.local.format === 'fullscreen') {
+      this.local.height = vh()
+      element.style.height = `${this.local.height}px`
+    }
+  }
 
-    local.inTransition = false
-    if (local.href && local.label && !local.isInitialized && !isFullscreen) {
+  load (element) {
+    var { href, label, isInitialized, format } = this.local
+
+    this.local.inTransition = false
+    if (href && label && !isInitialized && format !== 'fullscreen') {
       this.init(element)
     }
 
-    if (isFullscreen) {
-      var onresize = nanoraf(function () {
-        element.style.height = `${vh()}px`
-      })
-      onresize()
-      window.addEventListener('resize', onresize)
-    }
-
-    this.unload = function () {
-      local.isInitialized = false
-      if (isFullscreen) window.removeEventListener('resize', onresize)
+    this.unload = () => {
+      this.local.isInitialized = false
     }
   }
 
   afterupdate (element) {
-    this.load(element)
+    var { href, label, isInitialized, format } = this.local
+    if (href && label && !isInitialized && format !== 'fullscreen') {
+      this.init(element)
+    }
   }
 
   init (element) {
@@ -183,16 +182,18 @@ module.exports = class Goal extends Component {
       window.addEventListener('touchmove', preventDefault)
       window.addEventListener('wheel', preventDefault)
 
+      var style = `height: ${vh()}px;`
+
       // the label to be transformed into place
       var label = html`
-        <div class="Goal Goal--${self.local.number} Goal--transition is-hidden">
+        <div class="Goal Goal--${self.local.number} Goal--transition is-hidden" style="${style}">
           ${icon.label(self.local.number, self.local.label)}
         </div>
       `
 
       // the background to cover the page
       var takeover = html`
-        <div class="Goal Goal--takeover Goal--fullscreen Goal--${self.local.number} ${self.local.number === 7 ? 'Goal--light' : ''} is-hidden">
+        <div class="Goal Goal--takeover Goal--fullscreen Goal--${self.local.number} ${self.local.number === 7 ? 'Goal--light' : ''} is-hidden" style="${style}">
           <div class="Goal-container" style="visibility: hidden;">
             <div class="Goal-label">
               ${icon.label(self.local.number, self.local.label)}
@@ -264,57 +265,66 @@ module.exports = class Goal extends Component {
     })
     var isFullscreen = props.format === 'fullscreen'
     var hasBackground = !props.blank && props.format !== 'square'
-
-    var content = html`
-      <div class="Goal-container">
-        ${!props.blank && !isFullscreen ? html`
-          <div class="Goal-cell">
-            ${icon(props.number, props.label)}
-          </div>
-        ` : null}
-        ${props.number && props.label && isFullscreen ? html`
-          <div class="Goal-label">
-            ${icon.label(props.number, props.label)}
-          </div>
-        ` : null}
-        ${props.number && props.label && ((isFullscreen && props.description) || children) ? html`
-          <div class="Goal-content ${isFullscreen ? 'u-slideUp' : ''}" style="--offset: ${icon.offset(props.number, props.label)}">
-            ${props.description && isFullscreen ? html`
-              <p><strong>${props.description}</strong></p>
-            ` : null}
-            ${children ? html`
-              <div class="Goal-children">
-                ${typeof children === 'function' ? children() : children}
-              </div>
-            ` : null}
-          </div>
-        ` : null}
-        ${hasBackground ? html`
-          <div class="Goal-background">
-            ${this.background(props.number, { size: isFullscreen ? 'large' : 'small' })}
-          </div>
-        ` : null}
-      </div>
-    `
-
-    var classes = className(`Goal Goal--${props.format}`, {
-      [`Goal--${props.number}`]: !props.blank,
-      'Goal--light': props.number === 7,
-      'Goal--blank': props.blank
+    var background = hasBackground && this.background(props.number, {
+      size: isFullscreen ? 'large' : 'small'
     })
+
+    var attrs = {
+      id: this.local.id,
+      class: className(`Goal Goal--${props.format}`, {
+        [`Goal--${props.number}`]: !props.blank,
+        'Goal--light': props.number === 7,
+        'Goal--blank': props.blank
+      })
+    }
+    if (this.local.height) attrs.style = `height: ${this.local.height}px;`
 
     if (props.href && !isFullscreen) {
       return html`
-        <a class="${classes}" id="${this.local.id}" href="${props.href}" title="${props.label ? props.label.replace(/\n/, ' ') : ''}">
-          ${content}
+        <a href="${props.href}" title="${props.label ? props.label.replace(/\n/, ' ') : ''}" ${attrs}>
+          ${content()}
         </a>
       `
     }
 
     return html`
-      <div class="${classes}" id="${this.local.id}">
-        ${content}
+      <div ${attrs}>
+        ${content()}
       </div>
     `
+
+    function content () {
+      return html`
+        <div class="Goal-container">
+          ${!props.blank && !isFullscreen ? html`
+            <div class="Goal-cell">
+              ${icon(props.number, props.label)}
+            </div>
+          ` : null}
+          ${props.number && props.label && isFullscreen ? html`
+            <div class="Goal-label">
+              ${icon.label(props.number, props.label)}
+            </div>
+          ` : null}
+          ${props.number && props.label && ((isFullscreen && props.description) || children) ? html`
+            <div class="Goal-content ${isFullscreen ? 'u-slideUp' : ''}" style="--offset: ${icon.offset(props.number, props.label)}">
+              ${props.description && isFullscreen ? html`
+                <p><strong>${props.description}</strong></p>
+              ` : null}
+              ${children ? html`
+                <div class="Goal-children">
+                  ${typeof children === 'function' ? children() : children}
+                </div>
+              ` : null}
+            </div>
+          ` : null}
+          ${hasBackground ? html`
+            <div class="Goal-background">
+              ${background}
+            </div>
+          ` : null}
+        </div>
+      `
+    }
   }
 }
