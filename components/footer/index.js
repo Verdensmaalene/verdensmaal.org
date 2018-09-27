@@ -9,34 +9,37 @@ module.exports = footer
 function footer (props, slot) {
   return html`
     <footer class="Footer">
-      <div class="Footer-content u-container">
-        <div class="Footer-section Footer-section--logo">
-          <a href="/" rel="home" class="Footer-logo">
-            ${logo({ vertical: true })}
-          </a>
+      <div class=" u-container">
+        <div class="Footer-content">
+          <div class="Footer-section Footer-section--logo">
+            <a href="/" rel="home" class="Footer-logo">
+              ${logo({ vertical: true })}
+            </a>
+            <br>
 
-          ${slot ? html`
-            <div class="Footer-slot">
-              ${slot()}
-            </div>
+            ${slot ? html`
+              <div class="Footer-slot">
+                ${slot()}
+              </div>
+            ` : null}
+          </div>
+          ${props.shortcuts.map((group, index) => html`
+            <section class="Footer-section Footer-section--${index + 1}">
+              <h2 class="Footer-title">${group.heading}</h2>
+              <nav>
+                <ul class="Footer-list">
+                  ${group.links.map(link)}
+                </ul>
+              </nav>
+            </section>
+          `)}
+          ${props.credits ? html`
+            <section class="Footer-section Footer-section--credits">
+              <h2 class="Footer-title">${props.credits.heading}</h2>
+              ${props.credits.links.map(credit)}
+            </section>
           ` : null}
         </div>
-        ${props.shortcuts.map((group, index) => html`
-          <section class="Footer-section Footer-section--${index + 1}">
-            <h2 class="Footer-title">${group.heading}</h2>
-            <nav>
-              <ul class="Footer-list">
-                ${group.links.map(link)}
-              </ul>
-            </nav>
-          </section>
-        `)}
-        ${props.credits ? html`
-          <section class="Footer-section Footer-section--credits">
-            <h2 class="Footer-title">${props.credits.heading}</h2>
-            ${props.credits.links.map(credit)}
-          </section>
-        ` : null}
       </div>
     </footer>
   `

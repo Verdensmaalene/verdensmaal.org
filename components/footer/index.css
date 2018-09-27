@@ -33,7 +33,7 @@
 }
 
 .Footer-list {
-  margin-top: 1rem;
+  padding-top: 0.5rem;
 }
 
 .Footer-item {
@@ -56,6 +56,20 @@
   padding: 0.5rem;
 }
 
+.Footer-section--3 .Footer-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.Footer-section--3 .Footer-item {
+  flex: 0 0 calc(50% - 1rem);
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+
 .Footer-section--4 {
   padding: 1.7rem 0 1.4rem;
   margin-top: 2rem;
@@ -67,6 +81,7 @@
 .Footer-section--4 .Footer-list {
   max-width: 33rem;
   margin: 0;
+  padding-top: 0;
 }
 
 .Footer-section--4 .Footer-item {
@@ -107,6 +122,7 @@
   padding: 0.5rem;
   position: relative;
   font-size: 0.9rem;
+  color: rgb(var(--color-gray));
 }
 
 .Footer-credit .Footer-link {
@@ -125,18 +141,16 @@
 
 .Footer-sub {
   display: block;
-  color: rgb(var(--color-gray));
 }
 
 .Footer-credit .Footer-figure {
-  display: none;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.3rem;
 }
 
 .Footer-credit .Footer-img {
   display: inline-block;
   vertical-align: middle;
-  width: 85%;
+  width: 100%;
 }
 
 @media (min-width: 500px) {
@@ -149,8 +163,9 @@
     flex-basis: 100%;
   }
 
-  .Footer-credit .Footer-figure {
-    display: block;
+  .Footer-credit .Footer-img {
+    width: 85%;
+    max-width: 8.1rem;
   }
 }
 
@@ -196,11 +211,6 @@
 
   .Footer-section--credits {
     flex-basis: calc((100% / 6) * 2);
-  }
-
-  .Footer-list,
-  .Footer-credit {
-    margin-top: 2rem;
   }
 
   .Footer-item {
