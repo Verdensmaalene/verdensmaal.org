@@ -1,5 +1,5 @@
 var html = require('choo/html')
-var { i18n } = require('../base')
+var { i18n, timestamp } = require('../base')
 
 var text = i18n()
 
@@ -26,14 +26,6 @@ function event (props) {
       </time>
     </div>
   `
-}
-
-// get time HH:mm
-// Date -> str
-function timestamp (date) {
-  var hours = date.getHours()
-  var minutes = date.getHours()
-  return ('0' + hours).substr(-2) + ':' + ('0' + minutes).substr(-2)
 }
 
 function loading () {

@@ -1,15 +1,28 @@
-/* @define Banner */
-
 @import "../base";
 
+/* @define Banner */
 .Banner {
-  width: 100%;
-  height: 50vh;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.Banner-slot {
+  flex: 1 1 22rem;
+  background: rgb(var(--color-gray-light));
+}
+
+/**
+ * 1. Fill extra space but allow Banner-slot to grow in when wrapped
+ */
+
+.Banner-figure {
+  flex: 999 1 25rem; /* 1 */
   max-height: 700px;
   overflow: hidden;
 }
 
-.Banner-figure {
+.Banner-image {
   object-fit: cover;
   width: 100%;
   min-height: 100%;
@@ -24,7 +37,7 @@
 }
 
 @supports (object-fit: cover) {
-  .Banner-figure {
+  .Banner-image {
     height: 100%;
   }
 }

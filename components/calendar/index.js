@@ -2,7 +2,7 @@ var html = require('choo/html')
 var isSameDay = require('date-fns/is_same_day')
 var isSameMonth = require('date-fns/is_same_month')
 var differenceInDays = require('date-fns/difference_in_days')
-var { i18n, className } = require('../base')
+var { i18n, className, timestamp } = require('../base')
 
 var text = i18n(require('./lang.json'))
 
@@ -95,15 +95,6 @@ function calendar (entries, opts = {}) {
       </li>
     `
   }
-}
-
-// get HH:mm timestamp from date
-// Date -> str
-function timestamp (date) {
-  return [
-    ('0' + date.getHours()).substr(-2),
-    ('0' + date.getMinutes()).substr(-2)
-  ].join(':')
 }
 
 // render placeholder loading calendar

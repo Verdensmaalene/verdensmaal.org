@@ -218,3 +218,13 @@ function hexToRgb (hex) {
     parseInt(result[3], 16)
   ] : null
 }
+
+// get HH:mm timestamp from date
+// Date -> str
+exports.timestamp = timestamp
+function timestamp (date) {
+  return [
+    ('0' + date.getHours()).substr(-2),
+    ('0' + date.getMinutes()).substr(-2)
+  ].join(':')
+}

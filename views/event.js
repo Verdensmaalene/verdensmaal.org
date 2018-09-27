@@ -21,10 +21,9 @@ function event (state, emit) {
       return html`
         <main class="View-main">
           <article>
-            ${banner.loading()}
             <div class="u-container">
+              ${banner.loading()}
               <div class="Text">
-                <span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span>
                 <h1><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h1>
                 <p class="u-loading">${text`LOADING_TEXT_LONG`}</p>
               </div>
@@ -38,7 +37,14 @@ function event (state, emit) {
     var hero
     if (doc.data.image.url) {
       let img = doc.data.image
-      hero = banner({ width: img.dimensions.width, height: img.dimensions.height, src: img.url, alt: img.alt })
+      hero = banner({
+        width: img.dimensions.width,
+        height: img.dimensions.height,
+        src: img.url,
+        alt: img.alt
+      }, html`
+        <aside>Meta data goes here</aside>
+      `)
     } else {
       let location = doc.data.location
       let country = Object.keys(state.bounds).find(function (key) {
@@ -54,12 +60,9 @@ function event (state, emit) {
     return html`
       <main class="View-main">
         <article>
-          ${hero}
           <div class="u-container">
+            ${hero}
             <div class="Text">
-              <time class="u-colorGray u-colorCurrent" datetime="${date}">
-                ${date}
-              </time>
               <h1>${asText(doc.data.title)}</h1>
               <p>${asText(doc.data.description)}</p>
             </div>

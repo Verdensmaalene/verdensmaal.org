@@ -3,18 +3,25 @@ var html = require('choo/html')
 module.exports = banner
 module.exports.loading = loading
 
-function banner (props) {
+function banner (image, slot) {
   var attrs = {}
-  if (props.width) attrs.width = props.width
-  if (props.height) attrs.height = props.height
-  if (props.sizes) attrs.sizes = props.sizes
-  if (props.srcset) attrs.srcset = props.srcset
+  if (image.width) attrs.width = image.width
+  if (image.height) attrs.height = image.height
+  if (image.sizes) attrs.sizes = image.sizes
+  if (image.srcset) attrs.srcset = image.srcset
 
   return html`
-    <figure class="Banner">
-      <img class="Banner-figure" ${attrs} alt="${props.alt}" src="${props.src}">
-      ${props.caption ? html`<figcaption class="Banner-caption">${props.caption}</figcaption>` : null}
-    </figure>
+    <div class="Banner">
+      <figure class="Banner-figure">
+        <img class="Banner-image" ${attrs} alt="${image.alt}" src="${image.src}">
+        ${image.caption ? html`<figcaption class="Banner-caption">${image.caption}</figcaption>` : null}
+      </figure>
+      ${slot ? html`
+        <div class="Banner-slot">
+          ${typeof slot === 'function' ? slot() : slot}
+        </div>
+      ` : null}
+    </div>
   `
 }
 
