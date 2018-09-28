@@ -1,7 +1,6 @@
-/* @define Text */
-
 @import "../base";
 
+/* @define Text */
 .Text {
   color: rgb(var(--current-color));
   font-family: var(--default-font-family);
@@ -11,7 +10,7 @@
 }
 
 .Text-muted {
-  --current-color: var(--color-text-muted);
+  color: rgb(var(--color-text-muted));
 }
 
 .Text:first-child {

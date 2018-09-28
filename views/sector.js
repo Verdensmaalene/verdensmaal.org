@@ -7,6 +7,7 @@ var Map = require('../components/map')
 var view = require('../components/view')
 var hero = require('../components/hero')
 var grid = require('../components/grid')
+var icon = require('../components/icon')
 var card = require('../components/card')
 var Text = require('../components/text')
 var intro = require('../components/intro')
@@ -209,29 +210,34 @@ function goal (state, emit) {
         }
         case 'link_list': {
           let items = slice.items.map(function (item) {
-            var attrs = {}
+            var attrs = { class: 'u-posRelative u-block u-spaceB2' }
             var href
-
-            if (item.link.link_type === 'Document') {
-              href = state.docs.resolve(item.link)
-            }
-            if (item.link.link_type === 'Web') {
+            var type = item.link.link_type
+            if (type === 'Document') href = state.docs.resolve(item.link)
+            if (type === 'Web') {
               href = item.link.url
               attrs.rel = 'noopener noreferrer'
               if (item.link.target) attrs.target = item.link.target
             }
-            if (item.link.link_type === 'Media') {
+            if (type === 'Media') {
               href = item.link.url
               attrs.download = ''
             }
 
             if (!href) return null
+
+            var words = item.text.split(' ')
             return html`
               <a href="${href}" ${attrs}>
+                <p class="u-color1 u-colorCurrent u-spaceB1">
+                  ${words.slice(0, words.length - 1)} <span class="u-nowrap">
+                    ${words[words.length - 1]}${icon('external', { cover: true })}
+                  </span>
+                </p>
                 <div class="Text">
-                  ${item.text}
                   ${asElement(item.description, state.docs.resolve)}
                 </div>
+                <small class="Text-muted">${href.replace(/\/$/, '')}</small>
               </a>
             `
           }).filter(Boolean)
@@ -239,7 +245,7 @@ function goal (state, emit) {
           if (!items.length) return null
           return html`
             <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-              ${grid({ size: '1of3' }, items)}
+              ${grid({ size: { md: '1of2', lg: '1of3' } }, items)}
             </div>
           `
         }

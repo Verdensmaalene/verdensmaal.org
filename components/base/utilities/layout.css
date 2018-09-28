@@ -23,6 +23,15 @@
 }
 
 /**
+ * Display
+ */
+
+.u-block { display: block !important; }
+.u-inline-block { display: block !important; }
+.u-inline { display: block !important; }
+.u-flex { display: flex !important; }
+
+/**
  * Positioning
  */
 
