@@ -9,6 +9,7 @@ var view = require('../components/view')
 var hero = require('../components/hero')
 var grid = require('../components/grid')
 var card = require('../components/card')
+var Text = require('../components/text')
 var intro = require('../components/intro')
 var { i18n, srcset } = require('../components/base')
 
@@ -62,7 +63,7 @@ function goal (state, emit) {
           <div class="Text u-spaceV6">
             ${text`Shortcuts`}: ${shortcuts.map((slice, index, list) => html`
               <span>
-                <a href="#${slugify(slice.primary.shortcut_name)}">${slice.primary.shortcut_name}</a>${index < (list.length - 1) ? ', ' : null}
+                <a href="#${slugify(slice.primary.shortcut_name)}" onclick=${shortcut}>${slice.primary.shortcut_name}</a>${index < (list.length - 1) ? ', ' : null}
               </span>
             `)}
           </div>
@@ -71,13 +72,21 @@ function goal (state, emit) {
       </main>
     `
 
+    function shortcut (event) {
+      var el = document.getElementById(event.target.hash.substr(1))
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        event.preventDefault()
+      }
+    }
+
     // render slice as element
     // obj -> Element
     function fromSlice (slice, index) {
       switch (slice.slice_type) {
         case 'text': return html`
-          <div class="Text u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-            ${asElement(slice.primary.text, state.docs.resolve)}
+          <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+            ${state.cache(Text, doc.id + '-text-' + index).render(slice.primary.text)}
           </div>
         `
         case 'news':
