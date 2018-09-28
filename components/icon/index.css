@@ -1,0 +1,35 @@
+@import "../base";
+
+/** @define Icon */
+.Icon {
+  display: inline-block;
+  margin: 0 1ch;
+  vertical-align: text-top;
+  line-height: 1;
+}
+
+.Icon--cover::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/**
+ * Variants
+ */
+
+.Icon--external {
+  top: -0.2rem;
+}
+
+.Icon--external .Icon-arrow {
+  will-change: transform;
+  transition: transform 100ms var(--ease-out);
+}
+
+.Icon--external:hover .Icon-arrow {
+  transform: translate(2px, -2px);
+}
