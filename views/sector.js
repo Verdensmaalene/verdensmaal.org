@@ -11,6 +11,7 @@ var card = require('../components/card')
 var Text = require('../components/text')
 var intro = require('../components/intro')
 var embed = require('../components/embed')
+var blockquote = require('../components/blockquote')
 var { i18n, srcset } = require('../components/base')
 
 var text = i18n()
@@ -151,12 +152,9 @@ function goal (state, emit) {
           </div>
         `
         case 'quote': return html`
-          <figure class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-            <blockquote>
-              ${asElement(slice.primary.quote, state.docs.resolve)}
-            </blockquote>
-            ${slice.primary.author ? html`<figcaption>${slice.primary.author}</figcaption>` : null}
-          </figure>
+          <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+            ${blockquote({ body: asElement(slice.primary.quote, state.docs.resolve), caption: slice.primary.author })}
+          </div>
         `
         case 'video': {
           if (slice.primary.video.type !== 'video') return null

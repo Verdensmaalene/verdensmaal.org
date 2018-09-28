@@ -14,7 +14,7 @@ function serialize (type, node, content, children) {
         src: `/media/${provider}/w_900/${id}`,
         width: node.oembed.thumbnail_width,
         height: node.oembed.thumbnail_height,
-        sizes: '38em',
+        sizes: '39em',
         srcset: [
           `/media/${provider}/w_400,c_fill,q_auto/${id} 400w`,
           `/media/${provider}/w_900,c_fill,q_auto/${id} 900w`,
