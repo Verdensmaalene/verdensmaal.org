@@ -12,6 +12,7 @@
 
 .Grid-cell {
   flex: 0 0 100%;
+  display: flex;
   min-width: 0;
   padding: 0 calc(var(--gutter) * 0.5);
   margin-bottom: var(--gutter);

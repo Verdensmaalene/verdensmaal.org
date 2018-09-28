@@ -243,9 +243,50 @@ function goal (state, emit) {
             </div>
           `
         }
+        case 'link_grid': {
+          if (!slice.items.length) return null
+          var cols = slice.items.length % 3 === 0 ? 3 : 2
+          var cells = slice.items.map((item) => linkCard(item, cols))
+          return html`
+            <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+              ${grid({ size: { md: '1of2', lg: `1of${cols}` }, carousel: true }, cells)}
+            </div>
+          `
+        }
         default: return null
       }
     }
+  }
+
+  // render link as card
+  // (obj, num) -> Element
+  function linkCard (props, cols = 3) {
+    var sizes = '(min-width: 400px) 50vw, 100vw'
+    if (cols === 3) sizes = '(min-width: 1000px) 30vw, ' + sizes
+    var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
+    if (cols === 2) opts.aspect = 9 / 16
+
+    var href
+    var type = props.link.link_type
+    if (type === 'Document') href = state.docs.resolve(props.link)
+    if (type === 'Web' || type === 'Media') href = props.link.url
+    if (!href) return null
+
+    return card({
+      title: asText(props.title),
+      body: asText(props.description),
+      color: props.color,
+      image: {
+        alt: props.image.alt,
+        sizes: sizes,
+        srcset: srcset(props.image.url, [400, 600, 900, 1800], opts),
+        src: `/media/fetch/w_900/${props.image.url}`,
+        caption: props.image.copyright
+      },
+      link: {
+        href: href
+      }
+    })
   }
 }
 

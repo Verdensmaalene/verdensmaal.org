@@ -124,7 +124,7 @@
 }
 
 .Card--bg {
-  background-color: rgb(var(--Card-background-color, var(--current-background)));
+  background-color: rgb(var(--high-contrast-dark, var(--Card-background-color, var(--current-background))));
 }
 
 .Card--dark {
