@@ -119,16 +119,17 @@ function goal (state, emit) {
           // fetch the lates news with mathing tags
           var result = state.docs.get(predicates, opts, function (err, response) {
             if (err) throw err
-            var cells = []
+            var cells = featured
             if (!response) {
               for (let i = 0; i < opts.pageSize; i++) cells.push(card.loading())
             } else {
-              cells = response.results.map(render)
+              cells = featured.concat(response.results.map(render))
             }
 
+            var cols = cells.length % 3 === 0 ? 3 : 2
             return html`
               <div class="u-spaceT8" id="${slugify(slice.primary.shortcut_name || '')}">
-                ${grid({ size: '1of3' }, featured.concat(cells))}
+                ${grid({ size: { md: '1of2', lg: `1of${cols}` }, carousel: true }, cells)}
               </div>
             `
           })
