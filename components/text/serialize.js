@@ -6,7 +6,7 @@ module.exports = serialize
 function serialize (type, node, content, children) {
   switch (type) {
     case Elements.embed: {
-      let id = getEmbedId(node.oembed)
+      let id = embed.id(node.oembed)
       let provider = node.oembed.provider_name.toLowerCase()
       return embed({
         url: node.oembed.embed_url,
@@ -15,21 +15,13 @@ function serialize (type, node, content, children) {
         width: node.oembed.thumbnail_width,
         height: node.oembed.thumbnail_height,
         sizes: '38em',
-        srcset: `
-          /media/${provider}/w_400,c_fill/${id} 400w,
-          /media/${provider}/w_900,c_fill/${id} 900w,
-          /media/${provider}/w_1800,c_fill/${id} 1800w
-        `.replace(/\n/, ' ')
+        srcset: [
+          `/media/${provider}/w_400,c_fill,q_auto/${id} 400w`,
+          `/media/${provider}/w_900,c_fill,q_auto/${id} 900w`,
+          `/media/${provider}/w_1800,c_fill,q_auto/${id} 1800w`
+        ].join(',')
       })
     }
     default: return null
-  }
-}
-
-function getEmbedId (embed) {
-  switch (embed.provider_name) {
-    case 'YouTube': return embed.embed_url.match(/\/(\w+)$/)[1]
-    case 'Vimeo': return embed.embed_url.match(/vimeo\.com\/(.+)?\??/)[1]
-    default: throw new Error(`serialize: embed provider ${embed.provider_name} not supported`)
   }
 }

@@ -1,5 +1,4 @@
 var html = require('choo/html')
-var raw = require('choo/html/raw')
 var parse = require('date-fns/parse')
 var asElement = require('prismic-element')
 var { asText } = require('prismic-richtext')
@@ -11,6 +10,7 @@ var grid = require('../components/grid')
 var card = require('../components/card')
 var Text = require('../components/text')
 var intro = require('../components/intro')
+var embed = require('../components/embed')
 var { i18n, srcset } = require('../components/base')
 
 var text = i18n()
@@ -160,11 +160,7 @@ function goal (state, emit) {
         `
         case 'video': {
           if (slice.primary.video.type !== 'video') return null
-          return html`
-            <div class="Text u-sizeFull u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-              ${video(slice.primary.video)}
-            </div>
-          `
+          return video(slice.primary.video)
         }
         case 'image': return html`
           <div class="Text u-sizeFull u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
@@ -173,6 +169,7 @@ function goal (state, emit) {
         `
         case 'gallery': {
           let items = slice.items.map(function (item) {
+            if (item.video.embed_url) return video(slice.primary.video)
             if (item.image.url) {
               return html`
                 <figure>
@@ -181,7 +178,6 @@ function goal (state, emit) {
                 </figure>
               `
             }
-            if (item.video.html) return video(item.video)
             return null
           }).filter(Boolean)
 
@@ -255,17 +251,25 @@ function goal (state, emit) {
   }
 }
 
-// render video embed
+// map props to embed player
 // obj -> Element
 function video (props) {
-  let embed = props.html
-  if (props.provider_name === 'YouTube') {
-    // remove YouTube cruft and enhance privacy
-    embed = embed
-      .replace(/youtube\.com/, 'youtube-nocookie.com')
-      .replace(/(src=".+?)"/, '$1?rel=0&amp;showinfo=0"')
-  }
-  return raw(embed)
+  var id = embed.id(props)
+  var provider = props.provider_name.toLowerCase()
+  return embed({
+    url: props.embed_url,
+    title: props.title,
+    src: `/media/${provider}/w_900/${id}`,
+    width: props.thumbnail_width,
+    height: props.thumbnail_height,
+    sizes: '100vw',
+    srcset: [
+      `/media/${provider}/w_400,c_fill,q_auto/${id} 400w`,
+      `/media/${provider}/w_900,c_fill,q_auto/${id} 900w`,
+      `/media/${provider}/w_1800,c_fill,q_auto/${id} 1800w`,
+      `/media/${provider}/w_1800,c_fill,q_30/${id} 3600w`
+    ].join(',')
+  })
 }
 
 // transfor string to url friendly format
