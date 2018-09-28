@@ -12,8 +12,9 @@
   display: flex;
   flex: 1 1 22rem;
   background: rgb(var(--high-contrast-light, var(--color-gray-light)));
-  border: 0.2rem solid;
-  border-color: rgba(var(--high-contrast-dark, 0, 0, 0, 0));
+  outline: 0.2rem solid;
+  outline-offset: -0.2rem;
+  outline-color: rgba(var(--high-contrast-dark, 0, 0, 0, 0));
 }
 
 /**
