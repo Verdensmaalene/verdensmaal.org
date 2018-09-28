@@ -2,13 +2,13 @@
   display: flex;
   width: 100%;
   flex-direction: column;
-  padding: 1.5rem 1.25rem 0;
+  padding: 0.6rem 1.25rem 0;
   justify-content: space-between;
 }
 
 .Ticket-date {
   padding: 0.4rem 1.25rem;
-  margin-right: 1.25rem;
+  margin: 0.8rem 1.25rem 0 0;
   color: #fff;
   font-size: 3rem;
   background: rgb(var(--high-contrast-dark, var(--color-theme)));
@@ -20,6 +20,7 @@
 }
 
 .Ticket-details {
+  margin-top: 0.6rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -71,9 +72,5 @@
   .Ticket-info {
     margin: 1.5rem 0 3rem;
     font-size: 1rem;
-  }
-
-  .Ticket-details {
-    margin-top: 0.9rem;
   }
 }
