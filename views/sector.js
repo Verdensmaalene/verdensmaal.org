@@ -87,11 +87,15 @@ function goal (state, emit) {
     // obj -> Element
     function fromSlice (slice, index, slices) {
       switch (slice.slice_type) {
-        case 'text': return html`
-          <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
-            ${state.cache(Text, doc.id + '-text-' + index).render(slice.primary.text)}
-          </div>
-        `
+        case 'text': {
+          var id = doc.id + '-text-' + index
+          var opts = { size: 'large' }
+          return html`
+            <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
+              ${state.cache(Text, id, opts).render(slice.primary.text)}
+            </div>
+          `
+        }
         case 'news':
         case 'events': {
           let render = slice.slice_type === 'events' ? eventCard : newsCard

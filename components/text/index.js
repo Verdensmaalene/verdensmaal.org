@@ -7,13 +7,13 @@ var { i18n } = require('../base')
 var text = i18n(require('./lang.json'))
 
 module.exports = class Text extends Component {
-  constructor (id, state, emit) {
+  constructor (id, state, emit, opts) {
     super(id)
     this.cache = state.cache
     this.resolve = state.docs.resolve
-    this.local = state.components[id] = {
+    this.local = state.components[id] = Object.assign({
       expanded: false
-    }
+    }, opts)
   }
 
   update (block, expanded = false) {
@@ -29,7 +29,7 @@ module.exports = class Text extends Component {
     if (typeof expanded !== 'undefined') this.local.expanded = expanded
 
     return html`
-      <div class="Text u-posRelative">
+      <div class="Text ${this.local.size ? `Text--${this.local.size}` : ''} u-posRelative">
         ${block.length > 1 ? html`
           <div>
             <div class="Text-expandable ${this.local.expanded ? 'is-expanded' : ''}">
