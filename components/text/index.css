@@ -1,6 +1,6 @@
 @import "../base";
 
-/* @define Text */
+/** @define Text */
 .Text {
   color: rgb(var(--current-color));
   font-family: var(--default-font-family);
@@ -19,6 +19,18 @@
 
 .Text:last-child {
   margin-bottom: 0;
+}
+
+/**
+ * Inline elements
+ */
+
+.Text a {
+  color: rgb(var(--color-link));
+}
+
+.Text small {
+  font-size: 0.8rem;
 }
 
 /**
