@@ -7,7 +7,7 @@ var Map = require('../components/map')
 var view = require('../components/view')
 var hero = require('../components/hero')
 var grid = require('../components/grid')
-var icon = require('../components/icon')
+var symbol = require('../components/symbol')
 var card = require('../components/card')
 var Text = require('../components/text')
 var intro = require('../components/intro')
@@ -232,7 +232,7 @@ function goal (state, emit) {
               <a href="${href}" ${attrs}>
                 <p class="u-color1 u-colorCurrent u-spaceB1">
                   ${words.slice(0, words.length - 1)} <span class="u-nowrap">
-                    ${words[words.length - 1]}${icon('external', { cover: true })}
+                    ${words[words.length - 1]}${symbol('external', { cover: true })}
                   </span>
                 </p>
                 <div class="Text">

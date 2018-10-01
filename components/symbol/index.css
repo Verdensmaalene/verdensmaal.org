@@ -1,14 +1,14 @@
 @import "../base";
 
-/** @define Icon */
-.Icon {
+/** @define Symbol */
+.Symbol {
   display: inline-block;
   margin: 0 1ch;
   vertical-align: text-top;
   line-height: 1;
 }
 
-.Icon--cover::before {
+.Symbol--cover::before {
   content: "";
   width: 100%;
   height: 100%;
@@ -21,15 +21,15 @@
  * Variants
  */
 
-.Icon--external {
+.Symbol--external {
   top: -0.2rem;
 }
 
-.Icon--external .Icon-arrow {
+.Symbol--external .Symbol-arrow {
   will-change: transform;
   transition: transform 100ms var(--ease-out);
 }
 
-.Icon--external:hover .Icon-arrow {
+.Symbol--external:hover .Symbol-arrow {
   transform: translate(2px, -2px);
 }
