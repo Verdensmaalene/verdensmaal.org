@@ -11,8 +11,10 @@ var symbol = require('../components/symbol')
 var card = require('../components/card')
 var Text = require('../components/text')
 var embed = require('../components/embed')
+var Details = require('../components/details')
 var blockquote = require('../components/blockquote')
 var { i18n, srcset } = require('../components/base')
+var serialize = require('../components/text/serialize')
 
 var text = i18n()
 
@@ -145,16 +147,23 @@ function goal (state, emit) {
             </div>
           </div>
         `
-        case 'drill_down': return html`
-          <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
-            ${slice.items.map((item) => html`
-              <details>
-                <summary>${asText(item.heading)}</summary>
-                ${asElement(item.text, state.docs.resolve)}
-              </details>
-            `)}
-          </div>
-        `
+        case 'drill_down': {
+          var items = slice.items.map(function (item, order) {
+            var id = `${doc.id}-details-${index}-${order}`
+            var title = asText(item.heading)
+            var children = html`
+              <div class="Text">
+                ${asElement(item.text, state.docs.resolve, serialize)}
+              </div>
+            `
+            return state.cache(Details, id).render(title, children)
+          })
+          return html`
+            <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
+              ${items}
+            </div>
+          `
+        }
         case 'quote': return html`
           <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
             ${blockquote({ body: asElement(slice.primary.quote, state.docs.resolve), caption: slice.primary.author })}
@@ -207,7 +216,7 @@ function goal (state, emit) {
 
           return html`
             <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
-              ${grid({ size: { sm: '1of2' } }, items)}
+              ${grid({ size: { md: '1of2' } }, items)}
             </div>
           `
         }
