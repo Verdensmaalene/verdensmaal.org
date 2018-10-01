@@ -1,7 +1,6 @@
-/* @define Map */
-
 @import "../base";
 
+/** @define Map */
 .Map {
   display: flex;
   width: 100%;
@@ -13,6 +12,12 @@
 
 :root:not([scripting-enabled]) .Map {
   display: none;
+}
+
+@media (pointer: coarse) {
+  .Map {
+    display: none;
+  }
 }
 
 @media (min-width: 600px) {

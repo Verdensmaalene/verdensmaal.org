@@ -106,8 +106,8 @@ class Home extends View {
           ${doc && doc.data.interlink_heading.length ? html`
             <div class="u-container">
               <div class="Text u-spaceV8">
-                <h3 class="u-spaceB0">
-                  <span class="Text-h2 Text-muted">${asText(doc.data.interlink_heading)}</span>
+                <h3 class="Text-h2 Text-muted u-spaceB0">
+                  ${asText(doc.data.interlink_heading)}
                 </h3>
                 <div class="Text-h2 u-spaceT0">${asElement(doc.data.interlink_text, state.docs.resolve)}</div>
               </div>

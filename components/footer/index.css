@@ -122,7 +122,7 @@
   padding: 0.5rem;
   position: relative;
   font-size: 0.9rem;
-  color: rgb(var(--color-gray));
+  color: rgb(var(--color-text-muted));
 }
 
 .Footer-credit .Footer-link {

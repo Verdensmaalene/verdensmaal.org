@@ -12,13 +12,25 @@
 
 .Blockquote-quotes {
   float: left;
+  width: 2rem;
+  height: auto;
   margin-top: 0.5em;
   opacity: 0.25;
 }
 
 .Blockquote-content {
-  padding-left: 2em;
+  padding-left: 1em;
   overflow: hidden;
+}
+
+@media (min-width: 600px) {
+  .Blockquote-quotes {
+    width: 4rem;
+  }
+
+  .Blockquote-content {
+    padding-left: 2em;
+  }
 }
 
 .Blockquote:not(.is-loading) .Blockquote-caption::before {

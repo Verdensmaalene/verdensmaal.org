@@ -154,6 +154,21 @@
   color: rgb(var(--current-color));
 }
 
+.Text h1.Text-muted,
+.Text h2.Text-muted,
+.Text h3.Text-muted,
+.Text h4.Text-muted,
+.Text h5.Text-muted,
+.Text h6.Text-muted,
+.Text .Text-h1.Text-muted,
+.Text .Text-h2.Text-muted,
+.Text .Text-h3.Text-muted,
+.Text .Text-h4.Text-muted,
+.Text .Text-h5.Text-muted,
+.Text .Text-h6 {
+  --current-color: 204, 204, 204;
+}
+
 .Text h1:not(:first-child),
 .Text h2:not(:first-child),
 .Text h3:not(:first-child),
@@ -288,14 +303,10 @@
   position: relative;
 }
 
-:root[scripting-enabled] .Text-expandable {
+:root[scripting-enabled] .Text-expandable:not(.is-expanded) {
   max-height: 13em;
   overflow: hidden;
   padding-bottom: 2em;
-}
-
-.Text-expandable.is-expanded {
-  padding-bottom: 0;
 }
 
 .Text-expander {
