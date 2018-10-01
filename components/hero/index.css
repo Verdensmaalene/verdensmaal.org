@@ -78,13 +78,20 @@
   }
 }
 
+/**
+ * 1. Cast to rgba-comaptible value
+ * 2. Safari requires the variable to be defined before being used
+ */
+
 .Hero-title,
 .Hero-body {
+  --rgba: var(--high-contrast-light), 1; /* 1 */
+  --background-color: rgba(var(--rgba, 0, 0, 0, 0)); /* 2 */
   color: rgb(var(--high-contrast-dark, var(--current-background)));
-  background-color: rgba(var(--high-contrast-light, 0, 0, 0, 0));
+  background-color: var(--background-color);
   box-shadow:
-    0.2em 0 0 rgba(var(--high-contrast-light, 0, 0, 0, 0)),
-    -0.2em 0 0 rgba(var(--high-contrast-light, 0, 0, 0, 0));
+    0.2em 0 0 var(--background-color),
+    -0.2em 0 0 var(--background-color);
 }
 
 .Hero-title {
