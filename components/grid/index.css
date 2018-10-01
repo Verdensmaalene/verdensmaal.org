@@ -1,21 +1,35 @@
-/* @define Grid */
-
 @import "../base";
 
+:root {
+  --Grid-gutter: 1.5rem;
+}
+
+@media (mix-width: 600px) {
+  :root {
+    --Grid-gutter: 2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --Grid-gutter: 2.8rem;
+  }
+}
+
+/* @define Grid */
 .Grid {
-  --gutter: 1.5rem;
   display: flex;
   flex-wrap: wrap;
-  width: calc(100% + var(--gutter, 1.5rem));
-  margin: 0 calc(var(--gutter, 1.5rem) * -0.5);
+  width: calc(100% + var(--gutter, var(--Grid-gutter)));
+  margin: 0 calc(var(--gutter, var(--Grid-gutter)) * -0.5);
 }
 
 .Grid-cell {
   flex: 0 0 100%;
   display: flex;
   min-width: 0;
-  padding: 0 calc(var(--gutter) * 0.5);
-  margin-bottom: var(--gutter);
+  padding: 0 calc(var(--gutter, var(--Grid-gutter)) * 0.5);
+  margin-bottom: var(--gutter, var(--Grid-gutter));
 }
 
 @media (max-width: 599px) {
@@ -42,18 +56,6 @@
   .Grid--carousel .Grid-cell:last-child {
     flex-basis: calc(100% - 1.125rem);
     padding-right: 1.125rem;
-  }
-}
-
-@media (mix-width: 600px) {
-  .Grid {
-    --gutter: 2rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .Grid {
-    --gutter: 2.8rem;
   }
 }
 

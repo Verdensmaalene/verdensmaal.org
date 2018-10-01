@@ -10,7 +10,6 @@ var grid = require('../components/grid')
 var symbol = require('../components/symbol')
 var card = require('../components/card')
 var Text = require('../components/text')
-var intro = require('../components/intro')
 var embed = require('../components/embed')
 var blockquote = require('../components/blockquote')
 var { i18n, srcset } = require('../components/base')
@@ -84,10 +83,10 @@ function goal (state, emit) {
 
     // render slice as element
     // obj -> Element
-    function fromSlice (slice, index) {
+    function fromSlice (slice, index, slices) {
       switch (slice.slice_type) {
         case 'text': return html`
-          <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+          <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
             ${state.cache(Text, doc.id + '-text-' + index).render(slice.primary.text)}
           </div>
         `
@@ -128,7 +127,7 @@ function goal (state, emit) {
 
             var cols = cells.length % 3 === 0 ? 3 : 2
             return html`
-              <div class="u-spaceT8" id="${slugify(slice.primary.shortcut_name || '')}">
+              <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
                 ${grid({ size: { md: '1of2', lg: `1of${cols}` }, carousel: true }, cells)}
               </div>
             `
@@ -139,12 +138,15 @@ function goal (state, emit) {
           return result
         }
         case 'heading': return html`
-          <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-            ${intro({ title: asText(slice.primary.heading), body: asText(slice.primary.text) })}
+          <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="Text">
+              <h2 class="Text-h1 u-spaceB1">${asText(slice.primary.heading)}</h2>
+              ${asElement(slice.primary.text)}
+            </div>
           </div>
         `
         case 'drill_down': return html`
-          <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+          <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
             ${slice.items.map((item) => html`
               <details>
                 <summary>${asText(item.heading)}</summary>
@@ -154,27 +156,49 @@ function goal (state, emit) {
           </div>
         `
         case 'quote': return html`
-          <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+          <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
             ${blockquote({ body: asElement(slice.primary.quote, state.docs.resolve), caption: slice.primary.author })}
           </div>
         `
         case 'video': {
           if (slice.primary.video.type !== 'video') return null
-          return video(slice.primary.video)
+          return html`
+            <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
+              ${video(slice.primary.video)}
+            </div>
+          `
         }
         case 'image': return html`
-          <div class="Text u-sizeFull u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-            <img class="u-sizeFull" width="${slice.primary.image.dimensions.width}" height="${slice.primary.image.dimensions.height}" src="${slice.primary.image.url}" alt="${slice.primary.image.alt || ''}" />
+          <div class="View-section View-section--${camelCase(slice.slice_type)}">
+            <div class="Text u-sizeFull" id="${slugify(slice.primary.shortcut_name || '')}">
+              <img class="u-sizeFull" width="${slice.primary.image.dimensions.width}" height="${slice.primary.image.dimensions.height}" src="${slice.primary.image.url}" alt="${slice.primary.image.alt || ''}" />
+            </div>
           </div>
         `
         case 'gallery': {
           let items = slice.items.map(function (item) {
             if (item.video.embed_url) return video(slice.primary.video)
             if (item.image.url) {
+              var attrs = {
+                class: 'u-cover',
+                alt: item.image.alt || '',
+                sizes: '(min-width: 400px) 50vw, 100vw',
+                srcset: srcset(
+                  item.image.url,
+                  [400, 600, 900, 1800],
+                  { transforms: 'c_thumb', aspect: 3 / 4 }
+                )
+              }
               return html`
-                <figure>
-                  <img src="${item.image.url}" alt="${item.image.alt || ''}" style="max-width: 100%;">
-                  ${item.image.copyright ? html`<figcaption>${item.image.copyright}</figcaption>` : null}
+                <figure class="u-sizeFull">
+                  <div class="u-aspect4-3">
+                    <img ${attrs} src="/media/fetch/w_900/${item.image.url}">
+                  </div>
+                  ${item.image.copyright ? html`
+                    <figcaption class="Text">
+                      <small class="Text-muted">${item.image.copyright}</small>
+                    </figcaption>
+                  ` : null}
                 </figure>
               `
             }
@@ -182,17 +206,19 @@ function goal (state, emit) {
           }).filter(Boolean)
 
           return html`
-            <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-              ${grid({ size: '1of2' }, items)}
+            <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
+              ${grid({ size: { sm: '1of2' } }, items)}
             </div>
           `
         }
         case 'link_text': return html`
-          <div class="Text u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-            <h3 class="u-spaceB0">
-              <span class="Text-h2 Text-muted">${asText(slice.primary.heading)}</span>
-            </h3>
-            <div class="Text-h2 u-spaceT0">${asElement(slice.primary.text, state.docs.resolve)}</div>
+          <div class="View-section View-section--${camelCase(slice.slice_type)}">
+            <div class="Text u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+              <h3 class="u-spaceB0">
+                <span class="Text-h2 Text-muted">${asText(slice.primary.heading)}</span>
+              </h3>
+              <div class="Text-h2 u-spaceT0">${asElement(slice.primary.text, state.docs.resolve)}</div>
+            </div>
           </div>
         `
         case 'map': {
@@ -204,7 +230,7 @@ function goal (state, emit) {
             return location
           })
           return html`
-            <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
               ${state.cache(Map, `${doc.id}-${index}`).render(locations)}
             </div>
           `
@@ -245,7 +271,7 @@ function goal (state, emit) {
 
           if (!items.length) return null
           return html`
-            <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
               ${grid({ size: { md: '1of2', lg: '1of3' } }, items)}
             </div>
           `
@@ -255,7 +281,7 @@ function goal (state, emit) {
           var cols = slice.items.length % 3 === 0 ? 3 : 2
           var cells = slice.items.map((item) => linkCard(item, cols))
           return html`
-            <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
               ${grid({ size: { md: '1of2', lg: `1of${cols}` }, carousel: true }, cells)}
             </div>
           `
@@ -366,6 +392,15 @@ function eventCard (doc) {
       href: `/events/${doc.uid}`
     }
   })
+}
+
+// format snake_case slice type to SUIT-compatible camelCase
+// str -> str
+function camelCase (snake) {
+  return snake.split('_').reduce(function (camel, part, index) {
+    if (index === 0) return part
+    return camel + part[0].toUpperCase() + part.substr(1)
+  }, '')
 }
 
 function meta (state) {
