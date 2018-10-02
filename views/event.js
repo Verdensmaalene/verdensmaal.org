@@ -3,19 +3,19 @@ var raw = require('choo/html/raw')
 var parse = require('date-fns/parse')
 var asElement = require('prismic-element')
 var { asText } = require('prismic-richtext')
-var Map = require('../components/map')
 var view = require('../components/view')
+var event = require('../components/event')
 var symbol = require('../components/symbol')
 var ticket = require('../components/ticket')
 var banner = require('../components/banner')
-var { i18n } = require('../components/base')
+var { i18n, srcset } = require('../components/base')
 var serialize = require('../components/text/serialize')
 
 var text = i18n()
 
-module.exports = view(event, meta)
+module.exports = view(eventView, meta)
 
-function event (state, emit) {
+function eventView (state, emit) {
   return state.docs.getByUID('event', state.params.uid, onresponse)
 
   // handle response
@@ -44,19 +44,22 @@ function event (state, emit) {
       hero = banner({
         width: img.dimensions.width,
         height: img.dimensions.height,
+        sizes: '66vw',
+        srcset: srcset(img.url, [400, 600, 900, 1800, [3000, 'q_60']]),
         src: img.url,
         alt: img.alt
       }, asTicket(doc))
     } else {
-      let location = doc.data.location
-      let country = Object.keys(state.bounds).find(function (key) {
-        var [sw, ne] = state.bounds[key]
-        return (
-          location.latitude > sw[1] && location.latitude < ne[1] &&
-          location.longitude > sw[0] && location.longitude < ne[0]
-        )
-      })
-      hero = state.cache(Map, `map-${state.params.uid}`).render([location], state.bounds[country])
+      hero = html`
+        <div class="u-cols u-spaceB8">
+          <div class="u-col u-lg-size2of3 u-aspect4-3">
+            ${event.outer(event.inner(), { static: true })}
+          </div>
+          <div class="u-col u-lg-size1of3">
+            ${asTicket(doc)}
+          </div>
+        </div>
+      `
     }
 
     var title = asText(doc.data.title)
@@ -157,16 +160,16 @@ function event (state, emit) {
     }]
     if (doc.data.rsvp_link) {
       let rsvp = state.docs.resolve(doc.data.rsvp_link)
-
-      let icon
-      if (rsvp.indexOf('mailto:') === 0) icon = symbol('mail')
-      else icon = symbol('external', { cover: true })
-
-      links.push({
-        icon: icon,
-        href: rsvp,
-        text: `RSVP to this event`
-      })
+      if (rsvp) {
+        let icon
+        if (rsvp.indexOf('mailto:') === 0) icon = symbol('mail')
+        else icon = symbol('external', { cover: true })
+        links.push({
+          icon: icon,
+          href: rsvp,
+          text: `RSVP to this event`
+        })
+      }
     }
 
     return ticket({

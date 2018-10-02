@@ -9,7 +9,7 @@ var text = i18n(require('./lang.json'))
 module.exports = card
 card.loading = loading
 
-function card (props = {}) {
+function card (props = {}, slot) {
   var bg = props.color || null
 
   assert(!bg || /^#/.test(bg), 'Card: props.color should be hex string color code')
@@ -28,12 +28,12 @@ function card (props = {}) {
 
   var cover
   if (props.image) cover = figure(props.image)
-  else if (props.placeholder) cover = figure.placeholder(props.placeholder)
-  else cover = figure.placeholder()
+  else if (slot) cover = slot
+  else cover = figure.loading()
 
   return html`
     <article ${attrs}>
-      ${cover}
+      ${typeof cover === 'function' ? cover() : cover}
       <div class="Card-content ${bg ? 'u-hoverTriggerTarget' : ''}">
         <div class="Card-body">
           ${props.date && props.date.text ? html`

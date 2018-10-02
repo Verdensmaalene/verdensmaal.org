@@ -8,7 +8,7 @@
 .Banner-slot {
   display: flex;
   order: 1;
-  background: rgb(var(--high-contrast-light, var(--color-gray-light)));
+  background: rgb(var(--color-gray-light));
   outline: 0.2rem solid;
   outline-offset: -0.2rem;
   outline-color: rgba(var(--high-contrast-dark, 0, 0, 0, 0));

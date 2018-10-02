@@ -129,6 +129,7 @@
 
   --color-gray: var(--default-color) !important;
   --color-gray-dark: var(--default-color) !important;
+  --color-gray-light: var(--default-background-color) !important;
 
   --color-twitter: var(--default-color) !important;
   --color-facebook: var(--default-color) !important;
