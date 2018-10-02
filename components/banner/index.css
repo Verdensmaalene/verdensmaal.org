@@ -2,15 +2,11 @@
 
 /* @define Banner */
 .Banner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
   margin-bottom: 2.3rem;
 }
 
 .Banner-slot {
   display: flex;
-  flex: 1 1 22rem;
   order: 1;
   background: rgb(var(--high-contrast-light, var(--color-gray-light)));
   outline: 0.2rem solid;
@@ -23,7 +19,6 @@
  */
 
 .Banner-figure {
-  flex: 999 1 35rem; /* 1 */
   overflow: hidden;
   position: relative;
   min-height: 65vh;

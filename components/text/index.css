@@ -9,7 +9,8 @@
   max-width: 39em;
 }
 
-.Text--large {
+.Text--large,
+.Text-large {
   font-size: 1.25rem;
 }
 
@@ -101,16 +102,16 @@
   padding-left: 1.5em;
 }
 
-.Text ul li {
+.Text ul > li {
   padding-left: 1.5em;
   position: relative;
 }
 
-.Text ol li {
+.Text ol > li {
   padding-left: 0.5em;
 }
 
-.Text ul li::before {
+.Text ul > li::before {
   content: "–";
   position: absolute;
   left: 0;
@@ -120,6 +121,22 @@
 
 .Text li + li {
   padding-top: 1em;
+}
+
+.Text dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+@supports (display: grid) {
+  .Text dl > dd {
+    padding-left: 1em;
+    margin: 0;
+  }
+
+  .Text dl > dd:not(:last-child) {
+    margin-bottom: 0.25em;
+  }
 }
 
 /**

@@ -1,3 +1,6 @@
 {
-  "%s day event": "%s dages event"
+  "%s day event": "%s dages event",
+  "Taking place at %s.": "Tager sted på %s.",
+  "This event is being organized by %s.": "Denne event arrangeres af %s.",
+  "Taking place at %s and being organized by %s.": "Tager sted på %s og arrangeres af %s."
 }

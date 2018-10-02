@@ -11,16 +11,16 @@ function banner (image, slot) {
   if (image.srcset) attrs.srcset = image.srcset
 
   return html`
-    <div class="Banner">
-      ${slot ? html`
-        <div class="Banner-slot">
-          ${typeof slot === 'function' ? slot() : slot}
-        </div>
-      ` : null}
-      <figure class="Banner-figure">
+    <div class="Banner u-cols">
+      <figure class="Banner-figure u-col u-lg-size2of3">
         <img class="Banner-image" ${attrs} alt="${image.alt}" src="${image.src}">
         ${image.caption ? html`<figcaption class="Banner-caption">${image.caption}</figcaption>` : null}
       </figure>
+      ${slot ? html`
+        <div class="Banner-slot u-col u-lg-size1of3">
+          ${typeof slot === 'function' ? slot() : slot}
+        </div>
+      ` : null}
     </div>
   `
 }

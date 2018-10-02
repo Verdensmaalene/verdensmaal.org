@@ -4,6 +4,7 @@
 .Symbol {
   display: inline-block;
   margin: 0 1ch;
+  position: relative;
   vertical-align: text-top;
   line-height: 1;
 }
@@ -21,8 +22,8 @@
  * Variants
  */
 
-.Symbol--external {
-  top: -0.2rem;
+.Symbol--calendar {
+  top: -0.05em;
 }
 
 .Symbol--external .Symbol-arrow {

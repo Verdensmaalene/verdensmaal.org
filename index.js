@@ -1,6 +1,7 @@
 var choo = require('choo')
 
 var REPOSITORY = 'https://verdensmaalene.cdn.prismic.io/api/v2'
+
 var app = choo({ hash: false })
 
 app.use(require('./stores/reset'))

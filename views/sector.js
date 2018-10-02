@@ -84,7 +84,7 @@ function goal (state, emit) {
     }
 
     // render slice as element
-    // obj -> Element
+    // (obj, num, arr) -> Element
     function fromSlice (slice, index, slices) {
       switch (slice.slice_type) {
         case 'text': {
@@ -251,20 +251,12 @@ function goal (state, emit) {
         case 'link_list': {
           let items = slice.items.map(function (item) {
             var attrs = { class: 'u-posRelative u-block u-spaceB2' }
-            var href
-            var type = item.link.link_type
-            if (type === 'Document') href = state.docs.resolve(item.link)
-            if (type === 'Web') {
-              href = item.link.url
+            var href = state.docs.resolve(item.link)
+            if (item.link.link_type === 'Web') {
               attrs.rel = 'noopener noreferrer'
               if (item.link.target) attrs.target = item.link.target
             }
-            if (type === 'Media') {
-              href = item.link.url
-              attrs.download = ''
-            }
-
-            if (!href) return null
+            if (item.link.link_type === 'Media') attrs.download = ''
 
             var words = item.text.split(' ')
             return html`
@@ -312,12 +304,6 @@ function goal (state, emit) {
     var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
     if (cols === 2) opts.aspect = 9 / 16
 
-    var href
-    var type = props.link.link_type
-    if (type === 'Document') href = state.docs.resolve(props.link)
-    if (type === 'Web' || type === 'Media') href = props.link.url
-    if (!href) return null
-
     return card({
       title: asText(props.title),
       body: asText(props.description),
@@ -330,7 +316,7 @@ function goal (state, emit) {
         caption: props.image.copyright
       },
       link: {
-        href: href
+        href: state.docs.resolve(props.link)
       }
     })
   }
