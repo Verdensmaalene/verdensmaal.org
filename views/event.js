@@ -52,8 +52,8 @@ function eventView (state, emit) {
     } else {
       hero = html`
         <div class="u-cols u-spaceB8">
-          <div class="u-col u-lg-size2of3 u-aspect4-3">
-            ${event.outer(event.inner(), { static: true })}
+          <div class="u-col u-lg-size2of3">
+            ${event.outer(event.inner(), { static: true, type: 'banner' })}
           </div>
           <div class="u-col u-lg-size1of3">
             ${asTicket(doc)}

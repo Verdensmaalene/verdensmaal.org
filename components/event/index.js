@@ -1,5 +1,5 @@
 var html = require('choo/html')
-var { i18n, timestamp } = require('../base')
+var { i18n, timestamp, className } = require('../base')
 
 var text = i18n()
 
@@ -8,7 +8,11 @@ exports.outer = outer
 exports.loading = loading
 
 function outer (children, opts = {}) {
-  return html`<div class="Event ${opts.static ? 'Event--static' : ''}">${children}</div>`
+  var classes = className('Event', {
+    'Event--static': opts.static,
+    [`Event--${opts.type}`]: opts.type
+  })
+  return html`<div class="${classes}">${children}</div>`
 }
 
 function inner (props) {

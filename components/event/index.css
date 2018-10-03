@@ -5,14 +5,26 @@
   width: 100%;
 }
 
+.Event--banner {
+  height: 65vh;
+  max-height: 75vw;
+}
+
+@media (min-width: 600px) {
+  .Event--banner {
+    max-height: 45vw;
+  }
+}
+
 .Event-content {
+  height: 100%;
   position: relative;
   overflow: hidden;
   color: rgb(var(--current-background));
   background-color: rgb(var(--color-theme));
 }
 
-.Event-content::before {
+.Event:not(.Event--banner) .Event-content::before {
   content: "";
   display: block;
   height: 0;
