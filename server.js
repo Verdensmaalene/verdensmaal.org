@@ -187,6 +187,14 @@ app.use(route.get('/', function (ctx, next) {
   return next()
 }))
 
+// expose origin on state
+app.use(function (ctx, next) {
+  ctx.state.origin = app.env === 'development'
+    ? `http://localhost:${process.env.PORT || 8080}`
+    : 'https://dk.globalgoals.org'
+  return next()
+})
+
 // set cache headers
 app.use(function (ctx, next) {
   if (!ctx.accepts('html')) return next()
