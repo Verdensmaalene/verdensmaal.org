@@ -7,6 +7,9 @@
   --color-theme-shaded: 212, 30, 55;
 }
 
+.u-colorTheme { --current-color: var(--color-theme) !important; }
+.u-bgTheme { --current-background: var(--color-theme) !important; }
+
 .u-highContrast,
 .u-highContrast *,
 .u-highContrast *::before,

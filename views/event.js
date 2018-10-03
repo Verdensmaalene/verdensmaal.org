@@ -9,6 +9,7 @@ var symbol = require('../components/symbol')
 var ticket = require('../components/ticket')
 var banner = require('../components/banner')
 var { i18n, srcset } = require('../components/base')
+var shareButton = require('../components/share-button')
 var serialize = require('../components/text/serialize')
 
 var text = i18n()
@@ -79,11 +80,33 @@ function eventView (state, emit) {
                 </div>
               </div>
               <div class="View-sidebar u-col u-lg-size1of3">
-                <div>
+                <div class="u-sizeFull">
                   ${doc.data.related.map(related)}
-                  <aside class="Text">
-                    <h2 class="Text-h3 u-spaceB2">${text`Spread the word`}</h2>
-                    Links
+                  <aside>
+                    <div class="Text">
+                      <h2 class="Text-h3 u-spaceB2">${text`Spread the word`}</h2>
+                    </div>
+                    <ul>
+                      <li>
+                        ${/* eslint-disable indent */
+                          shareButton({
+                            text: text`Share with others`,
+                            icon: symbol('share', { circle: true }),
+                            color: 'theme'
+                          })
+                        /* eslint-enable indent */}
+                      </li>
+                      <li>
+                        ${/* eslint-disable indent */
+                          shareButton({
+                            text: text`E-mail to a friend`,
+                            icon: symbol('mail', { circle: true }),
+                            color: 'gray',
+                            href: `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text`Check this out: ${state.origin + state.href}`)}`
+                          })
+                        /* eslint-enable indent */}
+                      </li>
+                    </ul>
                   </aside>
                 </div>
               </div>
