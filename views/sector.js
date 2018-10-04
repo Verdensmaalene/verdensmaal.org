@@ -7,11 +7,11 @@ var Map = require('../components/map')
 var view = require('../components/view')
 var hero = require('../components/hero')
 var grid = require('../components/grid')
-var symbol = require('../components/symbol')
 var card = require('../components/card')
 var Text = require('../components/text')
 var embed = require('../components/embed')
 var Details = require('../components/details')
+var { external } = require('../components/symbol')
 var blockquote = require('../components/blockquote')
 var { i18n, srcset } = require('../components/base')
 var serialize = require('../components/text/serialize')
@@ -263,7 +263,7 @@ function goal (state, emit) {
               <a href="${href}" ${attrs}>
                 <p class="u-color1 u-colorCurrent u-spaceB1">
                   ${words.slice(0, words.length - 1)} <span class="u-nowrap">
-                    ${words[words.length - 1]}${symbol('external', { cover: true })}
+                    ${words[words.length - 1]}${external({ cover: true })}
                   </span>
                 </p>
                 <div class="Text">

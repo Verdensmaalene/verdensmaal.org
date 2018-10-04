@@ -30,12 +30,12 @@ class Player extends Component {
   createElement (content, onclose) {
     this.content = content
 
-    if (!content) return html`<div class="Embed Embed--hidden"></div>`
+    if (!content) return html`<div class="Embed Embed--hidden" id="player" hidden></div>`
 
     var isUrl = typeof content === 'string' && /^(?:https?:)\/\//.test(content)
 
     return html`
-      <div class="Embed Embed--fullscreen" tabindex="0">
+      <div class="Embed Embed--fullscreen" id="player" tabindex="0">
         <div class="Embed-wrapper">
           ${isUrl ? html`
             <div class="Embed-iframe">

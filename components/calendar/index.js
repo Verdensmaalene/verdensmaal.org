@@ -2,7 +2,7 @@ var html = require('choo/html')
 var isSameDay = require('date-fns/is_same_day')
 var isSameMonth = require('date-fns/is_same_month')
 var differenceInDays = require('date-fns/difference_in_days')
-var symbol = require('../symbol')
+var { calendar: symbol } = require('../symbol')
 var { i18n, className, timestamp } = require('../base')
 
 var text = i18n(require('./lang.json'))
@@ -76,7 +76,7 @@ function calendar (entries, opts = {}) {
           <div class="Calendar-body">
             ${props.download ? html`
               <a class="Calendar-download" href="${props.download}" download>
-                ${symbol('calendar')}
+                ${symbol()}
                 ${text`Save to calendar`}
               </a>
             ` : null}

@@ -4,9 +4,10 @@ var parse = require('date-fns/parse')
 var asElement = require('prismic-element')
 var { asText } = require('prismic-richtext')
 var view = require('../components/view')
+var share = require('../components/share')
 var event = require('../components/event')
-var symbol = require('../components/symbol')
 var ticket = require('../components/ticket')
+var symbol = require('../components/symbol')
 var banner = require('../components/banner')
 var { i18n, srcset } = require('../components/base')
 var shareButton = require('../components/share-button')
@@ -39,32 +40,27 @@ function eventView (state, emit) {
       `
     }
 
-    var hero
-    if (doc.data.image.url) {
-      let img = doc.data.image
-      hero = banner({
-        width: img.dimensions.width,
-        height: img.dimensions.height,
-        sizes: '66vw',
-        srcset: srcset(img.url, [400, 600, 900, 1800, [3000, 'q_60']]),
-        src: img.url,
-        alt: img.alt
-      }, asTicket(doc))
-    } else {
-      hero = html`
-        <div class="u-cols u-spaceB8">
-          <div class="u-col u-lg-size2of3">
-            ${event.outer(event.inner(), { static: true, type: 'banner' })}
-          </div>
-          <div class="u-col u-lg-size1of3">
-            ${asTicket(doc)}
-          </div>
-        </div>
-      `
-    }
-
     var title = asText(doc.data.title)
     var description = asText(doc.data.description)
+    var image = doc.data.image
+
+    var hero = image.url ? banner({
+      width: image.dimensions.width,
+      height: image.dimensions.height,
+      sizes: '66vw',
+      srcset: srcset(image.url, [400, 600, 900, 1800, [3000, 'q_60']]),
+      src: image.url,
+      alt: image.alt
+    }, asTicket(doc)) : html`
+      <div class="u-cols u-spaceB8">
+        <div class="u-col u-lg-size2of3">
+          ${event.outer(event.inner(), { static: true, type: 'banner' })}
+        </div>
+        <div class="u-col u-lg-size1of3">
+          ${asTicket(doc)}
+        </div>
+      </div>
+    `
 
     return html`
       <main class="View-main">
@@ -91,8 +87,16 @@ function eventView (state, emit) {
                         ${/* eslint-disable indent */
                           shareButton({
                             text: text`Share with others`,
-                            icon: symbol('share', { circle: true }),
-                            color: 'theme'
+                            icon: symbol('share', { circle: true, cover: true }),
+                            color: 'theme',
+                            onclick () {
+                              share.render({
+                                href: state.origin + state.href,
+                                image: image.url || (state.origin + '/share.png'),
+                                title: title,
+                                description: description
+                              })
+                            }
                           })
                         /* eslint-enable indent */}
                       </li>
@@ -100,7 +104,7 @@ function eventView (state, emit) {
                         ${/* eslint-disable indent */
                           shareButton({
                             text: text`E-mail to a friend`,
-                            icon: symbol('mail', { circle: true }),
+                            icon: symbol('mail', { circle: true, cover: true }),
                             color: 'gray',
                             href: `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text`Check this out: ${state.origin + state.href}`)}`
                           })

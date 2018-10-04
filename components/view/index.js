@@ -5,6 +5,7 @@ var { asText } = require('prismic-richtext')
 var { Predicates } = require('prismic-javascript')
 var Flag = require('../flag')
 var error = require('./error')
+var share = require('../share')
 var Header = require('../header')
 var footer = require('../footer')
 var player = require('../embed/player')
@@ -80,6 +81,7 @@ function createView (view, meta) {
           ${children}
           ${doc ? getFooter() : null}
           ${player.render(null)}
+          ${share.render(null)}
         </body>
       `
 
