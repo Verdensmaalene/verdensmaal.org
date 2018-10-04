@@ -2,7 +2,7 @@
 
 /* @define Banner */
 .Banner {
-  margin-bottom: 2.3rem;
+  display: flex;
 }
 
 .Banner-slot {
@@ -19,6 +19,7 @@
  */
 
 .Banner-figure {
+  flex: 1 1 100%;
   overflow: hidden;
   position: relative;
   min-height: 65vh;
@@ -50,16 +51,5 @@
     height: 100%;
     transform: none;
     object-fit: cover;
-  }
-}
-@media (min-width: 700px) {
-  .Benner {
-    margin-bottom: 3.6rem;
-  }
-}
-
-@media (min-width: 700px) {
-  .Banner {
-    margin-bottom: 3.6rem;
   }
 }

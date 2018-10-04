@@ -85,14 +85,14 @@
  */
 
 .u-cols {
-  display: flex;
-  flex-wrap: wrap;
+  display: flex !important;
+  flex-wrap: wrap !important;
 }
 
 .u-col {
   flex: 0 0 100%;
-  display: flex;
-  min-width: 0;
+  display: flex !important;
+  min-width: 0 !important;
 }
 
 /**

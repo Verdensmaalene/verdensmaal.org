@@ -235,7 +235,6 @@
 .Text .Text-h4 {
   font-size: 1.5em;
   line-height: 1.15;
-  margin-bottom: -0.625em;
 }
 
 .Text h5,
@@ -286,7 +285,7 @@
   .Text .Text-h2:not(:first-child),
   .Text .Text-h3:not(:first-child),
   .Text .Text-h4:not(:first-child) {
-    margin-top: 4.5em;
+    margin-top: 1.5em;
   }
 
   .Text h1,

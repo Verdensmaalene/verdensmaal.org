@@ -11,8 +11,8 @@ function banner (image, slot) {
   if (image.srcset) attrs.srcset = image.srcset
 
   return html`
-    <div class="Banner u-cols">
-      <figure class="Banner-figure u-col u-lg-size2of3">
+    <div class="Banner ${slot ? 'u-cols' : ''}">
+      <figure class="Banner-figure ${slot ? 'u-col u-lg-size2of3' : ''}">
         <img class="Banner-image" ${attrs} alt="${image.alt}" src="${image.src}">
         ${image.caption ? html`<figcaption class="Banner-caption">${image.caption}</figcaption>` : null}
       </figure>

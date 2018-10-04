@@ -30,7 +30,7 @@ function eventView (state, emit) {
           <article>
             <div class="u-container">
               ${banner.loading()}
-              <div class="Text">
+              <div class="Text u-spaceT6">
                 <h1><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h1>
                 <p class="Text-large"><span class="u-loading">${text`LOADING_TEXT_LONG`}</span></p>
               </div>
@@ -67,7 +67,7 @@ function eventView (state, emit) {
         <article>
           <div class="u-container">
             ${hero}
-            <div class="u-cols">
+            <div class="u-cols u-spaceT6">
               <div class="u-col u-lg-size2of3 u-spaceB4">
                 <div class="Text">
                   <h1>${title}</h1>
