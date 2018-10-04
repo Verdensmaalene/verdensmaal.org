@@ -44,7 +44,9 @@ function article (state, emit) {
     return html`
       <main class="View-main">
         <article>
-          ${banner(image(doc.data.image))}
+          <div class="js-banner">
+            ${banner(image(doc.data.image))}
+          </div>
           <div class="u-container u-spaceT6">
             <div class="u-cols">
               <div class="u-col u-lg-size2of3 u-spaceB4">
@@ -72,9 +74,10 @@ function article (state, emit) {
                             icon: symbol('share', { circle: true, cover: true }),
                             color: 'theme',
                             onclick () {
+                              var img = document.querySelector('.js-banner img')
                               share.render({
                                 href: state.origin + state.href,
-                                image: doc.data.image.url || (state.origin + '/share.png'),
+                                image: (img && img.currentSrc) || (state.origin + '/share.png'),
                                 title: title,
                                 description: description
                               })

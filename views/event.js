@@ -66,7 +66,9 @@ function eventView (state, emit) {
       <main class="View-main">
         <article>
           <div class="u-container">
-            ${hero}
+            <div class="js-banner">
+              ${hero}
+            </div>
             <div class="u-cols u-spaceT6">
               <div class="u-col u-lg-size2of3 u-spaceB4">
                 <div class="Text">
@@ -90,9 +92,10 @@ function eventView (state, emit) {
                             icon: symbol('share', { circle: true, cover: true }),
                             color: 'theme',
                             onclick () {
+                              var img = document.querySelector('.js-banner img')
                               share.render({
                                 href: state.origin + state.href,
-                                image: image.url || (state.origin + '/share.png'),
+                                image: (img && img.currentSrc) || (state.origin + '/share.png'),
                                 title: title,
                                 description: description
                               })
