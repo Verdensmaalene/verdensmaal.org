@@ -101,7 +101,8 @@
 
 .u-container {
   width: 100% !important;
-  margin: 0 auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   padding-left: 1.125rem !important;
   padding-right: 1.125rem !important;
   padding-left: calc(1.125rem + constant(safe-area-inset-right)) !important;
@@ -114,7 +115,8 @@
   .u-container,
   .u-md-container {
     width: 100% !important;
-    margin: 0 auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
     padding-left: 1.5rem !important;
     padding-right: 1.5rem !important;
     padding-left: calc(1.5rem + constant(safe-area-inset-right)) !important;

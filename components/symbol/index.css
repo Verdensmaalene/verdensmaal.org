@@ -43,11 +43,11 @@
  */
 
 .Symbol--calendar {
-  transform: translateY(-0.12em);
+  margin-top: -0.12em;
 }
 
 .Symbol--external {
-  transform: translateY(-0.05em);
+  margin-top: -0.05em;
 }
 
 .Symbol--external .Symbol-arrow {

@@ -100,10 +100,14 @@ function createView (view, meta) {
             }
           }
         }
+        if (state.route === 'mission') {
+          opts.theme = 'white'
+          opts.static = true
+        }
 
         opts.slot = function () {
           return getFlag({
-            white: isGoal,
+            white: isGoal || state.route === 'mission',
             id: `header${isGoal ? '-white' : ''}}`
           })
         }
@@ -159,7 +163,7 @@ function createView (view, meta) {
 
       function getFlag (opts) {
         opts = Object.assign({
-          href: doc && doc.data.about_page ? doc.data.about_page.uid : false,
+          href: '/mission',
           title: text`Denmark`,
           text: text`Greenland, Faroe Islands`
         }, opts)

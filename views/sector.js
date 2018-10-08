@@ -262,7 +262,7 @@ function goal (state, emit) {
             return html`
               <a href="${href}" ${attrs}>
                 <p class="u-color1 u-colorCurrent u-spaceB1">
-                  ${words.slice(0, words.length - 1)} <span class="u-nowrap">
+                  ${words.slice(0, words.length - 1).join(' ')} <span class="u-nowrap">
                   ${words[words.length - 1]}<span class="u-spaceL1">${external({ cover: true })}</span>
                   </span>
                 </p>
