@@ -15,7 +15,7 @@ module.exports = view(missionView, meta)
 function missionView (state, emit) {
   return state.docs.getSingle('mission', function (err, doc) {
     if (err) throw err
-    if (!doc || true) {
+    if (!doc) {
       return html`
         <main class="View-main">
           ${Mission.loading()}
