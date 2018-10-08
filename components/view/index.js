@@ -76,7 +76,7 @@ function createView (view, meta) {
       var menu = doc && doc.data.main_menu.map(link)
 
       return html`
-        <body class="View" id="app-view">
+        <body class="View" id="view">
           ${doc ? getHeader() : null}
           ${children}
           ${doc ? getFooter() : null}

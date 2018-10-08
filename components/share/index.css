@@ -219,12 +219,6 @@
   background: rgb(var(--color-gray));
 }
 
-.Share-glyph {
-  width: 50%;
-  height: 50%;
-  margin: 25% 0 0;
-}
-
 .Share-link:hover .Share-icon {
   transform: scale(1.12);
 }

@@ -18,7 +18,7 @@ module.exports.calendar = wrap('calendar', function calendar () {
   return html`
     <svg class="Symbol-image" width="19" height="19" viewBox="0 0 19 19" aria-hidden="true">
       <g fill="none" fill-rule="evenodd" transform="translate(-2 -1)">
-        <path fill="currentColor" d="M16 6v1h-1V6H8v1H7V6H4v13h15V6h-3zm0-1h4v15H3V5h4V2h1v3h7V2h1v3zm-5 4h1v2h-1V9zm0 5h1v2h-1v-2zm4-5h1v2h-1V9zm0 5h1v2h-1v-2zM7 9h1v2H7V9zm0 5h1v2H7v-2z"/>
+        <path fill="currentColor" d="M16 5v1h-1V5H8v1H7V5H4v13h15V5h-3zm0-1h4v15H3V4h4V1h1v3h7V1h1v3zm-5 4h1v2h-1V8zm0 5h1v2h-1v-2zm4-5h1v2h-1V8zm0 5h1v2h-1v-2zM7 8h1v2H7V8zm0 5h1v2H7v-2z"/>
       </g>
     </svg>
   `
@@ -64,7 +64,7 @@ module.exports.download = wrap('download', function download () {
 })
 
 function any (type, opts) {
-  return wrap(type, module.exports[type])(opts)
+  return module.exports[type](opts)
 }
 
 function wrap (type, symbol) {

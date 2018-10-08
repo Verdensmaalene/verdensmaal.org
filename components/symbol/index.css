@@ -7,14 +7,6 @@
   line-height: 1;
 }
 
-.Symbol:not(:first-child) {
-  margin-left: 1ch;
-}
-
-.Symbol:not(:last-child) {
-  margin-right: 1ch;
-}
-
 .Symbol-image {
   width: 1.25em;
   height: auto;
@@ -51,6 +43,10 @@
  */
 
 .Symbol--calendar {
+  transform: translateY(-0.12em);
+}
+
+.Symbol--external {
   transform: translateY(-0.05em);
 }
 

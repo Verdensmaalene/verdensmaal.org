@@ -76,7 +76,7 @@ function calendar (entries, opts = {}) {
           <div class="Calendar-body">
             ${props.download ? html`
               <a class="Calendar-download" href="${props.download}" download>
-                ${symbol()}
+                <span class="u-spaceR1">${symbol()}</span>
                 ${text`Save to calendar`}
               </a>
             ` : null}

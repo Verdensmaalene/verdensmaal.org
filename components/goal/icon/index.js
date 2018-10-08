@@ -34,17 +34,17 @@ var LANG_MULTIPLIERS = {
 
 module.exports = icon
 module.exports.label = label
-module.exports.glyph = glyph
+module.exports.symbol = symbol
 module.exports.loading = loading
 module.exports.offset = offset
 
-// render complete icon, label + glyph
+// render complete icon, label + symbol
 // (num, str, str?) -> Element
 function icon (num, title, lang) {
   return html`
     <div class="Goal-icon Goal-icon--${num} js-icon">
       ${draw(num, title, lang)}
-      <div class="Goal-glyph js-glyph">${icons[num - 1]()}</div>
+      <div class="Goal-symbol js-symbol">${icons[num - 1]()}</div>
     </div>
   `
 }
@@ -83,12 +83,12 @@ function label (num, title, lang) {
   `
 }
 
-// render glyph section of icon
+// render symbol section of icon
 // num -> Element
-function glyph (num) {
+function symbol (num) {
   return html`
     <div class="Goal-icon Goal-icon--${num}">
-      <div class="Goal-glyph js-glyph">${icons[num - 1]()}</div>
+      <div class="Goal-symbol js-symbol">${icons[num - 1]()}</div>
     </div>
   `
 }
