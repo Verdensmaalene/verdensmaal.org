@@ -19,16 +19,17 @@ module.exports = class Mission extends Component {
     return html`
       <div class="Mission">
         ${background()}
-        <div class="Mission-content">
-          <h1 class="Mission-title u-textHeading u-container">
+        <div class="Mission-content u-container">
+          <div class="Mission-body">
+            <h1 class="Mission-title u-textHeading">
             <span class="u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span>
           </h1>
-          <p class="Mission-text u-container">
+          <p class="Mission-text">
             <span class="u-loadingOnColor">${text`LOADING_TEXT_LONG`}</span>
           </p>
         </div>
         <div class="Mission-footer">
-          <div class="Mission-partners u-container">
+          <div class="Mission-partners">
             <span class="Mission-partner u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span>
             <span class="Mission-partner u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span>
             <span class="Mission-partner u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span>
