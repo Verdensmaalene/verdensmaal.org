@@ -172,7 +172,7 @@ module.exports = class Goal extends Component {
     function onrelease () {
       if (isAborted || !isPressed || self.local.inTransition) return
       self.local.inTransition = true
-      self.emit('goal:start', self.local.id)
+      self.emit('goal:transitionstart', self.local.id)
 
       start = null
       isAborted = false
@@ -243,7 +243,7 @@ module.exports = class Goal extends Component {
           if (event.target === label) {
             window.removeEventListener('touchmove', preventDefault)
             window.removeEventListener('wheel', preventDefault)
-            self.emit('goal:end', self.local.id)
+            self.emit('goal:transitionend', self.local.id)
           }
         })
 

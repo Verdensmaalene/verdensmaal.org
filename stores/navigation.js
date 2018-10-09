@@ -21,6 +21,18 @@ function navigation (state, emitter) {
     })
   })
 
+  emitter.on('DOMContentLoaded', function () {
+    window.addEventListener('click', function (event) {
+      var link = event.target
+      while (link && link.localName !== 'a') {
+        link = link.parentNode
+      }
+      if (!maintainScroll && link && link.href === window.location.href) {
+        document.body.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, true)
+  })
+
   var fetching = {}
   emitter.on('goal:press', function (id) {
     var number = state.components[id].number
@@ -29,7 +41,12 @@ function navigation (state, emitter) {
     fetching[id] = state.docs.get(predicate, { prefetch: true })
   })
 
-  emitter.on('goal:end', function (id) {
+  emitter.on('goal:transitionstart', function (id) {
+    maintainScroll = true
+    window.history.pushState({}, null, state.components[id].href)
+  })
+
+  emitter.on('goal:transitionend', function (id) {
     if (!(fetching[id] instanceof Promise)) return navigate()
 
     // defer navigation until prefetch is done preventing scroll in the meantime
@@ -42,23 +59,19 @@ function navigation (state, emitter) {
     })
 
     function navigate () {
-      emitter.emit('pushState', state.components[id].href)
+      maintainScroll = false
+      window.scrollTo(0, 0)
+      // workaround Safari requestAnimationFrame inconsistency
+      // see: https://www.youtube.com/watch?v=cCOL7MC4Pl0&feature=youtu.be&t=1387
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
+          emitter.emit('navigate')
+        })
+      })
     }
 
     function preventScroll (event) {
       event.preventDefault()
     }
-  })
-
-  emitter.on('DOMContentLoaded', function () {
-    window.addEventListener('click', function (event) {
-      var link = event.target
-      while (link && link.localName !== 'a') {
-        link = link.parentNode
-      }
-      if (link && link.href === window.location.href) {
-        document.body.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }
-    }, true)
   })
 }

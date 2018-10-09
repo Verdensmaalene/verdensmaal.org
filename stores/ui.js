@@ -31,11 +31,11 @@ function ui (state, emitter) {
     emitter.emit('render')
   })
 
-  emitter.prependListener('goal:start', function (id) {
+  emitter.prependListener('goal:transitionstart', function (id) {
     emitter.emit('transition:start', 'goal-page')
   })
 
-  emitter.prependListener('goal:end', function (id) {
+  emitter.prependListener('goal:transitionend', function (id) {
     emitter.emit('transition:end', 'goal-page')
   })
 
