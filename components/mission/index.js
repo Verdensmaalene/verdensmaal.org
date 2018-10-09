@@ -9,16 +9,17 @@ var BIRD_WING_FLAP = 'M13.774.01C9.294.01 2.172 2.586 1.408 3.26c-.764.675-.826 
 module.exports = class Mission extends Component {
   constructor (id, state, emit) {
     super(id)
+    this.state = state
     this.local = state.components[id] = {
       id: id,
-      isLoaded: false
+      isLoaded: false,
+      isHighContrast: state.ui.isHighContrast
     }
   }
 
   static loading () {
     return html`
       <div class="Mission">
-        ${background()}
         <div class="Mission-content u-container">
           <div class="Mission-body">
             <h1 class="Mission-title u-textHeading">
@@ -40,6 +41,10 @@ module.exports = class Mission extends Component {
   }
 
   update () {
+    if (this.local.isHighContrast !== this.state.ui.isHighContrast) {
+      this.local.isHighContrast = this.state.ui.isHighContrast
+      return true
+    }
     return false
   }
 
@@ -56,13 +61,13 @@ module.exports = class Mission extends Component {
   createElement (props) {
     return html`
       <div class="Mission ${this.local.isLoaded ? 'is-loaded' : ''}" id="${this.local.id}">
-        ${background()}
+        ${!this.local.isHighContrast ? background() : null}
         <div class="Mission-content u-container">
           <div class="Mission-body">
             <h1 class="Mission-title u-textHeading">${props.title}</h1>
             <p class="Mission-text">${props.description}</p>
           </div>
-          ${props.partners ? html`
+          ${!this.local.isHighContrast && props.partners ? html`
             <div class="Mission-footer">
               <div class="Mission-partners">
                 ${props.partners.map((partner) => html`

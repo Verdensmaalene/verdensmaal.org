@@ -15,29 +15,34 @@
 }
 
 /**
- * 1. Prevent text from overlapping the background
+ * 1. Prevent title overlapping the menu
+ * 2. Prevent text from overlapping the background
  */
+
+.Mission::before {
+  content: "";
+  display: block;
+  height: 25vh;
+  max-height: calc(var(--Header-height) + 10vh); /* 1 */
+}
 
 .Mission::after {
   content: "";
-  height: 10vh;
   display: block;
-  max-height: 20vh; /* 1 */
+  height: 20vh; /* 2 */
 }
 
-/**
- * 1. Prevent title overlapping the menu
- */
-
-@media (min-width: 600px) {
+@media (min-height: 600px) and (min-width: 600px) {
   .Mission::before {
-    content: "";
     height: 10vh;
-    display: block;
-    max-height: var(--Header-height);
   }
 
+  .Mission::after {
+    height: 15vh;
+  }
+}
 
+@media (min-width: 1000px) {
   .Mission::after {
     content: none;
   }
@@ -58,7 +63,13 @@
   align-items: flex-start;
   justify-content: center;
   height: 100%;
-  max-width: 45rem;
+  max-width: 32rem;
+}
+
+@media (min-height: 600px) {
+  .Mission-body {
+    max-width: 45rem;
+  }
 }
 
 .Mission-title {
