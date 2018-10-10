@@ -82,7 +82,7 @@ function calendar (entries, opts = {}) {
             ` : null}
             <a class="Calendar-link" href="${props.href}">
               <time class="Calendar-datetime" datetime="${JSON.stringify(props.start).replace(/"/g, '')}">
-                ${duration > 0 ? text`${duration} day event` : timestamp(props.start)} – ${timestamp(props.end)} ${text`in ${props.city}, ${props.country}`}
+                ${duration > 0 ? text`${duration + 1} days` : timestamp(props.start)} – ${timestamp(props.end)} ${text`in ${props.city}, ${props.country}`}
               </time>
               <h3 class="Calendar-title">${props.title}</h3>
             </a>

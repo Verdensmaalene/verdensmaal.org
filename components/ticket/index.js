@@ -21,7 +21,7 @@ function ticket (props) {
             ${('0' + props.start.getDate()).substr(-2)} ${text(`MONTH_${props.start.getMonth()}`).substr(0, 3)}
           </span>
           <span class="Ticket-details">
-            <span class="Ticket-time u-textHeading">${duration > 0 ? text`${duration} day event` : timestamp(props.start)} – ${timestamp(props.end)}</span>
+            <span class="Ticket-time u-textHeading">${duration > 0 ? text`${duration + 1} days` : timestamp(props.start)} – ${timestamp(props.end)}</span>
             <br class="u-hidden">
             <span class="Ticket-location">${[props.city, props.country].filter(Boolean).join(', ')}</span>
           </span>
