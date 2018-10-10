@@ -1,6 +1,7 @@
 var choo = require('choo')
 
 var REPOSITORY = 'https://verdensmaalene.cdn.prismic.io/api/v2'
+
 var app = choo({ hash: false })
 
 app.use(require('./stores/reset'))
@@ -23,10 +24,11 @@ app.use(require('./stores/ui'))
 
 app.route('/', require('./views/home'))
 app.route('/nyheder', require('./views/news'))
-app.route('/nyheder/:uid', require('./views/article'))
 app.route('/events', require('./views/events'))
 app.route('/events/:uid', require('./views/event'))
+app.route('/nyheder/:uid', require('./views/article'))
 app.route('/materialer', require('./views/resources'))
+app.route('/mission', require('./views/mission'))
 app.route('/*', require('./views/catchall'))
 
 try {

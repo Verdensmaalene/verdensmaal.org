@@ -1,5 +1,4 @@
 var html = require('choo/html')
-var raw = require('choo/html/raw')
 var parse = require('date-fns/parse')
 var asElement = require('prismic-element')
 var { asText } = require('prismic-richtext')
@@ -9,8 +8,13 @@ var view = require('../components/view')
 var hero = require('../components/hero')
 var grid = require('../components/grid')
 var card = require('../components/card')
-var intro = require('../components/intro')
-var { i18n } = require('../components/base')
+var Text = require('../components/text')
+var embed = require('../components/embed')
+var Details = require('../components/details')
+var { external } = require('../components/symbol')
+var blockquote = require('../components/blockquote')
+var { i18n, srcset } = require('../components/base')
+var serialize = require('../components/text/serialize')
 
 var text = i18n()
 
@@ -32,7 +36,18 @@ function goal (state, emit) {
     var data = doc.data
     var title = asText(data.title)
     var body = asText(data.description)
-    var image = Object.assign({ src: data.image.url }, data.image.dimensions)
+    var image = {
+      src: `/media/fetch/w_900/${doc.data.image.url}`,
+      height: doc.data.image.dimensions.height,
+      width: doc.data.image.dimensions.width,
+      alt: data.image.alt,
+      sizes: '100w',
+      srcset: srcset(
+        doc.data.image.url,
+        [400, 600, 900, 1800, [3600, 'q_30']],
+        { aspect: 9 / 16 }
+      )
+    }
     var shortcuts = data.slices.filter((slice) => slice.primary.shortcut_name)
     var slices = doc.data.slices.map(fromSlice)
 
@@ -51,7 +66,7 @@ function goal (state, emit) {
           <div class="Text u-spaceV6">
             ${text`Shortcuts`}: ${shortcuts.map((slice, index, list) => html`
               <span>
-                <a href="#${slugify(slice.primary.shortcut_name)}">${slice.primary.shortcut_name}</a>${index < (list.length - 1) ? ', ' : null}
+                <a href="#${slugify(slice.primary.shortcut_name)}" onclick=${shortcut}>${slice.primary.shortcut_name}</a>${index < (list.length - 1) ? ', ' : null}
               </span>
             `)}
           </div>
@@ -60,15 +75,27 @@ function goal (state, emit) {
       </main>
     `
 
+    function shortcut (event) {
+      var el = document.getElementById(event.target.hash.substr(1))
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        event.preventDefault()
+      }
+    }
+
     // render slice as element
-    // obj -> Element
-    function fromSlice (slice, index) {
+    // (obj, num, arr) -> Element
+    function fromSlice (slice, index, slices) {
       switch (slice.slice_type) {
-        case 'text': return html`
-          <div class="Text u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-            ${asElement(slice.primary.text, state.docs.resolve)}
-          </div>
-        `
+        case 'text': {
+          var id = doc.id + '-text-' + index
+          var opts = { size: 'large' }
+          return html`
+            <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
+              ${state.cache(Text, id, opts).render(slice.primary.text)}
+            </div>
+          `
+        }
         case 'news':
         case 'events': {
           let render = slice.slice_type === 'events' ? eventCard : newsCard
@@ -97,16 +124,17 @@ function goal (state, emit) {
           // fetch the lates news with mathing tags
           var result = state.docs.get(predicates, opts, function (err, response) {
             if (err) throw err
-            var cells = []
+            var cells = featured
             if (!response) {
               for (let i = 0; i < opts.pageSize; i++) cells.push(card.loading())
             } else {
-              cells = response.results.map(render)
+              cells = featured.concat(response.results.map(render))
             }
 
+            var cols = cells.length % 3 === 0 ? 3 : 2
             return html`
-              <div class="u-spaceT8" id="${slugify(slice.primary.shortcut_name || '')}">
-                ${grid({ size: '1of3' }, featured.concat(cells))}
+              <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
+                ${grid({ size: { md: '1of2', lg: `1of${cols}` }, carousel: true }, cells)}
               </div>
             `
           })
@@ -116,67 +144,94 @@ function goal (state, emit) {
           return result
         }
         case 'heading': return html`
-          <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-            ${intro({ title: asText(slice.primary.heading), body: asText(slice.primary.text) })}
+          <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="Text">
+              <h2 class="Text-h1 u-spaceB1">${asText(slice.primary.heading)}</h2>
+              ${asElement(slice.primary.text)}
+            </div>
           </div>
         `
-        case 'drill_down': return html`
-          <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-            ${slice.items.map((item) => html`
-              <details>
-                <summary>${asText(item.heading)}</summary>
-                ${asElement(item.text, state.docs.resolve)}
-              </details>
-            `)}
-          </div>
-        `
+        case 'drill_down': {
+          var items = slice.items.map(function (item, order) {
+            var id = `${doc.id}-details-${index}-${order}`
+            var title = asText(item.heading)
+            var children = html`
+              <div class="Text">
+                ${asElement(item.text, state.docs.resolve, serialize)}
+              </div>
+            `
+            return state.cache(Details, id).render(title, children)
+          })
+          return html`
+            <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
+              ${items}
+            </div>
+          `
+        }
         case 'quote': return html`
-          <figure class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-            <blockquote>
-              ${asElement(slice.primary.quote, state.docs.resolve)}
-            </blockquote>
-            ${slice.primary.author ? html`<figcaption>${slice.primary.author}</figcaption>` : null}
-          </figure>
+          <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
+            ${blockquote({ body: asElement(slice.primary.quote, state.docs.resolve), caption: slice.primary.author })}
+          </div>
         `
         case 'video': {
           if (slice.primary.video.type !== 'video') return null
           return html`
-            <div class="Text u-sizeFull u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
               ${video(slice.primary.video)}
             </div>
           `
         }
         case 'image': return html`
-          <div class="Text u-sizeFull u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-            <img class="u-sizeFull" width="${slice.primary.image.dimensions.width}" height="${slice.primary.image.dimensions.height}" src="${slice.primary.image.url}" alt="${slice.primary.image.alt || ''}" />
+          <div class="View-section View-section--${camelCase(slice.slice_type)}">
+            <div class="Text u-sizeFull" id="${slugify(slice.primary.shortcut_name || '')}">
+              <img class="u-sizeFull" width="${slice.primary.image.dimensions.width}" height="${slice.primary.image.dimensions.height}" src="${slice.primary.image.url}" alt="${slice.primary.image.alt || ''}" />
+            </div>
           </div>
         `
         case 'gallery': {
           let items = slice.items.map(function (item) {
+            if (item.video.embed_url) return video(slice.primary.video)
             if (item.image.url) {
+              var attrs = {
+                class: 'u-cover',
+                alt: item.image.alt || '',
+                sizes: '(min-width: 400px) 50vw, 100vw',
+                srcset: srcset(
+                  item.image.url,
+                  [400, 600, 900, 1800],
+                  { transforms: 'c_thumb', aspect: 3 / 4 }
+                )
+              }
               return html`
-                <figure>
-                  <img src="${item.image.url}" alt="${item.image.alt || ''}">
-                  ${item.image.copyright ? html`<figcaption>${item.image.copyright}</figcaption>` : null}
+                <figure class="u-sizeFull">
+                  <div class="u-aspect4-3">
+                    <img ${attrs} src="/media/fetch/w_900/${item.image.url}">
+                  </div>
+                  ${item.image.copyright ? html`
+                    <figcaption class="Text">
+                      <small class="Text-muted">${item.image.copyright}</small>
+                    </figcaption>
+                  ` : null}
                 </figure>
               `
             }
-            if (item.video.html) return video(item.video)
             return null
           }).filter(Boolean)
 
           return html`
-            <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-              ${grid({ size: '1of2' }, items)}
+            <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
+              ${grid({ size: { md: '1of2' } }, items)}
             </div>
           `
         }
         case 'link_text': return html`
-          <div class="Text u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-            <h3 class="u-spaceB0">
-              <span class="Text-h2 Text-muted">${asText(slice.primary.heading)}</span>
-            </h3>
-            <div class="Text-h2 u-spaceT0">${asElement(slice.primary.text, state.docs.resolve)}</div>
+          <div class="View-section View-section--${camelCase(slice.slice_type)}">
+            <div class="Text u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+              <h3 class="Text-h2 Text-muted u-spaceB0">
+                ${asText(slice.primary.heading)}
+              </h3>
+              <div class="Text-h2 u-spaceT0">${asElement(slice.primary.text, state.docs.resolve)}</div>
+            </div>
           </div>
         `
         case 'map': {
@@ -188,44 +243,51 @@ function goal (state, emit) {
             return location
           })
           return html`
-            <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
               ${state.cache(Map, `${doc.id}-${index}`).render(locations)}
             </div>
           `
         }
         case 'link_list': {
           let items = slice.items.map(function (item) {
-            var attrs = {}
-            var href
-
-            if (item.link.link_type === 'Document') {
-              href = state.docs.resolve(item.link)
-            }
+            var attrs = { class: 'u-posRelative u-block u-spaceB2' }
+            var href = state.docs.resolve(item.link)
             if (item.link.link_type === 'Web') {
-              href = item.link.url
               attrs.rel = 'noopener noreferrer'
               if (item.link.target) attrs.target = item.link.target
             }
-            if (item.link.link_type === 'Media') {
-              href = item.link.url
-              attrs.download = ''
-            }
+            if (item.link.link_type === 'Media') attrs.download = ''
 
-            if (!href) return null
+            var words = item.text.split(' ')
             return html`
               <a href="${href}" ${attrs}>
+                <p class="u-color1 u-colorCurrent u-spaceB1">
+                  ${words.slice(0, words.length - 1).join(' ')} <span class="u-nowrap">
+                  ${words[words.length - 1]}<span class="u-spaceL1">${external({ cover: true })}</span>
+                  </span>
+                </p>
                 <div class="Text">
-                  ${item.text}
                   ${asElement(item.description, state.docs.resolve)}
                 </div>
+                <small class="Text-muted">${href.replace(/\/$/, '')}</small>
               </a>
             `
           }).filter(Boolean)
 
           if (!items.length) return null
           return html`
-            <div class="u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-              ${grid({ size: '1of3' }, items)}
+            <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
+              ${grid({ size: { md: '1of2', lg: '1of3' } }, items)}
+            </div>
+          `
+        }
+        case 'link_grid': {
+          if (!slice.items.length) return null
+          var cols = slice.items.length % 3 === 0 ? 3 : 2
+          var cells = slice.items.map((item) => linkCard(item, cols))
+          return html`
+            <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
+              ${grid({ size: { md: '1of2', lg: `1of${cols}` }, carousel: true }, cells)}
             </div>
           `
         }
@@ -233,19 +295,52 @@ function goal (state, emit) {
       }
     }
   }
+
+  // render link as card
+  // (obj, num) -> Element
+  function linkCard (props, cols = 3) {
+    var sizes = '(min-width: 400px) 50vw, 100vw'
+    if (cols === 3) sizes = '(min-width: 1000px) 30vw, ' + sizes
+    var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
+    if (cols === 2) opts.aspect = 9 / 16
+
+    return card({
+      title: asText(props.title),
+      body: asText(props.description),
+      color: props.color,
+      image: {
+        alt: props.image.alt,
+        sizes: sizes,
+        srcset: srcset(props.image.url, [400, 600, 900, 1800], opts),
+        src: `/media/fetch/w_900/${props.image.url}`,
+        caption: props.image.copyright
+      },
+      link: {
+        href: state.docs.resolve(props.link)
+      }
+    })
+  }
 }
 
-// render video embed
+// map props to embed player
 // obj -> Element
 function video (props) {
-  let embed = props.html
-  if (props.provider_name === 'YouTube') {
-    // remove YouTube cruft and enhance privacy
-    embed = embed
-      .replace(/youtube\.com/, 'youtube-nocookie.com')
-      .replace(/(src=".+?)"/, '$1?rel=0&amp;showinfo=0"')
-  }
-  return raw(embed)
+  var id = embed.id(props)
+  var provider = props.provider_name.toLowerCase()
+  return embed({
+    url: props.embed_url,
+    title: props.title,
+    src: `/media/${provider}/w_900/${id}`,
+    width: props.thumbnail_width,
+    height: props.thumbnail_height,
+    sizes: '100vw',
+    srcset: [
+      `/media/${provider}/w_400,c_fill,q_auto/${id} 400w`,
+      `/media/${provider}/w_900,c_fill,q_auto/${id} 900w`,
+      `/media/${provider}/w_1800,c_fill,q_auto/${id} 1800w`,
+      `/media/${provider}/w_1800,c_fill,q_30/${id} 3600w`
+    ].join(',')
+  })
 }
 
 // transfor string to url friendly format
@@ -296,6 +391,15 @@ function eventCard (doc) {
       href: `/events/${doc.uid}`
     }
   })
+}
+
+// format snake_case slice type to SUIT-compatible camelCase
+// str -> str
+function camelCase (snake) {
+  return snake.split('_').reduce(function (camel, part, index) {
+    if (index === 0) return part
+    return camel + part[0].toUpperCase() + part.substr(1)
+  }, '')
 }
 
 function meta (state) {

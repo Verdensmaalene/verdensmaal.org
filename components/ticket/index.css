@@ -1,9 +1,13 @@
+@import "../base";
+
+/** @define Ticket */
 .Ticket {
   display: flex;
   width: 100%;
   flex-direction: column;
   padding: 0.6rem 1.25rem 0;
   justify-content: space-between;
+  background: rgb(var(--color-gray-light));
 }
 
 .Ticket-date {
@@ -42,8 +46,11 @@
 }
 
 .Ticket-action {
-  display: block;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
   padding: 1.1rem 0;
+  position: relative;
   border-top: 1px solid rgb(228, 228, 228);
   font-weight: 600;
   color: rgb(var(--high-contrast-dark, 148, 148, 148));
@@ -51,17 +58,18 @@
 
 @media (min-width: 700px) {
   .Ticket {
-    padding: 2.2rem 3rem 1rem;
+    padding: 1rem 2rem;
   }
 
   .Ticket-date {
     padding: 0.4rem 1.4rem 0;
-    font-size: 6rem;
+    font-size: 4rem;
     white-space: nowrap;
     margin: 1.3rem 1.7rem 0 0;
   }
 
   .Ticket-time {
+    white-space: nowrap;
     font-size: 3.5rem;
   }
 
@@ -72,5 +80,15 @@
   .Ticket-info {
     margin: 1.5rem 0 3rem;
     font-size: 1rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Ticket {
+    padding: 2.2rem 3rem 1rem;
+  }
+
+  .Ticket-date {
+    font-size: 5rem;
   }
 }

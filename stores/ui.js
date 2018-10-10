@@ -5,6 +5,7 @@ function ui (state, emitter) {
   state.ui.transitions = []
   state.ui.isLoading = false
   state.ui.hasOverlay = false
+  state.ui.isHighContrast = false
   state.ui.gridLayout = state.ui.gridLayout || Math.ceil(Math.random() * 9)
   state.ui.clock = { ref: 1 }
 
@@ -30,11 +31,11 @@ function ui (state, emitter) {
     emitter.emit('render')
   })
 
-  emitter.prependListener('goal:start', function (id) {
+  emitter.prependListener('goal:transitionstart', function (id) {
     emitter.emit('transition:start', 'goal-page')
   })
 
-  emitter.prependListener('goal:end', function (id) {
+  emitter.prependListener('goal:transitionend', function (id) {
     emitter.emit('transition:end', 'goal-page')
   })
 

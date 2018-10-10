@@ -163,8 +163,8 @@ class GoalPage extends View {
           ${doc.data.interlink_heading && doc.data.interlink_heading.length ? html`
             <div class="u-container u-spaceV8">
               <div class="Text">
-                <h3 class="u-spaceB0">
-                  <span class="Text-h2 Text-muted">${asText(doc.data.interlink_heading)}</span>
+                <h3 class="Text-h2 Text-muted u-spaceB0">
+                  ${asText(doc.data.interlink_heading)}
                 </h3>
                 <div class="Text-h2 u-spaceT0">${asElement(doc.data.interlink_text, state.docs.resolve)}</div>
               </div>

@@ -4,7 +4,6 @@ var { pluck } = require('../base')
 
 module.exports = figure
 figure.loading = loading
-figure.placeholder = placeholder
 
 function figure (props = {}) {
   assert(props.src, 'figure: src string is required')
@@ -30,15 +29,4 @@ function caption (content) {
 
 function loading (props = {}) {
   return html`<div class="Card-figure is-loading"></div>`
-}
-
-function placeholder (children) {
-  return html`
-    <div class="Card-figure Card-figure--placeholder">
-      <div class="Card-shape Card-shape--circle"></div>
-      <div class="Card-shape Card-shape--big"></div>
-      <div class="Card-shape Card-shape--small"></div>
-      ${typeof children === 'function' ? children() : children}
-    </div>
-  `
 }

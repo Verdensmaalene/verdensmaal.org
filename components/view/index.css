@@ -9,14 +9,14 @@
   background: rgb(var(--default-background-color));
 }
 
+/**
+ * Header
+ */
+
 .View-header {
   position: relative;
   z-index: 2;
 }
-
-/**
- * Fade in
- */
 
 .View-header--appear {
   opacity: 0;
@@ -84,10 +84,99 @@
   }
 }
 
+/**
+ * Main content area
+ */
+
 .View-main {
   flex-grow: 1;
 }
 
+/**
+ * Footer
+ */
+
 .View-footer {
-  margin-top: 10rem;
+  margin-top: 4rem;
+}
+
+@media (min-width: 600px) {
+  .View-footer {
+    margin-top: 5rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .View-footer {
+    margin-top: 10rem;
+  }
+}
+
+/**
+ * Sidebar
+ */
+
+@media (min-width: 1000px) {
+  .View-sidebar {
+    padding-left: 2rem;
+    border-left: 1px solid rgb(var(--color-gray-light));
+  }
+}
+
+@media (min-width: 1200px) {
+  .View-sidebar {
+    padding-left: 3rem;
+  }
+}
+
+/**
+ * Sections
+ */
+
+.View-section {
+  margin-bottom: 7rem;
+}
+
+/**
+ * Visually group section heading with next sibling section
+ */
+
+.View-section--heading {
+  margin-bottom: 2.5rem;
+}
+
+.View-section--heading::before {
+  content: "";
+  height: 10vh;
+  display: block;
+  max-height: 60px;
+}
+
+/**
+ * 1. Deduct trailing grid margin
+ */
+
+.View-section--news + .View-section,
+.View-section--events + .View-section {
+  margin-top: calc(var(--Grid-gutter) * -1); /* 1 */
+}
+
+/**
+ * 1. Deduct margin to augument Grid spacing
+ */
+
+.View-section--image + .View-section--video,
+.View-section--image + .View-section--gallery,
+.View-section--video + .View-section--image,
+.View-section--video + .View-section--gallery {
+  margin-top: calc((7rem - var(--Grid-gutter)) * -1); /* 1 */
+}
+
+/**
+ * 1. Rely on gutter cell bottom to apply appropiate spacing
+ */
+
+.View-section--gallery + .View-section--image,
+.View-section--gallery + .View-section--video {
+  margin-top: -7rem; /* 1 */
 }

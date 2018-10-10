@@ -1,0 +1,38 @@
+@import "../base";
+
+/** @define Blockquote */
+.Blockquote {
+  max-width: 39em;
+  color: rgba(var(--high-contrast-dark, var(--current-color), 0.6));
+}
+
+.Blockquote.is-loading {
+  color: rgba(var(--color-gray-light), 0.8);
+}
+
+.Blockquote-quotes {
+  float: left;
+  width: 2rem;
+  height: auto;
+  margin-top: 0.5em;
+  opacity: 0.25;
+}
+
+.Blockquote-content {
+  padding-left: 1em;
+  overflow: hidden;
+}
+
+@media (min-width: 600px) {
+  .Blockquote-quotes {
+    width: 4rem;
+  }
+
+  .Blockquote-content {
+    padding-left: 2em;
+  }
+}
+
+.Blockquote:not(.is-loading) .Blockquote-caption::before {
+  content: "– ";
+}

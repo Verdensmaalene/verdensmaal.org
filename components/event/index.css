@@ -3,10 +3,32 @@
 /** @define Event */
 .Event {
   width: 100%;
+}
+
+.Event--banner {
+  height: 65vh;
+  max-height: 75vw;
+}
+
+@media (min-width: 600px) {
+  .Event--banner {
+    max-height: 45vw;
+  }
+}
+
+.Event-content {
   height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
+  position: relative;
+  overflow: hidden;
+  color: rgb(var(--current-background));
+  background-color: rgb(var(--color-theme));
+}
+
+.Event:not(.Event--banner) .Event-content::before {
+  content: "";
+  display: block;
+  height: 0;
+  padding-top: calc(100% * 3 / 4);
 }
 
 .Event-icon {
@@ -48,4 +70,65 @@
 .Event-location {
   display: block;
   line-height: 0.9;
+}
+
+/**
+ * Background
+ */
+
+.Event-shape {
+  position: absolute;
+  will-change: transform;
+  transition: transform 600ms var(--ease-out);
+}
+
+.Event:not(.Event--static):not(.is-loading):hover .Event-shape {
+  transition: transform 400ms var(--ease-out);
+}
+
+.Event-shape::before {
+  content: "";
+  display: block;
+  height: 0;
+  padding-top: 100%;
+}
+
+.Event-shape--big {
+  width: 100%;
+  left: -75%;
+  top: 25%;
+  transform: rotate(-20deg);
+  transform-origin: 100% 0;
+  background-color: rgb(var(--high-contrast-dark, 253, 105, 37));
+}
+
+.Event:not(.Event--static):not(.is-loading):hover .Event-shape--big {
+  transform: translateX(-5%) rotate(5deg);
+}
+
+.Event-shape--small {
+  width: 42%;
+  right: -35%;
+  top: 30%;
+  transform: rotate(40deg);
+  transform-origin: 0 0;
+  background-color: #C5192D;
+  background-color: rgb(var(--high-contrast-dark, 197, 25, 45));
+}
+
+.Event:not(.Event--static):not(.is-loading):hover .Event-shape--small {
+  transform: translateX(8%) rotate(15deg);
+}
+
+.Event-shape--circle {
+  width: 30%;
+  right: -6%;
+  top: 10%;
+  border-radius: 100%;
+  transform-origin: 50% 50%;
+  background-color: rgb(var(--high-contrast-dark, 255, 58, 33));
+}
+
+.Event:not(.Event--static):not(.is-loading):hover .Event-shape--circle {
+  transform: translate(10%, -20%);
 }

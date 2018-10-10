@@ -2,6 +2,7 @@ var html = require('choo/html')
 var isSameDay = require('date-fns/is_same_day')
 var isSameMonth = require('date-fns/is_same_month')
 var differenceInDays = require('date-fns/difference_in_days')
+var { calendar: symbol } = require('../symbol')
 var { i18n, className, timestamp } = require('../base')
 
 var text = i18n(require('./lang.json'))
@@ -75,12 +76,7 @@ function calendar (entries, opts = {}) {
           <div class="Calendar-body">
             ${props.download ? html`
               <a class="Calendar-download" href="${props.download}" download>
-                <svg class="Calendar-icon" width="11" height="11" viewBox="0 0 11 11">
-                  <g fill="currentColor" fill-rule="nonzero">
-                    <path d="M9.26 1.15v-.4a.63.63 0 0 0-1.27 0v.4H2.55v-.4A.63.63 0 0 0 1.9.12a.65.65 0 0 0-.65.63v.4H0V3.3h10.5V1.15H9.25z"/>
-                    <path d="M.01 10.61h10.5V3.75H0v6.86zm7.35-5.94h2v1.88h-2V4.67zm0 2.97h2v1.88h-2V7.64zm-3.1-2.97h2v1.88h-2V4.67zm0 2.97h2v1.88h-2V7.64zM1.11 4.67h2.02v1.88H1.12V4.67zm0 2.97h2.02v1.88H1.12V7.64z"/>
-                  </g>
-                </svg>
+                <span class="u-spaceR1">${symbol()}</span>
                 ${text`Save to calendar`}
               </a>
             ` : null}

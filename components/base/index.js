@@ -178,7 +178,7 @@ function reduce (list) {
 // compose srcset attribute from url for given sizes
 // (str, arr, obj?) -> str
 exports.srcset = srcset
-function srcset (url, sizes, opts) {
+function srcset (url, sizes, opts = {}) {
   var transforms = opts.transforms
   if (!transforms) transforms = 'c_fill,f_auto,q_auto'
   if (!/c_/.test(transforms)) transforms += ',c_fill'

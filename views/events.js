@@ -164,14 +164,14 @@ function events (state, emit) {
         src: `/media/fetch/w_900/${doc.data.image.url}`,
         caption: doc.data.image.copyright
       }
-    } else {
-      props.placeholder = event(Object.assign(Object.create(doc.data), {
-        start: date,
-        end: parse(doc.data.end)
-      }))
+      return card(props)
     }
 
-    return card(props)
+    // wrap card with event and supply event content as card slot 🤯
+    return event.outer(card(props, event.inner(Object.assign({}, doc.data, {
+      start: date,
+      end: parse(doc.data.end)
+    }))))
   }
 }
 

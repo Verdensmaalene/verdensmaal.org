@@ -1,17 +1,21 @@
-/* @define Text */
-
 @import "../base";
 
+/** @define Text */
 .Text {
   color: rgb(var(--current-color));
   font-family: var(--default-font-family);
   line-height: 1.5;
   font-size: 1rem;
-  max-width: 38em;
+  max-width: 39em;
+}
+
+.Text--large,
+.Text-large {
+  font-size: 1.25rem;
 }
 
 .Text-muted {
-  --current-color: var(--color-text-muted);
+  color: rgb(var(--color-text-muted));
 }
 
 .Text:first-child {
@@ -20,6 +24,18 @@
 
 .Text:last-child {
   margin-bottom: 0;
+}
+
+/**
+ * Inline elements
+ */
+
+.Text a {
+  color: rgb(var(--color-link));
+}
+
+.Text small {
+  font-size: 0.8em;
 }
 
 /**
@@ -83,19 +99,19 @@
 
 .Text ol {
   list-style-type: decimal;
-  padding-left: 1.5rem;
+  padding-left: 1.5em;
 }
 
-.Text ul li {
-  padding-left: 1.5rem;
+.Text ul > li {
+  padding-left: 1.5em;
   position: relative;
 }
 
-.Text ol li {
-  padding-left: 0.5rem;
+.Text ol > li {
+  padding-left: 0.5em;
 }
 
-.Text ul li::before {
+.Text ul > li::before {
   content: "–";
   position: absolute;
   left: 0;
@@ -104,7 +120,23 @@
 }
 
 .Text li + li {
-  padding-top: 1rem;
+  padding-top: 1em;
+}
+
+.Text dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+@supports (display: grid) {
+  .Text dl > dd {
+    padding-left: 1em;
+    margin: 0;
+  }
+
+  .Text dl > dd:not(:last-child) {
+    margin-bottom: 0.25em;
+  }
 }
 
 /**
@@ -137,6 +169,21 @@
 .Text .Text-h6 {
   margin: 0;
   color: rgb(var(--current-color));
+}
+
+.Text h1.Text-muted,
+.Text h2.Text-muted,
+.Text h3.Text-muted,
+.Text h4.Text-muted,
+.Text h5.Text-muted,
+.Text h6.Text-muted,
+.Text .Text-h1.Text-muted,
+.Text .Text-h2.Text-muted,
+.Text .Text-h3.Text-muted,
+.Text .Text-h4.Text-muted,
+.Text .Text-h5.Text-muted,
+.Text .Text-h6 {
+  --current-color: 204, 204, 204;
 }
 
 .Text h1:not(:first-child),
@@ -172,13 +219,13 @@
 
 .Text h1,
 .Text .Text-h1 {
-  font-size: 3rem;
+  font-size: 3em;
   line-height: 1;
 }
 
 .Text h2,
 .Text .Text-h2 {
-  font-size: 2rem;
+  font-size: 2em;
   line-height: 1.1;
 }
 
@@ -186,9 +233,8 @@
 .Text h4,
 .Text .Text-h3,
 .Text .Text-h4 {
-  font-size: 1.5rem;
+  font-size: 1.5em;
   line-height: 1.15;
-  margin-bottom: -0.625em;
 }
 
 .Text h5,
@@ -239,28 +285,92 @@
   .Text .Text-h2:not(:first-child),
   .Text .Text-h3:not(:first-child),
   .Text .Text-h4:not(:first-child) {
-    margin-top: 4.5rem;
+    margin-top: 1.5em;
   }
 
   .Text h1,
   .Text .Text-h1 {
-    font-size: 4.5rem;
+    font-size: 4.5em;
   }
 
   .Text h2,
   .Text .Text-h2 {
-    font-size: 3rem;
+    font-size: 3em;
   }
 
   .Text h3,
   .Text .Text-h3 {
-    font-size: 2rem;
+    font-size: 2em;
     line-height: 1.05;
   }
 
   .Text h4,
   .Text .Text-h4 {
-    font-size: 1.5rem;
+    font-size: 1.5em;
     line-height: 1.05;
   }
+}
+
+/**
+ * Expandable
+ */
+
+.Text-expandable {
+  position: relative;
+}
+
+:root[scripting-enabled] .Text-expandable:not(.is-expanded) {
+  max-height: 13em;
+  overflow: hidden;
+  padding-bottom: 2em;
+}
+
+.Text-expander {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0.95) 80%, rgba(255, 255, 255, 1) 88%);
+}
+
+:root[scripting-enabled] .Text-expander {
+  display: block;
+}
+
+/**
+ * 1. Cast to rgba-comaptible value
+ * 2. Safari requires the variable to be defined before being used
+ */
+
+.Text-toggle {
+  --rgba: var(--high-contrast-dark), 1; /* 1 */
+  --background-color: rgba(var(--rgba, 0, 0, 0, 0)); /* 2 */
+  padding-left: 1.25em;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  color: rgb(var(--high-contrast-light, var(--color-gray)));
+  background-color: var(--background-color);
+  box-shadow:
+    0.2em 0 0 var(--background-color),
+    -0.2em 0 0 var(--background-color);
+}
+
+.Text-toggle::before,
+.Text-toggle::after {
+  content: "";
+  width: 1px;
+  height: 0.7em;
+  position: absolute;
+  left: 0.35em;
+  top: 50%;
+  transform-origin: center;
+  transform: translateY(-50%);
+  background-color: currentColor;
+}
+
+.Text-toggle::after {
+  transform: translateY(-50%) rotate(90deg);
 }

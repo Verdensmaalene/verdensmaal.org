@@ -1,5 +1,4 @@
 var html = require('choo/html')
-var intro = require('../intro')
 var { i18n, pluck } = require('../base')
 
 var text = i18n()
@@ -17,19 +16,25 @@ function hero (props) {
       <figure class="Hero-figure">
         <img class="Hero-image" ${imgattrs} src=${src}>
       </figure>
-      <div class="Hero-body">
-        <div class="u-container">${intro(props)}</div>
+      <div class="Hero-content">
+        <h1 class="Hero-title">${props.title}</h1>
+        <p class="Hero-body">${props.body}</p>
       </div>
     </div>
   `
 }
 
 function loading () {
-  var title = html`<span class="u-loadingOnGray">${text`LOADING_TEXT_SHORT`}</span>`
-  var body = html`<span class="u-loadingOnGray">${text`LOADING_TEXT_LONG`}</span>`
   return html`
     <div class="Hero is-loading">
-      <div class="Hero-body u-container">${intro({ title, body })}</div>
+      <div class="Hero-content">
+        <h1 class="Hero-title">
+          <span class="u-loadingOnGray">${text`LOADING_TEXT_SHORT`}</span>
+        </h1>
+        <p class="Hero-body">
+          <span class="u-loadingOnGray">${text`LOADING_TEXT_LONG`}</span>
+        </p>
+      </div>
     </div>
   `
 }

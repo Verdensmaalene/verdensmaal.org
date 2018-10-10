@@ -3,16 +3,12 @@
 /* @define Banner */
 .Banner {
   display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  margin-bottom: 2.3rem;
 }
 
 .Banner-slot {
   display: flex;
-  flex: 1 1 22rem;
   order: 1;
-  background: rgb(var(--high-contrast-light, var(--color-gray-light)));
+  background: rgb(var(--color-gray-light));
   outline: 0.2rem solid;
   outline-offset: -0.2rem;
   outline-color: rgba(var(--high-contrast-dark, 0, 0, 0, 0));
@@ -23,7 +19,7 @@
  */
 
 .Banner-figure {
-  flex: 999 1 35rem; /* 1 */
+  flex: 1 1 100%;
   overflow: hidden;
   position: relative;
   min-height: 65vh;
@@ -55,16 +51,5 @@
     height: 100%;
     transform: none;
     object-fit: cover;
-  }
-}
-@media (min-width: 700px) {
-  .Benner {
-    margin-bottom: 3.6rem;
-  }
-}
-
-@media (min-width: 700px) {
-  .Banner {
-    margin-bottom: 3.6rem;
   }
 }

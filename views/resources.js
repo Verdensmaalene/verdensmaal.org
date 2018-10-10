@@ -58,8 +58,8 @@ function resources (state, emit) {
     if (slice.slice_type !== 'interlink_navigation') return null
     return html`
       <div class="Text u-spaceV8">
-        <h3 class="u-spaceB0">
-          <span class="Text-h2 Text-muted">${asText(slice.primary.heading)}</span>
+        <h3 class="Text-h2 Text-muted u-spaceB0">
+          ${asText(slice.primary.heading)}
         </h3>
         <div class="Text-h2 u-spaceT0">${asElement(slice.primary.text, state.docs.resolve)}</div>
       </div>

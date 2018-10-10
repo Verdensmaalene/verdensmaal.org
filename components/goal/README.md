@@ -29,8 +29,8 @@ the constructor. All event names are prefixed with `goal:` and event argument
 will always be the component id.
 
 - __`goal:press`:__ emitted on `mousedown`/`touchstart`.
-- __`goal:start`:__ emitted on transition start (`mouseup`/`touchend`).
-- __`goal:end`:__ emitted when transition ends.
+- __`goal:transitionstart`:__ emitted on transition start (`mouseup`/`touchend`).
+- __`goal:transitionend`:__ emitted when transition ends.
 
 ### Render arguments
 The render method takes two arguments; an object with goal properties and a

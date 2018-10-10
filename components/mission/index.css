@@ -1,0 +1,263 @@
+@import "../base";
+
+/** @define Mission */
+.Mission {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 90vh;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  color: rgb(var(--current-background));
+  background-color: rgb(var(--color-goal-1));
+}
+
+/**
+ * 1. Prevent title overlapping the menu
+ * 2. Prevent text from overlapping the background
+ */
+
+.Mission::before {
+  content: "";
+  display: block;
+  height: 25vh;
+  max-height: calc(var(--Header-height) + 10vh); /* 1 */
+}
+
+.Mission::after {
+  content: "";
+  display: block;
+  height: 20vh; /* 2 */
+}
+
+@media (min-height: 600px) and (min-width: 600px) {
+  .Mission::before {
+    height: 10vh;
+  }
+
+  .Mission::after {
+    height: 15vh;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Mission::after {
+    content: none;
+  }
+}
+
+.Mission-content {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+}
+
+.Mission-body {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100%;
+  max-width: 32rem;
+}
+
+@media (min-height: 600px) {
+  .Mission-body {
+    max-width: 45rem;
+  }
+}
+
+.Mission-title {
+  font-size: 3rem;
+}
+
+@media (min-width: 600px) {
+  .Mission-title {
+    font-size: 4.5rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Mission-title {
+    font-size: 6rem;
+  }
+
+  .Mission-text {
+    font-size: 1.5rem;
+  }
+}
+
+.Mission-footer {
+  display: none;
+  max-width: 45rem;
+}
+
+@media (min-width: 1000px) {
+  .Mission-footer {
+    display: block;
+  }
+}
+
+.Mission-partners {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding-bottom: 2rem;
+}
+
+.Mission-partner {
+  display: flex;
+  align-items: center;
+  min-height: 3.5rem;
+  max-height: 5rem;
+  min-width: 5rem;
+  max-width: 7rem;
+  margin-right: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.Mission-logo {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+/**
+ * Background
+ */
+
+.Mission-background {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.Mission-vista {
+  display: block;
+  height: auto;
+  width: 100%;
+  max-width: 80vw;
+}
+
+@media (min-width: 600px) {
+  .Mission-vista {
+    max-width: 40vw;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Mission-vista {
+    max-width: 40vw;
+  }
+}
+
+.Mission-hill {
+  opacity: 0.25;
+}
+
+.Mission-house,
+.Mission-hill,
+.Mission-bear {
+  transform: translateY(100%);
+  animation: Mission-item--appear 400ms forwards var(--ease-out);
+}
+
+@keyframes Mission-item--appear {
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.Mission-house:nth-child(1) { animation-delay: 200ms; }
+.Mission-house:nth-child(2) { animation-delay: 450ms; }
+.Mission-house:nth-child(3) { animation-delay: 575ms; }
+.Mission-house:nth-child(4) { animation-delay: 350ms; }
+.Mission-house:nth-child(5) { animation-delay: 250ms; }
+
+.Mission-hill { animation-delay: 700ms; }
+.Mission-bear {
+  animation-duration: 600ms;
+  animation-delay: 825ms;
+}
+
+.Mission-cloud {
+  transform: translateY(calc(50vh + 50%));
+  animation: Mission-cloud--appear 600ms forwards cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.Mission-cloud:nth-child(1) { animation-delay: 450ms; }
+.Mission-cloud:nth-child(2) { animation-delay: 590ms; }
+.Mission-cloud:nth-child(3) { animation-delay: 575ms; }
+.Mission-cloud:nth-child(4) { animation-delay: 725ms; }
+.Mission-cloud:nth-child(5) { animation-delay: 500ms; }
+
+@keyframes Mission-cloud--appear {
+  to {
+    transform: translateY(0vh);
+  }
+}
+
+.Mission-birdPath:not(.is-animated) {
+  display: none;
+}
+
+.Mission-birds {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  transform: translateY(50vh);
+  animation: Mission-birds--appear 600ms 650ms forwards cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.Mission.is-loaded .Mission-birds {
+  display: block;
+}
+
+@keyframes Mission-birds--appear {
+  to {
+    transform: translateY(0vh);
+  }
+}
+
+.Mission-bird {
+  height: auto;
+  position: absolute;
+}
+
+.Mission-bird:nth-child(1) {
+  width: 2.5rem;
+  left: 51%;
+  top: 33%;
+  transform: rotate(-16deg);
+}
+
+.Mission-bird:nth-child(2) {
+  width: 1.8rem;
+  left: 58%;
+  top: 10%;
+  transform: rotate(12deg);
+}
+
+.Mission-bird:nth-child(3) {
+  width: 1.2rem;
+  left: 65%;
+  top: 23%;
+  color: rgb(var(--color-goal-1-shaded));
+  transform: rotate(10deg);
+}
+
+.Mission-bird:nth-child(4) {
+  width: 2.25rem;
+  left: 72%;
+  top: 5%;
+  color: rgb(var(--color-goal-1-shaded));
+  transform: rotate(-28deg);
+}

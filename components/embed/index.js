@@ -5,7 +5,13 @@ var { pluck, i18n } = require('../base')
 
 var text = i18n(require('./lang.json'))
 
+// match short and long youtube links
+// https://www.youtube.com/watch?v=WwE7TxtoyqM
+// https://youtu.be/gd6_ZECm58g
+var YOUTUBE_RE = /https?:\/\/(?:www.)?youtu\.?be(?:\.com\/watch\?v=|\/)(\w+)(?:\?|&|$)/
+
 module.exports = embed
+module.exports.id = id
 
 function embed (props) {
   assert(props.src, 'figure: src string is required')
@@ -28,5 +34,15 @@ function embed (props) {
   function onclick (event) {
     player.render(props.url)
     event.preventDefault()
+  }
+}
+
+// extract unique embed id
+// obj -> str
+function id (props) {
+  switch (props.provider_name) {
+    case 'YouTube': return props.embed_url.match(YOUTUBE_RE)[1]
+    case 'Vimeo': return props.embed_url.match(/vimeo\.com\/(.+)?\??/)[1]
+    default: throw new Error(`serialize: embed provider ${props.provider_name} not supported`)
   }
 }

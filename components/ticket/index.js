@@ -2,7 +2,7 @@ var html = require('choo/html')
 var differenceInDays = require('date-fns/difference_in_days')
 var { i18n, timestamp } = require('../base')
 
-var text = i18n()
+var text = i18n(require('./lang.json'))
 
 module.exports = ticket
 
@@ -31,13 +31,20 @@ function ticket (props) {
         </p>
       </div>
       <ul class="Ticket-list">
-        <li class="Ticket-item">
-          <a class="Ticket-action" download href="${props.download}">${text`Save event to calendar`}</a>
-        </li>
-        <li class="Ticket-item">
-          <a class="Ticket-action" href="${props.download}">${text`RSVP to this event`}</a>
-        </li>
+        ${props.links.map(link)}
       </ul>
     </div>
+  `
+}
+
+// render link
+// obj -> Element
+function link (props) {
+  var attrs = { class: 'Ticket-action', href: props.href }
+  if (/\.\w+$/.test(props.href)) attrs.download = 'download'
+  return html`
+    <li class="Ticket-item">
+      <a ${attrs}>${props.text}${props.icon || null}</a>
+    </li>
   `
 }

@@ -7,9 +7,12 @@
  * 1. Inverse current color theme
  */
 
-.Goal {
+:root {
   --Goal-color: rgb(var(--current-background)); /* 1 */
   --Goal-backgorund: rgb(var(--current-color)); /* 1 */
+}
+
+.Goal {
   display: flex;
   align-items: stretch;
   width: 100%;
@@ -217,24 +220,28 @@
   overflow: visible !important; /* 1 */
 }
 
-.Goal-glyph {
+.Goal-symbol {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  fill: currentColor;
   width: 80%;
   margin-left: 10%;
   margin-top: -4%;
 }
 
-.Goal[href] .Goal-glyph {
+.Goal[href] .Goal-symbol {
   transition: transform 180ms var(--ease-out);
   will-change: transform;
 }
 
-.Goal[href]:hover .Goal-glyph {
+.Goal[href]:hover .Goal-symbol {
   transform: scale(1.08);
+}
+
+.Goal-icon {
+  width: 100%;
+  height: auto;
 }
 
 /**

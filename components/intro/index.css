@@ -20,6 +20,7 @@
   font-size: 4rem;
   line-height: .95;
   font-weight: 600;
+  hyphens: auto;
   text-transform: uppercase;
   font-family: var(--heading-font-family);
   word-spacing: var(--heading-word-spacing);

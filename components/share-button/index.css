@@ -1,0 +1,27 @@
+@import "../base";
+
+/** @define ShareButton */
+.ShareButton {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 0.25em 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.ShareButton-icon {
+  --current-color: var(--current-background);
+  display: inline-block;
+  margin-right: 1.5ch;
+}
+
+.ShareButton-text {
+  display: inline-block;
+  color: rgba(var(--current-color), 0.6);
+}
+
+.ShareButton:hover .ShareButton-text {
+  color: rgba(var(--current-color), 1);
+}

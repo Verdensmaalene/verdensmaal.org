@@ -2,15 +2,19 @@
 
 @import "../base";
 
+:root {
+  --Header-size: 1;
+  --Header-height: 5rem;
+  --Header-displace: 2rem;
+}
+
 /**
  * Root element is left behind (at top of page) to fill upp space
  */
 
 .Header {
-  --height: 5rem;
-  --displace: 2rem;
   width: 100%;
-  height: var(--height);
+  height: var(--Header-height);
   contain: size layout style;
   position: relative;
   overflow: hidden;
@@ -51,7 +55,7 @@
 
 .Header-fill {
   width: 100%;
-  height: var(--height);
+  height: var(--Header-height);
   position: absolute;
   top: 0;
   left: 0;
@@ -75,7 +79,7 @@
 @media (min-width: 700px) {
   .Header-fill {
     transform-origin: top center;
-    transform: translateY(calc((-1 * var(--displace)) * (1 - var(--Header-size, 1))));
+    transform: translateY(calc((-1 * var(--Header-displace)) * (1 - var(--Header-size))));
   }
 
   .Header:not(.Header--static) .Header-fill {
@@ -84,7 +88,7 @@
 
   /* .Header--static .Header-fill {
     transform-origin: top center;
-    transform: translateY(calc((-1 * var(--displace)) * 0));
+    transform: translateY(calc((-1 * var(--Header-displace)) * 0));
   } */
 
   .Header-slot {
@@ -95,7 +99,7 @@
 
 .Header-content {
   display: flex;
-  height: var(--height);
+  height: var(--Header-height);
   position: relative;
   flex: 1 0 100%;
   align-items: center;
@@ -105,16 +109,16 @@
 
 @media (min-width: 700px) {
   .Header-content {
-    top: calc((var(--displace) / 2) * -1);
+    top: calc((var(--Header-displace) / 2) * -1);
   }
 
   .Header-content {
-    transform: translateY(calc((var(--displace, 1) / 2) * var(--Header-size, 1)));
+    transform: translateY(calc((var(--Header-displace) / 2) * var(--Header-size)));
     will-change: transform;
   }
 
   /* .Header--static .Header-content {
-    transform: translateY(calc((var(--displace, 1) / 2) * (1 - 0)));
+    transform: translateY(calc((var(--Header-displace, 1) / 2) * (1 - 0)));
   } */
 }
 
@@ -130,7 +134,7 @@
 @media (min-width: 1300px) {
   .Header-list {
     transform-origin: center right;
-    transform: scale(calc(1.2 - (0.2 * (1 - var(--Header-size, 1)))));
+    transform: scale(calc(1.2 - (0.2 * (1 - var(--Header-size)))));
   }
 
   /* .Header--static .Header-list {
@@ -164,7 +168,7 @@
 
 @media (min-width: 700px) {
   .Header .Header-logo {
-    transform: scale(calc(1 + (0.25 * var(--Header-size, 1))));
+    transform: scale(calc(1 + (0.25 * var(--Header-size))));
     transform-origin: center left;
   }
 }
@@ -175,13 +179,13 @@
 
 @media (min-width: 700px) {
   .Header {
-    --height: 7rem;
+    --Header-height: 7rem;
   }
 }
 
 @media (min-width: 1000px) {
   .Header {
-    --height: 8rem;
+    --Header-height: 8rem;
   }
 
   .Header-logo {
@@ -415,7 +419,7 @@
     height: 0;
     visibility: hidden;
     opacity: 0;
-    transform: translateY(var(--displace));
+    transform: translateY(var(--Header-displace));
     transition: 300ms 100ms var(--ease-out);
     transition-property: transform, opacity;
   }

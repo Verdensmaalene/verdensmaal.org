@@ -1,7 +1,6 @@
-/* @define utilities */
-
 @import "../global";
 
+/* @define utilities */
 .u-hidden {
   display: none !important;
 }
@@ -23,6 +22,15 @@
 }
 
 /**
+ * Display
+ */
+
+.u-block { display: block !important; }
+.u-inline-block { display: block !important; }
+.u-inline { display: block !important; }
+.u-flex { display: flex !important; }
+
+/**
  * Positioning
  */
 
@@ -38,12 +46,63 @@
 .u-left { left: 0 !important; }
 
 /**
+ * Aspect ratio
+ */
+
+.u-aspect1-1,
+.u-aspect4-3,
+.u-aspect16-9 {
+  position: relative !important;
+}
+
+.u-aspect1-1::before,
+.u-aspect4-3::before,
+.u-aspect16-9::before {
+  content: "" !important;
+  display: block !important;
+  height: 0 !important;
+}
+
+.u-aspect1-1::before { padding-top: 100% !important; }
+.u-aspect4-3::before { padding-top: calc(100% * 3 / 4) !important; }
+.u-aspect16-9::before { padding-top: calc(100% * 9 / 16) !important; }
+
+/**
+ * Cover offset parent
+ */
+
+.u-cover {
+  object-fit: cover !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+}
+
+/**
+ * Columns
+ */
+
+.u-cols {
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+.u-col {
+  flex: 0 0 100%;
+  display: flex !important;
+  min-width: 0 !important;
+}
+
+/**
  * Centered page container
  */
 
 .u-container {
   width: 100% !important;
-  margin: 0 auto !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   padding-left: 1.125rem !important;
   padding-right: 1.125rem !important;
   padding-left: calc(1.125rem + constant(safe-area-inset-right)) !important;
@@ -56,7 +115,8 @@
   .u-container,
   .u-md-container {
     width: 100% !important;
-    margin: 0 auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
     padding-left: 1.5rem !important;
     padding-right: 1.5rem !important;
     padding-left: calc(1.5rem + constant(safe-area-inset-right)) !important;

@@ -5,6 +5,7 @@ var { asText } = require('prismic-richtext')
 var { Predicates } = require('prismic-javascript')
 var Flag = require('../flag')
 var error = require('./error')
+var share = require('../share')
 var Header = require('../header')
 var footer = require('../footer')
 var player = require('../embed/player')
@@ -75,11 +76,12 @@ function createView (view, meta) {
       var menu = doc && doc.data.main_menu.map(link)
 
       return html`
-        <body class="View" id="app-view">
+        <body class="View" id="view">
           ${doc ? getHeader() : null}
           ${children}
           ${doc ? getFooter() : null}
           ${player.render(null)}
+          ${share.render(null)}
         </body>
       `
 
@@ -98,17 +100,36 @@ function createView (view, meta) {
             }
           }
         }
+        if (state.route === 'mission') {
+          opts.theme = 'white'
+          opts.static = true
+        }
 
         opts.slot = function () {
           return getFlag({
-            white: isGoal,
+            white: isGoal || state.route === 'mission',
             id: `header${isGoal ? '-white' : ''}}`
           })
         }
 
+        // determine selected menu item by caluclating href match
+        var scores = [] // href match score [<score>, <index>]
+        var segments = state.href.split('/')
+        for (let i = 0, len = menu.length; i < len; i++) {
+          let href = menu[i].href.replace(/\/$/, '')
+          scores.push([href.split('/').reduce(function (score, segment, index) {
+            return segments[index] === segment ? score + 1 : score
+          }, 0), i])
+        }
+
+        // sort scores and pick out top score
+        var topscore = scores.sort(([a], [b]) => a > b ? -1 : 1)[0]
+        var links = menu.slice()
+        links[topscore[1]].selected = true
+
         return html`
           <div class="View-header ${opts.static ? 'View-header--stuck View-header--appear' : ''}">
-            ${state.cache(Header, 'header').render(menu, state.href, opts)}
+            ${state.cache(Header, 'header').render(links, state.href, opts)}
           </div>
         `
       }
@@ -142,7 +163,7 @@ function createView (view, meta) {
 
       function getFlag (opts) {
         opts = Object.assign({
-          href: doc && doc.data.about_page ? doc.data.about_page.uid : false,
+          href: '/mission',
           title: text`Denmark`,
           text: text`Greenland, Faroe Islands`
         }, opts)

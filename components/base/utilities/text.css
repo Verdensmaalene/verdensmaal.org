@@ -40,3 +40,7 @@
 .u-rtl {
   direction: rtl !important;
 }
+
+.u-nowrap {
+  white-space: nowrap !important;
+}

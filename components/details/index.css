@@ -1,0 +1,86 @@
+@import "../base";
+
+/** @define Details */
+.Details {
+
+}
+
+.Details-summary {
+  display: block;
+  padding: 0.455em 2.2em 0.355em 0.7em;
+  margin: 1rem 0;
+
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+
+  color: #fff;
+  font-size: 1.8rem;
+  line-height: 1;
+  font-weight: 600;
+  user-select: none;
+  text-transform: uppercase;
+  font-family: var(--heading-font-family);
+  word-spacing: var(--heading-word-spacing);
+  line-height: var(--heading-line-height);
+  background-color: rgb(var(--color-link));
+  transition: background-color 180ms var(--ease-out);
+}
+
+@media (min-width: 600px) {
+  .Details-summary {
+    font-size: 2.25rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .Details-summary {
+    font-size: 3rem;
+  }
+}
+
+.Details-summary:hover {
+  background-color: rgb(var(--color-link-shaded));
+}
+
+.Details-summary::-webkit-details-marker {
+  display: none;
+}
+
+.Details-summary::after,
+.Details-summary::before {
+  content: "";
+  width: 2px;
+  height: 1.6rem;
+  position: absolute;
+  top: 50%;
+  right: 2.35rem;
+  background: #fff;
+  will-change: transform;
+  transform: translateY(-50%) scaleY(1);
+  transition: transform 150ms var(--ease-out);
+}
+
+.Details-summary::after {
+  transform: translateY(-50%) rotate(90deg);
+}
+
+.Details[open] .Details-summary::before {
+  transform: translateY(-50%) scaleY(0);
+}
+
+.Details-content {
+  padding: 0.26rem 0;
+}
+
+@media (min-width: 600px) {
+  .Details-content {
+    padding: 0.575rem 1.575rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .Details-content {
+    padding: 1.1rem 2.1rem;
+  }
+}
