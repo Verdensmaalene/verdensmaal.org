@@ -179,6 +179,7 @@
   top: -0.3rem;
   font-size: 0.8rem;
   color: rgb(var(--high-contrast-light, var(--color-gray)));
+  border-radius: 2px;
 }
 
 /**

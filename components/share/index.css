@@ -50,9 +50,9 @@
   height: 1.5rem;
   padding: 1rem;
   position: absolute;
-  top: -1rem; /** TODO: fix px */
-  right: -1rem; /** TODO: fix px */
-  border-radius: 1px;
+  top: -1rem;
+  right: -1rem;
+  border-radius: 2px;
   transition: background-color 180ms var(--ease-out);
 }
 

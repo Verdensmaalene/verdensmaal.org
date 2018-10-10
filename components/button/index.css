@@ -3,9 +3,9 @@
 /* @define Button */
 .Button {
   display: inline-block;
-  height: calc(4em / 3 * 2);
-  line-height: calc(4em / 3 * 2);
-  padding: 0 calc(2em / 3 * 2);
+  line-height: 3.25rem;
+  padding: 0 1rem;
+  min-width: 10rem;
   font-size: 1.5rem;
   color: rgb(var(--default-color));
   background-color: rgba(var(--color-gray), 0.12);
@@ -17,6 +17,7 @@
   word-spacing: var(--heading-word-spacing);
   transition: 140ms var(--ease-out);
   transition-property: background-color, color;
+  border-radius: 2px;
 }
 
 .Button:hover {

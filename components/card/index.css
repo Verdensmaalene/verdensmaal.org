@@ -33,24 +33,24 @@
 
 @media (min-width: 1000px) {
   .Card-content {
-    padding-bottom: 17px;
+    padding-bottom: 1rem;
   }
 }
 
 @media (min-width: 1200px) {
   .Card-content {
-    padding-bottom: 10px;
+    padding-bottom: 0.8rem;
   }
 }
 
 .Card--bg .Card-content {
-  padding: 20px 20px 30px;
+  padding: 1.3rem 1.3rem 2rem;
 }
 
 @media (min-width: 400px) {
   .Card--bg .Card-content {
-    padding: 28px 32px 32px;
-    min-height: 260px;
+    padding: 1.8rem 2rem 2rem;
+    min-height: 17rem;
   }
 }
 
@@ -62,6 +62,11 @@
   flex-grow: 1;
   position: relative; /* 1 */
   width: 100%;
+}
+
+
+.Card:not(.Card--bg) .Card-body {
+  flex-grow: 0;
 }
 
 .Card-meta {
@@ -83,7 +88,12 @@
 }
 
 .Card:not(.Card--bg) .Card-title:first-child {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+}
+
+.Card-text {
+  font-size: 1rem;
+  margin-top: 0.3em;
 }
 
 @media (min-width: 900px) {
@@ -91,11 +101,10 @@
     font-size: 2rem;
     line-height: 1.05;
   }
-}
 
-.Card-text {
-  font-size: 1rem;
-  margin-top: 0.3em;
+  .Card-text {
+    margin-top: 0.5em;
+  }
 }
 
 .Card-footer {
@@ -105,14 +114,14 @@
 }
 
 .Card--bg .Card-footer {
-  margin: 4px 0 0;
+  margin: 0.25rem 0 0;
 }
 
 @media (min-width: 400px) {
   .Card--bg .Card-footer {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
-    padding-top: 5px;
-    margin: 34px 0 0;
+    padding-top: 0.25rem;
+    margin: 2rem 0 0;
   }
 }
 
@@ -140,7 +149,7 @@
 .Card-figure {
   margin: 0;
   position: relative;
-  max-height: 21rem;
+  max-height: 24rem;
   overflow: hidden;
   background-color: rgba(var(--color-gray-light), 0.6);
 }
@@ -188,7 +197,7 @@
 
 .Card-link {
   display: inline-block;
-  line-height: 52px;
+  line-height: 3.25rem;
   font-size: 1.5rem;
   color: rgb(var(--color-link));
   text-transform: uppercase;
@@ -199,17 +208,18 @@
   user-select: none;
   transition: 140ms var(--ease-out);
   transition-property: background-color, color;
+  border-radius: 2px;
 }
 
 .Card-link:not(.Card-link--silent) {
-  margin: 0.2rem 0 -1.5rem -0.8rem;
   padding: 0 1rem 0 0.8rem;
+  margin: 0.2rem 0 -1.5rem -0.8rem;
 }
 
 @media (min-width: 500px) {
   .Card-link:not(.Card-link--silent) {
-    padding: 0 16px 0 14px;
-    margin: 8px 0 0 -14px;
+    padding: 0 1rem 0 0.8rem;
+    margin: 0.5rem 0 0 -0.8rem;
   }
 }
 

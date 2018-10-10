@@ -32,6 +32,10 @@
   margin-bottom: var(--gutter, var(--Grid-gutter));
 }
 
+.Grid-cell > *{
+  flex-basis: 100%;
+}
+
 @media (max-width: 599px) {
   .Grid--carousel {
     width: 100%;
