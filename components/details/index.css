@@ -43,6 +43,10 @@
   background-color: rgb(var(--color-link-shaded));
 }
 
+.Details-summary {
+  list-style: none;
+}
+
 .Details-summary::-webkit-details-marker {
   display: none;
 }
