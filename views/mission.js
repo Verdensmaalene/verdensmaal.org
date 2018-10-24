@@ -133,7 +133,7 @@ function meta (state) {
     if (!doc) return { title: text`LOADING_TEXT_SHORT` }
     var attrs = {
       title: asText(doc.data.title),
-      description: asText(doc.data.description),
+      description: asText(doc.data.description)
     }
 
     return state.docs.getSingle('website', function (err, doc) {
