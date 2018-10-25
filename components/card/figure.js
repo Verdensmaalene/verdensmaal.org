@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var assert = require('assert')
-var { pluck } = require('../base')
+var { pluck, className } = require('../base')
 
 module.exports = figure
 figure.loading = loading
@@ -12,7 +12,7 @@ function figure (props = {}) {
   attrs.alt = attrs.alt || ''
 
   return html`
-    <figure class="Card-figure u-hoverTriggerTarget">
+    <figure class="${className('Card-figure u-hoverTriggerTarget', { 'Card-figure--background': props.background })}">
       <img class="Card-image" ${attrs} src="${src}" />
       ${props.caption ? caption(props.caption) : null}
     </figure>

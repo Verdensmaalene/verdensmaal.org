@@ -1,6 +1,6 @@
 var assert = require('assert')
 var html = require('choo/html')
-var { luma, i18n, hexToRgb } = require('../base')
+var { luma, i18n, hexToRgb, className } = require('../base')
 var figure = require('./figure')
 var link = require('./link')
 
@@ -10,31 +10,36 @@ module.exports = card
 card.loading = loading
 
 function card (props = {}, slot) {
-  var bg = props.color || null
-
-  assert(!bg || /^#/.test(bg), 'Card: props.color should be hex string color code')
+  var fill = props.color || null
+  assert(!fill || /^#/.test(fill), 'Card: props.color should be hex string color code')
 
   if (props.link) {
     props.link.block = true
-    if (bg) props.link.silent = true
-    if (bg) props.link.inherit = true
+    if (fill) props.link.silent = true
+    if (fill) props.link.inherit = true
   }
 
-  var attrs = { class: 'Card' }
-  if (props.link && bg) attrs.class += ' Card--interactive'
-  if (bg && luma(bg) < 185) attrs.class += ' Card--dark'
-  if (bg) attrs.class += ' Card--bg'
-  if (bg) attrs.style = `--Card-background-color: ${hexToRgb(bg).join(', ')}`
+  var attrs = {
+    class: className('Card', {
+      'Card--interactive': props.link && (fill || props.background),
+      'Card--dark': props.background || (fill && luma(fill) < 185),
+      'Card--fill': fill || props.background,
+      'Card--background': props.background
+    })
+  }
+  if (fill) attrs.style = `--Card-background-color: ${hexToRgb(fill).join(', ')}`
 
-  var cover
-  if (props.image) cover = figure(props.image)
-  else if (slot) cover = slot
-  else cover = figure.loading()
+  var cover = null
+  if (props.image) {
+    cover = figure(Object.assign({ background: props.background }, props.image))
+  } else if (slot) {
+    cover = typeof slot === 'function' ? slot() : slot
+  }
 
   return html`
     <article ${attrs}>
-      ${typeof cover === 'function' ? cover() : cover}
-      <div class="Card-content ${bg ? 'u-hoverTriggerTarget' : ''}">
+      ${cover}
+      <div class="Card-content ${fill ? 'u-hoverTriggerTarget' : ''}">
         <div class="Card-body">
           ${props.date && props.date.text ? html`
             <time class="Card-meta" datetime="${JSON.stringify(props.date.datetime).replace(/"/g, '')}">
@@ -46,7 +51,7 @@ function card (props = {}, slot) {
         </div>
         ${props.link ? html`
           <div class="Card-footer">
-            ${link(props.link)}
+            ${link(Object.assign({ inherit: props.background }, props.link))}
           </div>
         ` : null}
       </div>

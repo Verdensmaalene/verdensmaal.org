@@ -6,6 +6,14 @@
   flex-direction: column;
   width: 100%;
   position: relative;
+  z-index: 0;
+  color: rgb(var(--current-color));
+}
+
+.Card--background {
+  --current-color: 255, 255, 255;
+  --current-background: 0, 0, 0;
+  justify-content: flex-end;
 }
 
 .Card--interactive .Card-content::before {
@@ -43,15 +51,21 @@
   }
 }
 
-.Card--bg .Card-content {
+.Card--fill .Card-content {
   padding: 1.3rem 1.3rem 2rem;
 }
 
 @media (min-width: 400px) {
-  .Card--bg .Card-content {
+  .Card--fill .Card-content {
     padding: 1.8rem 2rem 2rem;
     min-height: 17rem;
   }
+}
+
+.Card--background .Card-content {
+  flex: 0 0 auto;
+  min-height: auto;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.65) 50%);
 }
 
 /**
@@ -64,8 +78,7 @@
   width: 100%;
 }
 
-
-.Card:not(.Card--bg) .Card-body {
+.Card:not(.Card--fill) .Card-body {
   flex-grow: 0;
 }
 
@@ -87,7 +100,7 @@
   word-spacing: var(--heading-word-spacing);
 }
 
-.Card:not(.Card--bg) .Card-title:first-child {
+.Card:not(.Card--fill) .Card-title:first-child {
   margin-top: 1.5rem;
 }
 
@@ -113,16 +126,20 @@
   width: 100%;
 }
 
-.Card--bg .Card-footer {
+.Card--fill .Card-footer {
   margin: 0.25rem 0 0;
 }
 
 @media (min-width: 400px) {
-  .Card--bg .Card-footer {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  .Card--fill .Card-footer {
+    border-top: 1px solid rgba(var(--current-color), 0.1);
     padding-top: 0.25rem;
-    margin: 2rem 0 0;
+    margin: 1rem 0 0;
   }
+}
+
+.Card--dark {
+  --current-color: 255, 255, 255;
 }
 
 .Card--dark .Card-footer {
@@ -130,15 +147,11 @@
   border-top-color: rgba(255, 255, 255, 0.2);
 }
 
-.Card--bg {
+.Card--fill {
   background-color: rgb(var(--high-contrast-dark, var(--Card-background-color, var(--current-background))));
 }
 
-.Card--dark {
-  color: #fff;
-}
-
-.Card--bg .Card-content {
+.Card--fill .Card-content {
   padding: 1rem 1rem 0;
 }
 
@@ -148,9 +161,10 @@
 
 .Card-figure {
   margin: 0;
-  position: relative;
   max-height: 24rem;
+  position: relative;
   overflow: hidden;
+  z-index: -1;
   background-color: rgba(var(--color-gray-light), 0.6);
 }
 
@@ -163,6 +177,16 @@
 
 .Card-figure.is-loading {
   background-color: rgba(var(--color-gray-light), 0.6);
+}
+
+.Card-figure--background {
+  object-fit: cover;
+  max-height: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .Card-caption {
@@ -234,7 +258,7 @@
   cursor: pointer;
 }
 
-.Card-link:not(.Card-link--silent):hover {
+.Card-link:not(.Card-link--silent):not(.Card-link--inherit):hover {
   background: rgba(var(--current-background, 0, 0, 0), 0.04);
   color: rgb(var(--color-link-shaded));
 }
