@@ -1,4 +1,5 @@
 var { Elements } = require('prismic-richtext')
+var { srcset } = require('../base')
 var embed = require('../embed')
 
 module.exports = serialize
@@ -15,11 +16,7 @@ function serialize (type, node, content, children) {
         width: node.oembed.thumbnail_width,
         height: node.oembed.thumbnail_height,
         sizes: '39em',
-        srcset: [
-          `/media/${provider}/w_400,c_fill,q_auto/${id} 400w`,
-          `/media/${provider}/w_900,c_fill,q_auto/${id} 900w`,
-          `/media/${provider}/w_1800,c_fill,q_auto/${id} 1800w`
-        ].join(',')
+        srcset: srcset(id, [400, 900, 1800], { type: provider })
       })
     }
     default: return null

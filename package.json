@@ -48,7 +48,9 @@
       "PRISMIC_VERDENSMAALENE_SECRET": "@prismic-verdensmaalene-secret",
       "CLOUDFLARE_VERDENSMAALENE_ZONE": "@cloudflare-verdensmaalene-zone",
       "CLOUDFLARE_CODEANDCONSPIRE_EMAIL": "@cloudflare-codeandconspire-email",
-      "CLOUDFLARE_CODEANDCONSPIRE_KEY": "@cloudflare-codeandconspire-key"
+      "CLOUDFLARE_CODEANDCONSPIRE_KEY": "@cloudflare-codeandconspire-key",
+      "CLOUDINARY_KEY": "@cloudinary-key",
+      "CLOUDINARY_SECRET": "@cloudinary-secret"
     }
   },
   "repository": {
@@ -66,6 +68,7 @@
     "cccpurge": "^2.0.0",
     "choo": "^6.13.0",
     "choo-service-worker": "^2.4.0",
+    "cloudinary": "^1.11.0",
     "date-fns": "^1.29.0",
     "dedent": "^0.7.0",
     "dotenv": "^6.0.0",

@@ -334,12 +334,7 @@ function video (props) {
     width: props.thumbnail_width,
     height: props.thumbnail_height,
     sizes: '100vw',
-    srcset: [
-      `/media/${provider}/w_400,c_fill,q_auto/${id} 400w`,
-      `/media/${provider}/w_900,c_fill,q_auto/${id} 900w`,
-      `/media/${provider}/w_1800,c_fill,q_auto/${id} 1800w`,
-      `/media/${provider}/w_1800,c_fill,q_30/${id} 3600w`
-    ].join(',')
+    srcset: srcset(id, [400, 900, 1800, [3600, 'q_30']], { type: provider })
   })
 }
 
