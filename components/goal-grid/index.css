@@ -285,21 +285,8 @@
   max-width: 24em;
 }
 
-.GoalGrid-description--long {
-  font-size: 0.7rem;
-}
-
-@media (min-width: 1000px) {
-  .GoalGrid-description--long {
-    font-size: 0.9rem;
-  }
-}
-
 @media (min-width: 1200px) {
   .GoalGrid-description {
-    font-size: 1rem;
-  }
-  .GoalGrid-description--long {
     font-size: 1rem;
   }
 }
@@ -309,7 +296,7 @@
  */
 
 .GoalGrid-button {
-  display: inline-block;
+  display: none;
   padding: 0.65em 1em 0.55em;
   margin-top: 1em;
   color: transparent;
@@ -322,6 +309,12 @@
   white-space: nowrap;
   background: #fff;
   text-shadow: 0 0 var(--Goal-background); /* 1 */
+}
+
+@media (min-width: 1000px) {
+  .GoalGrid-button {
+    display: inline-block;
+  }
 }
 
 .GoalGrid-item--1:hover .GoalGrid-button { color: rgba(var(--color-goal-1-shaded), 0.13); }

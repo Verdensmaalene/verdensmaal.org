@@ -122,7 +122,7 @@ module.exports = class GoalGrid extends Component {
       function children () {
         return html`
           <div class="GoalGrid-content">
-            <p class="GoalGrid-description ${props.description.length > 120 ? 'GoalGrid-description--long' : ''}">${props.description}</p>
+            <p class="GoalGrid-description">${props.description}</p>
             <span class="GoalGrid-button">${text`Explore goal`}</span>
           </div>
         `
