@@ -1,27 +1,26 @@
 var html = require('choo/html')
 var Component = require('choo/component')
-var splitRequire = require('split-require')
 var { vw, vh, className } = require('../base')
 var icon = require('./icon')
 
 var backgrounds = [
-  (callback) => splitRequire('./background/1', callback),
-  (callback) => splitRequire('./background/2', callback),
-  (callback) => splitRequire('./background/3', callback),
-  (callback) => splitRequire('./background/4', callback),
-  (callback) => splitRequire('./background/5', callback),
-  (callback) => splitRequire('./background/6', callback),
-  (callback) => splitRequire('./background/7', callback),
-  (callback) => splitRequire('./background/8', callback),
-  (callback) => splitRequire('./background/9', callback),
-  (callback) => splitRequire('./background/10', callback),
-  (callback) => splitRequire('./background/11', callback),
-  (callback) => splitRequire('./background/12', callback),
-  (callback) => splitRequire('./background/13', callback),
-  (callback) => splitRequire('./background/14', callback),
-  (callback) => splitRequire('./background/15', callback),
-  (callback) => splitRequire('./background/16', callback),
-  (callback) => splitRequire('./background/17', callback)
+  () => import('./background/1'),
+  () => import('./background/2'),
+  () => import('./background/3'),
+  () => import('./background/4'),
+  () => import('./background/5'),
+  () => import('./background/6'),
+  () => import('./background/7'),
+  () => import('./background/8'),
+  () => import('./background/9'),
+  () => import('./background/10'),
+  () => import('./background/11'),
+  () => import('./background/12'),
+  () => import('./background/13'),
+  () => import('./background/14'),
+  () => import('./background/15'),
+  () => import('./background/16'),
+  () => import('./background/17')
 ]
 
 module.exports = class Goal extends Component {
@@ -42,9 +41,10 @@ module.exports = class Goal extends Component {
 
     var index = num - 1
     var background = backgrounds[index]
-    background((err, Background) => {
-      if (err) background = { render () { throw err } }
-      else background = new Background(`background-${num}`)
+    background().then(
+      (Background) => new Background(`background-${num}`),
+      (err) => ({ render () { throw err } })
+    ).then((background) => {
       this.background = (num, opts) => background.render(opts)
       this.rerender()
     })

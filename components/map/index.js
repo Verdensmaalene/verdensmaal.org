@@ -1,7 +1,6 @@
 var assert = require('assert')
 var html = require('choo/html')
 var Component = require('choo/component')
-var splitRequire = require('split-require')
 
 var mapboxgl = null
 var CLUSTER_THRESHOLD = 12
@@ -57,11 +56,10 @@ module.exports = class Map extends Component {
       `)
     })
 
-    splitRequire('mapbox-gl', function (err, response) {
-      if (err) return onerror(err)
+    import('mapbox-gl').then(function (response) {
       mapboxgl = response
       styles.then(init, onerror)
-    })
+    }).catch(onerror)
 
     function init () {
       mapboxgl.accessToken = ACCESS_TOKEN
