@@ -11,7 +11,8 @@ var logo = require('../components/logo')
 var intro = require('../components/intro')
 var GoalGrid = require('../components/goal-grid')
 var { i18n, reduce, srcset } = require('../components/base')
-var center = require('../components/goal-grid/slots/center')
+var centerSlot = require('../components/goal-grid/slots/center')
+var cardSlot = require('../components/goal-grid/slots/card')
 
 var text = i18n()
 
@@ -115,6 +116,29 @@ class Home extends View {
           ` : null}
         </main>
       `
+
+      // render slot by type
+      // str -> Element
+      function slot (type) {
+        switch (type) {
+          case 'square': return centerSlot(logo({ vertical: true }), type)
+          case 'large': {
+            if (!doc.data.grid_slots.length) return null
+            let slice = doc.data.grid_slots[0]
+            let props = {
+              image: slice.primary.image,
+              title: asText(slice.primary.title),
+              body: asText(slice.primary.body),
+              link: {
+                href: state.docs.resolve(slice.primary.link)
+              }
+            }
+            return cardSlot(props, type)
+          }
+          case 'small': return centerSlot('small', type)
+          default: return null
+        }
+      }
 
       // get latest news with similar tags
       // (num?) -> arr
@@ -238,14 +262,3 @@ class Home extends View {
 }
 
 module.exports = View.createClass(Home, 'homepage')
-
-// render slot by type
-// str -> Element
-function slot (type) {
-  switch (type) {
-    case 'square': return center(logo({ vertical: true }), type)
-    case 'large': return center('large', type)
-    case 'small': return center('small', type)
-    default: return null
-  }
-}

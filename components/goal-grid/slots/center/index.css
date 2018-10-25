@@ -1,7 +1,6 @@
-/* GoalGrid */
-
 @import "../../../base/global";
 
+/* GoalGrid */
 .GoalGrid-slot--center {
   --current-color: var(---default-color);
   width: 100%;
