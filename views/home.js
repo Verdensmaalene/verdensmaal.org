@@ -123,7 +123,7 @@ class Home extends View {
         switch (type) {
           case 'square': return centerSlot(logo({ vertical: true }), type)
           case 'large': {
-            if (!doc.data.grid_slots.length) return null
+            if (!doc || !doc.data.grid_slots.length) return null
             let slice = doc.data.grid_slots[0]
             let props = {
               image: slice.primary.image,
@@ -135,7 +135,16 @@ class Home extends View {
             }
             return cardSlot(props, type)
           }
-          case 'small': return centerSlot('small', type)
+          case 'small': {
+            if (!doc || !doc.data.interlink_heading.length) return null
+            return centerSlot(html`
+              <div class="Text">
+                <p class="Text-h3">
+                  ${asElement(doc.data.interlink_text, state.docs.resolve)}
+                </p>
+              </div>
+            `, 'fill')
+          }
           default: return null
         }
       }
