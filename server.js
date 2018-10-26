@@ -187,22 +187,15 @@ app.use(function (ctx, next) {
   return next()
 })
 
-if (process.env.NOW && app.env === 'production') {
-  queried().then(function (urls) {
-    purge(['/sw.js', ...urls], function (err) {
-      if (err) throw err
-      start()
+app.listen(process.env.PORT || 8080, function () {
+  if (process.env.NOW && app.env === 'production') {
+    queried().then(function (urls) {
+      purge(['/sw.js', ...urls], function (err) {
+        app.emit('error', err)
+      })
     })
-  })
-} else {
-  start()
-}
-
-// start server
-// () -> void
-function start () {
-  app.listen(process.env.PORT || 8080)
-}
+  }
+})
 
 // get urls for all queried pages
 // () -> Promise
