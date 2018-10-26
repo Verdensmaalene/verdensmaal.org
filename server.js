@@ -191,7 +191,7 @@ app.listen(process.env.PORT || 8080, function () {
   if (process.env.NOW && app.env === 'production') {
     queried().then(function (urls) {
       purge(['/sw.js', ...urls], function (err) {
-        app.emit('error', err)
+        if (err) app.emit('error', err)
       })
     })
   }
