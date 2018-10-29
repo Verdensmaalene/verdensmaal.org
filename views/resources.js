@@ -24,8 +24,8 @@ function resources (state, emit) {
           <div class="u-container">
             ${intro.loading()}
             ${border.loading()}
-            ${grid({ size: { md: '1of3' }, carousel: true }, cells)}
           </div>
+          ${grid({ size: { md: '1of3' }, carousel: true }, cells)}
         </main>
       `
     }
@@ -46,7 +46,9 @@ function resources (state, emit) {
           <div class="u-spaceB4">
             ${intro({ title: asText(doc.data.title), body: [asElement(doc.data.description), shortcuts] })}
           </div>
-          ${grid({ size: '1of3' }, reduce(doc.data.slices, group))}
+        </div>
+        ${reduce(doc.data.slices, group)}
+        <div class="u-container">
           ${reduce(doc.data.slices, interlink)}
         </div>
       </main>
@@ -69,8 +71,12 @@ function group (slice) {
   var slug = slice.primary.shortcut_name || heading
   return html`
     <section id="${slugify(slug)}">
-      ${border(heading)}
-      ${grid({ size: { md: '1of3' }, carousel: true }, slice.items.map(cell))}
+      <div class="u-container">
+        ${border(heading)}
+      </div>
+      <div class="u-md-container">
+        ${grid({ size: { md: '1of3' }, carousel: true }, slice.items.map(cell))}
+      </div>
     </section>
   `
 }
