@@ -6,7 +6,7 @@ var text = i18n()
 module.exports = intro
 module.exports.loading = loading
 
-function intro (opts) {
+function intro (opts = {}) {
   var body = opts.body
   if (typeof window === 'undefined') {
     if (Array.isArray(body) || body[0] === '<') html`<div>${body}</div>`
@@ -29,7 +29,7 @@ function intro (opts) {
   `
 }
 
-function loading (opts) {
+function loading (opts = {}) {
   return html`
     <div class="Intro ${opts.secondary ? 'Intro--secondary' : ''}">
       <h1 class="Intro-title">
