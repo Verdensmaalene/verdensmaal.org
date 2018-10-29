@@ -3,6 +3,7 @@ var asElement = require('prismic-element')
 var { asText } = require('prismic-richtext')
 var view = require('../components/view')
 var grid = require('../components/grid')
+var intersection = require('../components/intersection')
 var Text = require('../components/text')
 var { i18n } = require('../components/base')
 var Mission = require('../components/mission')
@@ -63,12 +64,7 @@ function missionView (state, emit) {
         }
         case 'link_text': return html`
           <section class="View-section View-section--${camelCase(slice.slice_type)} u-container">
-            <div class="Text u-spaceV8">
-              <h3 class="Text-h2 Text-muted u-spaceB0">
-                ${asText(slice.primary.heading)}
-              </h3>
-              <div class="Text-h2 u-spaceT0">${asElement(slice.primary.text, state.docs.resolve)}</div>
-            </div>
+            ${intersection({ title: asText(slice.primary.heading), body: asElement(slice.primary.text, state.docs.resolve) })}
           </section>
         `
         case 'link_list': {

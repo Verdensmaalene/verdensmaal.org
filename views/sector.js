@@ -10,6 +10,7 @@ var grid = require('../components/grid')
 var card = require('../components/card')
 var Text = require('../components/text')
 var embed = require('../components/embed')
+var intersection = require('../components/intersection')
 var Details = require('../components/details')
 var { external } = require('../components/symbol')
 var blockquote = require('../components/blockquote')
@@ -226,11 +227,8 @@ function goal (state, emit) {
         }
         case 'link_text': return html`
           <div class="View-section View-section--${camelCase(slice.slice_type)}">
-            <div class="Text u-spaceV8" id="${slugify(slice.primary.shortcut_name || '')}">
-              <h3 class="Text-h2 Text-muted u-spaceB0">
-                ${asText(slice.primary.heading)}
-              </h3>
-              <div class="Text-h2 u-spaceT0">${asElement(slice.primary.text, state.docs.resolve)}</div>
+            <div id="${slugify(slice.primary.shortcut_name || '')}">
+              ${intersection({ title: asText(slice.primary.heading), body: asElement(slice.primary.text, state.docs.resolve) })}
             </div>
           </div>
         `

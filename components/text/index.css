@@ -174,21 +174,6 @@
   color: rgb(var(--current-color));
 }
 
-.Text h1.Text-muted,
-.Text h2.Text-muted,
-.Text h3.Text-muted,
-.Text h4.Text-muted,
-.Text h5.Text-muted,
-.Text h6.Text-muted,
-.Text .Text-h1.Text-muted,
-.Text .Text-h2.Text-muted,
-.Text .Text-h3.Text-muted,
-.Text .Text-h4.Text-muted,
-.Text .Text-h5.Text-muted,
-.Text .Text-h6 {
-  --current-color: 204, 204, 204;
-}
-
 .Text h1:not(:first-child),
 .Text h2:not(:first-child),
 .Text h3:not(:first-child),
@@ -250,35 +235,6 @@
   line-height: inherit;
 }
 
-.Text h1 a,
-.Text h2 a,
-.Text h3 a,
-.Text h4 a,
-.Text .Text-h1 a,
-.Text .Text-h2 a,
-.Text .Text-h3 a,
-.Text .Text-h4 a {
-  background: rgb(var(--color-link));
-  color: rgb(var(--current-background));
-  padding: 0.15em 0.18em 0.08em;
-  margin: 0;
-  white-space: nowrap;
-  font-weight: normal;
-  transition: background-color 140ms var(--ease-out);
-}
-
-.Text h1 a:hover,
-.Text h2 a:hover,
-.Text h3 a:hover,
-.Text h4 a:hover,
-.Text .Text-h1 a:hover,
-.Text .Text-h2 a:hover,
-.Text .Text-h3 a:hover,
-.Text .Text-h4 a:hover {
-  background: rgb(var(--color-link-shaded));
-  color: #fff;
-}
-
 @media (min-width: 1200px) {
   .Text h1:not(:first-child),
   .Text h2:not(:first-child),
@@ -304,7 +260,7 @@
   .Text h3,
   .Text .Text-h3 {
     font-size: 2em;
-    line-height: 1.05;
+    line-height: 1.1;
   }
 
   .Text h4,

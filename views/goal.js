@@ -8,6 +8,7 @@ var { Predicates } = require('prismic-javascript')
 var View = require('../components/view')
 var card = require('../components/card')
 var intro = require('../components/intro')
+var intersection = require('../components/intersection')
 var grid = require('../components/grid')
 var Goal = require('../components/goal')
 var Flag = require('../components/flag')
@@ -154,12 +155,7 @@ class GoalPage extends View {
           ` : null}
           ${doc.data.interlink_heading && doc.data.interlink_heading.length ? html`
             <div class="u-container">
-              <div class="Text">
-                <h3 class="Text-h2 Text-muted u-spaceB0">
-                  ${asText(doc.data.interlink_heading)}
-                </h3>
-                <div class="Text-h2 u-spaceT0">${asElement(doc.data.interlink_text, state.docs.resolve)}</div>
-              </div>
+              ${intersection({ title: asText(doc.data.interlink_heading), body: asElement(doc.data.interlink_text, state.docs.resolve) })}
             </div>
           ` : null}
         </main>

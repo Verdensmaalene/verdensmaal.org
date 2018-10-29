@@ -1,0 +1,40 @@
+/* @define Intersection */
+
+@import "../base";
+
+.Intersection {
+  max-width: 18em;
+  margin: 0 0 0.2em;
+  font-size: 2.5rem;
+  line-height: 1.15;
+  font-weight: 600;
+  hyphens: auto;
+  text-transform: uppercase;
+  font-family: var(--heading-font-family);
+  word-spacing: var(--heading-word-spacing);
+}
+
+.Intersection-title {
+  color: rgb(204, 204, 204);
+}
+
+.Intersection a {
+  background: rgb(var(--color-link));
+  color: rgb(var(--current-background));
+  padding: 0.14em 0.14em 0.07em;
+  margin: 0;
+  white-space: nowrap;
+  font-weight: normal;
+  transition: background-color 140ms var(--ease-out);
+}
+
+.Intersection a:hover {
+  background: rgb(var(--color-link-shaded));
+  color: #fff;
+}
+
+@media (min-width: 1000px) {
+  .Intersection {
+    font-size: 4rem;
+  }
+}

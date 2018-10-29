@@ -9,6 +9,7 @@ var card = require('../components/card')
 var grid = require('../components/grid')
 var logo = require('../components/logo')
 var intro = require('../components/intro')
+var intersection = require('../components/intersection')
 var GoalGrid = require('../components/goal-grid')
 var { i18n, reduce, srcset } = require('../components/base')
 var centerSlot = require('../components/goal-grid/slots/center')
@@ -98,17 +99,9 @@ class Home extends View {
               ${grid({ size: { md: '1of2', lg: '1of3' }, carousel: true }, featured)}
             </div>
           </section>
-          <section class="u-spaceV8 u-container">
-            <!-- TODO: insert engager here -->
-          </section>
-          ${doc && doc.data.interlink_heading.length ? html`
+          ${doc ? html`
             <div class="u-container">
-              <div class="Text u-spaceV8">
-                <h3 class="Text-h2 Text-muted u-spaceB0">
-                  ${asText(doc.data.interlink_heading)}
-                </h3>
-                <div class="Text-h2 u-spaceT0">${asElement(doc.data.interlink_text, state.docs.resolve)}</div>
-              </div>
+              ${doc.data.interlink_heading.length ? intersection({ title: asText(doc.data.interlink_heading), body: asElement(doc.data.interlink_text, state.docs.resolve) }) : intersection.loading()}
             </div>
           ` : null}
         </main>
