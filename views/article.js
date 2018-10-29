@@ -123,14 +123,14 @@ function article (state, emit) {
               ${/* eslint-disable indent */
                 slice.items.map(function (item) {
                   var href = state.docs.resolve(item.link)
-                  var attrs = { class: 'u-block', href: href }
+                  var attrs = {}
                   if (item.link.link_type !== 'Document') {
                     attrs.rel = 'noopener noreferer'
                     if (item.link.target) attrs.target = item.link.target
                   }
                   return html`
                     <li class="Text u-spaceB2">
-                      <a ${attrs}>
+                      <a class="u-block" href="${href}" ${attrs}>
                         <span class="Text-large">${item.text}</span>
                         <br>
                         <small class="Text-muted">${href}</small>

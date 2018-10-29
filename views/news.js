@@ -51,7 +51,7 @@ function news (state, emit) {
           `}
           ${news.length >= num * PAGE_SIZE + 2 ? html`
             <p class="u-textCenter">
-              ${button({ href: `/nyheder?page=${num + 1}`, text: text`Show more`, class: state.isLoading ? 'is-loading' : '', onclick: onclick })}
+              ${button({ href: `/nyheder?page=${num + 1}`, text: text`Show more`, 'class': state.isLoading ? 'is-loading' : '', onclick: onclick })}
             </p>
           ` : null}
         </div>
