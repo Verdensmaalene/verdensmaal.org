@@ -26,6 +26,10 @@
   word-spacing: var(--heading-word-spacing);
 }
 
+.Intro--secondary .Intro-title {
+  font-size: 3rem;
+}
+
 .Intro-body {
   margin: 0;
   max-width: 39em;
@@ -33,6 +37,10 @@
 
 .Intro-body p:not(:last-child) {
   margin-bottom: 1em;
+}
+
+.Intro a {
+  color: rgb(var(--color-link));
 }
 
 @media (min-width: 1000px) {
@@ -48,6 +56,10 @@
   .Intro-title {
     max-width: 8em;
     font-size: 6rem;
+  }
+
+  .Intro--secondary .Intro-title {
+    font-size: 4.5rem;
   }
 
   .Intro-body {

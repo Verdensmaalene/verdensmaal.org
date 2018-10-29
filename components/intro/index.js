@@ -18,7 +18,7 @@ function intro (opts) {
   }
 
   return html`
-    <div class="Intro">
+    <div class="Intro ${opts.secondary ? 'Intro--secondary' : ''}">
       <h1 class="Intro-title">${opts.title}</h1>
       <div class="Text u-sizeFull">
         <div class="Intro-body">
@@ -29,9 +29,9 @@ function intro (opts) {
   `
 }
 
-function loading () {
+function loading (opts) {
   return html`
-    <div class="Intro">
+    <div class="Intro ${opts.secondary ? 'Intro--secondary' : ''}">
       <h1 class="Intro-title">
         <span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>
       </h1>

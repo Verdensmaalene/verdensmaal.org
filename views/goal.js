@@ -7,6 +7,7 @@ var { asText } = require('prismic-richtext')
 var { Predicates } = require('prismic-javascript')
 var View = require('../components/view')
 var card = require('../components/card')
+var intro = require('../components/intro')
 var grid = require('../components/grid')
 var Goal = require('../components/goal')
 var Flag = require('../components/flag')
@@ -137,31 +138,22 @@ class GoalPage extends View {
         <main class="View-main">
           ${goal.render(props)}
           ${header}
-          <section class="u-spaceV8">
+          <section>
             <div class="u-container">
-              <div class="Text u-spaceB4">
-                <h2 class="Text-h1">${asText(doc.data.featured_heading)}</h2>
-                ${asElement(doc.data.featured_text, state.docs.resolve)}
-              </div>
+              ${doc ? intro({ title: asText(doc.data.featured_heading), body: asElement(doc.data.featured_text, state.docs.resolve) }) : intro.loading()}
             </div>
             <div class="u-md-container">
               ${grid({ size: { md: '1of2', lg: '1of3' }, carousel: true }, featured)}
             </div>
           </section>
           ${targets.length ? html`
-            <section class="u-container u-spaceV8" id="targets">
-              <div class="Text u-spaceB4">
-                <h2 class="Text-h1">${asText(doc.data.targets_title)}</h2>
-                ${asElement(doc.data.targets_description, state.docs.resolve)}
-              </div>
+            <section class="u-container" id="targets">
+              ${doc ? intro({ secondary: true, title: asText(doc.data.targets_title), body: asElement(doc.data.targets_description, state.docs.resolve) }) : intro.loading({ secondary: true })}
               ${state.cache(TargetGrid, `${doc.data.number}-targets`).render(doc.data.number, targets)}
             </section>
           ` : null}
-          <section class="u-container u-spaceV8">
-            <!-- TODO: insert engager here -->
-          </section>
           ${doc.data.interlink_heading && doc.data.interlink_heading.length ? html`
-            <div class="u-container u-spaceV8">
+            <div class="u-container">
               <div class="Text">
                 <h3 class="Text-h2 Text-muted u-spaceB0">
                   ${asText(doc.data.interlink_heading)}

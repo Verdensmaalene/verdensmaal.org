@@ -92,10 +92,7 @@ class Home extends View {
           </div>
           <section class="u-spaceV8">
             <div class="u-container">
-              <div class="Text u-spaceB4">
-                <h2 class="Text-h1">${doc ? asText(doc.data.featured_heading) : html`<span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`}</h2>
-                ${doc ? asElement(doc.data.featured_text, state.docs.resolve) : html`<p><span class="u-loading">${text`LOADING_TEXT_LONG`}</span></p>`}
-              </div>
+              ${doc ? intro({ secondary: true, title: asText(doc.data.featured_heading), body: asText(doc.data.featured_text, state.docs.resolve) }) : intro.loading({ secondary: true })}
             </div>
             <div class="u-md-container">
               ${grid({ size: { md: '1of2', lg: '1of3' }, carousel: true }, featured)}
