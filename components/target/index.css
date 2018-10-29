@@ -15,7 +15,7 @@
   --collapse-body: 0;
 }
 
-.Target-content {
+.Target.is-collapsed .Target-content {
   overflow: hidden;
 }
 

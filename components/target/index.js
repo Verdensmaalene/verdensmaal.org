@@ -20,7 +20,9 @@ module.exports = class Target extends Component {
   }
 
   init () {
+    if (this.local.isInitialized) return
     this.local.isInitialized = true
+
     var element = this.element
     var resize = nanoraf(() => {
       var styles = window.getComputedStyle(element)
@@ -41,7 +43,10 @@ module.exports = class Target extends Component {
     resize()
 
     window.addEventListener('resize', resize)
-    this.unload = () => window.removeEventListener('resize', resize)
+    this.unload = () => {
+      this.local.isInitialized = false
+      window.removeEventListener('resize', resize)
+    }
   }
 
   createElement (opts = {}) {
