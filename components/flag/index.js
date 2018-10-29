@@ -13,7 +13,7 @@ module.exports = class Flag extends Component {
 
     var body = html`
       <div class="Flag-body">
-        <strong class="Flag-title">${opts.title}</strong>
+        <span class="Flag-title">${opts.title}</span>
         <span class="u-hiddenVisually"> – </span>
         <span class="Flag-sub">${opts.text}</span>
       </div>

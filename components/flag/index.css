@@ -1,7 +1,6 @@
-/* @define Flag */
-
 @import "../base/global";
 
+/* @define Flag */
 .Flag {
   display: flex;
   align-items: center;
@@ -12,8 +11,8 @@
 }
 
 .Flag-figure {
-  flex: 0 0 3rem;
-  width: 3rem;
+  flex: 0 0 2.5rem;
+  width: 2.5rem;
   margin-left: 1rem;
   order: 1;
   position: relative;
@@ -54,7 +53,6 @@
 
 .Flag-title {
   display: block;
-  font-weight: 600;
   font-size: 0.875rem;
 }
 
