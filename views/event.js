@@ -40,6 +40,9 @@ function eventView (state, emit) {
       `
     }
 
+    var body = asElement(doc.data.body, state.docs.resolve, serialize)
+    if (state.prefetch) return Promise.all(body)
+
     var title = asText(doc.data.title)
     var description = asText(doc.data.description)
     var image = doc.data.image
@@ -74,7 +77,7 @@ function eventView (state, emit) {
                 <div class="Text">
                   <h1>${title}</h1>
                   <p class="Text-large">${description}</p>
-                  ${asElement(doc.data.body, state.docs.resolve, serialize)}
+                  ${body}
                 </div>
               </div>
               <div class="View-sidebar u-col u-lg-size1of3">

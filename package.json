@@ -38,6 +38,9 @@
       ]
     ]
   },
+  "browser": {
+    "./lib/scrape": "./lib/scrape/browser"
+  },
   "standard": {
     "parser": "babel-eslint"
   },
@@ -82,6 +85,13 @@
     "koa-compose": "^4.1.0",
     "koa-route": "^3.2.0",
     "mapbox-gl": "^0.48.0",
+    "metascraper": "^4.5.5",
+    "metascraper-date": "^4.5.5",
+    "metascraper-description": "^4.5.5",
+    "metascraper-image": "^4.5.5",
+    "metascraper-publisher": "^4.5.5",
+    "metascraper-title": "^4.5.5",
+    "metascraper-url": "^4.5.5",
     "nanolru": "^1.0.0",
     "nanoraf": "^3.1.0",
     "normalize.css": "^8.0.0",

@@ -50,9 +50,10 @@ function prismicStore (opts) {
       opts = typeof opts === 'function' ? {} : opts
       callback = callback || Function.prototype
 
+      var transform
       if (typeof middleware === 'function') {
         // pass input through middleware
-        middleware(predicates, opts)
+        transform = middleware(predicates, opts)
       }
 
       // pluck out prefetch from opts
@@ -77,10 +78,14 @@ function prismicStore (opts) {
 
       var request = init.then(function (api) {
         return api.query(predicates, opts).then(function (response) {
-          cache.set(key, response)
-          emitter.emit('prismic:response', response)
-          if (!prefetch) emitter.emit('render')
+          // optionally transform the response using registered middleware
+          if (typeof transform === 'function') return transform(response)
           return response
+        }).then(function (result) {
+          cache.set(key, result)
+          emitter.emit('prismic:response', result)
+          if (!prefetch) emitter.emit('render')
+          return result
         })
       }).catch(function (err) {
         cache.set(key, err)

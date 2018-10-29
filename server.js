@@ -10,22 +10,30 @@ var ics = require('ics')
 var jalla = require('jalla')
 var dedent = require('dedent')
 var body = require('koa-body')
-var route = require('koa-route')
 var geoip = require('geoip-lite')
 var compose = require('koa-compose')
 var parse = require('date-fns/parse')
+var { get, post } = require('koa-route')
 var { asText } = require('prismic-richtext')
 var Prismic = require('prismic-javascript')
 var purge = require('./lib/purge')
+var scrape = require('./lib/scrape')
 var resolve = require('./lib/resolve')
 
 var app = jalla('index.js', { sw: 'sw.js' })
+
+// internal meta data scraper api
+app.use(get('/scrape/:uri(.+)', async function (ctx, uri, next) {
+  ctx.body = await scrape(uri)
+  ctx.type = 'application/json'
+  ctx.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 365}`)
+}))
 
 // proxy cloudinary on-demand-transform API
 app.use(require('./lib/cloudinary-proxy'))
 
 // disallow robots anywhere but live URL
-app.use(route.get('/robots.txt', function (ctx, next) {
+app.use(get('/robots.txt', function (ctx, next) {
   // if (ctx.host === 'dk.globalgoals.org') return next()
   ctx.type = 'text/plain'
   ctx.body = dedent`
@@ -35,7 +43,7 @@ app.use(route.get('/robots.txt', function (ctx, next) {
 }))
 
 // add webhook for prismic updates
-app.use(route.post('/prismic-hook', compose([body(), function (ctx) {
+app.use(post('/prismic-hook', compose([body(), function (ctx) {
   var secret = ctx.request.body && ctx.request.body.secret
   ctx.assert(secret === process.env.PRISMIC_VERDENSMAALENE_SECRET, 403, 'Secret mismatch')
   return new Promise(function (resolve, reject) {
@@ -51,7 +59,7 @@ app.use(route.post('/prismic-hook', compose([body(), function (ctx) {
 }])))
 
 // set preview cookie
-app.use(route.get('/prismic-preview', async function (ctx) {
+app.use(get('/prismic-preview', async function (ctx) {
   var host = process.env.NOW_URL && url.parse(process.env.NOW_URL).host
   if (host && ctx.host !== host) {
     return ctx.redirect(url.resolve(process.env.NOW_URL, ctx.url))
@@ -64,13 +72,13 @@ app.use(route.get('/prismic-preview', async function (ctx) {
     ? new Date(Date.now() + (1000 * 60 * 60 * 12))
     : new Date(Date.now() + (1000 * 60 * 30))
 
-  ctx.set('Cache-Control', 'max-age=0')
+  ctx.set('Cache-Control', 'no-cache, private, max-age=0')
   ctx.cookies.set(Prismic.previewCookie, token, { expires: expires, path: '/' })
   ctx.redirect(href)
 }))
 
 // redirect goal shorthand url to complete slug
-app.use(route.get('/:num(\\d{1,2})', async function (ctx, num) {
+app.use(get('/:num(\\d{1,2})', async function (ctx, num) {
   var api = await Prismic.api(REPOSITORY, { req: ctx.req })
   var response = await api.query(Prismic.Predicates.at('my.goal.number', +num))
   var doc = response.results[0]
@@ -79,7 +87,7 @@ app.use(route.get('/:num(\\d{1,2})', async function (ctx, num) {
 }))
 
 // push goal background bundle
-app.use(route.get('/:num(\\d{1,2})-:uid', function (ctx, num, uid, next) {
+app.use(get('/:num(\\d{1,2})-:uid', function (ctx, num, uid, next) {
   if (app.env === 'development') return next()
   var reg = new RegExp(`bundle-\\d+-(${num})\\.js`)
   var key = Object.keys(ctx.assets).find((key) => reg.test(key))
@@ -90,7 +98,7 @@ app.use(route.get('/:num(\\d{1,2})-:uid', function (ctx, num, uid, next) {
 }))
 
 // get event as iCalendar file
-app.use(route.get('/events/:uid.ics', async function (ctx, uid) {
+app.use(get('/events/:uid.ics', async function (ctx, uid) {
   var api = await Prismic.api(REPOSITORY, { req: ctx.req })
   var response = await api.query(Prismic.Predicates.at('my.event.uid', uid))
   var doc = response.results[0]
@@ -135,15 +143,15 @@ app.use(route.get('/events/:uid.ics', async function (ctx, uid) {
 }))
 
 // loopkup user location by ip
-app.use(route.get('/geoip', function (ctx, next) {
-  ctx.set('Cache-Control', 'max-age=0')
+app.use(get('/geoip', function (ctx, next) {
+  ctx.set('Cache-Control', 'no-cache, private, max-age=0')
   ctx.type = 'application/json'
   var ip = ctx.headers['cf-connecting-ip'] || ctx.ip
   ctx.body = geoip.lookup(ip.replace('::1', '2.131.255.255'))
 }))
 
 // randomize layout
-app.use(route.get('/', function (ctx, next) {
+app.use(get('/', function (ctx, next) {
   if (!ctx.accepts('html')) return next()
   var layout = parseInt(ctx.query.layout, 10)
   if (!layout) layout = Math.ceil(Math.random() * 9)
@@ -176,7 +184,7 @@ app.use(function (ctx, next) {
   var previewCookie = ctx.cookies.get(Prismic.previewCookie)
   if (previewCookie) {
     ctx.state.ref = previewCookie
-    ctx.set('Cache-Control', 'max-age=0')
+    ctx.set('Cache-Control', 'no-cache, private, max-age=0')
   } else {
     ctx.state.ref = null
   }

@@ -1,0 +1,93 @@
+@import "../base";
+
+/** @define Bookmark */
+.Bookmark {
+  display: flex;
+  position: relative;
+  background-color: rgba(var(--color-gray-light), 0.6);
+}
+
+.Bookmark-icon {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 0.9rem;
+}
+
+.Bookmark-publisher {
+  display: inline-block;
+  padding: 0.4em 0.75em 0.5em;
+  font-size: 0.75rem;
+  color: rgb(var(--current-background));
+  background-color: rgb(var(--color-theme));
+  border-radius: 1px;
+}
+
+.Bookmark.is-loading .Bookmark-provider {
+  color: rgb(var(--color-theme));
+}
+
+.Bookmark-thumbnail {
+  flex: 0 0 auto;
+  min-width: 26%;
+  padding: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.Bookmark-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  color: transparent;
+}
+
+.Bookmark-body {
+  flex: 1 1 auto;
+  padding: 1rem 1.5rem 1.5rem;
+  overflow: hidden;
+}
+
+.Bookmark-title {
+  margin: 0.2em 0;
+  font-size: 1.125rem;
+  text-transform: none;
+  line-height: 1.3;
+  font-family: var(--default-font-family);
+}
+
+.Bookmark-description {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 700px) {
+  .Bookmark-description {
+    display: none;
+  }
+}
+
+.Bookmark-meta {
+  color: rgb(var(--color-text-muted));
+}
+
+@media (max-width: 700px) {
+  .Bookmark-date {
+    display: none;
+  }
+}
+
+.Bookmark-href {
+  text-decoration: underline;
+}

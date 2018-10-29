@@ -52,13 +52,8 @@ function goal (state, emit) {
     var shortcuts = data.slices.filter((slice) => slice.primary.shortcut_name)
     var slices = doc.data.slices.map(fromSlice)
 
-    if (state.prefetch) {
-      // concat and await all nested requests during prefetch
-      return Promise.all(slices.reduce(function (all, slice) {
-        if (slice instanceof Promise) all.push(slice)
-        return all
-      }, []))
-    }
+    // await all nested requests during prefetch
+    if (state.prefetch) return Promise.all(slices)
 
     return html`
       <main class="View-main">
@@ -154,15 +149,20 @@ function goal (state, emit) {
         `
         case 'drill_down': {
           var items = slice.items.map(function (item, order) {
+            var body = asElement(item.text, state.docs.resolve, serialize)
+
+            // expose possible nested promises
+            if (state.prefetch) return body
+
             var id = `${doc.id}-details-${index}-${order}`
             var title = asText(item.heading)
-            var children = html`
-              <div class="Text">
-                ${asElement(item.text, state.docs.resolve, serialize)}
-              </div>
-            `
+            var children = html`<div class="Text">${body}</div>`
             return state.cache(Details, id).render(title, children)
           })
+
+          // forward nested promises
+          if (state.prefetch) return Promise.all(items)
+
           return html`
             <div class="View-section View-section--${camelCase(slice.slice_type)}" id="${slugify(slice.primary.shortcut_name || '')}">
               ${items}
@@ -206,7 +206,7 @@ function goal (state, emit) {
               return html`
                 <figure class="u-sizeFull">
                   <div class="u-aspect4-3">
-                    <img ${attrs} src="/media/fetch/w_900/${item.image.url}">
+                    <img ${attrs} src="${srcset(item.image.url, [900]).split(' ')[0]}">
                   </div>
                   ${item.image.copyright ? html`
                     <figcaption class="Text">

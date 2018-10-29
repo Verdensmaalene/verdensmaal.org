@@ -38,6 +38,9 @@ function article (state, emit) {
       `
     }
 
+    var body = asElement(doc.data.body, state.docs.resolve, serialize)
+    if (state.prefetch) return Promise.all(body)
+
     var title = asText(doc.data.title)
     var description = asText(doc.data.description)
     var date = parse(doc.first_publication_date)
@@ -56,7 +59,7 @@ function article (state, emit) {
                   </time>
                   <h1 class="u-spaceT3">${title}</h1>
                   <p>${description}</p>
-                  ${asElement(doc.data.body, state.docs.resolve, serialize)}
+                  ${body}
                 </div>
               </div>
               <div class="View-sidebar u-col u-lg-size1of3">
