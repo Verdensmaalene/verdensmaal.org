@@ -9,9 +9,9 @@
 
 .Intro::before {
   content: "";
-  height: 10vh;
+  height: 17vh;
   display: block;
-  max-height: 60px;
+  max-height: 7rem;
 }
 
 .Intro-title {
@@ -50,7 +50,7 @@
 
   .Intro::before {
     max-height: none;
-    min-height: 3rem;
+    min-height: 10rem;
   }
 
   .Intro-title {

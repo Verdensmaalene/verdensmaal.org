@@ -88,11 +88,11 @@ class Home extends View {
         <main class="View-main">
           <div class="u-container">
             ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
-            <section class="u-spaceT4">
+            <section>
               ${state.cache(Grid, id).render(goals, state.ui.gridLayout, slot)}
             </section>
           </div>
-          <section class="u-spaceV8">
+          <section>
             <div class="u-container">
               ${doc ? intro({ secondary: true, title: asText(doc.data.featured_heading), body: asText(doc.data.featured_text, state.docs.resolve) }) : intro.loading({ secondary: true })}
             </div>
