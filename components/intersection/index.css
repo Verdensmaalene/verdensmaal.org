@@ -4,7 +4,6 @@
 
 .Intersection {
   max-width: 18em;
-  margin: 0 0 0.2em;
   font-size: 2.5rem;
   line-height: 1.15;
   font-weight: 600;
@@ -12,6 +11,7 @@
   text-transform: uppercase;
   font-family: var(--heading-font-family);
   word-spacing: var(--heading-word-spacing);
+  text-align: left;
 }
 
 .Intersection-title {
@@ -33,8 +33,28 @@
   color: #fff;
 }
 
+.Intersection--secondary {
+  font-size: 1.35rem;
+}
+
 @media (min-width: 1000px) {
   .Intersection {
     font-size: 4rem;
+  }
+
+  .Intersection--secondary {
+    font-size: 1.55rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .Intersection--secondary {
+    font-size: 1.7rem;
+  }
+}
+
+@media (min-width: 2000px) {
+  .Intersection--secondary {
+    font-size: 2.2rem;
   }
 }

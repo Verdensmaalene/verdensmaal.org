@@ -13,6 +13,7 @@ var intersection = require('../components/intersection')
 var GoalGrid = require('../components/goal-grid')
 var { i18n, reduce, srcset } = require('../components/base')
 var centerSlot = require('../components/goal-grid/slots/center')
+var paddSlot = require('../components/goal-grid/slots/padded')
 var cardSlot = require('../components/goal-grid/slots/card')
 
 var text = i18n()
@@ -127,13 +128,7 @@ class Home extends View {
           }
           case 'small': {
             if (!doc || !doc.data.interlink_heading.length) return null
-            return centerSlot(html`
-              <div class="Text">
-                <p class="Text-h3">
-                  ${asElement(doc.data.interlink_text, state.docs.resolve)}
-                </p>
-              </div>
-            `, 'fill')
+            return paddSlot(intersection({ secondary: true, body: asElement(doc.data.interlink_text, state.docs.resolve) }), 'fill')
           }
           default: return null
         }

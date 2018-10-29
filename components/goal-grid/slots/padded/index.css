@@ -1,0 +1,16 @@
+@import "../../../base/global";
+
+/* GoalGrid */
+.GoalGrid-slot--padded {
+  display: flex;
+  align-items: center;
+  padding: 1.2rem;
+  width: 100%;
+  background: rgba(var(--color-gray-light), 0.6);
+}
+
+@media (min-width: 1200px) {
+  .GoalGrid-slot--padded {
+    padding: 2rem;
+  }
+}
