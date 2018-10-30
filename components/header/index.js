@@ -15,7 +15,8 @@ module.exports = class Header extends Component {
       id: id,
       size: 1,
       isOpen: false,
-      isHighContrast: false
+      isHighContrast: false,
+      isInitialized: false
     }
 
     var self = this
@@ -58,7 +59,8 @@ module.exports = class Header extends Component {
   }
 
   load (element) {
-    if (this.local.opts.static) return
+    if (this.local.isInitialized) return
+    this.local.isInitialized = true
 
     var top
     var onscroll = nanoraf(() => {

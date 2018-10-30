@@ -24,6 +24,10 @@
   --current-color: #fff;
 }
 
+.Header--static {
+  --Header-size: 1 !important;
+}
+
 @media print {
   .Header {
     display: none;
