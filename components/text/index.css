@@ -70,12 +70,14 @@
 }
 
 .Text img:not(:first-child),
-.Text pre:not(:first-child) {
+.Text pre:not(:first-child),
+.Text figure:not(:first-child) {
   margin-top: 1.5em;
 }
 
 .Text img:not(:last-child),
-.Text pre:not(:last-child) {
+.Text pre:not(:last-child),
+.Text figure:not(:last-child) {
   margin-bottom: 1.5em;
 }
 

@@ -1,3 +1,4 @@
+var html = require('choo/html')
 var { Elements } = require('prismic-richtext')
 var bookmark = require('../bookmark')
 var { srcset } = require('../base')
@@ -24,6 +25,14 @@ function serialize (type, node, content, children) {
       } catch (err) {
         return bookmark(node.oembed.meta)
       }
+    }
+    case Elements.image: {
+      let sizes = [400, 600, 800, 1200].map(function (size, index) {
+        return Math.min(size, node.dimensions.width * (index + 1))
+      })
+      return html`
+        <img sizes="(min-width: 1000px) 66vw, 100vw" srcset="${srcset(node.url, sizes)}" src="${srcset(node.url, [800]).split(' ')[0]}" alt="${node.alt}">
+      `
     }
     default: return null
   }

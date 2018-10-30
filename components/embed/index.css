@@ -1,16 +1,30 @@
-/* @defind Embed */
-
 @import "../base";
 
+/* @defind Embed */
 .Embed {
   width: 100%;
   position: relative;
   color: rgb(var(--current-background));
 }
 
-.Embed::after {
+.Embed-link {
+  display: block;
+  width: 0;
+  height: 0;
+}
+
+.Embed-link::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Embed-link::after {
   --current-color: 255, 255, 255, 0;
-  content: attr(data-title);
+  content: "";
   width: 3rem;
   height: 3rem;
 

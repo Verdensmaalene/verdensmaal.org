@@ -20,15 +20,16 @@ function embed (props) {
   attrs.alt = attrs.alt || props.title || ''
 
   return html`
-    <a href="${props.url}" target="_blank" rel="noopener noreferrer" onclick=${onclick}>
-      <figure class="Embed" data-title="${text`Play ${props.title || ''}`}">
-        <img class="Embed-image" ${attrs} src="${src}">
-        <figcaption class="Embed-caption">
-          ${props.title ? html`<strong class="Embed-title">${props.title}</strong>` : null}
-          ${props.description ? html`<p class="u-spaceT1"><span class="Embed-description">${props.description}</span></p>` : null}
-        </figcaption>
-      </figure>
-    </a>
+    <figure class="Embed">
+      <a class="Embed-link" href="${props.url}" target="_blank" rel="noopener noreferrer" onclick=${onclick}>
+        <span class="u-hiddenVisually">${text`Play ${props.title || ''}`}</span>
+      </a>
+      <img class="Embed-image" ${attrs} src="${src}">
+      <figcaption class="Embed-caption">
+        ${props.title ? html`<strong class="Embed-title">${props.title}</strong>` : null}
+        ${props.description ? html`<p class="u-spaceT1"><span class="Embed-description">${props.description}</span></p>` : null}
+      </figcaption>
+    </figure>
   `
 
   function onclick (event) {
