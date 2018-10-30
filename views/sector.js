@@ -38,7 +38,7 @@ function goal (state, emit) {
     var title = asText(data.title)
     var body = asText(data.description)
     var image = {
-      src: `/media/fetch/w_900/${doc.data.image.url}`,
+      src: srcset(doc.data.image.url, [900], { aspect: 9 / 16 }).split(' ')[0],
       height: doc.data.image.dimensions.height,
       width: doc.data.image.dimensions.width,
       alt: data.image.alt,
