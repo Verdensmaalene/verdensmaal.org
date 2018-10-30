@@ -1,13 +1,19 @@
 @import "../base";
 
-/** @define Bookmark */
+/**
+ * @define Bookmark
+ * The Bookmark component is intended to be compatible with just about anything.
+ * To prevent generic typography rules from interfering, excessive importance is
+ * applied to some selectors, this is intended and neccessary but possible
+ * to override with i.e. utilities or selectors using !important.
+ */
 .Bookmark {
   display: flex;
   position: relative;
   background-color: rgba(var(--color-gray-light), 0.6);
 }
 
-.Bookmark-icon {
+.Bookmark .Bookmark-icon {
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
@@ -18,18 +24,23 @@
   top: 0;
   right: 0;
   font-size: 0.9rem;
+  color: rgb(var(--current-color));
 }
 
 @media (min-width: 700px) {
-  .Bookmark-icon {
+  .Bookmark .Bookmark-icon {
     padding: 1rem;
   }
 }
 
-.Bookmark-publisher {
+.Bookmark .Bookmark-publisher {
   display: inline-block;
+  max-width: 15em;
   padding: 0.4em 0.75em 0.5em;
   font-size: 0.75rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   color: rgb(var(--current-background));
   background-color: rgb(var(--color-theme));
   border-radius: 1px;
@@ -39,7 +50,7 @@
   color: rgb(var(--color-theme));
 }
 
-.Bookmark-thumbnail {
+.Bookmark .Bookmark-thumbnail {
   flex: 0 0 auto;
   min-width: 26%;
   padding: 0.5rem;
@@ -49,12 +60,12 @@
 }
 
 @media (max-width: 400px) {
-  .Bookmark-thumbnail {
+  .Bookmark .Bookmark-thumbnail {
     display: none;
   }
 }
 
-.Bookmark-image {
+.Bookmark .Bookmark-image {
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -65,19 +76,19 @@
   color: transparent;
 }
 
-.Bookmark-body {
+.Bookmark .Bookmark-body {
   flex: 1 1 auto;
   padding: 0.75rem 1rem;
   overflow: hidden;
 }
 
 @media (min-width: 700px) {
-  .Bookmark-body {
+  .Bookmark .Bookmark-body {
     padding: 1rem 1.5rem;
   }
 }
 
-.Bookmark-title {
+.Bookmark .Bookmark-title:nth-child(n) {
   margin: 0.2em 0;
   font-size: 1.125rem;
   text-transform: none;
@@ -85,27 +96,27 @@
   font-family: var(--default-font-family);
 }
 
-.Bookmark-description {
+.Bookmark .Bookmark-description:nth-child(n) {
   margin: 0;
   font-size: 0.875rem;
 }
 
 @media (max-width: 700px) {
-  .Bookmark-description {
+  .Bookmark .Bookmark-description {
     display: none;
   }
 }
 
-.Bookmark-meta {
+.Bookmark .Bookmark-meta {
   color: rgb(var(--color-text-muted));
 }
 
 @media (max-width: 700px) {
-  .Bookmark-date {
+  .Bookmark .Bookmark-date {
     display: none;
   }
 }
 
-.Bookmark-href {
+.Bookmark .Bookmark-href {
   text-decoration: underline;
 }

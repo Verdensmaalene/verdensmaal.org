@@ -33,12 +33,12 @@
  * Inline elements
  */
 
-.Text > a {
+.Text a {
   font-weight: 600;
   color: rgb(var(--color-link));
 }
 
-.Text > small {
+.Text small {
   font-size: 0.8em;
 }
 
@@ -46,46 +46,46 @@
  * Block elements
  */
 
-.Text > p,
-.Text > ul,
-.Text > ol {
+.Text p,
+.Text ul,
+.Text ol {
   margin: 0;
 }
 
-.Text > p:not(:first-child),
-.Text > ul:not(:first-child),
-.Text > ol:not(:first-child) {
+.Text p:not(:first-child),
+.Text ul:not(:first-child),
+.Text ol:not(:first-child) {
   margin-top: 1.3em;
 }
 
-.Text > p:not(:last-child),
-.Text > ul:not(:last-child),
-.Text > ol:not(:last-child) {
+.Text p:not(:last-child),
+.Text ul:not(:last-child),
+.Text ol:not(:last-child) {
   margin-bottom: 1.3em;
 }
 
-.Text > img,
-.Text > pre {
+.Text img,
+.Text pre {
   margin: 0;
 }
 
-.Text > img:not(:first-child),
-.Text > pre:not(:first-child) {
+.Text img:not(:first-child),
+.Text pre:not(:first-child) {
   margin-top: 1.5em;
 }
 
-.Text > img:not(:last-child),
-.Text > pre:not(:last-child) {
+.Text img:not(:last-child),
+.Text pre:not(:last-child) {
   margin-bottom: 1.5em;
 }
 
-.Text > img {
+.Text img {
   height: auto;
   max-width: 100%;
   background: rgb(var(--color-gray-light));
 }
 
-.Text > pre {
+.Text pre {
   font-size: 12px;
   overflow: auto;
   background: rgb(var(--color-gray-light));
@@ -97,25 +97,25 @@
  * Lists
  */
 
-.Text > ul {
+.Text ul {
   list-style-type: none;
 }
 
-.Text > ol {
+.Text ol {
   list-style-type: decimal;
   padding-left: 1.5em;
 }
 
-.Text > ul > li {
+.Text ul > li {
   padding-left: 1.5em;
   position: relative;
 }
 
-.Text > ol > li {
+.Text ol > li {
   padding-left: 0.5em;
 }
 
-.Text > ul > li::before {
+.Text ul > li::before {
   content: "–";
   position: absolute;
   left: 0;
@@ -127,18 +127,18 @@
   padding-top: 1em;
 }
 
-.Text > dl {
+.Text dl {
   display: grid;
   grid-template-columns: auto 1fr;
 }
 
 @supports (display: grid) {
-  .Text > dl > dd {
+  .Text dl > dd {
     padding-left: 1em;
     margin: 0;
   }
 
-  .Text > dl > dd:not(:last-child) {
+  .Text dl > dd:not(:last-child) {
     margin-bottom: 0.25em;
   }
 }
@@ -147,7 +147,7 @@
  * 1. Maintain 16/9 aspect ratio for embedded content
  */
 
-.Text > iframe {
+.Text iframe {
   width: 100vw;
   height: calc(100% * 9/16); /* 1 */
   max-width: 100%;
@@ -159,12 +159,12 @@
  * Headings
  */
 
-.Text > h1,
-.Text > h2,
-.Text > h3,
-.Text > h4,
-.Text > h5,
-.Text > h6,
+.Text h1,
+.Text h2,
+.Text h3,
+.Text h4,
+.Text h5,
+.Text h6,
 .Text .Text-h1,
 .Text .Text-h2,
 .Text .Text-h3,
@@ -175,12 +175,12 @@
   color: rgb(var(--current-color));
 }
 
-.Text > h1:not(:first-child),
-.Text > h2:not(:first-child),
-.Text > h3:not(:first-child),
-.Text > h4:not(:first-child),
-.Text > h5:not(:first-child),
-.Text > h6:not(:first-child),
+.Text h1:not(:first-child),
+.Text h2:not(:first-child),
+.Text h3:not(:first-child),
+.Text h4:not(:first-child),
+.Text h5:not(:first-child),
+.Text h6:not(:first-child),
 .Text .Text-h1:not(:first-child),
 .Text .Text-h2:not(:first-child),
 .Text .Text-h3:not(:first-child),
@@ -190,10 +190,10 @@
   margin-top: 1em;
 }
 
-.Text > h1,
-.Text > h2,
-.Text > h3,
-.Text > h4,
+.Text h1,
+.Text h2,
+.Text h3,
+.Text h4,
 .Text .Text-h1,
 .Text .Text-h2,
 .Text .Text-h3,
@@ -206,28 +206,28 @@
   word-spacing: var(--heading-word-spacing);
 }
 
-.Text > h1,
+.Text h1,
 .Text .Text-h1 {
   font-size: 3em;
   line-height: 1;
 }
 
-.Text > h2,
+.Text h2,
 .Text .Text-h2 {
   font-size: 2em;
   line-height: 1.1;
 }
 
-.Text > h3,
-.Text > h4,
+.Text h3,
+.Text h4,
 .Text .Text-h3,
 .Text .Text-h4 {
   font-size: 1.5em;
   line-height: 1.15;
 }
 
-.Text > h5,
-.Text > h6,
+.Text h5,
+.Text h6,
 .Text .Text-h5,
 .Text .Text-h6 {
   margin: 1.3em 0;
@@ -237,10 +237,10 @@
 }
 
 @media (min-width: 1200px) {
-  .Text > h1:not(:first-child),
-  .Text > h2:not(:first-child),
-  .Text > h3:not(:first-child),
-  .Text > h4:not(:first-child),
+  .Text h1:not(:first-child),
+  .Text h2:not(:first-child),
+  .Text h3:not(:first-child),
+  .Text h4:not(:first-child),
   .Text .Text-h1:not(:first-child),
   .Text .Text-h2:not(:first-child),
   .Text .Text-h3:not(:first-child),
@@ -248,23 +248,23 @@
     margin-top: 1.5em;
   }
 
-  .Text > h1,
+  .Text h1,
   .Text .Text-h1 {
     font-size: 4.5em;
   }
 
-  .Text > h2,
+  .Text h2,
   .Text .Text-h2 {
     font-size: 3em;
   }
 
-  .Text > h3,
+  .Text h3,
   .Text .Text-h3 {
     font-size: 2em;
     line-height: 1.1;
   }
 
-  .Text > h4,
+  .Text h4,
   .Text .Text-h4 {
     font-size: 1.5em;
     line-height: 1.05;

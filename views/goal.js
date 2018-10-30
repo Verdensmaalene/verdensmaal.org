@@ -12,6 +12,7 @@ var intersection = require('../components/intersection')
 var grid = require('../components/grid')
 var Goal = require('../components/goal')
 var Flag = require('../components/flag')
+var Text = require('../components/text')
 var Header = require('../components/header')
 var TargetGrid = require('../components/target-grid')
 var { i18n, isSameDomain, className, reduce, srcset } = require('../components/base')
@@ -141,9 +142,7 @@ class GoalPage extends View {
           ${header}
           ${doc.data.manifest && doc.data.manifest.length ? html`
             <section class="u-container">
-              <div class="Text Text--large">
-                ${asElement(doc.data.manifest)}
-              </div>
+              ${state.cache(Text, `${state.params.wildcard}-manifest`, { size: 'large' }).render(doc.data.manifest)}
             </section>
           ` : null}
           <section>
