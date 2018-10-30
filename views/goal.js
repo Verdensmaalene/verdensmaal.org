@@ -139,13 +139,24 @@ class GoalPage extends View {
         <main class="View-main">
           ${goal.render(props)}
           ${header}
+          ${doc.data.manifest && doc.data.manifest.length ? html`
+            <section class="u-container">
+              <div class="Text Text--large">
+                ${asElement(doc.data.manifest)}
+              </div>
+            </section>
+          ` : null}
           <section>
-            <div class="u-container">
-              ${doc ? intro({ title: asText(doc.data.featured_heading), body: asElement(doc.data.featured_text, state.docs.resolve) }) : intro.loading()}
-            </div>
-            <div class="u-md-container">
-              ${grid({ size: { md: '1of2', lg: '1of3' }, carousel: true }, featured)}
-            </div>
+            ${doc.data.featured_heading && doc.data.featured_heading.length ? html`
+              <div class="u-container">
+                ${doc ? intro({ title: asText(doc.data.featured_heading), body: asElement(doc.data.featured_text, state.docs.resolve) }) : intro.loading()}
+              </div>
+            ` : null}
+            ${featured.length ? html`
+              <div class="u-md-container">
+                ${grid({ size: { md: '1of2', lg: '1of3' }, carousel: true }, featured)}
+              </div>
+            ` : null}
           </section>
           ${targets.length ? html`
             <section class="u-container" id="targets">
