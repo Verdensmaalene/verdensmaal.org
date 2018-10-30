@@ -19,6 +19,7 @@ var Prismic = require('prismic-javascript')
 var purge = require('./lib/purge')
 var scrape = require('./lib/scrape')
 var resolve = require('./lib/resolve')
+var imageproxy = require('./lib/cloudinary-proxy')
 
 var app = jalla('index.js', { sw: 'sw.js' })
 
@@ -30,7 +31,14 @@ app.use(get('/scrape/:uri(.+)', async function (ctx, uri, next) {
 }))
 
 // proxy cloudinary on-demand-transform API
-app.use(require('./lib/cloudinary-proxy'))
+app.use(get('/media/:type/:transform/:uri(.+)', async function (ctx, type, transform, uri) {
+  if (ctx.querystring) uri += `?${ctx.querystring}`
+  var stream = await imageproxy(type, transform, uri)
+  var headers = ['etag', 'last-modified', 'content-length', 'content-type']
+  headers.forEach((header) => ctx.set(header, stream.headers[header]))
+  ctx.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 365}`)
+  ctx.body = stream
+}))
 
 // disallow robots anywhere but live URL
 app.use(get('/robots.txt', function (ctx, next) {
