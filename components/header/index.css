@@ -1,7 +1,6 @@
-/* @define Header */
-
 @import "../base";
 
+/* @define Header */
 :root {
   --Header-size: 1;
   --Header-height: 5rem;
@@ -9,13 +8,13 @@
 }
 
 /**
- * Root element is left behind (at top of page) to fill upp space
- */
+* Root element is left behind (at top of page) to fill upp space
+*/
 
 .Header {
   width: 100%;
   height: var(--Header-height);
-  contain: size layout style;
+  contain: size style;
   position: relative;
   overflow: hidden;
 }
