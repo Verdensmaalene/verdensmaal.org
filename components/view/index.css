@@ -138,21 +138,6 @@
 }
 
 /**
- * Visually group section heading with next sibling section
- */
-
-.View-section--heading {
-  margin-bottom: 2.5rem;
-}
-
-.View-section--heading::before {
-  content: "";
-  height: 10vh;
-  display: block;
-  max-height: 60px;
-}
-
-/**
  * 1. Deduct trailing grid margin
  */
 

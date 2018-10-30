@@ -3,6 +3,7 @@ var asElement = require('prismic-element')
 var { asText } = require('prismic-richtext')
 var view = require('../components/view')
 var grid = require('../components/grid')
+var intro = require('../components/intro')
 var intersection = require('../components/intersection')
 var Text = require('../components/text')
 var { i18n } = require('../components/base')
@@ -40,11 +41,9 @@ function missionView (state, emit) {
     return html`
       <main class="View-main">
         ${state.cache(Mission, doc.id + '-mission').render({ title, description, partners })}
-        <div class="View-section View-section--text u-container u-spaceT8">
-          <div class="Text">
-            ${asElement(doc.data.body)}
-          </div>
-        </div>
+        <section class="u-container">
+          ${state.cache(Text, `${state.params.wildcard}-manifest`, { size: 'large' }).render(doc.data.body)}
+        </section>
         ${doc.data.slices.map(fromSlice)}
       </main>
     `
@@ -96,12 +95,7 @@ function missionView (state, emit) {
           if (!items.length) return null
           return html`
             <section class="u-container">
-              <div class="View-section View-section--heading">
-                <div class="Text">
-                  ${slice.primary.heading.length ? html`<h2 class="Text-h1 u-spaceB1">${asText(slice.primary.heading)}</h2>` : null}
-                  ${slice.primary.text.length ? asElement(slice.primary.text) : null}
-                </div>
-              </div>
+              ${intro({ secondary: true, title: asText(slice.primary.heading), body: asElement(slice.primary.text) })}
               <div class="View-section View-section--${camelCase(slice.slice_type)}">
                 ${grid({ size: { md: '1of2', lg: '1of3' } }, items)}
               </div>

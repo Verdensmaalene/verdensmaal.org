@@ -5,7 +5,7 @@
   display: flex;
   width: 100%;
   height: 50vh;
-  max-height: 700px;
+  max-height: 43rem;
   position: relative;
   background-color: rgb(var(--color-gray-light));
 }
@@ -22,7 +22,7 @@
 
 @media (min-width: 600px) {
   .Map {
-    height: 63vh;
+    height: 75vh;
   }
 }
 
