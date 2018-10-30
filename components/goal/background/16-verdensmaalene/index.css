@@ -312,7 +312,7 @@
 }
 
 @media (min-width: 1000px) {
-  .Background:not(.Background--small) .Background16-dove {
+  .Background16:not(.Background16--small) .Background16-dove {
     display: block;
   }
 }
