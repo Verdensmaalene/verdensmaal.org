@@ -44,7 +44,7 @@ module.exports = class Header extends Component {
     }
   }
 
-  height () {
+  get height () {
     return this.element.offsetHeight
   }
 

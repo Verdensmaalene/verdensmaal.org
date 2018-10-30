@@ -137,6 +137,10 @@
   margin-bottom: 7rem;
 }
 
+.View-section--heading {
+  margin-bottom: 2.5rem;
+}
+
 /**
  * 1. Deduct trailing grid margin
  */
@@ -153,7 +157,8 @@
 .View-section--image + .View-section--video,
 .View-section--image + .View-section--gallery,
 .View-section--video + .View-section--image,
-.View-section--video + .View-section--gallery {
+.View-section--video + .View-section--gallery,
+.View-section--video + .View-section--video {
   margin-top: calc((7rem - var(--Grid-gutter)) * -1); /* 1 */
 }
 

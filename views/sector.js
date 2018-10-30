@@ -62,7 +62,7 @@ function goal (state, emit) {
           <div class="Text u-spaceV6">
             ${text`Shortcuts`}: ${shortcuts.map((slice, index, list) => html`
               <span>
-                <a href="#${slugify(slice.primary.shortcut_name)}" onclick=${shortcut}>${slice.primary.shortcut_name}</a>${index < (list.length - 1) ? ', ' : null}
+                <a href="#${slugify(slice.primary.shortcut_name)}" onclick=${scrollIntoView}>${slice.primary.shortcut_name}</a>${index < (list.length - 1) ? ', ' : null}
               </span>
             `)}
           </div>
@@ -71,7 +71,7 @@ function goal (state, emit) {
       </main>
     `
 
-    function shortcut (event) {
+    function scrollIntoView (event) {
       var el = document.getElementById(event.target.hash.substr(1))
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -87,8 +87,8 @@ function goal (state, emit) {
           var id = doc.id + '-text-' + index
           var opts = { size: 'large' }
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container" id="${slugify(slice.primary.shortcut_name || '')}">
-              ${state.cache(Text, id, opts).render(slice.primary.text)}
+            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
             </div>
           `
         }
@@ -129,7 +129,8 @@ function goal (state, emit) {
 
             var cols = cells.length % 3 === 0 ? 3 : 2
             return html`
-              <div class="View-section View-section--${camelCase(slice.slice_type)} u-md-container" id="${slugify(slice.primary.shortcut_name || '')}">
+              <div class="View-section View-section--${camelCase(slice.slice_type)} u-md-container">
+                <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
                 ${grid({ size: { md: '1of2', lg: `1of${cols}` }, carousel: true }, cells)}
               </div>
             `
@@ -140,7 +141,8 @@ function goal (state, emit) {
           return result
         }
         case 'heading': return html`
-          <div class="View-section View-section--${camelCase(slice.slice_type)} u-container" id="${slugify(slice.primary.shortcut_name || '')}">
+          <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
             <div class="Text">
               <h2 class="Text-h1 u-spaceB1 u-textHyphens">${asText(slice.primary.heading)}</h2>
               ${asElement(slice.primary.text)}
@@ -164,27 +166,31 @@ function goal (state, emit) {
           if (state.prefetch) return Promise.all(items)
 
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container" id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
               ${items}
             </div>
           `
         }
         case 'quote': return html`
-          <div class="View-section View-section--${camelCase(slice.slice_type)} u-container" id="${slugify(slice.primary.shortcut_name || '')}">
+          <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
             ${blockquote({ body: asElement(slice.primary.quote, state.docs.resolve), caption: slice.primary.author })}
           </div>
         `
         case 'video': {
           if (slice.primary.video.type !== 'video') return null
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container" id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
               ${video(slice.primary.video)}
             </div>
           `
         }
         case 'image': return html`
           <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
-            <div class="Text u-sizeFull" id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
+            <div class="Text u-sizeFull">
               <img class="u-sizeFull" width="${slice.primary.image.dimensions.width}" height="${slice.primary.image.dimensions.height}" src="${slice.primary.image.url}" alt="${slice.primary.image.alt || ''}" />
             </div>
           </div>
@@ -220,17 +226,17 @@ function goal (state, emit) {
           }).filter(Boolean)
 
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container" id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
               ${grid({ size: { md: '1of2' } }, items)}
             </div>
           `
         }
         case 'link_text': return html`
           <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
-            <div id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
               ${intersection({ title: asText(slice.primary.heading), body: asElement(slice.primary.text, state.docs.resolve) })}
             </div>
-          </div>
         `
         case 'map': {
           let locations = slice.items.map(function (item) {
@@ -241,7 +247,8 @@ function goal (state, emit) {
             return location
           })
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container" id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
               ${state.cache(Map, `${doc.id}-${index}`).render(locations)}
             </div>
           `
@@ -274,7 +281,8 @@ function goal (state, emit) {
 
           if (!items.length) return null
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container" id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
               ${grid({ size: { md: '1of2', lg: '1of3' } }, items)}
             </div>
           `
@@ -284,7 +292,8 @@ function goal (state, emit) {
           var cols = slice.items.length % 3 === 0 ? 3 : 2
           var cells = slice.items.map((item) => linkCard(item, cols))
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-md-container" id="${slugify(slice.primary.shortcut_name || '')}">
+            <div class="View-section View-section--${camelCase(slice.slice_type)} u-md-container">
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
               ${grid({ size: { md: '1of2', lg: `1of${cols}` }, carousel: true }, cells)}
             </div>
           `
@@ -332,7 +341,7 @@ function video (props) {
     width: props.thumbnail_width,
     height: props.thumbnail_height,
     sizes: '100vw',
-    srcset: srcset(id, [400, 900, 1800, [3600, 'q_30']], { type: provider })
+    srcset: srcset(id, [400, 900, 1800, [2600, 'q_50'], [3600, 'q_30']], { type: provider })
   })
 }
 

@@ -1,3 +1,6 @@
+var nanoraf = require('nanoraf')
+var Header = require('../components/header')
+
 module.exports = ui
 
 function ui (state, emitter) {
@@ -6,6 +9,7 @@ function ui (state, emitter) {
   state.ui.isLoading = false
   state.ui.hasOverlay = false
   state.ui.isHighContrast = false
+  state.ui.scrollOffset = 0
   state.ui.gridLayout = state.ui.gridLayout || Math.ceil(Math.random() * 9)
   state.ui.clock = { ref: 1 }
 
@@ -55,6 +59,14 @@ function ui (state, emitter) {
 
   emitter.on('navigate', function () {
     state.ui.transitions = []
+  })
+
+  emitter.on('DOMContentLoaded', function () {
+    var onresize = nanoraf(function () {
+      state.ui.scrollOffset = state.cache(Header, 'header').height
+    })
+    onresize()
+    window.addEventListener('resize', onresize)
   })
 
   var requests = 0
