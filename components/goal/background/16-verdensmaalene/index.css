@@ -1,0 +1,318 @@
+/* @define Background16 */
+
+.Background16 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Background16-container {
+  height: 100%;
+  width: calc(100% - (24px * 2));
+  max-width: calc(1280px + (48px * 2));
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 100%);
+  animation: Background16--appear 1000ms 100ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes Background16--appear {
+  to {
+    transform: translate(-50%, 0%);
+  }
+}
+
+@media (min-width: 1000px) {
+  .Background16-container {
+    width: calc(100% - (32px * 2));
+  }
+}
+
+.Background16--small .Background16-container {
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .Background16-container {
+    width: calc(100% - (48px * 2));
+  }
+}
+
+.Background16-institution {
+  height: 16%;
+  max-height: 190px;
+  width: auto;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 100%);
+  animation: Background16-institution--appear 1000ms 400ms cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+@keyframes Background16-institution--appear {
+  to {
+    transform: translate(-50%, 0%);
+  }
+}
+
+.Background16--small .Background16-institution {
+  display: none;
+}
+
+.Background16-person {
+  display: none;
+  height: 4em;
+  width: auto;
+  position: absolute;
+  bottom: 0;
+  color: #fff;
+  transform: translateY(100%);
+  animation: Background16-person--appear 600ms 700ms cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+@media (min-width: 900px) {
+  .Background16-person {
+    display: block;
+  }
+}
+
+.Background16-person--judge {
+  right: 28.5%;
+  height: 4em;
+  color: rgb(var(--color-goal-16-shaded));
+  animation-delay: 900ms;
+}
+
+.Background16-person--citizen:nth-child(1) {
+  left: 16%;
+  animation-delay: 200ms;
+}
+
+.Background16-person--citizen:nth-child(2) {
+  left: 19%;
+  opacity: 0.3;
+  animation-delay: 400ms;
+}
+
+.Background16-person--citizen:nth-child(3) {
+  left: 22%;
+  animation-delay: 1000ms;
+}
+
+.Background16-person--citizen:nth-child(4) {
+  left: 25%;
+  color: rgb(var(--color-goal-16-shaded));
+  animation-delay: 750ms;
+}
+
+.Background16-person--citizen:nth-child(5) {
+  height: 2.5em;
+  left: 28.5%;
+  opacity: 0.3;
+  animation-delay: 350ms;
+}
+
+.Background16-person--citizen:nth-child(6) {
+  left: 31%;
+  animation-delay: 100ms;
+}
+
+.Background16-person--citizen:nth-child(7) {
+  right: 25.5%;
+  height: 2.5em;
+  animation-delay: 280ms;
+}
+
+.Background16-person--citizen:nth-child(8) {
+  right: 22%;
+  animation-delay: 150ms;
+}
+
+.Background16-person--citizen:nth-child(9) {
+  right: 19%;
+  opacity: 0.3;
+  animation-delay: 500ms;
+}
+
+.Background16-person--citizen:nth-child(10) {
+  right: 16%;
+}
+
+.Background16-person--citizen:nth-child(11) {
+  right: 13.5%;
+  height: 2.5em;
+  opacity: 0.3;
+  animation-delay: 625ms;
+}
+
+.Background16-person--citizen:nth-child(12) {
+  right: 10%;
+  color: rgb(var(--color-goal-16-shaded));
+  animation-delay: 800ms;
+}
+
+.Background16--small .Background16-person {
+  display: none;
+  font-size: 0.8rem;
+}
+
+.Background16--small .Background16-person--judge,
+.Background16--small .Background16-person--citizen:nth-child(8) ~ .Background16-person--citizen {
+  display: block;
+}
+
+.Background16--small .Background16-person--judge { right: 33.5%; }
+.Background16--small .Background16-person--citizen:nth-child(9) { right: 25%; }
+.Background16--small .Background16-person--citizen:nth-child(10) { right: 17%; }
+.Background16--small .Background16-person--citizen:nth-child(11) { right: 11%; }
+.Background16--small .Background16-person--citizen:nth-child(12) { right: 3.5%; }
+
+@keyframes Background16-person--appear {
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.Background16-sky {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform: translateY(100%);
+  animation: Background16-sky--appear 1000ms 200ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes Background16-sky--appear {
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.Background16-cloud {
+  position: absolute;
+  color: #fff;
+  opacity: 0.1;
+  animation: Background16-cloud--appear 1200ms 200ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes Background16-cloud--appear {
+  0% { transform: translateY(200%) translateY(50px); }
+  25% { transform: translateY(200%); }
+  100% { transform: translateY(0%); }
+}
+
+.Background16-cloud--small {
+  width: 9%;
+}
+
+.Background16-cloud--medium {
+  width: 15%;
+}
+
+.Background16-cloud--large {
+  width: 24%;
+}
+
+@media (min-width: 900px) {
+  .Background16-cloud--small {
+    width: 3%;
+  }
+
+  .Background16-cloud--medium {
+    width: 5%;
+  }
+
+  .Background16-cloud--large {
+    width: 8%;
+  }
+}
+
+.Background16-cloud--light {
+  opacity: 0.275;
+  visibility: hidden;
+}
+
+@media (min-width: 900px) {
+  .Background16-cloud--light {
+    visibility: visible;
+  }
+}
+
+.Background16-cloud--dark {
+  opacity: 0.4;
+  color: rgb(var(--color-goal-16-shaded));
+}
+
+.Background16-cloud:nth-child(1) {
+  top: 70%;
+  left: -2.5%;
+}
+
+.Background16-cloud:nth-child(2) {
+  top: 25%;
+  left: 5.55%;
+}
+
+.Background16-cloud:nth-child(3) {
+  top: 50%;
+  left: 10%;
+}
+
+.Background16-cloud:nth-child(4) {
+  top: 60%;
+  left: 22%;
+}
+
+.Background16-cloud:nth-child(5) {
+  top: 30%;
+  left: 32%;
+}
+
+.Background16-cloud:nth-child(6) {
+  top: 18%;
+  right: 20%;
+}
+
+.Background16-cloud:nth-child(7) {
+  top: 35%;
+  right: 12%;
+}
+
+.Background16-cloud:nth-child(8) {
+  top: 50%;
+  right: 14%;
+}
+
+.Background16-cloud:nth-child(9) {
+  top: 70%;
+  right: -1.5%;
+}
+
+.Background16-dove {
+  display: none;
+  width: 6rem;
+  height: auto;
+  position: absolute;
+  right: 3%;
+  top: 35%;
+  overflow: visible;
+  color: #fff;
+  transform: translateY(100%);
+  animation: Background16-dove--appearing 300ms forwards cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes Background16-dove--appearing {
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@media (min-width: 1000px) {
+  .Background:not(.Background--small) .Background16-dove {
+    display: block;
+  }
+}
