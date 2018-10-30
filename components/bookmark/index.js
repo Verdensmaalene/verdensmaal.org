@@ -14,10 +14,12 @@ function bookmark (props) {
 
   return html`
     <figure class="Bookmark">
-      <div class="Bookmark-thumbnail">
-        <img onerror=${onerror} class="Bookmark-image" alt="${props.title}" sizes="200px" srcset="${srcset(props.image, [200, 400])}" src="${srcset(props.image, [200]).split(' ')[0]}">
-        ${props.publisher ? html`<small class="Bookmark-publisher">${props.publisher}</small>` : null}
-      </div>
+      ${props.image ? html`
+        <div class="Bookmark-thumbnail">
+          <img onerror=${onerror} class="Bookmark-image" alt="${props.title}" sizes="200px" srcset="${srcset(props.image, [200, 400])}" src="${srcset(props.image, [200]).split(' ')[0]}">
+          ${props.publisher ? html`<small class="Bookmark-publisher">${props.publisher}</small>` : null}
+        </div>
+      ` : null}
       <a href="${props.url}" rel="noreferrer noopener" target="_blank" class="Bookmark-icon">
         <span class="u-hiddenVisually">${text`Visit ${url.hostname}`}</span>
         ${external({ cover: true })}
