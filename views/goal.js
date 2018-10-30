@@ -246,14 +246,13 @@ class GoalPage extends View {
       // obj -> Element
       function asFeatured (slice) {
         var data = slice.primary.link ? slice.primary.link.data : slice.primary
-        var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
         var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
         var props = {
           title: asText(data.title),
           body: asText(data.description),
           image: data.image.url ? {
             alt: data.image.alt,
-            sizes: sizes,
+            sizes: '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw',
             srcset: srcset(data.image.url, [400, 600, 900, 1800], opts),
             src: `/media/fetch/w_900/${data.image.url}`,
             caption: data.image.copyright
@@ -274,10 +273,10 @@ class GoalPage extends View {
           case 'news': {
             let date = parse(slice.primary.link.first_publication_date)
             return card(Object.assign({
-              date: {
+              date: !isNaN(date) ? {
                 datetime: date,
                 text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
-              },
+              } : null,
               link: {
                 href: state.docs.resolve(slice.primary.link)
               }
