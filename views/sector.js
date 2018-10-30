@@ -85,10 +85,22 @@ function goal (state, emit) {
       switch (slice.slice_type) {
         case 'text': {
           var id = doc.id + '-text-' + index
-          var opts = { size: 'large' }
+          var children
+          if (index === 0) {
+            let opts = { size: 'large' }
+            children = state.cache(Text, id, opts).render(slice.primary.text)
+          } else {
+            children = html`
+              <div class="Text">
+                ${asElement(slice.primary.text, state.docs.resolve, serialize)}
+              </div>
+            `
+          }
+
           return html`
             <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
+              ${children}
             </div>
           `
         }
@@ -235,8 +247,8 @@ function goal (state, emit) {
         case 'link_text': return html`
           <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
             <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
-              ${intersection({ title: asText(slice.primary.heading), body: asElement(slice.primary.text, state.docs.resolve) })}
-            </div>
+            ${intersection({ title: asText(slice.primary.heading), body: asElement(slice.primary.text, state.docs.resolve) })}
+          </div>
         `
         case 'map': {
           let locations = slice.items.map(function (item) {
