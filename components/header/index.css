@@ -178,13 +178,13 @@
  */
 
 @media (min-width: 700px) {
-  .Header {
+  :root {
     --Header-height: 7rem;
   }
 }
 
 @media (min-width: 1000px) {
-  .Header {
+  :root {
     --Header-height: 8rem;
   }
 

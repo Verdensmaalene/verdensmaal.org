@@ -1,5 +1,6 @@
 var html = require('choo/html')
 var Component = require('choo/component')
+var intro = require('../intro')
 var { i18n } = require('../base')
 
 var text = i18n()
@@ -22,12 +23,8 @@ module.exports = class Mission extends Component {
       <div class="Mission">
         <div class="Mission-content u-container">
           <div class="Mission-body">
-            <h1 class="Mission-title u-textHeading">
-            <span class="u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span>
-          </h1>
-          <p class="Mission-text">
-            <span class="u-loadingOnColor">${text`LOADING_TEXT_LONG`}</span>
-          </p>
+            ${intro.loading()}
+          </div>
         </div>
         <div class="Mission-footer">
           <div class="Mission-partners">
@@ -64,8 +61,7 @@ module.exports = class Mission extends Component {
         ${!this.local.isHighContrast ? background() : null}
         <div class="Mission-content u-container">
           <div class="Mission-body">
-            <h1 class="Mission-title u-textHeading">${props.title}</h1>
-            <p class="Mission-text">${props.description}</p>
+            ${intro({ title: props.title, body: props.description })}
           </div>
           ${!this.local.isHighContrast && props.partners ? html`
             <div class="Mission-footer">

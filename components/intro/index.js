@@ -20,10 +20,8 @@ function intro (opts = {}) {
   return html`
     <div class="Intro ${opts.secondary ? 'Intro--secondary' : ''}">
       <h1 class="Intro-title">${opts.title}</h1>
-      <div class="Text u-sizeFull">
-        <div class="Intro-body">
-          ${body}
-        </div>
+      <div class="Intro-body">
+        ${body}
       </div>
     </div>
   `
