@@ -16,7 +16,6 @@
   height: var(--Header-height);
   contain: size style;
   position: relative;
-  overflow: hidden;
 }
 
 .Header--white {
@@ -96,7 +95,7 @@
 
   .Header-slot {
     display: block;
-    margin-left: 2.5rem;
+    margin-left: 1.8rem;
   }
 }
 
@@ -202,12 +201,12 @@
 
 .Header-button {
   display: inline-block;
-  height: 2em;
-  padding: 0 1rem;
+  height: 1.8em;
+  padding: 0 0.9rem;
   position: relative;
   z-index: 1;
   pointer-events: auto;
-  line-height: 2.05em;
+  line-height: 1.85em;
   font-weight: 600;
   font-size: 1.5rem;
   font-family: var(--heading-font-family);
@@ -328,40 +327,31 @@
  * High contrast button
  */
 
-.Header-contrast {
+.Header-button--contrast {
   display: none;
-  height: 3rem;
-  padding: 0.5rem;
-  margin: -0.5rem;
-  margin-left: 0.75rem;
-}
-
-:root[scripting-enabled] .Header-contrast {
-  display: block;
-}
-
-.Header-switch {
-  display: block;
-  width: 1.75rem;
-  height: 1.75rem;
-  border: 0.15625rem solid currentColor;
-  position: relative;
+  height: auto;
+  padding: 0.4rem;
   border-radius: 50%;
-  font-size: 0;
+  transform-origin: center center;
+  transition: transform 150ms var(--ease);
 }
 
-.Header-switch::after {
-  content: "";
-  width: calc(50% - 0.15625rem);
-  background: currentColor;
-  height: calc(100% - 0.3125rem);
-  position: absolute;
-  top: 0.15625rem;
-  right: 0.15625rem;
-  border-radius: 0 2rem 2rem 0;
+:root[scripting-enabled] .Header-button--contrast {
+  display: flex;
 }
 
-.Header-contrast.is-active .Header-switch {
+.Header-toggle {
+  width: 1.5625rem;
+  height: 1.5625rem;
+  transition: transform 200ms var(--ease);
+  will-change: transform;
+}
+
+.Header-button--contrast:hover {
+  transform: scale(1.1);
+}
+
+.Header-button--contrast.is-active .Header-toggle {
   transform: rotate(180deg);
 }
 
@@ -462,7 +452,7 @@
     padding: 0;
     position: absolute;
     top: 23%;
-    left: 1rem;
+    left: 0.9rem;
   }
 
   /**
@@ -471,7 +461,7 @@
 
   .Header-button--link {
     height: auto;
-    padding: 2px 2.7rem 0 1rem;
+    padding: 2px 2.7rem 0 0.9rem;
     color: inherit;
     font-size: 2rem;
     line-height: 3rem;
@@ -491,12 +481,6 @@
 
   .Header-button--link:hover .Header-arrow {
     right: 1.1875rem;
-  }
-
-  .Header-langIcon {
-    top: -15px;
-    height: 25px;
-    width: 2rem;
   }
 
   /**
@@ -593,45 +577,45 @@
  * Tooltip
  */
 
-/* .Header-tooltip {
-  font-family: var(--font-family-body);
+.Header-tooltip {
+  font-family: var(--default-font-family);
   font-weight: normal;
-  font-size: 11px;
-  background: var(--color-gray-dark);
-  z-index: 100;
+  font-size: 0.625rem;
+  background: rgb(var(--default-color));
+  z-index: 1;
   position: absolute;
-  top: calc(100% + 14px);
+  top: calc(100% + 1rem);
   left: 50%;
   color: #fff;
   text-transform: none;
   word-spacing: normal;
   line-height: 1.3;
-  padding: 5px 9px 6px;
+  padding: 0.3rem 0.4rem 0.3rem;
   border-radius: 2px;
   text-align: center;
-  letter-spacing: -0.1px;
   pointer-events: none;
   transform: translateX(-50%);
-  visibility: hidden;
+  transition: opacity 150ms var(--ease-out);
+  opacity: 0;
 }
 
 .Header-tooltip::before {
   content: "";
   position: absolute;
-  top: -4px;
+  top: -0.2rem;
   left: 50%;
   transform: translateX(-50%) rotate(45deg);
-  width: 10px;
-  height: 10px;
-  background: #1a1a1a;
+  width: 0.4rem;
+  height: 0.4rem;
+  background: rgb(var(--default-color));
 }
 
 .Header-button:hover .Header-tooltip {
-  visibility: visible;
+  opacity: 1;
 }
 
 @media (max-width: 1300px) {
   .Header-tooltip {
     display: none;
   }
-} */
+}
