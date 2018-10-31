@@ -112,16 +112,12 @@
 /**
  * High contrast mode
  * 1. Overwrite child selector colors
- * 2. Restore browsers prefered text rendering
  */
 
 .u-highContrast,
 .u-highContrast *, /* 1 */
 .u-highContrast *::before, /* 1 */
 .u-highContrast *::after /* 1 */ {
-  -webkit-font-smoothing: auto !important; /* 2 */
-  -moz-osx-font-smoothing: auto !important; /* 2 */
-
   --high-contrast-light: var(--default-background-color) !important;
   --high-contrast-dark: var(--default-color) !important;
 
