@@ -6,13 +6,13 @@ module.exports = class Flag extends Component {
     return false
   }
 
-  createElement (figure, opts = {}) {
+  createElement (symbol, opts = {}) {
     var className = 'Flag'
     if (opts.vertical) className += ' Flag--vertical'
     if (opts.white) className += ' Flag--white'
 
-    var body = html`
-      <div class="Flag-body">
+    var text = html`
+      <div class="Flag-text">
         <span class="Flag-title">${opts.title}</span>
         <span class="u-hiddenVisually"> – </span>
         <span class="Flag-sub">${opts.text}</span>
@@ -22,15 +22,15 @@ module.exports = class Flag extends Component {
     if (opts.href) {
       return html`
         <a class="${className}" href="${opts.href}">
-          <div class="Flag-figure">${figure}</div>
-          ${body}
+          <div class="Flag-symbol">${symbol}</div>
+          ${text}
         </a>
       `
     } else {
       return html`
         <div class="${className}">
-          <div class="Flag-figure">${figure}</div>
-          ${body}
+          <div class="Flag-symbol">${symbol}</div>
+          ${text}
         </div>
       `
     }

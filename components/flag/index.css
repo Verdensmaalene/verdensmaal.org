@@ -10,17 +10,18 @@
   padding: 0.5rem;
 }
 
-.Flag-figure {
+.Flag-symbol {
   flex: 0 0 2.5rem;
   width: 2.5rem;
-  margin-left: 1rem;
+  margin-left: 0.9rem;
   order: 1;
   position: relative;
-  border-radius: 0.0625rem;
+  border-radius: 2px;
   overflow: hidden;
+  transition: transform 150ms var(--ease);
 }
 
-.Flag-figure > * {
+.Flag-symbol > * {
   display: block;
 }
 
@@ -28,7 +29,7 @@
  * Pseudo element acting like a inner shadow
  */
 
-.Flag-figure::after {
+.Flag-symbol::after {
   content: "";
   width: 100%;
   height: 100%;
@@ -36,7 +37,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 0.0625rem;
+  border-radius: 2px;
 }
 
 .Flag--white path {
@@ -47,13 +48,15 @@
   border-color: rgba(255, 255, 255, 0.1);
 }
 
-.Flag-body {
+.Flag-text {
   flex: 1 1 auto;
+  transition: transform 150ms var(--ease);
 }
 
 .Flag-title {
   display: block;
   font-size: 0.875rem;
+  font-weight: 600;
 }
 
 .Flag-sub {
@@ -66,8 +69,21 @@
   text-align: center;
 }
 
-.Flag--vertical .Flag-figure {
+.Flag--vertical .Flag-symbol {
   flex: 0 0 auto;
   order: 0;
   margin: 0 0 0.5rem;
+}
+
+.Flag:hover .Flag-symbol {
+  transform: scale(1.1);
+  transform-origin: center center;
+}
+
+.Flag:hover .Flag-text {
+  transform: translateX(-0.15rem);
+}
+
+.Flag--vertical:hover .Flag-text {
+  transform: translateY(0.15rem);
 }
