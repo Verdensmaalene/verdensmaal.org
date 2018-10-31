@@ -80,76 +80,76 @@
 }
 
 .Background16-person--judge {
-  right: 28.5%;
+  right: 24.3%;
   height: 4em;
   color: rgb(var(--color-goal-16-shaded));
   animation-delay: 900ms;
 }
 
 .Background16-person--citizen:nth-child(1) {
-  left: 16%;
+  left: 9.6%;
   animation-delay: 200ms;
 }
 
 .Background16-person--citizen:nth-child(2) {
-  left: 19%;
+  left: 5.3%;
   opacity: 0.3;
   animation-delay: 400ms;
 }
 
 .Background16-person--citizen:nth-child(3) {
-  left: 22%;
+  left: 14%;
   animation-delay: 1000ms;
 }
 
 .Background16-person--citizen:nth-child(4) {
-  left: 25%;
+  left: 18.1%;
   color: rgb(var(--color-goal-16-shaded));
   animation-delay: 750ms;
 }
 
 .Background16-person--citizen:nth-child(5) {
   height: 2.5em;
-  left: 28.5%;
+  left: 22.4%;
   opacity: 0.3;
   animation-delay: 350ms;
 }
 
 .Background16-person--citizen:nth-child(6) {
-  left: 31%;
+  left: 25.5%;
   animation-delay: 100ms;
 }
 
 .Background16-person--citizen:nth-child(7) {
-  right: 25.5%;
+  right: 21.5%;
   height: 2.5em;
   animation-delay: 280ms;
 }
 
 .Background16-person--citizen:nth-child(8) {
-  right: 22%;
+  right: 17.5%;
   animation-delay: 150ms;
 }
 
 .Background16-person--citizen:nth-child(9) {
-  right: 19%;
+  right: 13.3%;
   opacity: 0.3;
   animation-delay: 500ms;
 }
 
 .Background16-person--citizen:nth-child(10) {
-  right: 16%;
+  right: 9.3%;
 }
 
 .Background16-person--citizen:nth-child(11) {
-  right: 13.5%;
+  right: 6.2%;
   height: 2.5em;
   opacity: 0.3;
   animation-delay: 625ms;
 }
 
 .Background16-person--citizen:nth-child(12) {
-  right: 10%;
+  right: 2%;
   color: rgb(var(--color-goal-16-shaded));
   animation-delay: 800ms;
 }
@@ -297,8 +297,8 @@
   width: 6rem;
   height: auto;
   position: absolute;
-  right: 3%;
-  top: 35%;
+  right: 2%;
+  top: 25%;
   overflow: visible;
   color: #fff;
   transform: translateY(100%);
