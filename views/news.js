@@ -10,7 +10,7 @@ var { i18n, srcset } = require('../components/base')
 var button = require('../components/button')
 
 var text = i18n()
-var PAGE_SIZE = 3
+var PAGE_SIZE = 6
 
 module.exports = view(news, meta)
 
