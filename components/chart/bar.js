@@ -102,12 +102,14 @@ module.exports = class BarChart extends Component {
       <svg class="Chart Chart--bar" ${attrs}>
         ${props.standalone ? raw(this.style) : null}
         <g class="Chart-heading">
-          ${title.map((text, index) => html`<text x="0" y="${LINE_HEIGHT * (1 / 1.25) + LINE_HEIGHT * index}">${text}</text>`)}
-          ${props.source ? html`
-            <text x="0" y="${LINE_HEIGHT * (1 / 1.25) + LINE_HEIGHT * title.length}" xmlns="http://www.w3.org/2000/svg">
-              ${sourceText}: <tspan text-decoration="underline"><a xlink:href="${props.source.url}">${props.source.text}</a></tspan>
-            </text>
-          ` : null}
+          <text x="0" y="${LINE_HEIGHT * (1 / 1.25)}">
+            ${title.map((text, index) => html`<tspan x="0" dy="${LINE_HEIGHT * index + LINE_HEIGHT * 0.15}">${text}</tspan>`)}
+            ${props.source ? html`
+              <tspan x="0" dy="${LINE_HEIGHT * (title.length - 1) + LINE_HEIGHT * 0.25}" xmlns="http://www.w3.org/2000/svg">
+                ${sourceText}: <tspan text-decoration="underline"><a xlink:href="${props.source.url}">${props.source.text}</a></tspan>
+              </tspan>
+            ` : null}
+          </text>
           ${props.dataset.map(legend)}
         </g>
         ${props.dataset.map(bar)}
