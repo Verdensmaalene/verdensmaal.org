@@ -138,7 +138,7 @@ app.use(get('/:num(\\d{1,2})-:uid/:id.svg', app.defer(async function (ctx, num, 
       dataset: slice.items.map((props, index) => Object.assign({
         color: props.color || ['#0A97D9', '#003570'][index] || '#F1F1F1'
       }, props)),
-      source: source.url ? {
+      source: source ? {
         text: publisher || source.replace(/^https?:\/\//, ''),
         url: source
       } : null
