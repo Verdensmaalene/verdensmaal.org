@@ -143,7 +143,7 @@ class GoalPage extends View {
           ${goal.render(props)}
           ${header}
           ${doc.data.manifest && doc.data.manifest.length ? html`
-            <section class="u-container">
+            <section id="manifest" class="u-container">
               ${state.cache(Text, `${state.params.wildcard}-manifest`, { size: 'large' }).render(doc.data.manifest)}
             </section>
           ` : null}
