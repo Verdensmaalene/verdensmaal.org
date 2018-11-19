@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var slugify = require('slugify')
 var asElement = require('prismic-element')
 var { asText } = require('prismic-richtext')
 var view = require('../components/view')
@@ -70,7 +71,7 @@ function group (slice) {
   var heading = asText(slice.primary.heading)
   var slug = slice.primary.shortcut_name || heading
   return html`
-    <section id="${slugify(slug)}">
+    <section id="${slugify(slug).toLowerCase()}">
       <div class="u-container">
         ${border(heading)}
       </div>
@@ -106,13 +107,7 @@ function shortcut (slice) {
     slug = slug || asText(slice.primary.heading)
   }
   if (!slug) return null
-  return html`<a href="#${slugify(slug)}">${slug}</a>`
-}
-
-// transfor string to url friendly format
-// str -> str
-function slugify (str) {
-  return str.toLowerCase().replace(/\s+/g, '-').replace(/[^\w]+/g, '')
+  return html`<a href="#${slugify(slug).toLowerCase()}">${slug}</a>`
 }
 
 function meta (state) {

@@ -5,7 +5,15 @@ module.exports = catchall
 // custom waterfall routing goal/sector -> page -> throw 404
 // (obj, fn) -> Element
 function catchall (state, emit) {
-  var wildcard = state.params.wildcard
+  var view
+  var wildcard = state.params.wildcard.split('/')
+  if (wildcard.length > 1) {
+    view = require('./404')
+    return view(state, emit)
+  } else {
+    wildcard = wildcard[0]
+  }
+
   var goalParams = wildcard.match(/^(\d{1,2})-.+$/)
 
   var predicate
@@ -15,7 +23,7 @@ function catchall (state, emit) {
   // lookup goal or sector
   return state.docs.get(predicate, function (err, response) {
     if (!err) {
-      var view = goalParams ? require('./goal') : require('./sector')
+      view = goalParams ? require('./goal') : require('./sector')
       return view(state, emit)
     }
 

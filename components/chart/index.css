@@ -1,0 +1,79 @@
+/* We can't really import base here as this file is embedded in the javascript
+ * without running through postcss
+ * @import "../base";
+ */
+
+/** @define Chart */
+.Chart {
+  width: 100%;
+  max-height: 100vh;
+  height: auto;
+}
+
+.Chart-label,
+.Chart-heading {
+  font-family: var(--default-font-family);
+  font-size: var(--default-font-size);
+  line-height: var(--default-line-height);
+}
+
+.Chart-label--number {
+  font-size: 2.5rem;
+  font-family: var(--heading-font-family);
+  word-spacing: var(--heading-word-spacing);
+  line-height: var(--heading-line-height);
+  text-transform: uppercase;
+}
+
+.Chart-label--dark {
+  fill: currentColor;
+}
+
+.Chart-label--light {
+  fill: #fff;
+}
+
+@media (max-width: 300px) {
+  .Chart-heading {
+    transform: translateY(8px);
+  }
+
+  .Chart-label {
+    font-size: 1.5rem;
+  }
+
+  .Chart-label--number.Chart-label--outside {
+    transform: translateY(-10px);
+  }
+
+  .Chart-label--number {
+    font-size: 4.5rem;
+  }
+
+  .Chart-legend {
+    display: none;
+  }
+}
+
+:root[scripting-enabled] .Chart-bar {
+  transform: scaleY(0);
+}
+
+:root[scripting-enabled] .Chart-bar.is-loaded {
+  transform: scaleY(1);
+  transform-origin: bottom;
+  transition: transform 800ms var(--ease-out);
+}
+
+:root[scripting-enabled] .Chart-label {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+:root[scripting-enabled] .Chart-label.is-loaded {
+  opacity: 1;
+  transform: translateY(0px);
+  transition:
+    transform 400ms var(--ease-out),
+    opacity 250ms var(--ease-out);
+}

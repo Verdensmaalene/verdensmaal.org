@@ -10,12 +10,14 @@ var ics = require('ics')
 var jalla = require('jalla')
 var dedent = require('dedent')
 var body = require('koa-body')
+var slugify = require('slugify')
 var geoip = require('geoip-lite')
 var compose = require('koa-compose')
 var parse = require('date-fns/parse')
 var { get, post } = require('koa-route')
 var { asText } = require('prismic-richtext')
 var Prismic = require('prismic-javascript')
+var svg = require('./lib/svg')
 var purge = require('./lib/purge')
 var scrape = require('./lib/scrape')
 var resolve = require('./lib/resolve')
@@ -86,12 +88,20 @@ app.use(get('/prismic-preview', async function (ctx) {
 }))
 
 // redirect goal shorthand url to complete slug
-app.use(get('/:num(\\d{1,2})', async function (ctx, num) {
-  var api = await Prismic.api(REPOSITORY, { req: ctx.req })
-  var response = await api.query(Prismic.Predicates.at('my.goal.number', +num))
-  var doc = response.results[0]
-  ctx.assert(doc, 404, 'Page not found')
-  ctx.redirect(`/${num}-${doc.uid}`)
+app.use(get('/:num(\\d{1,2})', async function (ctx, num, next) {
+  try {
+    var api = await Prismic.api(REPOSITORY, { req: ctx.req })
+    var response = await api.query(Prismic.Predicates.at('my.goal.number', +num))
+    var doc = response.results[0]
+    ctx.assert(doc, 404, 'Page not found')
+    ctx.redirect(`/${num}-${doc.uid}`)
+  } catch (err) {
+    if (ctx.accepts('html')) {
+      app.emit('error', err)
+      return next()
+    }
+    throw err
+  }
 }))
 
 // push goal background bundle
@@ -105,12 +115,47 @@ app.use(get('/:num(\\d{1,2})-:uid', function (ctx, num, uid, next) {
   return next()
 }))
 
+// render statistics as image
+app.use(get('/:num(\\d{1,2})-:uid/:id.svg', app.defer(async function (ctx, num, uid, id, next) {
+  try {
+    let api = await Prismic.api(REPOSITORY, { req: ctx.req })
+    let response = await api.query(Prismic.Predicates.at('my.goal.number', +num))
+    let doc = response.results[0]
+    ctx.assert(doc, 404, 'Image not found')
+
+    let slice = doc.data.statistics.find(function (slice) {
+      return slugify(slice.primary.title).toLowerCase() === id
+    })
+    ctx.assert(slice, 404, 'Image not found')
+
+    ctx.set('Content-Type', 'image/svg+xml')
+    let source = resolve(slice.primary.source)
+    let publisher = await scrape(source).then((meta) => meta.publisher)
+    ctx.body = await svg(slice.slice_type, {
+      title: slice.primary.title,
+      dataset: slice.items.map((props, index) => Object.assign({
+        color: props.color || ['#0A97D9', '#003570'][index] || '#F1F1F1'
+      }, props)),
+      source: {
+        name: publisher || source.replace(/^https?:\/\//, ''),
+        url: source
+      }
+    })
+  } catch (err) {
+    if (ctx.accepts('html')) {
+      app.emit('error', err)
+      return next()
+    }
+    throw err
+  }
+})))
+
 // get event as iCalendar file
 app.use(get('/events/:uid.ics', async function (ctx, uid) {
   var api = await Prismic.api(REPOSITORY, { req: ctx.req })
   var response = await api.query(Prismic.Predicates.at('my.event.uid', uid))
   var doc = response.results[0]
-  ctx.assert(doc, 404, 'Page not found')
+  ctx.assert(doc, 404, 'Event not found')
   var start = parse(doc.data.start)
   var end = parse(doc.data.end)
   var event = {
@@ -182,7 +227,7 @@ app.use(get('/', function (ctx, next) {
 app.use(function (ctx, next) {
   ctx.state.origin = app.env === 'development'
     ? `http://localhost:${process.env.PORT || 8080}`
-    : 'https://dk.globalgoals.org'
+    : `https://${process.env.npm_package_now_alias}`
   return next()
 })
 

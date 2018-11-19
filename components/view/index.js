@@ -88,8 +88,9 @@ function createView (view, meta) {
       function getHeader () {
         var opts = { isHighContrast: state.ui.isHighContrast }
         var isGoal
-        if (state.params.wildcard) {
-          let [, num] = (state.params.wildcard.match(GOAL_SLUG) || [])
+        var wildcard = state.params.wildcard
+        if (wildcard && wildcard.indexOf('/') === -1) {
+          let [, num] = (wildcard.match(GOAL_SLUG) || [])
           var predicate = Predicates.at('my.goal.number', +num)
           isGoal = num && state.docs.get(predicate, (err) => !err)
           if (isGoal) {

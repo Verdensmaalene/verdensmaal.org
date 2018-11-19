@@ -14,6 +14,7 @@ var Goal = require('../components/goal')
 var Flag = require('../components/flag')
 var Text = require('../components/text')
 var Header = require('../components/header')
+var BarChart = require('../components/chart/bar')
 var TargetGrid = require('../components/target-grid')
 var { i18n, isSameDomain, className, reduce, srcset } = require('../components/base')
 
@@ -145,7 +146,12 @@ class GoalPage extends View {
               ${state.cache(Text, `${state.params.wildcard}-manifest`, { size: 'large' }).render(doc.data.manifest)}
             </section>
           ` : null}
-          <section>
+          ${doc.data.statistics.length ? html`
+            <section id="statistics" class="u-md-container u-spaceT8">
+              ${grid({ size: { md: '1of2' }, carousel: true }, doc.data.statistics.map(statistic))}
+            </section>
+          ` : null}
+          <section id="action">
             ${doc.data.featured_heading && doc.data.featured_heading.length ? html`
               <div class="u-container">
                 ${doc ? intro({ title: asText(doc.data.featured_heading), body: asElement(doc.data.featured_text, state.docs.resolve) }) : intro.loading()}
@@ -158,7 +164,7 @@ class GoalPage extends View {
             ` : null}
           </section>
           ${targets.length ? html`
-            <section class="u-container" id="targets">
+            <section id="targets" class="u-container">
               ${doc ? intro({ secondary: true, title: asText(doc.data.targets_title), body: asElement(doc.data.targets_description, state.docs.resolve) }) : intro.loading({ secondary: true })}
               ${state.cache(TargetGrid, `${doc.data.number}-targets`).render(doc.data.number, targets)}
             </section>
@@ -170,6 +176,32 @@ class GoalPage extends View {
           ` : null}
         </main>
       `
+
+      function statistic (slice, index) {
+        switch (slice.slice_type) {
+          case 'bar_chart': {
+            let source = state.docs.resolve(slice.primary.source)
+            let props = {
+              title: slice.primary.title,
+              dataset: slice.items.map((props, index) => Object.assign({
+                color: props.color || ['#0A97D9', '#003570'][index] || '#F1F1F1'
+              }, props)),
+              source: {
+                name: slice.primary.meta.publisher || source.replace(/^https?:\/\//, ''),
+                url: source
+              }
+            }
+            return html`
+              <div class="u-aspect1-1">
+                <div class="u-cover">
+                  ${state.cache(BarChart, `${doc.id}-chart-${index}`).render(props)}
+                </div>
+              </div>
+            `
+          }
+          default: return null
+        }
+      }
 
       // get latest news with similar tags
       // (num?) -> arr

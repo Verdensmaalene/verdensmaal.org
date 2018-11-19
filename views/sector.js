@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var slugify = require('slugify')
 var parse = require('date-fns/parse')
 var asElement = require('prismic-element')
 var { asText } = require('prismic-richtext')
@@ -62,7 +63,7 @@ function goal (state, emit) {
           <div class="Text u-spaceV6">
             ${text`Shortcuts`}: ${shortcuts.map((slice, index, list) => html`
               <span>
-                <a href="#${slugify(slice.primary.shortcut_name)}" onclick=${scrollIntoView}>${slice.primary.shortcut_name}</a>${index < (list.length - 1) ? ', ' : null}
+                <a href="#${anchor(slice.primary.shortcut_name).id}" onclick=${scrollIntoView}>${slice.primary.shortcut_name}</a>${index < (list.length - 1) ? ', ' : null}
               </span>
             `)}
           </div>
@@ -99,7 +100,7 @@ function goal (state, emit) {
 
           return html`
             <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
-              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${children}
             </div>
           `
@@ -142,7 +143,7 @@ function goal (state, emit) {
             var cols = cells.length % 3 === 0 ? 3 : 2
             return html`
               <div class="View-section View-section--${camelCase(slice.slice_type)} u-md-container">
-                <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
+                <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
                 ${grid({ size: { md: '1of2', lg: `1of${cols}` }, carousel: true }, cells)}
               </div>
             `
@@ -154,7 +155,7 @@ function goal (state, emit) {
         }
         case 'heading': return html`
           <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
-            <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
+            <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
             <div class="Text">
               <h2 class="Text-h1 u-spaceB1 u-textHyphens">${asText(slice.primary.heading)}</h2>
               ${asElement(slice.primary.text)}
@@ -179,14 +180,14 @@ function goal (state, emit) {
 
           return html`
             <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
-              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${items}
             </div>
           `
         }
         case 'quote': return html`
           <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
-            <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
+            <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
             ${blockquote({ body: asElement(slice.primary.quote, state.docs.resolve), caption: slice.primary.author })}
           </div>
         `
@@ -194,14 +195,14 @@ function goal (state, emit) {
           if (slice.primary.video.type !== 'video') return null
           return html`
             <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
-              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${video(slice.primary.video)}
             </div>
           `
         }
         case 'image': return html`
           <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
-            <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
+            <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
             <div class="Text u-sizeFull">
               <img class="u-sizeFull" width="${slice.primary.image.dimensions.width}" height="${slice.primary.image.dimensions.height}" src="${slice.primary.image.url}" alt="${slice.primary.image.alt || ''}" />
             </div>
@@ -239,14 +240,14 @@ function goal (state, emit) {
 
           return html`
             <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
-              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${grid({ size: { md: '1of2' } }, items)}
             </div>
           `
         }
         case 'link_text': return html`
           <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
-            <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
+            <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
             ${intersection({ title: asText(slice.primary.heading), body: asElement(slice.primary.text, state.docs.resolve) })}
           </div>
         `
@@ -260,7 +261,7 @@ function goal (state, emit) {
           })
           return html`
             <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
-              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${state.cache(Map, `${doc.id}-${index}`).render(locations)}
             </div>
           `
@@ -294,7 +295,7 @@ function goal (state, emit) {
           if (!items.length) return null
           return html`
             <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
-              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${grid({ size: { md: '1of2', lg: '1of3' } }, items)}
             </div>
           `
@@ -305,7 +306,7 @@ function goal (state, emit) {
           var cells = slice.items.map((item) => linkCard(item, cols))
           return html`
             <div class="View-section View-section--${camelCase(slice.slice_type)} u-md-container">
-              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slice.primary.shortcut_name || '')}"></div>
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${grid({ size: { md: '1of2', lg: `1of${cols}` }, carousel: true }, cells)}
             </div>
           `
@@ -357,10 +358,12 @@ function video (props) {
   })
 }
 
-// transfor string to url friendly format
-// str -> str
-function slugify (str) {
-  return str.toLowerCase().replace(/\s+/g, '-').replace(/[^\w]+/g, '')
+// format str as object with id attribute
+// str -> obj
+function anchor (str) {
+  var attrs = {}
+  if (str) attrs.id = slugify(str).toLowerCase()
+  return attrs
 }
 
 // render document as card
