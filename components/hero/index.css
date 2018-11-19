@@ -8,8 +8,10 @@
   width: 100%;
   height: 60vh;
   min-height: 500px;
-  padding: 1.125rem;
-  padding: calc(1.125rem + constant(safe-area-inset-right));
+  max-width: calc(var(--max-width) + (var(--page-gutter) * 2));
+  padding: var(--page-gutter);
+  padding: calc(var(--page-gutter) + constant(safe-area-inset-right));
+  padding: calc(var(--page-gutter) + env(safe-area-inset-right));
   margin: 0 auto;
   position: relative;
   overflow: hidden;
@@ -18,27 +20,6 @@
 @media (min-width: 600px) {
   .Hero {
     height: 76vh;
-    padding: 1.5rem;
-    padding: calc(1.5rem + constant(safe-area-inset-right));
-  }
-}
-
-@media (min-width: 1000px) {
-  .Hero {
-    padding: 2rem;
-    padding: calc(2rem + constant(safe-area-inset-right));
-  }
-}
-
-@media (min-width: 1200px) {
-  .Hero {
-    padding-left: 3rem;
-    padding-right: 3rem;
-    padding-left: calc(3rem + constant(safe-area-inset-right));
-    padding-right: calc(3rem + constant(safe-area-inset-right));
-    padding-left: calc(3rem + env(safe-area-inset-right));
-    padding-right: calc(3rem + env(safe-area-inset-right));
-    max-width: calc(var(--max-width) + (3rem * 2));
   }
 }
 

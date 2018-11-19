@@ -128,18 +128,20 @@ app.use(get('/:num(\\d{1,2})-:uid/:id.svg', app.defer(async function (ctx, num, 
     })
     ctx.assert(slice, 404, 'Image not found')
 
+    let publisher
+    let source = slice.primary.source.url
+    if (source) publisher = await scrape(source).then((meta) => meta.publisher)
+
     ctx.set('Content-Type', 'image/svg+xml')
-    let source = resolve(slice.primary.source)
-    let publisher = await scrape(source).then((meta) => meta.publisher)
     ctx.body = await svg(slice.slice_type, {
       title: slice.primary.title,
       dataset: slice.items.map((props, index) => Object.assign({
         color: props.color || ['#0A97D9', '#003570'][index] || '#F1F1F1'
       }, props)),
-      source: {
-        name: publisher || source.replace(/^https?:\/\//, ''),
+      source: source.url ? {
+        text: publisher || source.replace(/^https?:\/\//, ''),
         url: source
-      }
+      } : null
     })
   } catch (err) {
     if (ctx.accepts('html')) {

@@ -51,15 +51,60 @@
   }
 
   .Grid--carousel .Grid-cell {
-    flex-basis: calc(100% - (1.125rem * 2));
-    padding-left: 1.125rem;
+    flex-basis: calc(100% - (var(--page-gutter) * 2));
+    padding-left: var(--page-gutter);
     padding-right: 0;
     scroll-snap-align: start;
   }
 
   .Grid--carousel .Grid-cell:last-child {
-    flex-basis: calc(100% - 1.125rem);
-    padding-right: 1.125rem;
+    flex-basis: calc(100% - var(--page-gutter));
+    padding-right: var(--page-gutter);
+  }
+}
+
+@media (min-width: 600px) {
+  .Grid--divided {
+    width: 100%;
+    margin: 0;
+  }
+
+  .Grid--divided .Grid-cell {
+    flex-basis: auto;
+    width: 50%;
+    padding: var(--page-gutter) 0;
+    border-top: 1px solid rgb(var(--color-gray-light));
+    margin: 0;
+    position: relative;
+  }
+
+  .Grid--divided .Grid-cell:nth-child(2n+1)::after {
+    content: "";
+    width: 1px;
+    position: absolute;
+    right: 0;
+    top: var(--page-gutter);
+    bottom: var(--page-gutter);
+    background-color: rgb(var(--color-gray-light));
+  }
+
+  .Grid--divided .Grid-cell:first-child::after,
+  .Grid--divided .Grid-cell:nth-child(2)::after {
+    top: 0;
+  }
+
+  .Grid--divided .Grid-cell:first-child,
+  .Grid--divided .Grid-cell:nth-child(2) {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .Grid--divided .Grid-cell:nth-child(2n+1) {
+    padding-right: var(--page-gutter);
+  }
+
+  .Grid--divided .Grid-cell:nth-child(2n+2) {
+    padding-left: var(--page-gutter);
   }
 }
 

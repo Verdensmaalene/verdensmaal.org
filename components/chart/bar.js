@@ -103,9 +103,11 @@ module.exports = class BarChart extends Component {
         ${props.standalone ? raw(this.style) : null}
         <g class="Chart-heading">
           ${title.map((text, index) => html`<text x="0" y="${LINE_HEIGHT * (1 / 1.25) + LINE_HEIGHT * index}">${text}</text>`)}
-          <text x="0" y="${LINE_HEIGHT * (1 / 1.25) + LINE_HEIGHT * title.length}" xmlns="http://www.w3.org/2000/svg">
-            ${sourceText}: <tspan text-decoration="underline"><a xlink:href="${props.source.url}">${props.source.name}</a></tspan>
-          </text>
+          ${props.source ? html`
+            <text x="0" y="${LINE_HEIGHT * (1 / 1.25) + LINE_HEIGHT * title.length}" xmlns="http://www.w3.org/2000/svg">
+              ${sourceText}: <tspan text-decoration="underline"><a xlink:href="${props.source.url}">${props.source.text}</a></tspan>
+            </text>
+          ` : null}
           ${props.dataset.map(legend)}
         </g>
         ${props.dataset.map(bar)}

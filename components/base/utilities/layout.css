@@ -99,30 +99,33 @@
  * Centered page container
  */
 
-.u-container {
+.u-container,
+.u-md-container,
+.u-lg-container,
+.u-xl-container {
   width: 100% !important;
   margin-left: 0 !important;
   margin-right: 0 !important;
-  padding-left: 1.125rem !important;
-  padding-right: 1.125rem !important;
-  padding-left: calc(1.125rem + constant(safe-area-inset-right)) !important;
-  padding-right: calc(1.125rem + constant(safe-area-inset-right)) !important;
-  padding-left: calc(1.125rem + env(safe-area-inset-right)) !important;
-  padding-right: calc(1.125rem + env(safe-area-inset-right)) !important;
+  padding-left: var(--page-gutter) !important;
+  padding-right: var(--page-gutter) !important;
+  padding-left: calc(var(--page-gutter) + constant(safe-area-inset-right)) !important;
+  padding-right: calc(var(--page-gutter) + constant(safe-area-inset-right)) !important;
+  padding-left: calc(var(--page-gutter) + env(safe-area-inset-right)) !important;
+  padding-right: calc(var(--page-gutter) + env(safe-area-inset-right)) !important;
+}
+
+.u-md-container,
+.u-lg-container,
+.u-xl-container {
+  --page-gutter: 0;
 }
 
 @media (min-width: 600px) {
   .u-container,
   .u-md-container {
-    width: 100% !important;
+    --page-gutter: inherit;
     margin-left: auto !important;
     margin-right: auto !important;
-    padding-left: 1.5rem !important;
-    padding-right: 1.5rem !important;
-    padding-left: calc(1.5rem + constant(safe-area-inset-right)) !important;
-    padding-right: calc(1.5rem + constant(safe-area-inset-right)) !important;
-    padding-left: calc(1.5rem + env(safe-area-inset-right)) !important;
-    padding-right: calc(1.5rem + env(safe-area-inset-right)) !important;
   }
 }
 
@@ -130,12 +133,9 @@
   .u-container,
   .u-md-container,
   .u-lg-container {
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
-    padding-left: calc(2rem + constant(safe-area-inset-right)) !important;
-    padding-right: calc(2rem + constant(safe-area-inset-right)) !important;
-    padding-left: calc(2rem + env(safe-area-inset-right)) !important;
-    padding-right: calc(2rem + env(safe-area-inset-right)) !important;
+    --page-gutter: inherit;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 }
 
@@ -144,12 +144,9 @@
   .u-md-container,
   .u-lg-container,
   .u-xl-container {
-    padding-left: 3rem !important;
-    padding-right: 3rem !important;
-    padding-left: calc(3rem + constant(safe-area-inset-right)) !important;
-    padding-right: calc(3rem + constant(safe-area-inset-right)) !important;
-    padding-left: calc(3rem + env(safe-area-inset-right)) !important;
-    padding-right: calc(3rem + env(safe-area-inset-right)) !important;
-    max-width: calc(var(--max-width) + (3rem * 2)) !important;
+    --page-gutter: inherit;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: calc(var(--max-width) + (var(--page-gutter) * 2)) !important;
   }
 }

@@ -6,7 +6,6 @@
 /** @define Chart */
 .Chart {
   width: 100%;
-  max-height: 100vh;
   height: auto;
 }
 
@@ -33,13 +32,18 @@
   fill: #fff;
 }
 
-@media (max-width: 300px) {
+@media (max-width: 480px) {
+  .Chart-label,
   .Chart-heading {
-    transform: translateY(8px);
+    font-size: 1.5rem;
   }
 
-  .Chart-label {
-    font-size: 1.5rem;
+  .Chart--bar .Chart-legend {
+    display: none;
+  }
+
+  .Chart-heading {
+    transform: translateY(8px);
   }
 
   .Chart-label--number.Chart-label--outside {
@@ -47,11 +51,7 @@
   }
 
   .Chart-label--number {
-    font-size: 4.5rem;
-  }
-
-  .Chart-legend {
-    display: none;
+    font-size: 4rem;
   }
 }
 

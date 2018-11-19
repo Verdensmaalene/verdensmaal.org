@@ -3,6 +3,11 @@ var html = require('choo/html')
 module.exports = grid
 
 function grid (opts, children) {
+  if (Array.isArray(opts)) {
+    children = opts
+    opts = {}
+  }
+
   return html`
     <div class="Grid ${opts.carousel ? 'Grid--carousel' : ''}">
       ${children.map(cell)}

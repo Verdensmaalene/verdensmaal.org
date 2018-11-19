@@ -18,6 +18,7 @@
   --color-text-muted: 148, 148, 148;
 
   --max-width: 2000px;
+  --page-gutter: 1.125rem;
 
   --focus-ring-width: 0.2rem;
   --focus-ring-color: var(--color-gray-dark);
@@ -82,4 +83,22 @@
   --color-goal-16-shaded: 0, 27, 60;
   --color-goal-17: 25, 72, 106;
   --color-goal-17-shaded: 0, 19, 46;
+}
+
+@media (min-width: 600px) {
+  :root {
+    --page-gutter: 1.5rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  :root {
+    --page-gutter: 2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --page-gutter: 3rem;
+  }
 }
