@@ -26,13 +26,21 @@ module.exports = class Chart extends Component {
       var parent = element.parentElement
       offset = parent.offsetTop
       height = parent.offsetHeight
-      element.style.setProperty('--Chart-scale-factor', SIZE / height)
       while ((parent = parent.offsetParent)) offset += parent.offsetTop
+      element.style.setProperty('--Chart-scale-factor', SIZE / height)
     })
 
-    window.requestAnimationFrame(function () {
+    element.rerender = this.rerender.bind(this)
+
+    window.requestAnimationFrame(() => {
       onresize()
       onscroll()
+      window.requestAnimationFrame(function () {
+        element.style.setProperty('display', 'none')
+        window.requestAnimationFrame(function () {
+          element.style.removeProperty('display')
+        })
+      })
     })
 
     window.addEventListener('scroll', onscroll, { passive: true })
