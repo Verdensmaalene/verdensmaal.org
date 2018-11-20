@@ -14,6 +14,7 @@ module.exports = class Chart extends Component {
 
   load (element) {
     var offset, height
+    var refresh = [...element.querySelectorAll('.js-refresh')]
 
     var onscroll = nanoraf(function () {
       var { scrollY } = window
@@ -32,13 +33,15 @@ module.exports = class Chart extends Component {
 
     element.rerender = this.rerender.bind(this)
 
-    window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(function () {
       onresize()
       onscroll()
-      window.requestAnimationFrame(function () {
-        element.style.setProperty('display', 'none')
+      refresh.forEach(function (el) {
         window.requestAnimationFrame(function () {
-          element.style.removeProperty('display')
+          el.style.setProperty('display', 'none')
+          window.requestAnimationFrame(function () {
+            el.style.removeProperty('display')
+          })
         })
       })
     })

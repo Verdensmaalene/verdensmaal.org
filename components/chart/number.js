@@ -15,7 +15,7 @@ module.exports = class BigNumber extends Chart {
     return html`
       <svg width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}" id="${this.id}" class="Chart Chart--number ${props.size ? `Chart--${props.size}` : ''}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         ${props.standalone ? raw(this.style) : null}
-        <g class="Chart-heading">
+        <g class="Chart-heading js-refresh">
           <text x="0" y="0">
             ${title.map((text, index) => html`<tspan x="0" dy="${index ? 1.5 : 0.75}em">${text}</tspan>`)}
             ${props.source ? html`
