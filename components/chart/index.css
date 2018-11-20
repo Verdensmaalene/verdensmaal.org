@@ -15,7 +15,8 @@
 
 .Chart-label,
 .Chart-heading {
-  fill: rgb(var(--current-color));
+  fill: currentColor;
+  color: rgb(var(--current-color));
   font-family: var(--default-font-family);
   font-size: calc(var(--default-font-size) * var(--Chart-scale-factor));
   line-height: var(--default-line-height);
@@ -35,19 +36,21 @@
 }
 
 .Chart-label--dark {
-  fill: currentColor;
+  color: currentColor;
 }
 
 .Chart-label--light {
-  fill: #fff;
+  color: #fff;
 }
 
 .Chart-color {
-  fill: rgb(var(--current-color));
+  fill: currentColor;
+  color: rgb(var(--current-color));
 }
 
 .Chart-bar {
-  fill: rgb(var(--current-color));
+  fill: currentColor;
+  color: rgb(var(--current-color));
 }
 
 /**
@@ -81,10 +84,10 @@
 
 :root:not([scripting-enabled]) .Chart-bar,
 :root[scripting-enabled] .Chart.in-view .Chart-bar {
-  animation: Chart-bar--appearing 800ms forwards var(--ease-out);
+  animation: Chart-bar--grow 800ms forwards var(--ease-out);
 }
 
-@keyframes Chart-bar--appearing {
+@keyframes Chart-bar--grow {
   to {
     transform: scaleY(1);
   }
@@ -92,30 +95,40 @@
 
 .Chart-label {
   opacity: 0;
-  transform: translateY(40px);
-}
-
-.Chart-label--huge {
   transform-origin: center;
-  transform: scale(1.5);
 }
 
 :root:not([scripting-enabled]) .Chart-label,
 :root[scripting-enabled] .Chart.in-view .Chart-label {
-  animation: Chart-label--appearing 400ms forwards var(--ease-out);
+  animation: Chart-label--slidein 400ms forwards var(--ease-out);
 }
 
-.Chart.in-view .Chart-label--huge {
+@keyframes Chart-label--slidein {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+:root:not([scripting-enabled]) .Chart-label--huge,
+:root[scripting-enabled] .Chart.in-view .Chart-label--huge {
+  animation-name: Chart-label--pop;
   animation-timing-function: cubic-bezier(0.175, 0.985, 0.14, 1.275);
 }
 
-@keyframes Chart-label--appearing {
-  62.5% {
-    opacity: 1;
+@keyframes Chart-label--pop {
+  from {
+    opacity: 0;
+    transform: scale(1.5);
   }
 
-  100% {
+  to {
     opacity: 1;
-    transform: translateY(0px) scale(1);
+    transform: scale(1);
   }
 }

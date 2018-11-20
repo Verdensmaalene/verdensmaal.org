@@ -11,19 +11,6 @@ var text = i18n(require('./lang.json'))
 
 module.exports = class BarChart extends Chart {
   createElement (props) {
-    var attrs = {
-      width: SIZE,
-      height: SIZE,
-      viewBox: `0 0 ${SIZE} ${SIZE}`,
-      id: this.id,
-      class: 'Chart Chart--bar'
-    }
-    if (props.size) attrs.class += ` Chart--${props.size}`
-    if (props.standalone) {
-      attrs.xmlns = 'http://www.w3.org/2000/svg'
-      attrs['xmlns:xlink'] = 'http://www.w3.org/1999/xlink'
-    }
-
     var title = split(props.title)
     // account for text growing 2x height (ish)
     var offset = LINE_HEIGHT * 5 + title.length * LINE_HEIGHT
@@ -35,7 +22,7 @@ module.exports = class BarChart extends Chart {
     var factor = 100 / max
 
     return html`
-      <svg ${attrs}>
+      <svg width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}" id="${this.id}" class="Chart Chart--bar ${props.size ? `Chart--${props.size}` : ''}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         ${props.standalone ? raw(this.style) : null}
         <g class="Chart-heading">
           <text x="0" y="0">
@@ -57,7 +44,7 @@ module.exports = class BarChart extends Chart {
       attrs.class = (attrs.class || '') + ' Chart-color'
       return html`
         <g class="Chart-legend">
-          <rect width="14" height="14" x="${SIZE - 14}" y="${index ? 1.45 : 0}em" ${attrs} />
+          <rect width="14" height="14" x="${SIZE - 14}" y="${index ? 1.45 : 0}em" class="${attrs.class}" style="${attrs.style || ''}" />
           <text x="${SIZE - 14 * 2}" y="${index ? 2.25 : 0.75}em" text-anchor="end">${point.label}</text>
         </g>
       `
@@ -72,7 +59,7 @@ module.exports = class BarChart extends Chart {
 
       return html`
         <g>
-          <rect x="${index * width}" y="${SIZE - height}" width="${width}" height="${height}" style="animation-delay: ${200 * index}ms;" ${attrs} />
+          <rect x="${index * width}" y="${SIZE - height}" width="${width}" height="${height}" style="animation-delay: ${200 * index}ms;${attrs.style || ''}" class="${attrs.class}" />
           ${number()}
           ${label()}
         </g>
@@ -104,6 +91,6 @@ module.exports = class BarChart extends Chart {
 function color (str) {
   var attrs = {}
   if (str.indexOf('#') === -1) attrs.class = 'u-color' + str
-  else attrs.fill = str
+  else attrs.style = `color: ${str};`
   return attrs
 }

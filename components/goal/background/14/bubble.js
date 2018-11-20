@@ -7,11 +7,13 @@ var SPEEDS = [ 15000, 9000 ]
 module.exports = class Bubble extends Component {
   load (element) {
     this.hasLoaded = true
-    element.addEventListener('transitionend', replay)
-    element.classList.add('in-transition')
-    Object.assign(element.style, {
-      transform: null,
-      transitionDuration: `${SPEEDS[SIZES.indexOf(this.size)] * ((100 - this.origin) / 100)}ms`
+    window.requestAnimationFrame(() => {
+      element.addEventListener('transitionend', replay)
+      element.classList.add('in-transition')
+      Object.assign(element.style, {
+        transform: null,
+        transitionDuration: `${SPEEDS[SIZES.indexOf(this.size)] * ((100 - this.origin) / 100)}ms`
+      })
     })
 
     function replay () {
