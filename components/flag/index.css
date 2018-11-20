@@ -1,4 +1,4 @@
-@import "../base/global";
+@import "../base";
 
 /* @define Flag */
 .Flag {
@@ -16,7 +16,6 @@
   margin-left: 0.9rem;
   order: 1;
   position: relative;
-  border-radius: 2px;
   overflow: hidden;
   transition: transform 150ms var(--ease);
 }
@@ -37,7 +36,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  border-radius: 2px;
 }
 
 .Flag--white path {

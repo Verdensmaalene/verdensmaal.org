@@ -3,6 +3,7 @@ var nanoraf = require('nanoraf')
 var raw = require('choo/html/raw')
 var Component = require('choo/component')
 var { i18n, luma, className, vh } = require('../base')
+var split = require('./split')
 
 var LINE_HEIGHT = 26
 var SIZE = 560
@@ -76,19 +77,7 @@ module.exports = class BarChart extends Component {
       attrs['xmlns:xlink'] = 'http://www.w3.org/1999/xlink'
     }
 
-    var title = props.title.split('').reduce(function (rows, char) {
-      var last = rows.length - 1
-      if (rows[last].length < 40) {
-        rows[last] += char
-      } else if (char !== ' ') {
-        var tail = rows[last].match(/\S+?$/)
-        rows[last] = rows[last].substr(0, tail.index)
-        if (tail) char = tail[0] + char
-        rows.push(tail[0])
-      }
-      return rows
-    }, [''])
-
+    var title = split(props.title)
     var offset = LINE_HEIGHT * (1 / 1.25) + LINE_HEIGHT * 3 + title.length * LINE_HEIGHT
     var width = SIZE / props.dataset.length
     var max = props.dataset.reduce(function (prev, point) {
@@ -96,7 +85,6 @@ module.exports = class BarChart extends Component {
       return value > prev ? value : prev
     }, 0)
     var factor = 100 / max
-    var sourceText = text`Source`
 
     var el = html`
       <svg class="Chart Chart--bar" ${attrs}>
@@ -105,8 +93,8 @@ module.exports = class BarChart extends Component {
           <text x="0" y="${LINE_HEIGHT * (1 / 1.25)}">
             ${title.map((text, index) => html`<tspan x="0" dy="${LINE_HEIGHT * index + LINE_HEIGHT * 0.15}">${text}</tspan>`)}
             ${props.source ? html`
-              <tspan x="0" dy="${LINE_HEIGHT * (title.length - 1) + LINE_HEIGHT * 0.25}" xmlns="http://www.w3.org/2000/svg">
-                ${sourceText}: <tspan text-decoration="underline"><a xlink:href="${props.source.url}">${props.source.text}</a></tspan>
+              <tspan x="0" dy="${LINE_HEIGHT * (title.length - 1) + LINE_HEIGHT * 0.25}">
+                ${text`Source`}: <tspan text-decoration="underline"><a xlink:href="${props.source.url}">${props.source.text}</a></tspan>
               </tspan>
             ` : null}
           </text>
@@ -122,9 +110,11 @@ module.exports = class BarChart extends Component {
     return raw((new window.XMLSerializer()).serializeToString(el))[0]
 
     function legend (point, index) {
+      var attrs = color(point.color)
+      attrs.class = (attrs.class || '') + ' Chart-color'
       return html`
         <g class="Chart-legend">
-          <rect width="16" height="16" x="${SIZE - 16}" y="${LINE_HEIGHT * (1 / 3.5) + LINE_HEIGHT * index}" fill="${point.color}" />
+          <rect width="16" height="16" x="${SIZE - 16}" y="${LINE_HEIGHT * (1 / 3.5) + LINE_HEIGHT * index}" ${attrs} />
           <text x="${SIZE - 16 - LINE_HEIGHT * (1 / 1.25)}" y="${LINE_HEIGHT * (1 / 1.25) + LINE_HEIGHT * index}" text-anchor="end">${point.label}</text>
         </g>
       `
@@ -134,13 +124,13 @@ module.exports = class BarChart extends Component {
       var value = parseFloat(point.value)
       if (value !== max) value = value * factor
       var height = (SIZE - offset) * (value / max)
-      var attrs = {
-        fill: point.color,
+      var attrs = Object.assign({
         x: index * width,
         y: SIZE - height,
         width: width,
         height: height
-      }
+      }, color(point.color))
+      attrs.class = (attrs.class || '') + ' Chart-bar js-bar'
 
       if (props.standalone) {
         attrs.y = SIZE
@@ -156,7 +146,7 @@ module.exports = class BarChart extends Component {
       } else {
         return html`
           <g>
-            <rect ${attrs} class="Chart-bar js-bar" />
+            <rect ${attrs} />
             ${number()}
             ${label()}
           </g>
@@ -167,7 +157,7 @@ module.exports = class BarChart extends Component {
         var y = height <= 110 ? SIZE - height - 70 : SIZE - height + 30
         if (props.standalone) y += 40
         return html`
-          <text opacity="${props.standalone ? 0 : 1}" x="${20 + width * index}" y="${y}" dominant-baseline="${height > 110 ? 'hanging' : 'central'}" class="${className(`Chart-label Chart-label--number Chart-label--${height > 110 && luma(point.color) < 185 ? 'light' : 'dark'} js-number`, { 'Chart-label--outside': height < 110 })}">
+          <text opacity="${props.standalone ? 0 : 1}" x="${20 + width * index}" y="${y}" dominant-baseline="${height > 110 ? 'hanging' : 'central'}" class="${className(`Chart-label Chart-label--big Chart-label--${height > 110 && luma(point.color) < 185 ? 'light' : 'dark'} js-number`, { 'Chart-label--outside': height < 110 })}">
             ${point.value}
             ${props.standalone ? html`<animate calcMode="spline" keySplines="0.165 0.84 0.44 1" keyTimes="0;1" values="${y};${y - 40}" attributeName="y" dur="400ms" begin="${800 + 200 * index}ms" fill="freeze" />` : null}
             ${props.standalone ? html`<animate calcMode="spline" keySplines="0.165 0.84 0.44 1" keyTimes="0;1" values="0;1" attributeName="opacity" dur="250ms" begin="${800 + 200 * index}ms" fill="freeze" />` : null}
@@ -188,4 +178,13 @@ module.exports = class BarChart extends Component {
       }
     }
   }
+}
+
+// convert color str to spreadable attribute
+// str -> obj
+function color (str) {
+  var attrs = {}
+  if (str.indexOf('#') === -1) attrs.class = 'u-color' + str
+  else attrs.fill = str
+  return attrs
 }

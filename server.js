@@ -131,13 +131,16 @@ app.use(get('/:num(\\d{1,2})-:uid/:id.svg', app.defer(async function (ctx, num, 
     let publisher
     let source = slice.primary.source.url
     if (source) publisher = await scrape(source).then((meta) => meta.publisher)
+    let value = slice.primary.value
+    let color = slice.primary.color
+    let dataset = value ? [{ value, color }] : slice.items
 
     ctx.set('Content-Type', 'image/svg+xml')
     ctx.body = await svg(slice.slice_type, {
       title: slice.primary.title,
-      dataset: slice.items.map((props, index) => Object.assign({
-        color: props.color || ['#0A97D9', '#003570'][index] || '#F1F1F1'
-      }, props)),
+      dataset: dataset.map((props, index) => Object.assign({}, props, {
+        color: props.color || [num, `${num}shaded`][index] || '#F1F1F1'
+      })),
       source: source ? {
         text: publisher || source.replace(/^https?:\/\//, ''),
         url: source

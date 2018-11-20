@@ -1,10 +1,8 @@
-var css = require('sheetify')
 var html = require('choo/html')
 var Component = require('choo/component')
 var Fish = require('./fish')
 var Bubble = require('./bubble')
 var Jellyfish = require('./jellyfish')
-css('./index.css')
 
 module.exports = class Background14 extends Component {
   constructor (id) {

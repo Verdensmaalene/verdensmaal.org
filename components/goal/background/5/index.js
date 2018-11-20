@@ -1,7 +1,5 @@
-var css = require('sheetify')
 const html = require('choo/html')
 const Component = require('choo/component')
-css('./index.css')
 
 module.exports = class Background5 extends Component {
   update () {

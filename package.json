@@ -18,26 +18,6 @@
       ]
     ]
   },
-  "browserify": {
-    "transform": [
-      [
-        "sheetify",
-        {
-          "use": [
-            [
-              "sheetify-postcss",
-              {
-                "plugins": [
-                  "autoprefixer",
-                  "postcss-csso"
-                ]
-              }
-            ]
-          ]
-        }
-      ]
-    ]
-  },
   "browser": {
     "./lib/scrape": "./lib/scrape/browser"
   },
@@ -67,7 +47,6 @@
   },
   "homepage": "https://github.com/codeandconspire/dk.globalgoals.org#readme",
   "dependencies": {
-    "autoprefixer": "^9.1.1",
     "cccpurge": "^2.0.0",
     "choo": "^6.13.1",
     "choo-service-worker": "^2.4.0",
@@ -80,7 +59,7 @@
     "hstream": "^1.2.0",
     "ics": "^2.7.2",
     "intune": "^1.0.0",
-    "jalla": "^0.10.0-17",
+    "jalla": "^0.10.0-18",
     "koa-body": "^4.0.4",
     "koa-compose": "^4.1.0",
     "koa-route": "^3.2.0",
@@ -96,14 +75,11 @@
     "nanoraf": "^3.1.0",
     "normalize.css": "^8.0.0",
     "postcss-calc": "^6.0.2",
-    "postcss-csso": "^3.0.0",
     "postcss-custom-properties": "^8.0.8",
     "postcss-focus-visible": "^3.0.0",
     "prismic-element": "^1.0.0",
     "prismic-javascript": "^1.5.0",
     "prismic-richtext": "^0.4.2",
-    "sheetify": "^7.3.3",
-    "sheetify-postcss": "^1.2.0",
     "slugify": "^1.3.3",
     "smoothscroll-polyfill": "^0.4.3"
   },

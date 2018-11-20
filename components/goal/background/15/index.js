@@ -1,7 +1,5 @@
-var css = require('sheetify')
 var html = require('choo/html')
 var Component = require('choo/component')
-css('./index.css')
 
 var BEE_WING_FLAPS = [
   'M39.163 9.994c.333-1.38-3.068-3.378-7.59-4.464-4.526-1.088-8.463-.85-8.795.534-.33 1.38 3.07 3.378 7.593 4.465 4.526 1.085 8.46.844 8.794-.537',

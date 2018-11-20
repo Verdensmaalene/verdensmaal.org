@@ -1,8 +1,6 @@
-var css = require('sheetify')
 var html = require('choo/html')
 var Component = require('choo/component')
 var { vw } = require('../../../base')
-css('./index.css')
 
 var BUS_SPEED = 18000
 var MAX_WIDTH = 1280

@@ -8,20 +8,25 @@ var { Predicates } = require('prismic-javascript')
 var View = require('../components/view')
 var card = require('../components/card')
 var intro = require('../components/intro')
-var intersection = require('../components/intersection')
 var grid = require('../components/grid')
 var Goal = require('../components/goal')
 var Flag = require('../components/flag')
 var Text = require('../components/text')
 var Header = require('../components/header')
-var BarChart = require('../components/chart/bar')
 var divide = require('../components/grid/divide')
+var BarChart = require('../components/chart/bar')
+var BigNumber = require('../components/chart/number')
 var TargetGrid = require('../components/target-grid')
+var intersection = require('../components/intersection')
 var { i18n, isSameDomain, className, reduce, srcset } = require('../components/base')
 
 var text = i18n()
 var SCROLL_MIN = 0
 var SCROLL_MAX = 50
+var CHARTS = {
+  'bar_chart': BarChart,
+  'big_number': BigNumber
+}
 
 // override goal background method in high contrast mode
 class HighContrastGoal extends Goal {
@@ -179,41 +184,42 @@ class GoalPage extends View {
       `
 
       function statistic (slice, index) {
-        switch (slice.slice_type) {
-          case 'bar_chart': {
-            let props = {
-              title: slice.primary.title,
-              dataset: slice.items.map((props, index) => Object.assign({
-                color: props.color || ['#0A97D9', '#003570'][index] || '#F1F1F1'
-              }, props))
-            }
-
-            let url = slice.primary.source.url
-            if (url) {
-              let publisher = slice.meta && slice.primary.meta.publisher
-              props.source = {
-                text: publisher || url.replace(/^https?:\/\//, ''),
-                url: url
-              }
-            }
-
-            return html`
-              <figure>
-                <div class="u-aspect1-1">
-                  <div class="u-cover">
-                    ${state.cache(BarChart, `${doc.id}-chart-${index}`).render(props)}
-                  </div>
-                </div>
-                ${slice.primary.description.length ? html`
-                  <figcaption class="Text u-spaceT2">
-                    <div class="Text-muted">${asElement(slice.primary.description)}</div>
-                  </figcaption>
-                ` : null}
-              </figure>
-            `
-          }
-          default: return null
+        let value = slice.primary.value
+        let color = slice.primary.color
+        let dataset = value ? [{ value, color }] : slice.items
+        var props = {
+          title: slice.primary.title,
+          dataset: dataset.map((props, index) => Object.assign({}, props, {
+            color: props.color || [num, `${num}shaded`][index] || '#F1F1F1'
+          }))
         }
+
+        var url = slice.primary.source.url
+        if (url) {
+          let publisher = slice.meta && slice.primary.meta.publisher
+          props.source = {
+            text: publisher || url.replace(/^https?:\/\//, ''),
+            url: url
+          }
+        }
+
+        var Chart = CHARTS[slice.slice_type]
+        if (!Chart) return null
+
+        return html`
+          <figure>
+            <div class="u-aspect1-1">
+              <div class="u-cover">
+                ${state.cache(Chart, `${doc.id}-chart-${index}`).render(props)}
+              </div>
+            </div>
+            ${slice.primary.description.length ? html`
+              <figcaption class="Text u-spaceT2">
+                <div class="Text-muted">${asElement(slice.primary.description)}</div>
+              </figcaption>
+            ` : null}
+          </figure>
+        `
       }
 
       // get latest news with similar tags
