@@ -1,6 +1,6 @@
 module.exports = title
 
-function title (str, length = 40) {
+function title (str, length = 35) {
   return str.split('').reduce(function (rows, char) {
     var last = rows.length - 1
     if (rows[last].length < length) {

@@ -1,84 +1,32 @@
 var html = require('choo/html')
-var nanoraf = require('nanoraf')
 var raw = require('choo/html/raw')
-var Component = require('choo/component')
-var { i18n, luma, className, vh } = require('../base')
+var { i18n, luma, className } = require('../base')
 var split = require('./split')
+var Chart = require('./chart')
 
 var LINE_HEIGHT = 26
 var SIZE = 560
 
 var text = i18n(require('./lang.json'))
 
-module.exports = class BarChart extends Component {
-  constructor (id) {
-    super(id)
-    this.id = id
-    this.style = null
-  }
-
-  load (element) {
-    var offset, height
-    var bars = element.querySelectorAll('.js-bar')
-    var labels = element.querySelectorAll('.js-label')
-    var numbers = element.querySelectorAll('.js-number')
-
-    var onscroll = nanoraf(function () {
-      var { scrollY } = window
-      if (scrollY + vh() < offset + height / 2) return
-      if (scrollY > offset + height) return
-      for (let i = 0, len = bars.length; i < len; i++) {
-        bars[i].classList.add('is-loaded')
-        bars[i].style.setProperty('transition-delay', `${200 * i}ms`)
-        numbers[i].classList.add('is-loaded')
-        numbers[i].style.setProperty('transition-delay', `${800 + 200 * i}ms`)
-        labels[i].classList.add('is-loaded')
-        labels[i].style.setProperty('transition-delay', `${950 + 200 * i}ms`)
-      }
-      unload()
-    })
-    var onresize = nanoraf(function () {
-      var parent = element.parentElement
-      offset = parent.offsetTop
-      height = parent.offsetHeight
-      while ((parent = parent.offsetParent)) offset += parent.offsetTop
-    })
-
-    window.requestAnimationFrame(function () {
-      onresize()
-      onscroll()
-    })
-
-    window.addEventListener('scroll', onscroll, { passive: true })
-    window.addEventListener('resize', onresize)
-    this.unload = unload
-
-    function unload () {
-      window.removeEventListener('scroll', onscroll)
-      window.removeEventListener('resize', onresize)
-    }
-  }
-
-  update () {
-    return false
-  }
-
+module.exports = class BarChart extends Chart {
   createElement (props) {
-    if (props.standalone && !this.style) {
-      return import('./style').then((style) => {
-        this.style = style
-        return this.render(props)
-      })
+    var attrs = {
+      width: SIZE,
+      height: SIZE,
+      viewBox: `0 0 ${SIZE} ${SIZE}`,
+      id: this.id,
+      class: 'Chart Chart--bar'
     }
-
-    var attrs = { width: SIZE, height: SIZE, viewBox: '0 0 560 560', id: this.id }
+    if (props.size) attrs.class += ` Chart--${props.size}`
     if (props.standalone) {
       attrs.xmlns = 'http://www.w3.org/2000/svg'
       attrs['xmlns:xlink'] = 'http://www.w3.org/1999/xlink'
     }
 
     var title = split(props.title)
-    var offset = LINE_HEIGHT * (1 / 1.25) + LINE_HEIGHT * 3 + title.length * LINE_HEIGHT
+    // account for text growing 2x height (ish)
+    var offset = LINE_HEIGHT * 5 + title.length * LINE_HEIGHT
     var width = SIZE / props.dataset.length
     var max = props.dataset.reduce(function (prev, point) {
       var value = parseFloat(point.value)
@@ -86,14 +34,14 @@ module.exports = class BarChart extends Component {
     }, 0)
     var factor = 100 / max
 
-    var el = html`
-      <svg class="Chart Chart--bar" ${attrs}>
+    return html`
+      <svg ${attrs}>
         ${props.standalone ? raw(this.style) : null}
         <g class="Chart-heading">
-          <text x="0" y="${LINE_HEIGHT * (1 / 1.25)}">
-            ${title.map((text, index) => html`<tspan x="0" dy="${LINE_HEIGHT * index + LINE_HEIGHT * 0.15}">${text}</tspan>`)}
+          <text x="0" y="0">
+            ${title.map((text, index) => html`<tspan x="0" dy="${index ? 1.5 : 0.75}em">${text}</tspan>`)}
             ${props.source ? html`
-              <tspan x="0" dy="${LINE_HEIGHT * (title.length - 1) + LINE_HEIGHT * 0.25}">
+              <tspan x="0" dy="1.5em">
                 ${text`Source`}: <tspan text-decoration="underline"><a xlink:href="${props.source.url}">${props.source.text}</a></tspan>
               </tspan>
             ` : null}
@@ -104,18 +52,13 @@ module.exports = class BarChart extends Component {
       </svg>
     `
 
-    if (typeof window === 'undefined') return el
-
-    // hack to preserve xmlns namespaces
-    return raw((new window.XMLSerializer()).serializeToString(el))[0]
-
     function legend (point, index) {
       var attrs = color(point.color)
       attrs.class = (attrs.class || '') + ' Chart-color'
       return html`
         <g class="Chart-legend">
-          <rect width="16" height="16" x="${SIZE - 16}" y="${LINE_HEIGHT * (1 / 3.5) + LINE_HEIGHT * index}" ${attrs} />
-          <text x="${SIZE - 16 - LINE_HEIGHT * (1 / 1.25)}" y="${LINE_HEIGHT * (1 / 1.25) + LINE_HEIGHT * index}" text-anchor="end">${point.label}</text>
+          <rect width="14" height="14" x="${SIZE - 14}" y="${index ? 1.45 : 0}em" ${attrs} />
+          <text x="${SIZE - 14 * 2}" y="${index ? 2.25 : 0.75}em" text-anchor="end">${point.label}</text>
         </g>
       `
     }
@@ -124,55 +67,31 @@ module.exports = class BarChart extends Component {
       var value = parseFloat(point.value)
       if (value !== max) value = value * factor
       var height = (SIZE - offset) * (value / max)
-      var attrs = Object.assign({
-        x: index * width,
-        y: SIZE - height,
-        width: width,
-        height: height
-      }, color(point.color))
+      var attrs = color(point.color)
       attrs.class = (attrs.class || '') + ' Chart-bar js-bar'
 
-      if (props.standalone) {
-        attrs.y = SIZE
-        return html`
-          <g>
-            <rect ${attrs}>
-              <animate calcMode="spline" keySplines="0.165 0.84 0.44 1" keyTimes="0;1" values="${SIZE};${SIZE - height}" attributeName="y" dur="800ms" begin="${200 * index}ms" fill="freeze" />
-            </rect>
-            ${number()}
-            ${label()}
-          </g>
-        `
-      } else {
-        return html`
-          <g>
-            <rect ${attrs} />
-            ${number()}
-            ${label()}
-          </g>
-        `
-      }
+      return html`
+        <g>
+          <rect x="${index * width}" y="${SIZE - height}" width="${width}" height="${height}" style="animation-delay: ${200 * index}ms;" ${attrs} />
+          ${number()}
+          ${label()}
+        </g>
+      `
 
       function number () {
         var y = height <= 110 ? SIZE - height - 70 : SIZE - height + 30
-        if (props.standalone) y += 40
         return html`
-          <text opacity="${props.standalone ? 0 : 1}" x="${20 + width * index}" y="${y}" dominant-baseline="${height > 110 ? 'hanging' : 'central'}" class="${className(`Chart-label Chart-label--big Chart-label--${height > 110 && luma(point.color) < 185 ? 'light' : 'dark'} js-number`, { 'Chart-label--outside': height < 110 })}">
+          <text x="${20 + width * index}" y="${y}" dominant-baseline="${height > 110 ? 'hanging' : 'central'}" class="${className(`Chart-label Chart-label--big Chart-label--${height > 110 && luma(point.color) < 185 ? 'light' : 'dark'} js-number`, { 'Chart-label--outside': height < 110 })}" style="animation-delay: ${800 + 200 * index}ms;">
             ${point.value}
-            ${props.standalone ? html`<animate calcMode="spline" keySplines="0.165 0.84 0.44 1" keyTimes="0;1" values="${y};${y - 40}" attributeName="y" dur="400ms" begin="${800 + 200 * index}ms" fill="freeze" />` : null}
-            ${props.standalone ? html`<animate calcMode="spline" keySplines="0.165 0.84 0.44 1" keyTimes="0;1" values="0;1" attributeName="opacity" dur="250ms" begin="${800 + 200 * index}ms" fill="freeze" />` : null}
           </text>
         `
       }
 
       function label () {
         var y = height <= 110 ? SIZE - height - 30 : SIZE - 40
-        if (props.standalone) y += 40
         return html`
-          <text opacity="${props.standalone ? 0 : 1}" x="${20 + width * index}" y="${y}" dominant-baseline="${height > 110 ? 'hanging' : 'central'}" class="${className(`Chart-label Chart-label--${height > 110 && luma(point.color) < 185 ? 'light' : 'dark'} js-label`, { 'Chart-label--outside': height < 110 })}">
+          <text x="${20 + width * index}" y="${y}" dominant-baseline="${height > 110 ? 'hanging' : 'central'}" class="${className(`Chart-label Chart-label--${height > 110 && luma(point.color) < 185 ? 'light' : 'dark'} js-label`, { 'Chart-label--outside': height < 110 })}" style="animation-delay: ${950 + 200 * index}ms;">
             ${point.label}
-            ${props.standalone ? html`<animate calcMode="spline" keySplines="0.165 0.84 0.44 1" keyTimes="0;1" values="${y};${y - 40}" attributeName="y" dur="400ms" begin="${950 + 200 * index}ms" fill="freeze" />` : null}
-            ${props.standalone ? html`<animate calcMode="spline" keySplines="0.165 0.84 0.44 1" keyTimes="0;1" values="0;1" attributeName="opacity" dur="250ms" begin="${950 + 200 * index}ms" fill="freeze" />` : null}
           </text>
         `
       }

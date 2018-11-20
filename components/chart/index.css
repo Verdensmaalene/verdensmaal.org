@@ -3,6 +3,10 @@
  * @import "../base";
  */
 
+:root {
+  --Chart-scale-factor: 1;
+}
+
 /** @define Chart */
 .Chart {
   width: 100%;
@@ -13,13 +17,13 @@
 .Chart-heading {
   fill: rgb(var(--current-color));
   font-family: var(--default-font-family);
-  font-size: var(--default-font-size);
+  font-size: calc(var(--default-font-size) * var(--Chart-scale-factor));
   line-height: var(--default-line-height);
 }
 
 .Chart-label--big,
 .Chart-label--huge {
-  font-size: 2.5rem;
+  font-size: calc(2.5rem * var(--Chart-scale-factor));
   font-family: var(--heading-font-family);
   word-spacing: var(--heading-word-spacing);
   line-height: var(--heading-line-height);
@@ -46,59 +50,72 @@
   fill: rgb(var(--current-color));
 }
 
+/**
+ * Apply "small" rules within specific scopes. Useful when shown in columns.
+ */
+
+@media (min-width: 600px) and (max-width: 900px) {
+  .Chart--md .Chart-label--big {
+    font-size: calc(2rem * var(--Chart-scale-factor));
+  }
+
+  .Chart--md.Chart--bar .Chart-legend {
+    display: none;
+  }
+}
+
 @media (max-width: 480px) {
-  .Chart-label,
-  .Chart-heading {
-    font-size: 1.5rem;
+  .Chart-label--big {
+    font-size: calc(2rem * var(--Chart-scale-factor));
   }
 
   .Chart--bar .Chart-legend {
     display: none;
   }
-
-  .Chart-heading {
-    transform: translateY(8px);
-  }
-
-  .Chart-label--number.Chart-label--outside {
-    transform: translateY(-10px);
-  }
-
-  .Chart-label--number {
-    font-size: 4rem;
-  }
 }
 
-:root[scripting-enabled] .Chart-bar {
+.Chart-bar {
   transform: scaleY(0);
-}
-
-:root[scripting-enabled] .Chart-bar.is-loaded {
-  transform: scaleY(1);
   transform-origin: bottom;
-  transition: transform 800ms var(--ease-out);
 }
 
-:root[scripting-enabled] .Chart-label {
+:root:not([scripting-enabled]) .Chart-bar,
+:root[scripting-enabled] .Chart.in-view .Chart-bar {
+  animation: Chart-bar--appearing 800ms forwards var(--ease-out);
+}
+
+@keyframes Chart-bar--appearing {
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.Chart-label {
   opacity: 0;
   transform: translateY(40px);
 }
 
-:root[scripting-enabled] .Chart-label--huge {
-  opacity: 0;
+.Chart-label--huge {
   transform-origin: center;
   transform: scale(1.5);
 }
 
-:root[scripting-enabled] .Chart-label.is-loaded {
-  opacity: 1;
-  transform: translateY(0px) scale(1);
-  transition:
-    transform 400ms var(--ease-out),
-    opacity 250ms var(--ease-out);
+:root:not([scripting-enabled]) .Chart-label,
+:root[scripting-enabled] .Chart.in-view .Chart-label {
+  animation: Chart-label--appearing 400ms forwards var(--ease-out);
 }
 
-:root[scripting-enabled] .Chart-label--huge.is-loaded {
-  transition-duration: 400ms, 300ms;
-  transition-timing-function: cubic-bezier(0.175, 0.985, 0.14, 1.275);
+.Chart.in-view .Chart-label--huge {
+  animation-timing-function: cubic-bezier(0.175, 0.985, 0.14, 1.275);
+}
+
+@keyframes Chart-label--appearing {
+  62.5% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
 }

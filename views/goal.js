@@ -188,6 +188,7 @@ class GoalPage extends View {
         let color = slice.primary.color
         let dataset = value ? [{ value, color }] : slice.items
         var props = {
+          size: 'md',
           title: slice.primary.title,
           dataset: dataset.map((props, index) => Object.assign({}, props, {
             color: props.color || [num, `${num}shaded`][index] || '#F1F1F1'
