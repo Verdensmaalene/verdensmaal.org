@@ -98,13 +98,13 @@ function news (state, emit) {
     return card({
       title: asText(doc.data.title),
       body: asText(doc.data.description),
-      image: {
+      image: doc.data.image.url ? {
         alt: doc.data.image.alt,
         sizes: sizes,
         srcset: srcset(doc.data.image.url, [400, 600, 900, 1800], opts),
         src: `/media/fetch/w_900/${doc.data.image.url}`,
         caption: doc.data.image.copyright
-      },
+      } : null,
       date: {
         datetime: date,
         text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
