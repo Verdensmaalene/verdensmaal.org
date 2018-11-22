@@ -7,7 +7,7 @@ module.exports = slot
 // image with text and link overlaid
 // (obj, str) -> Element
 function slot (props, slot) {
-  var image = Object.assign({
+  var image = props.image && Object.assign({
     sizes: '50vw',
     alt: props.title || '',
     src: srcset(props.image.url, [900]).split(' ')[0],

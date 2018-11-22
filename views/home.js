@@ -117,7 +117,7 @@ class Home extends View {
             if (!doc || !doc.data.grid_slots.length) return null
             let slice = doc.data.grid_slots[0]
             let props = {
-              image: slice.primary.image,
+              image: slice.primary.image.url ? slice.primary.image : null,
               title: asText(slice.primary.title),
               body: asText(slice.primary.body),
               link: {
