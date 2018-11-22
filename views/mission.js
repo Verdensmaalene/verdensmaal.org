@@ -1,14 +1,13 @@
 var html = require('choo/html')
 var asElement = require('prismic-element')
-var { asText } = require('prismic-richtext')
 var view = require('../components/view')
 var grid = require('../components/grid')
-var intro = require('../components/intro')
-var intersection = require('../components/intersection')
 var Text = require('../components/text')
-var { i18n } = require('../components/base')
+var intro = require('../components/intro')
 var Mission = require('../components/mission')
 var { external } = require('../components/symbol')
+var { i18n, asText } = require('../components/base')
+var intersection = require('../components/intersection')
 
 var text = i18n()
 

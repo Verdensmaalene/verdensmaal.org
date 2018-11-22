@@ -2,19 +2,19 @@ var html = require('choo/html')
 var parse = require('date-fns/parse')
 var subDays = require('date-fns/sub_days')
 var asElement = require('prismic-element')
-var { asText } = require('prismic-richtext')
 var { Predicates } = require('prismic-javascript')
 var View = require('../components/view')
 var card = require('../components/card')
 var grid = require('../components/grid')
 var logo = require('../components/logo')
+var event = require('../components/event')
 var intro = require('../components/intro')
-var intersection = require('../components/intersection')
 var GoalGrid = require('../components/goal-grid')
-var { i18n, reduce, srcset } = require('../components/base')
-var centerSlot = require('../components/goal-grid/slots/center')
-var paddSlot = require('../components/goal-grid/slots/padded')
+var intersection = require('../components/intersection')
 var cardSlot = require('../components/goal-grid/slots/card')
+var paddSlot = require('../components/goal-grid/slots/padded')
+var centerSlot = require('../components/goal-grid/slots/center')
+var { i18n, reduce, srcset, asText } = require('../components/base')
 
 var text = i18n()
 
@@ -227,26 +227,29 @@ class Home extends View {
             srcset: srcset(data.image.url, [400, 600, 900, 1800], opts),
             src: `/media/fetch/w_900/${data.image.url}`,
             caption: data.image.copyright
-          } : null
+          } : null,
+          link: {
+            href: state.docs.resolve(slice.primary.link)
+          }
         }
 
         switch (slice.slice_type) {
-          case 'event': return card(Object.assign({
-            link: {
-              href: state.docs.resolve(slice.primary.link)
-            }
-          }, props))
+          case 'event': {
+            if (props.image) return card(props)
+            let { data } = slice.primary.link
+            let date = parse(data.start)
+            return event.outer(card(props, event.inner(Object.assign({}, data, {
+              start: date,
+              end: parse(data.end)
+            }))))
+          }
           case 'news': {
             let date = parse(slice.primary.link.first_publication_date)
-            return card(Object.assign({
-              date: {
-                datetime: date,
-                text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
-              },
-              link: {
-                href: state.docs.resolve(slice.primary.link)
-              }
-            }, props))
+            props.date = {
+              datetime: date,
+              text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
+            }
+            return card(props)
           }
           default: return null
         }

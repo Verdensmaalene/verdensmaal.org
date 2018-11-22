@@ -1,14 +1,13 @@
 var html = require('choo/html')
 var slugify = require('slugify')
 var asElement = require('prismic-element')
-var { asText } = require('prismic-richtext')
 var view = require('../components/view')
 var card = require('../components/card')
 var grid = require('../components/grid')
 var intro = require('../components/intro')
-var intersection = require('../components/intersection')
 var border = require('../components/border')
-var { i18n, reduce } = require('../components/base')
+var intersection = require('../components/intersection')
+var { i18n, reduce, asText } = require('../components/base')
 
 var text = i18n()
 

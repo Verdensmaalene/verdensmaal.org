@@ -1,7 +1,6 @@
 var assert = require('assert')
 var html = require('choo/html')
 var Component = require('choo/component')
-var { asText } = require('prismic-richtext')
 var { Predicates } = require('prismic-javascript')
 var Flag = require('../flag')
 var error = require('./error')
@@ -9,7 +8,7 @@ var share = require('../share')
 var Header = require('../header')
 var footer = require('../footer')
 var player = require('../embed/player')
-var { i18n, isSameDomain } = require('../base')
+var { i18n, isSameDomain, asText } = require('../base')
 
 var text = i18n()
 
@@ -62,7 +61,7 @@ function createView (view, meta) {
         // forward nested promises for deep prefetching to work
         if (state.prefetch) return Promise.all([children, next])
 
-        if (next.title !== DEFAULT_TITLE) {
+        if (next.title && next.title !== DEFAULT_TITLE) {
           next.title = `${next.title} | ${DEFAULT_TITLE}`
         }
         emit('meta', next)

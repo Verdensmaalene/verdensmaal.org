@@ -1,7 +1,6 @@
 var html = require('choo/html')
 var parse = require('date-fns/parse')
 var subDays = require('date-fns/sub_days')
-var { asText } = require('prismic-richtext')
 var { Predicates } = require('prismic-javascript')
 var Map = require('../components/map')
 var Tabs = require('../components/tabs')
@@ -11,7 +10,7 @@ var view = require('../components/view')
 var event = require('../components/event')
 var intro = require('../components/intro')
 var calendar = require('../components/calendar')
-var { i18n, srcset } = require('../components/base')
+var { i18n, srcset, asText } = require('../components/base')
 
 var text = i18n()
 

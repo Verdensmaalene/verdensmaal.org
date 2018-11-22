@@ -6,15 +6,17 @@ var text = i18n()
 module.exports = hero
 module.exports.loading = loading
 
+var ATTRIBUTES = ['width', 'height', 'srcset', 'sizes', 'alt']
+
 function hero (props) {
-  var src = props.image.src
-  var imgattrs = pluck(props.image, 'width', 'height', 'srcset', 'sizes', 'alt')
-  imgattrs.alt = imgattrs.alt || ''
+  var src = props.image && props.image.src
+  var imgattrs = props.image ? pluck(props.image || {}, ...ATTRIBUTES) : null
+  if (imgattrs && !imgattrs.alt) imgattrs.alt = ''
 
   return html`
     <div class="Hero">
       <figure class="Hero-figure">
-        <img class="Hero-image" ${imgattrs} src=${src}>
+        ${props.image ? html`<img class="Hero-image" ${imgattrs} src=${src}>` : null}
       </figure>
       <div class="Hero-content">
         <h1 class="Hero-title">${props.title}</h1>

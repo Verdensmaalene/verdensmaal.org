@@ -1,14 +1,13 @@
 var html = require('choo/html')
 var parse = require('date-fns/parse')
-var { asText } = require('prismic-richtext')
 var asElement = require('prismic-element')
 var view = require('../components/view')
 var share = require('../components/share')
 var symbol = require('../components/symbol')
 var banner = require('../components/banner')
-var { i18n, srcset } = require('../components/base')
 var shareButton = require('../components/share-button')
 var serialize = require('../components/text/serialize')
+var { i18n, srcset, asText } = require('../components/base')
 
 var text = i18n()
 

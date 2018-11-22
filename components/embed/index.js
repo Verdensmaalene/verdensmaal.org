@@ -44,6 +44,6 @@ function id (props) {
   switch (props.provider_name) {
     case 'YouTube': return props.embed_url.match(YOUTUBE_RE)[1]
     case 'Vimeo': return props.embed_url.match(/vimeo\.com\/(.+)?\??/)[1]
-    default: throw new Error(`serialize: embed provider ${props.provider_name} not supported`)
+    default: return null
   }
 }

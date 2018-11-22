@@ -1,13 +1,12 @@
 var html = require('choo/html')
 var parse = require('date-fns/parse')
-var { asText } = require('prismic-richtext')
 var { Predicates } = require('prismic-javascript')
 var view = require('../components/view')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var intro = require('../components/intro')
-var { i18n, srcset } = require('../components/base')
 var button = require('../components/button')
+var { i18n, srcset, asText } = require('../components/base')
 
 var text = i18n()
 var PAGE_SIZE = 6

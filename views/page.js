@@ -1,7 +1,6 @@
 var html = require('choo/html')
-var { asText } = require('prismic-richtext')
 var view = require('../components/view')
-var { i18n } = require('../components/base')
+var { i18n, asText } = require('../components/base')
 
 var text = i18n()
 

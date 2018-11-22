@@ -1,7 +1,7 @@
 var html = require('choo/html')
 var parse = require('date-fns/parse')
 var { external } = require('../symbol')
-var { i18n, srcset } = require('../base')
+var { i18n, srcset, snippet } = require('../base')
 
 var text = i18n(require('./lang.json'))
 
@@ -33,7 +33,7 @@ function bookmark (props) {
           </span> <span class="Bookmark-href">${url.hostname}</span>
         </small>
         <h3 class="Bookmark-title">${props.title}</h3>
-        ${props.description ? html`<p class="Bookmark-description">${snippet(props.description)}</p>` : null}
+        ${props.description ? html`<p class="Bookmark-description">${snippet(props.description, 90)}</p>` : null}
       </figcaption>
     </figure>
   `
@@ -56,14 +56,4 @@ function loading () {
       </figcaption>
     </figure>
   `
-}
-
-// cut off text at max length
-// str -> Element
-function snippet (str) {
-  if (str.length < 90) return str
-  var words = str.split(' ')
-  var snipped = ''
-  while (snipped.length < 90) snipped += ' ' + words.shift()
-  return [snipped, ' ', html`<span class="u-textNowrap">${words[0]}…</span>`]
 }

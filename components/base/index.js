@@ -1,5 +1,6 @@
 var fs = require('fs')
 var path = require('path')
+var html = require('choo/html')
 var common = require('./lang.json')
 
 if (typeof window !== 'undefined') {
@@ -228,4 +229,27 @@ function timestamp (date) {
     ('0' + date.getHours()).substr(-2),
     ('0' + date.getMinutes()).substr(-2)
   ].join(':')
+}
+
+// nullable text getter for Prismic text fields
+// (arr?) -> str
+exports.asText = asText
+function asText (richtext) {
+  if (!richtext || !richtext.length) return null
+  var text = ''
+  for (let i = 0, len = richtext.length; i < len; i++) {
+    text += (i > 0 ? ' ' : '') + richtext[i].text
+  }
+  return text
+}
+
+// get truncated snippet of text
+// (str, num?) = arr
+exports.snippet = snippet
+function snippet (str, maxlen = Infinity) {
+  if (!str || str.length < maxlen) return str
+  var words = str.split(' ')
+  var snipped = ''
+  while (snipped.length < maxlen) snipped += ' ' + words.shift()
+  return [snipped, ' ', html`<span class="u-textNowrap">${words[0]}…</span>`]
 }

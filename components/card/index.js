@@ -1,8 +1,8 @@
 var assert = require('assert')
 var html = require('choo/html')
-var { luma, i18n, hexToRgb, className } = require('../base')
-var figure = require('./figure')
 var link = require('./link')
+var figure = require('./figure')
+var { luma, i18n, hexToRgb, className, snippet } = require('../base')
 
 var text = i18n(require('./lang.json'))
 
@@ -47,7 +47,7 @@ function card (props = {}, slot) {
             </time>
           ` : null}
           <h1 class="Card-title">${props.title}</h1>
-          <p class="Card-text">${snippet(props.body)}</p>
+          <p class="Card-text">${snippet(props.body, 170)}</p>
         </div>
         ${props.link ? html`
           <div class="Card-footer">
@@ -75,14 +75,4 @@ function loading (props = {}) {
       </div>
     </article>
   `
-}
-
-// cut off text at max length
-// str -> Element
-function snippet (str) {
-  if (str.length < 170) return str
-  var words = str.split(' ')
-  var snipped = ''
-  while (snipped.length < 170) snipped += ' ' + words.shift()
-  return [snipped, ' ', html`<span class="u-textNowrap">${words[0]}…</span>`]
 }

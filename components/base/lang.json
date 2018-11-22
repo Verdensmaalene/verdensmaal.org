@@ -37,12 +37,11 @@
   "Greenland, Faroe Islands": "Grønland, Færøerne",
   "List": "Listevisning",
   "Calendar": "Kalender",
-  "Save event to calendar": "Gem i kalender",
+  "Save event to calendar": "Importer i din kalender",
   "RSVP to this event": "Tilmeld til event",
   "Spread the word": "Spred budskabet",
   "Share with others": "Del med andre",
   "E-mail to a friend": "E-mail til en du kender",
   "Check this out: %s": "Se her: %s",
-  "Download document": "Hent dokument",
-  "%s days": "%s days"
+  "Download document": "Hent dokument"
 }
