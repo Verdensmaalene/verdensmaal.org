@@ -46,7 +46,7 @@ module.exports = class Goal extends Component {
       (err) => ({ render () { throw err } })
     ).then((background) => {
       this.background = (num, opts) => background.render(opts)
-      this.rerender()
+      if (this.element) this.rerender()
     })
 
     return null

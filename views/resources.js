@@ -70,7 +70,7 @@ function group (slice) {
   var heading = asText(slice.primary.heading)
   var slug = slice.primary.shortcut_name || heading
   return html`
-    <section id="${slugify(slug).toLowerCase()}">
+    <section id="${slugify(slug, { lower: true })}">
       <div class="u-container">
         ${border(heading)}
       </div>
@@ -106,7 +106,7 @@ function shortcut (slice) {
     slug = slug || asText(slice.primary.heading)
   }
   if (!slug) return null
-  return html`<a href="#${slugify(slug).toLowerCase()}">${slug}</a>`
+  return html`<a href="#${slugify(slug, { lower: true })}">${slug}</a>`
 }
 
 function meta (state) {

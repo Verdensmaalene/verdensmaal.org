@@ -431,7 +431,7 @@ function video (props) {
 // str -> obj
 function anchor (str) {
   var attrs = {}
-  if (str) attrs.id = slugify(str).toLowerCase()
+  if (str) attrs.id = slugify(str, { lower: true })
   return attrs
 }
 

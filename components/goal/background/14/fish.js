@@ -10,9 +10,11 @@ module.exports = class Fish extends Component {
     window.requestAnimationFrame(() => {
       element.addEventListener('transitionend', replay)
       element.classList.add('in-transition')
-      Object.assign(element.style, {
-        transform: null,
-        transitionDuration: `${SPEEDS[SIZES.indexOf(this.size)] * ((100 - this.origin) / 100)}ms`
+      window.requestAnimationFrame(() => {
+        Object.assign(element.style, {
+          transform: null,
+          transitionDuration: `${SPEEDS[SIZES.indexOf(this.size)] * ((100 - this.origin) / 100)}ms`
+        })
       })
     })
 
