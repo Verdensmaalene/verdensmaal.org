@@ -93,24 +93,6 @@ Chart.prototype.update = function () {
   return false
 }
 
-Chart.prototype._handleRender = function (args) {
-  var el = Component.prototype._handleRender.call(this, args)
-  if (typeof window === 'undefined' || !this.props.standalone) return el
-  // hack to preserve xmlns namespaces
-  return raw((new window.XMLSerializer()).serializeToString(el))[0]
-}
-
-Chart.prototype.render = function () {
-  if (!this.standalone || this.style) {
-    return Component.prototype.render.apply(this, arguments)
-  }
-
-  return import('./style').then((style) => {
-    this.style = style
-    return Component.prototype.render.apply(this, arguments)
-  })
-}
-
 function wrapper (props, children) {
   var link = { href: props.source.url, class: 'Chart-link' }
   if (props.source.target) {

@@ -19,7 +19,7 @@
 }
 
 .Chart-label,
-.Chart--stadnalone .Chart-heading {
+.Chart--standalone .Chart-heading {
   color: rgba(var(--color-current));
   font-family: var(--default-font-family);
   font-size: calc(var(--default-font-size) * var(--Chart-scale-factor));
@@ -201,12 +201,12 @@
     --Chart-scale-factor: 1.8;
   }
 
-  .Chart-pie {
+  .Chart--standalone .Chart-pie {
     transform: scale(1);
   }
 
   .Chart--pie.Chart--standalone .Chart-legend {
-    transform: translateY(0);
+    transform: translateY(-1em);
   }
 }
 

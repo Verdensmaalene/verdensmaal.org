@@ -18,7 +18,7 @@ function pie (props, style = null) {
   var values = props.dataset.map((data) => parseFloat(data.value))
   var total = values.reduce((total, value) => total + value, 0)
   var angles = values.map((value) => 360 * (value / total))
-  var height = props.standalone ? WIDTH + heading + half * LINE_HEIGHT : WIDTH * 3 / 4
+  var height = props.standalone ? WIDTH + (title.length + half + 2) * LINE_HEIGHT : WIDTH * 3 / 4
   var radius = props.standalone ? RADIUS : RADIUS / WIDTH * height
   var labelRadius = radius * 1.12
   var centerY = height - labelRadius
