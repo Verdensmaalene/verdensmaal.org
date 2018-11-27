@@ -205,7 +205,10 @@ app.use(get('/geoip', function (ctx, next) {
   ctx.set('Cache-Control', 'no-cache, private, max-age=0')
   ctx.type = 'application/json'
   var ip = ctx.headers['cf-connecting-ip'] || ctx.ip
-  ctx.body = geoip.lookup(ip.replace('::1', '2.131.255.255'))
+  if (ip.indexOf('::') !== -1) ip = '2.131.255.255'
+  var result = geoip.lookup(ip)
+  ctx.assert(result, 500, 'Could not resolve geoip')
+  ctx.body = result
 }))
 
 // randomize layout
