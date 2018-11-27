@@ -11,7 +11,6 @@ module.exports = `
         src: url(data:font/woff;base64,${fs.readFileSync(__dirname + '/../base/fonts/giorgio-sans-bold.woff', 'base64')}) format("woff");
       }
       ${fs.readFileSync(__dirname + '/../base/global.css', 'utf-8')}
-      ${fs.readFileSync(__dirname + '/../base/utilities/colors.css', 'utf-8')}
       ${fs.readFileSync(__dirname + '/index.css', 'utf-8')}
     ]]>
   </style>

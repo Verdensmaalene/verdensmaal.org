@@ -20,8 +20,8 @@ var svg = require('./lib/svg')
 var purge = require('./lib/purge')
 var scrape = require('./lib/scrape')
 var resolve = require('./lib/resolve')
-var { asText } = require('./components/base')
 var imageproxy = require('./lib/cloudinary-proxy')
+var { asText, colors } = require('./components/base')
 
 var app = jalla('index.js', { sw: 'sw.js' })
 
@@ -124,26 +124,23 @@ app.use(get('/:num(\\d{1,2})-:uid/:id.svg', app.defer(async function (ctx, num, 
     ctx.assert(doc, 404, 'Image not found')
 
     let slice = doc.data.statistics.find(function (slice) {
-      return slugify(slice.primary.title).toLowerCase() === id
+      return slugify(slice.primary.title, { lower: true }) === id
     })
     ctx.assert(slice, 404, 'Image not found')
 
-    let publisher
-    let source = slice.primary.source.url
-    if (source) publisher = await scrape(source).then((meta) => meta.publisher)
-    let value = slice.primary.value
-    let color = slice.primary.color
+    let { value, color, title, source, link_text: linkText } = slice.primary
     let dataset = value ? [{ value, color }] : slice.items
+    let goalColors = [colors[`goal${num}`], colors[`goal${num}Shaded`]]
 
     ctx.set('Content-Type', 'image/svg+xml')
     ctx.body = await svg(slice.slice_type, {
-      title: slice.primary.title,
+      title: title,
       dataset: dataset.map((props, index) => Object.assign({}, props, {
-        color: props.color || [num, `${num}shaded`][index] || '#F1F1F1'
+        color: props.color || goalColors[index] || '#F1F1F1'
       })),
-      source: source ? {
-        text: publisher || source.replace(/^https?:\/\//, ''),
-        url: source
+      source: source.url ? {
+        text: linkText || source.url.replace(/^https?:\/\//, ''),
+        url: source.url
       } : null
     })
   } catch (err) {

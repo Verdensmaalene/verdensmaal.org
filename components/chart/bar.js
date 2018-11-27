@@ -2,95 +2,99 @@ var html = require('choo/html')
 var raw = require('choo/html/raw')
 var { i18n, luma, className } = require('../base')
 var split = require('./split')
-var Chart = require('./chart')
 
 var LINE_HEIGHT = 26
-var SIZE = 560
+var WIDTH = 560
 
 var text = i18n(require('./lang.json'))
 
-module.exports = class BarChart extends Chart {
-  createElement (props) {
-    var title = split(props.title)
-    // account for text growing 2x height (ish)
-    var offset = LINE_HEIGHT * 5 + title.length * LINE_HEIGHT
-    var width = SIZE / props.dataset.length
-    var max = props.dataset.reduce(function (prev, point) {
-      var value = parseFloat(point.value)
-      return value > prev ? value : prev
-    }, 0)
-    var factor = 100 / max
+module.exports = bar
+
+function bar (props, style = null) {
+  var title = props.standalone ? split(props.title) : null
+  var offset = 0
+  if (props.standalone) offset = LINE_HEIGHT * 5 + title.length * LINE_HEIGHT
+  var barWidth = WIDTH / props.dataset.length
+  var max = props.dataset.reduce(function (prev, data) {
+    var value = parseFloat(data.value)
+    return value > prev ? value : prev
+  }, 0)
+  var factor = 100 / max
+  var height = props.standalone ? WIDTH : WIDTH * 3 / 4
+  var classAttr = className({
+    'Chart Chart--bar': props.standalone,
+    'Chart-graph Chart-graph--bar': !props.standalone,
+    'Chart--standalone': props.standalone
+  })
+
+  return html`
+    <svg width="${WIDTH}" height="${height}" viewBox="0 0 ${WIDTH} ${height}" class="${classAttr}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <symbol id="bar-chart-trend-arrow" width="13" height="13" viewBox="0 0 13 13">
+        <path d="M11.4 1.7L.7 12.4l-.7-.7L10.7 1H2.4V0h10v10h-1V1.7z"/>
+      </symbol>
+      ${style ? raw(style) : null}
+      ${props.standalone ? heading() : null}
+      ${props.dataset.map(bar)}
+    </svg>
+  `
+
+  function heading () {
+    return html`
+      <g class="Chart-heading">
+        <text x="0" y="0">
+          ${title.map((text, index) => html`<tspan x="0" dy="${index ? 1.5 : 0.75}em">${text}</tspan>`)}
+          ${props.source ? html`
+            <tspan x="0" dy="1.5em">
+              ${text`Source`}: <tspan text-decoration="underline"><a xlink:href="${props.source.url}">${props.source.text}</a></tspan>
+            </tspan>
+          ` : null}
+        </text>
+        <g class="Chart-legend">
+          <text x="0" y="0" text-anchor="end">
+            ${props.dataset.map((data, index) => html`<tspan x="${WIDTH - 20}" dy="${index ? 1.5 : 0.75}em">${data.label}</tspan>`)}
+          </text>
+          ${props.dataset.map((data, index) => html`
+            <rect width="14" height="14" x="${WIDTH - 14}" y="${1.45 * index + 0.08 * index}em" fill="${data.color}" />
+          `)}
+        </g>
+      </g>
+    `
+  }
+
+  function bar (data, index) {
+    var value = parseFloat(data.value)
+    if (value === max) value = 100
+    else value = value * factor
+    var barHeight = (height - offset) * value / 100
+    var isShort = barHeight < 110
+    var labelPos = isShort ? height - barHeight - 30 : height - 40
+    var numberPos = isShort ? height - barHeight - 70 : height - barHeight + 30
+    var isDark = luma(data.color) < 185
+    var theme = !isShort && isDark ? 'light' : 'dark'
 
     return html`
-      <svg width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}" id="${this.id}" class="Chart Chart--bar ${props.size ? `Chart--${props.size}` : ''}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        ${props.standalone ? raw(this.style) : null}
-        <g class="Chart-heading js-refresh">
-          <text x="0" y="0">
-            ${title.map((text, index) => html`<tspan x="0" dy="${index ? 1.5 : 0.75}em">${text}</tspan>`)}
-            ${props.source ? html`
-              <tspan x="0" dy="1.5em">
-                ${text`Source`}: <tspan text-decoration="underline"><a xlink:href="${props.source.url}">${props.source.text}</a></tspan>
-              </tspan>
-            ` : null}
-          </text>
-          ${props.dataset.map(legend)}
-        </g>
-        ${props.dataset.map(bar)}
-      </svg>
+      <g>
+        <rect x="${index * barWidth}" y="${height - barHeight}" width="${barWidth}" height="${barHeight}" style="animation-delay: ${200 * index}ms;" class="Chart-bar" fill="${data.color}" />
+        ${data.trend ? arrow() : null}
+        <text x="${20 + barWidth * index}" y="${numberPos}" dominant-baseline="${barHeight > 110 ? 'hanging' : 'central'}" class="${className(`Chart-label Chart-label--lg Chart-label--${theme}`, { 'Chart-label--outside': isShort })}" style="animation-delay: ${800 + 200 * index}ms;">
+          ${data.value}
+        </text>
+        <text x="${20 + barWidth * index}" y="${labelPos}" dominant-baseline="${barHeight > 110 ? 'hanging' : 'central'}" class="${className(`Chart-label Chart-label--${theme}`, { 'Chart-label--outside': isShort })}" style="animation-delay: ${950 + 200 * index}ms;">
+          ${data.label}
+        </text>
+      </g>
     `
 
-    function legend (point, index) {
-      var attrs = color(point.color)
-      attrs.class = (attrs.class || '') + ' Chart-color'
+    function arrow () {
+      var trend = data.trend.toLowerCase()
+      var y = isShort ? labelPos - 9 : height - barHeight + 25
+      var x = index * barWidth + barWidth - 45
+      if (trend === 'downward') x += 20
       return html`
-        <g class="Chart-legend">
-          <rect width="14" height="14" x="${SIZE - 14}" y="${index ? 1.45 : 0}em" class="${attrs.class}" style="${attrs.style || ''}" />
-          <text x="${SIZE - 14 * 2}" y="${index ? 2.25 : 0.75}em" text-anchor="end">${point.label}</text>
+        <g transform="rotate(${trend === 'downward' ? 90 : 0} ${x} ${y})">
+          <use fill="#${!isShort && isDark ? 'fff' : '000'}" fill-rule="nonzero" xlink:href="#bar-chart-trend-arrow" class="Chart-arrow" x="${x}" y="${y}" width="20" height="20" style="animation-delay: ${850 + 200 * index}ms;" />
         </g>
       `
-    }
-
-    function bar (point, index) {
-      var value = parseFloat(point.value)
-      if (value !== max) value = value * factor
-      var height = (SIZE - offset) * (value / max)
-      var attrs = color(point.color)
-      attrs.class = (attrs.class || '') + ' Chart-bar js-bar'
-
-      return html`
-        <g>
-          <rect x="${index * width}" y="${SIZE - height}" width="${width}" height="${height}" style="animation-delay: ${200 * index}ms;${attrs.style || ''}" class="${attrs.class}" />
-          ${number()}
-          ${label()}
-        </g>
-      `
-
-      function number () {
-        var y = height <= 110 ? SIZE - height - 70 : SIZE - height + 30
-        return html`
-          <text x="${20 + width * index}" y="${y}" dominant-baseline="${height > 110 ? 'hanging' : 'central'}" class="${className(`Chart-label Chart-label--big Chart-label--${height > 110 && luma(point.color) < 185 ? 'light' : 'dark'} js-number`, { 'Chart-label--outside': height < 110 })}" style="animation-delay: ${800 + 200 * index}ms;">
-            ${point.value}
-          </text>
-        `
-      }
-
-      function label () {
-        var y = height <= 110 ? SIZE - height - 30 : SIZE - 40
-        return html`
-          <text x="${20 + width * index}" y="${y}" dominant-baseline="${height > 110 ? 'hanging' : 'central'}" class="${className(`Chart-label Chart-label--${height > 110 && luma(point.color) < 185 ? 'light' : 'dark'} js-label`, { 'Chart-label--outside': height < 110 })}" style="animation-delay: ${950 + 200 * index}ms;">
-            ${point.label}
-          </text>
-        `
-      }
     }
   }
-}
-
-// convert color str to spreadable attribute
-// str -> obj
-function color (str) {
-  var attrs = {}
-  if (str.indexOf('#') === -1) attrs.class = 'u-color' + str
-  else attrs.style = `color: ${str};`
-  return attrs
 }

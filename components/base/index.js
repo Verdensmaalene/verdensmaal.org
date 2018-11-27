@@ -253,3 +253,40 @@ function snippet (str, maxlen = Infinity) {
   while (snipped.length < maxlen) snipped += ' ' + words.shift()
   return [snipped, ' ', html`<span class="u-textNowrap">${words[0]}…</span>`]
 }
+
+exports.colors = {
+  goal1: '#e5243b',
+  goal1Shaded: '#75001f',
+  goal2: '#dda63a',
+  goal2Shaded: '#774804',
+  goal3: '#4c9f38',
+  goal3Shaded: '#0d3b06',
+  goal4: '#c5192d',
+  goal4Shaded: '#5b0104',
+  goal5: '#ff3a21',
+  goal5Shaded: '#800501',
+  goal6: '#26bde2',
+  goal6Shaded: '#015379',
+  goal7: '#fcc30b',
+  goal7Shaded: '#7b4a00',
+  goal8: '#a21942',
+  goal8Shaded: '#40002a',
+  goal9: '#fd6925',
+  goal9Shaded: '#872600',
+  goal10: '#dd1367',
+  goal10Shaded: '#6e0035',
+  goal11: '#fd9d24',
+  goal11Shaded: '#944009',
+  goal12: '#bf8b2e',
+  goal12Shaded: '#5b3203',
+  goal13: '#3f7e44',
+  goal13Shaded: '#00301f',
+  goal14: '#0a97d9',
+  goal14Shaded: '#003570',
+  goal15: '#56c02b',
+  goal15Shaded: '#105702',
+  goal16: '#00689d',
+  goal16Shaded: '#001b3c',
+  goal17: '#19486a',
+  goal17Shaded: '#00132e'
+}

@@ -11,21 +11,16 @@ var grid = require('../components/grid')
 var Goal = require('../components/goal')
 var Flag = require('../components/flag')
 var Text = require('../components/text')
+var Chart = require('../components/chart')
 var Header = require('../components/header')
 var divide = require('../components/grid/divide')
-var BarChart = require('../components/chart/bar')
-var BigNumber = require('../components/chart/number')
 var TargetGrid = require('../components/target-grid')
 var intersection = require('../components/intersection')
-var { i18n, isSameDomain, className, reduce, srcset, asText } = require('../components/base')
+var { i18n, isSameDomain, className, reduce, srcset, asText, colors } = require('../components/base')
 
 var text = i18n()
 var SCROLL_MIN = 0
 var SCROLL_MAX = 50
-var CHARTS = {
-  'bar_chart': BarChart,
-  'big_number': BigNumber
-}
 
 // override goal background method in high contrast mode
 class HighContrastGoal extends Goal {
@@ -183,43 +178,33 @@ class GoalPage extends View {
       `
 
       function statistic (slice, index) {
-        let value = slice.primary.value
-        let color = slice.primary.color
-        let dataset = value ? [{ value, color }] : slice.items
+        var { value, color, title, source, link_text: linkText } = slice.primary
+        var dataset = value ? [{ value, color }] : slice.items
+        var goalColors = [colors[`goal${num}`], colors[`goal${num}Shaded`]]
         var props = {
           size: 'md',
-          title: slice.primary.title,
+          title: title,
+          shrink: true,
           dataset: dataset.map((props, index) => Object.assign({}, props, {
-            color: props.color || [num, `${num}shaded`][index] || '#F1F1F1'
-          }))
+            color: props.color || goalColors[index] || '#F1F1F1'
+          })),
+          source: source.url ? {
+            text: linkText || source.url.replace(/^https?:\/\//, ''),
+            url: source.url
+          } : null
         }
 
-        var url = slice.primary.source.url
-        if (url) {
-          let publisher = slice.meta && slice.primary.meta.publisher
-          props.source = {
-            text: publisher || url.replace(/^https?:\/\//, ''),
-            url: url
-          }
+        if (slice.primary.description.length) {
+          props.description = asElement(slice.primary.description)
         }
 
-        var Chart = CHARTS[slice.slice_type]
-        if (!Chart) return null
+        var types = {
+          'bar_chart': 'bar',
+          'big_number': 'number',
+          'pie_chart': 'pie'
+        }
 
-        return html`
-          <figure>
-            <div class="u-aspect1-1">
-              <div class="u-cover">
-                ${state.cache(Chart, `${doc.id}-chart-${index}`).render(props)}
-              </div>
-            </div>
-            ${slice.primary.description.length ? html`
-              <figcaption class="Text u-spaceT2">
-                <div class="Text-muted">${asElement(slice.primary.description)}</div>
-              </figcaption>
-            ` : null}
-          </figure>
-        `
+        return state.cache(Chart, `${doc.id}-chart-${index}`, types[slice.slice_type], props).render()
       }
 
       // get latest news with similar tags
