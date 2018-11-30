@@ -22,7 +22,7 @@ function catchall (state, emit) {
 
   // lookup goal or sector
   return state.docs.get(predicate, function (err, response) {
-    if (!err) {
+    if (!err && (!response || response.results_size)) {
       view = goalParams ? require('./goal') : require('./sector')
       return view(state, emit)
     }
