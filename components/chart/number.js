@@ -22,7 +22,7 @@ function number (props, style = null) {
     <svg width="${SIZE}" height="${height}" viewBox="0 0 ${SIZE} ${height}" class="${classAttr}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       ${style ? raw(style) : null}
       ${props.standalone ? heading() : null}
-      ${value(props.dataset[0])}
+      ${value(props.series[0])}
     </svg>
   `
 

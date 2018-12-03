@@ -14,8 +14,8 @@ module.exports = pie
 
 function pie (props, style = null) {
   var title = props.standalone ? split(props.title) : null
-  var half = Math.floor(props.dataset.length / 2)
-  var values = props.dataset.map((data) => parseFloat(data.value))
+  var half = Math.floor(props.series.length / 2)
+  var values = props.series.map((data) => parseFloat(data.value))
   var total = values.reduce((total, value) => total + value, 0)
   var angles = values.map((value) => 360 * (value / total))
   var height = props.standalone ? WIDTH + (title.length + half + 2) * LINE_HEIGHT : WIDTH * 3 / 4
@@ -30,8 +30,8 @@ function pie (props, style = null) {
   var cols = [[], []]
   for (let i = 0, len = angles.length; i < len; i++) {
     let data = Object.assign({
-      id: slugify(props.dataset[i].label)
-    }, props.dataset[i])
+      id: slugify(props.series[i].label)
+    }, props.series[i])
     start = end
     end = start + angles[i]
     cols[[i > half ? 1 : 0]].push(data)

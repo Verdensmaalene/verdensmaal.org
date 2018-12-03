@@ -115,10 +115,10 @@ app.use(get('/:num(\\d{1,2})-:uid', function (ctx, num, uid, next) {
 }))
 
 // render statistics as image
-app.use(get(/\/(?:(\d{1,2}).+?\/)?(.+?)\.svg/, app.defer(async function (ctx, num, uid, next) {
+app.use(get(/\/(?:(\d{1,2}).*?\/)?(.+?)\.svg/, app.defer(async function (ctx, num, id, next) {
   try {
     let api = await Prismic.api(REPOSITORY, { req: ctx.req })
-    let doc = await api.getByUID('chart', uid)
+    let doc = await api.getByID(id)
     ctx.assert(doc, 404, 'Image not found')
 
     if (!num) {
@@ -128,32 +128,26 @@ app.use(get(/\/(?:(\d{1,2}).+?\/)?(.+?)\.svg/, app.defer(async function (ctx, nu
       num = tag ? tag.substr(5) : Math.ceil(Math.random() * 17)
     }
 
-    let { title, source, link_text: linkText } = doc.data
+    let { title, value, color, source, link_text: linkText } = doc.data
     let goalColors = [colors[`goal${num}`], colors[`goal${num}Shaded`]]
 
-    let type
-    let dataset = []
-    for (let i = 0, len = doc.data.dataset.length; i < len; i++) {
-      let slice = doc.data.dataset[i]
-      type = type || slice.slice_type
-      ctx.assert(type === slice.slice_type, 500, 'Inconsistent chart types')
-
-      var data = slice.items.length ? slice.items : [slice.primary]
-      var items = data.map((props, index) => Object.assign({}, props, {
-        color: props.color || slice.primary.color || goalColors[index] || '#F1F1F1'
-      }))
-
-      if (Object.keys(slice.primary).length) {
-        dataset.push(Object.assign({ data: items }, slice.primary))
-      } else {
-        dataset.push(...items)
+    let series = []
+    if (doc.data.series) {
+      for (let i = 0, len = doc.data.series.length; i < len; i++) {
+        let serie = doc.data.series[i]
+        series.push(Object.assign({}, serie, {
+          data: serie.items,
+          color: serie.color || goalColors[i] || '#F1F1F1'
+        }))
       }
+    } else {
+      series.push({ value: value, color: color || goalColors[0] })
     }
 
     ctx.set('Content-Type', 'image/svg+xml')
-    ctx.body = await chart(type, {
+    ctx.body = await chart(doc.type, {
       title: title,
-      dataset: dataset,
+      series: series,
       source: source.url ? {
         text: linkText || source.url.replace(/^https?:\/\//, ''),
         url: source.url

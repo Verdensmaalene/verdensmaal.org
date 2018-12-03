@@ -184,13 +184,13 @@ class GoalPage extends View {
           if (err) throw err
           if (!doc) return Chart.loading({ size: 'md', shrink: true })
 
-          var { title, source, link_text: linkText } = doc.data
+          var { title, value, color, source, link_text: linkText } = doc.data
           var goalColors = [colors[`goal${num}`], colors[`goal${num}Shaded`]]
           var props = {
             size: 'md',
             title: title,
             shrink: true,
-            dataset: [],
+            series: [],
             source: source.url ? {
               text: linkText || source.url.replace(/^https?:\/\//, ''),
               url: source.url
@@ -201,19 +201,26 @@ class GoalPage extends View {
             props.description = asElement(doc.data.description)
           }
 
-          var type
-          for (let i = 0, len = doc.data.dataset.length; i < len; i++) {
-            let slice = doc.data.dataset[i]
-            type = type || slice.slice_type
-            assert(type === slice.slice_type, 'Inconsistent chart types')
-            let items = slice.items.filter((item) => Object.keys(item).length)
-            if (!items.length) items = [slice.primary]
-            props.dataset.push(...items.map((props, index) => Object.assign({}, props, {
-              color: props.color || slice.primary.color || goalColors[index] || '#F1F1F1'
-            })))
+          if (doc.data.series) {
+            for (let i = 0, len = doc.data.series.length; i < len; i++) {
+              let serie = doc.data.series[i]
+              props.series.push(Object.assign({}, serie, {
+                data: serie.items,
+                color: serie.color || goalColors[i] || '#F1F1F1'
+              }))
+            }
+          } else {
+            props.series.push({ value: value, color: color || goalColors[0] })
           }
 
-          return state.cache(Chart, doc.id, type).render(props)
+          var types = {
+            'bar_chart': 'bar',
+            'numeric_chart': 'number',
+            'line_chart': 'line',
+            'pie_chart': 'pie'
+          }
+
+          return state.cache(Chart, doc.id, types[doc.type]).render(props)
         })
       }
 

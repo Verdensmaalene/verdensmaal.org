@@ -14,8 +14,8 @@ function bar (props, style = null) {
   var title = props.standalone ? split(props.title) : null
   var offset = 0
   if (props.standalone) offset = LINE_HEIGHT * 5 + title.length * LINE_HEIGHT
-  var barWidth = WIDTH / props.dataset.length
-  var max = props.dataset.reduce(function (prev, data) {
+  var barWidth = WIDTH / props.series.length
+  var max = props.series.reduce(function (prev, data) {
     var value = parseFloat(data.value)
     return value > prev ? value : prev
   }, 0)
@@ -34,7 +34,7 @@ function bar (props, style = null) {
       </symbol>
       ${style ? raw(style) : null}
       ${props.standalone ? heading() : null}
-      ${props.dataset.map(bar)}
+      ${props.series.map(bar)}
     </svg>
   `
 
@@ -51,9 +51,9 @@ function bar (props, style = null) {
         </text>
         <g class="Chart-legend">
           <text x="0" y="0" text-anchor="end">
-            ${props.dataset.map((data, index) => html`<tspan x="${WIDTH - 20}" dy="${index ? 1.5 : 0.75}em">${data.label}</tspan>`)}
+            ${props.series.map((data, index) => html`<tspan x="${WIDTH - 20}" dy="${index ? 1.5 : 0.75}em">${data.label}</tspan>`)}
           </text>
-          ${props.dataset.map((data, index) => html`
+          ${props.series.map((data, index) => html`
             <rect width="14" height="14" x="${WIDTH - 14}" y="${1.45 * index + 0.08 * index}em" fill="${data.color}" />
           `)}
         </g>

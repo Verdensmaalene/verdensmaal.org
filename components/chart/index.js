@@ -138,7 +138,7 @@ function wrapper (props, children) {
         </p>
         ${this.type !== 'number' ? html`
           <ol class="Chart-legend">
-            ${props.dataset.map((data) => html`
+            ${props.series.map((data) => html`
               <li class="Chart-marque" id="legend${slugify(data.label)}">
                 <span>${data.label} (${data.value})</span>
                 <span class="Chart-marker" style="color: ${data.color}"></span>
