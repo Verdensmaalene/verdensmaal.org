@@ -1,3 +1,4 @@
+var assert = require('assert')
 var html = require('choo/html')
 var nanoraf = require('nanoraf')
 var parse = require('date-fns/parse')
@@ -114,10 +115,11 @@ class GoalPage extends View {
 
       var featured = getFeatured()
       var header = state.docs.getSingle('website', getHeader)
+      var charts = doc.data.charts.map((block) => chart(block.chart))
 
       if (state.prefetch) {
         // exit early during prefetch exposing async elements
-        return Promise.all([featured, header])
+        return Promise.all([featured, header, ...charts])
       } else if (!response) {
         return html`
           <main class="View-main">
@@ -146,9 +148,9 @@ class GoalPage extends View {
               ${state.cache(Text, `${state.params.wildcard}-manifest`, { size: 'large' }).render(doc.data.manifest)}
             </section>
           ` : null}
-          ${doc.data.statistics && doc.data.statistics.length ? html`
+          ${charts.length ? html`
             <section id="statistics" class="u-container u-spaceT8">
-              ${divide(doc.data.statistics.map(statistic))}
+              ${divide(charts)}
             </section>
           ` : null}
           <section id="action">
@@ -177,34 +179,42 @@ class GoalPage extends View {
         </main>
       `
 
-      function statistic (slice, index) {
-        var { value, color, title, source, link_text: linkText } = slice.primary
-        var dataset = value ? [{ value, color }] : slice.items
-        var goalColors = [colors[`goal${num}`], colors[`goal${num}Shaded`]]
-        var props = {
-          size: 'md',
-          title: title,
-          shrink: true,
-          dataset: dataset.map((props, index) => Object.assign({}, props, {
-            color: props.color || goalColors[index] || '#F1F1F1'
-          })),
-          source: source.url ? {
-            text: linkText || source.url.replace(/^https?:\/\//, ''),
-            url: source.url
-          } : null
-        }
+      function chart (link) {
+        return state.docs.getByID(link.id, function (err, doc) {
+          if (err) throw err
+          if (!doc) return Chart.loading({ size: 'md', shrink: true })
 
-        if (slice.primary.description.length) {
-          props.description = asElement(slice.primary.description)
-        }
+          var { title, source, link_text: linkText } = doc.data
+          var goalColors = [colors[`goal${num}`], colors[`goal${num}Shaded`]]
+          var props = {
+            size: 'md',
+            title: title,
+            shrink: true,
+            dataset: [],
+            source: source.url ? {
+              text: linkText || source.url.replace(/^https?:\/\//, ''),
+              url: source.url
+            } : null
+          }
 
-        var types = {
-          'bar_chart': 'bar',
-          'big_number': 'number',
-          'pie_chart': 'pie'
-        }
+          if (doc.data.description.length) {
+            props.description = asElement(doc.data.description)
+          }
 
-        return state.cache(Chart, `${doc.id}-chart-${index}`, types[slice.slice_type], props).render()
+          var type
+          for (let i = 0, len = doc.data.dataset.length; i < len; i++) {
+            let slice = doc.data.dataset[i]
+            type = type || slice.slice_type
+            assert(type === slice.slice_type, 'Inconsistent chart types')
+            let items = slice.items.filter((item) => Object.keys(item).length)
+            if (!items.length) items = [slice.primary]
+            props.dataset.push(...items.map((props, index) => Object.assign({}, props, {
+              color: props.color || slice.primary.color || goalColors[index] || '#F1F1F1'
+            })))
+          }
+
+          return state.cache(Chart, doc.id, type).render(props)
+        })
       }
 
       // get latest news with similar tags

@@ -10,13 +10,12 @@ var ics = require('ics')
 var jalla = require('jalla')
 var dedent = require('dedent')
 var body = require('koa-body')
-var slugify = require('slugify')
 var geoip = require('geoip-lite')
 var compose = require('koa-compose')
 var parse = require('date-fns/parse')
 var { get, post } = require('koa-route')
 var Prismic = require('prismic-javascript')
-var svg = require('./lib/svg')
+var chart = require('./lib/chart')
 var purge = require('./lib/purge')
 var scrape = require('./lib/scrape')
 var resolve = require('./lib/resolve')
@@ -116,28 +115,45 @@ app.use(get('/:num(\\d{1,2})-:uid', function (ctx, num, uid, next) {
 }))
 
 // render statistics as image
-app.use(get('/:num(\\d{1,2})-:uid/:id.svg', app.defer(async function (ctx, num, uid, id, next) {
+app.use(get(/\/(?:(\d{1,2}).+?\/)?(.+?)\.svg/, app.defer(async function (ctx, num, uid, next) {
   try {
     let api = await Prismic.api(REPOSITORY, { req: ctx.req })
-    let response = await api.query(Prismic.Predicates.at('my.goal.number', +num))
-    let doc = response.results[0]
+    let doc = await api.getByUID('chart', uid)
     ctx.assert(doc, 404, 'Image not found')
 
-    let slice = doc.data.statistics.find(function (slice) {
-      return slugify(slice.primary.title, { lower: true }) === id
-    })
-    ctx.assert(slice, 404, 'Image not found')
+    if (!num) {
+      // try and match goal by tag
+      let tag = doc.tags.find((tag) => tag.indexOf('goal-') === 0)
+      // fallback to random goal colors
+      num = tag ? tag.substr(5) : Math.ceil(Math.random() * 17)
+    }
 
-    let { value, color, title, source, link_text: linkText } = slice.primary
-    let dataset = value ? [{ value, color }] : slice.items
+    let { title, source, link_text: linkText } = doc.data
     let goalColors = [colors[`goal${num}`], colors[`goal${num}Shaded`]]
 
+    let type
+    let dataset = []
+    for (let i = 0, len = doc.data.dataset.length; i < len; i++) {
+      let slice = doc.data.dataset[i]
+      type = type || slice.slice_type
+      ctx.assert(type === slice.slice_type, 500, 'Inconsistent chart types')
+
+      var data = slice.items.length ? slice.items : [slice.primary]
+      var items = data.map((props, index) => Object.assign({}, props, {
+        color: props.color || slice.primary.color || goalColors[index] || '#F1F1F1'
+      }))
+
+      if (Object.keys(slice.primary).length) {
+        dataset.push(Object.assign({ data: items }, slice.primary))
+      } else {
+        dataset.push(...items)
+      }
+    }
+
     ctx.set('Content-Type', 'image/svg+xml')
-    ctx.body = await svg(slice.slice_type, {
+    ctx.body = await chart(type, {
       title: title,
-      dataset: dataset.map((props, index) => Object.assign({}, props, {
-        color: props.color || goalColors[index] || '#F1F1F1'
-      })),
+      dataset: dataset,
       source: source.url ? {
         text: linkText || source.url.replace(/^https?:\/\//, ''),
         url: source.url

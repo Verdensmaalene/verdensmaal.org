@@ -7,7 +7,7 @@ var LINE_HEIGHT = 26
 var RADIUS = 170
 var WIDTH = 560
 
-var hasAnimation = typeof window === 'undefined' || ('SVGAnimateElement' in window)
+var hasAnimation = typeof window !== 'undefined' && ('SVGAnimateElement' in window)
 var text = i18n(require('./lang.json'))
 
 module.exports = pie
@@ -42,7 +42,7 @@ function pie (props, style = null) {
     'Chart Chart--pie': props.standalone,
     'Chart-graph Chart-graph--pie': !props.standalone,
     'Chart--standalone': props.standalone,
-    'has-fallback': !hasAnimation
+    'has-fallback': !props.standalone || !hasAnimation
   })
 
   return html`
@@ -105,12 +105,12 @@ function pie (props, style = null) {
 
     return html`
       <g>
-        ${hasAnimation ? html`<path id="path${data.id}" d="${shrunk}" class="Chart-slice" fill="${data.color}" />` : null}
-        ${!props.standalone ? html`<path d="${path}" class="Chart-slice Chart-slice--fallback" fill="${data.style}" />` : null}
+        ${props.standalone || hasAnimation ? html`<path id="path${data.id}" d="${shrunk}" class="Chart-slice" fill="${data.color}" />` : null}
+        ${!props.standalone ? html`<path d="${path}" class="Chart-slice Chart-slice--fallback" fill="${data.color}" />` : null}
         <text x="${x}" y="${y}" dominant-baseline="central" text-anchor="middle" class="Chart-label Chart-label--md Chart-label--${theme}" style="animation-delay: ${300 + 125 * index}ms;">
             ${data.value}
         </text>
-        ${hasAnimation ? html`
+        ${props.standalone || hasAnimation ? html`
           <g>
             <animate class="js-deferred" data-deferanimation="${125 * index}" xlink:href="#path${data.id}" attributeName="d" dur="200ms" begin="${props.standalone ? `${125 * index}ms` : 'indefinite'}" from="${shrunk}" to="${path}" fill="freeze" />
             <animate class="js-trigger" data-trigger="legend${data.id}.mouseenter" xlink:href="#path${data.id}" attributeName="d" dur="300ms" begin="legend${data.id}.mouseover;marker${data.id}.mouseover" calcMode="spline" keyTimes="0;1" keySplines="0.19 1 0.22 1" values="${path};${selected}" fill="freeze" />

@@ -1,41 +1,66 @@
 var html = require('choo/html')
 var nanoraf = require('nanoraf')
-var raw = require('choo/html/raw')
 var Component = require('choo/component')
-var bar = require('./bar')
-var pie = require('./pie')
-var number = require('./number')
 var { vh, i18n } = require('../base')
 
 var text = i18n(require('./lang.json'))
 
 var SIZE = 560
-var TYPES = { bar, pie, number }
+var types = {
+  bar: () => import('./bar'),
+  pie: () => import('./pie'),
+  number: () => import('./number'),
+  line: () => import('./line')
+}
 
 module.exports = Chart
 
-function Chart (id, state, emit, type, props) {
+function Chart (id, state, emit, type) {
   Component.call(this, id)
   this.id = id
   this.type = type
   this.style = null
-  this.props = props
 
-  var createElement = TYPES[type]
-  if (!props.standalone) {
-    this.createElement = function () {
-      var children = createElement(props)
-      return wrapper.call(this, props, children)
-    }
-  } else {
-    this.createElement = createElement.bind(undefined, props)
+  this.createElement = function (props) {
+    var createElement = Chart[type]
+    if (createElement) return wrapper.call(this, props, createElement(props))
+
+    var load = types[type]
+    var promise = load().then((createElement) => {
+      Chart[type] = createElement
+      this.load = this.init
+      if (this.element) {
+        this.rerender()
+        this.init(this.element)
+      }
+    })
+
+    // expose promise during prefetch
+    if (state.prefetch) return promise
+    return Chart.loading(props)
   }
 }
 
 Chart.prototype = Object.create(Component.prototype)
 Chart.prototype.constructor = Chart
 
-Chart.prototype.load = function (element) {
+Chart.loading = function (props) {
+  return html`
+    <figure class="Chart ${props.shrink ? 'Chart--shrink' : null}">
+      <div class="Chart-heading">
+        <p class="Chart-title">
+          <span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span>
+        </p>
+      </div>
+      <div class="u-aspect4-3"></div>
+      <figcaption class="Text u-spaceT2">
+        <span class="u-loading">${text`LOADING_TEXT_LONG`}</span>
+      </figcaption>
+    </figure>
+  `
+}
+
+Chart.prototype.init = function (element) {
   var offset, height
   var deferred = [...element.querySelectorAll('.js-deferred')]
   var triggers = [...element.querySelectorAll('.js-trigger')]
