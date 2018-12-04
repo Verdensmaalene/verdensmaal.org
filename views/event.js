@@ -122,7 +122,7 @@ function eventView (state, emit) {
             </div>
           </div>
         </article>
-        <script type="application/ld+json">${raw(JSON.stringify(linkedData(doc)))}</script>
+        <script type="application/ld+json">${raw(JSON.stringify(linkedData(doc, state)))}</script>
       </main>
     `
   }
@@ -218,7 +218,7 @@ function eventView (state, emit) {
 
 // format document as schema-compatible linked data table
 // obj -> obj
-function linkedData (doc) {
+function linkedData (doc, state) {
   var data = {
     '@context': 'http://schema.org',
     '@type': 'Event',
@@ -239,7 +239,7 @@ function linkedData (doc) {
   }
 
   if (doc.data.image.url) {
-    data.image = `/media/fetch/w_900/${doc.data.image.url}`
+    data.image = state.origin + `/media/fetch/w_900/${doc.data.image.url}`
   }
 
   return data
