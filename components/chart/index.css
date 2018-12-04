@@ -12,18 +12,14 @@
 .Chart-graph {
   width: 100%;
   height: auto;
-}
-
-.Chart-legend {
-  cursor: default;
-}
-
-.Chart-label,
-.Chart--standalone .Chart-heading {
   color: rgba(var(--color-current));
   font-family: var(--default-font-family);
   font-size: calc(var(--default-font-size) * var(--Chart-scale-factor));
   line-height: var(--default-line-height);
+}
+
+.Chart-legend {
+  cursor: default;
 }
 
 .Chart-heading {

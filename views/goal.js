@@ -204,10 +204,16 @@ class GoalPage extends View {
           if (doc.data.series) {
             for (let i = 0, len = doc.data.series.length; i < len; i++) {
               let serie = doc.data.series[i]
-              props.series.push(Object.assign({}, serie, {
-                data: serie.items,
-                color: serie.color || goalColors[i] || '#F1F1F1'
-              }))
+              if (serie.items && serie.primary) {
+                props.series.push(Object.assign({}, serie.primary, {
+                  color: serie.primary.color || goalColors[i] || '#F1F1F1',
+                  data: serie.items
+                }))
+              } else {
+                props.series.push(Object.assign({}, serie, {
+                  color: serie.color || goalColors[i] || '#F1F1F1'
+                }))
+              }
             }
           } else {
             props.series.push({ value: value, color: color || goalColors[0] })

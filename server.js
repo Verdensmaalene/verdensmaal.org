@@ -135,10 +135,16 @@ app.use(get(/\/(?:(\d{1,2}).*?\/)?(.+?)\.svg/, app.defer(async function (ctx, nu
     if (doc.data.series) {
       for (let i = 0, len = doc.data.series.length; i < len; i++) {
         let serie = doc.data.series[i]
-        series.push(Object.assign({}, serie, {
-          data: serie.items,
-          color: serie.color || goalColors[i] || '#F1F1F1'
-        }))
+        if (serie.items && serie.primary) {
+          series.push(Object.assign({}, serie.primary, {
+            color: serie.primary.color || goalColors[i] || '#F1F1F1',
+            data: serie.items
+          }))
+        } else {
+          series.push(Object.assign({}, serie, {
+            color: serie.color || goalColors[i] || '#F1F1F1'
+          }))
+        }
       }
     } else {
       series.push({ value: value, color: color || goalColors[0] })
