@@ -52,7 +52,7 @@ module.exports = class Map extends Component {
     var styles = new Promise(function (resolve, reject) {
       var version = process.env.npm_package_dependencies_mapbox_gl
       document.head.appendChild(html`
-        <link onload=${resolve} onerror=${reject} rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v${version.replace(/^[^\d]/, '')}/mapbox-gl.css" />
+        <link onload=${resolve} onerror=${reject} rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox-gl-js/v${version.replace(/^[^\d]/, '')}/mapbox-gl.css" />
       `)
     })
 
@@ -67,13 +67,14 @@ module.exports = class Map extends Component {
       var map = self.map = new mapboxgl.Map({
         container: element,
         scrollZoom: false,
+        dragRotate: false,
         zoom: 6,
         minZoom: 4,
-        maxZoom: 18,
+        maxZoom: 13,
         center: bounds.getCenter(),
         attributionControl: false,
         failIfMajorPerformanceCaveat: true,
-        style: 'mapbox://styles/verdensmaalene/cjletio8i35kx2sl8v2bykwwf'
+        style: 'mapbox://styles/verdensmaalene/cjpaabceg0rju2stjn3ga61zc'
       })
 
       var offset = {
