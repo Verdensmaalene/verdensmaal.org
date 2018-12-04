@@ -1,4 +1,5 @@
 var assert = require('assert')
+var raw = require('choo/html/raw')
 var html = require('choo/html')
 var Component = require('choo/component')
 var { Predicates } = require('prismic-javascript')
@@ -76,6 +77,7 @@ function createView (view, meta) {
 
       return html`
         <body class="View" id="view">
+          <script type="application/ld+json">${raw(JSON.stringify(linkedData(state)))}</script>
           ${doc ? getHeader() : null}
           ${children}
           ${doc ? getFooter() : null}
@@ -132,6 +134,18 @@ function createView (view, meta) {
             ${state.cache(Header, 'header').render(links, state.href, opts)}
           </div>
         `
+      }
+
+      // format document as schema-compatible linked data table
+      // obj -> obj
+      function linkedData (state) {
+        return {
+          '@context': 'http://schema.org',
+          '@type': 'Organization',
+          name: 'Verdensmålene',
+          url: state.origin,
+          logo: state.origin + '/icon.png'
+        }
       }
 
       function getFooter () {
