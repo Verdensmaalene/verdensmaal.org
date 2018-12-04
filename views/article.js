@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var raw = require('choo/html/raw')
 var parse = require('date-fns/parse')
 var asElement = require('prismic-element')
 var view = require('../components/view')
@@ -104,6 +105,7 @@ function article (state, emit) {
             </div>
           </div>
         </article>
+        <script type="application/ld+json">${raw(JSON.stringify(linkedData(doc, state)))}</script>
       </main>
     `
   }
@@ -162,6 +164,42 @@ function image (props) {
       { aspect: 9 / 16 }
     )
   }
+}
+
+// format document as schema-compatible linked data table
+// obj -> obj
+function linkedData (doc, state) {
+  var data = {
+    '@context': 'http://schema.org',
+    '@type': 'NewsArticle',
+    headline: asText(doc.data.title),
+    description: asText(doc.data.description),
+    datePublished: doc.first_publication_date,
+    dateModified: doc.last_publication_date,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': state.origin + state.href
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Verdensmålene',
+      sameAs: state.origin,
+      logo: {
+        '@type': 'ImageObject',
+        url: state.origin + '/schema-logo.png'
+      }
+    },
+    author: {
+      '@type': 'Organization',
+      name: 'Verdensmålene'
+    }
+  }
+
+  if (doc.data.image.url) {
+    data.image = state.origin + `/media/fetch/w_900/${doc.data.image.url}`
+  }
+
+  return data
 }
 
 function meta (state) {
