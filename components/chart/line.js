@@ -16,8 +16,8 @@ function line (props, style = null) {
   var title = props.standalone ? split(props.title) : null
   var offset = LINE_HEIGHT / 2
   if (props.standalone) offset = LINE_HEIGHT * 2 + title.length * LINE_HEIGHT
-  var min //= props.min
-  var max //= props.max
+  var min = props.min
+  var max = props.max
   props.series.forEach(function (serie) {
     for (let i = 0, len = serie.data.length; i < len; i++) {
       let value = serie.data[i].value
@@ -27,16 +27,19 @@ function line (props, style = null) {
   })
   var height = props.standalone ? WIDTH : WIDTH * 3 / 4
   var bottom = height - LINE_HEIGHT
-  var canvas = bottom - offset
-  var range = Math.abs(max - min)
-  var factor = canvas / range
 
   var tickWidth = -Infinity
-  var ticks = getTicks(min, max, height).map(function (value) {
+  var ticks = getTicks(min, max, height)
+  min = ticks[0]
+  max = ticks[ticks.length - 1]
+  var factor = (bottom - offset) / Math.abs(max - min)
+  var grid = ticks.map(function (value) {
     var label = value.toString()
     tickWidth = label.length > tickWidth ? label.length : tickWidth
     return { label, y: bottom - (factor * (value - min)) }
   })
+
+  console.log(bottom, ticks[0])
   var indent = tickWidth * (CHAR - tickWidth * CHAR * 0.05)
 
   var classAttr = className({
@@ -49,7 +52,7 @@ function line (props, style = null) {
     <svg width="${WIDTH}" height="${height}" viewBox="0 0 ${WIDTH} ${height}" class="${classAttr}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       ${style ? raw(style) : null}
       ${props.standalone ? heading() : null}
-      ${ticks.map(({ label, y }, index) => html`
+      ${grid.map(({ label, y }, index) => html`
         <g class="Chart-label" style="animation-delay: ${100 * index}ms;">
           <path stroke="#F1F1F1" stroke-width="1" d="M${label.length * (CHAR - label.length * CHAR * 0.05)},${y} L${WIDTH},${y}" />
           <text class="Chart-label Chart-label--sm" x="0" y="${y}" dy="0.25em">${label}</text>
