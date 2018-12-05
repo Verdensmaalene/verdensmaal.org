@@ -36,6 +36,11 @@
 .Text a {
   font-weight: 600;
   color: rgb(var(--color-link));
+  transition: color 50ms cubic-bezier(0,0,.2,1);
+}
+
+.Text a:hover {
+  color: rgb(var(--color-link-shaded));
 }
 
 .Text small {

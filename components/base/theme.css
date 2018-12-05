@@ -4,7 +4,7 @@
 
 :root {
   --color-theme: 229, 36, 59;
-  --color-theme-shaded: 212, 30, 55;
+  --color-theme-shaded: 187, 29, 48;
 }
 
 .u-colorTheme { --current-color: var(--color-theme) !important; }
