@@ -312,7 +312,7 @@ function goal (state, emit) {
                     ${asElement(item.description, state.docs.resolve)}
                   </div>
                 ` : null}
-                <small class="Text-muted">${href.replace(/\/$/, '')}</small>
+                <small class="Text-muted u-textWordBreak">${href.replace(/\/$/, '')}</small>
               </a>
             `
           }).filter(Boolean)
