@@ -67,6 +67,7 @@
 @supports (object-fit: cover) {
   .Hero-image {
     height: 100%;
+    min-width: 100%;
   }
 }
 

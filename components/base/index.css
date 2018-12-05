@@ -78,6 +78,15 @@ iframe {
 }
 
 /**
+ * Improve alt text rendering for broken images
+ */
+
+img {
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/**
  * Inline elements
  */
 
