@@ -183,17 +183,26 @@ class GoalPage extends View {
           if (err) throw err
           if (!doc) return Chart.loading({ size: 'md', shrink: true })
 
-          var { title, value, color, source, link_text: linkText } = doc.data
-          var goalColors = [colors[`goal${num}`], colors[`goal${num}Shaded`]]
-          var props = {
+          let { title, value, color, source } = doc.data
+          let goalColors = [colors[`goal${num}`], colors[`goal${num}Shaded`]]
+          let props = {
+            title,
             size: 'md',
-            title: title,
             shrink: true,
-            series: [],
-            source: source.url ? {
-              text: linkText || source.url.replace(/^https?:\/\//, ''),
+            series: []
+          }
+
+          if (typeof doc.data.min_y !== 'undefined') props.min = doc.data.min_y
+          if (typeof doc.data.max_y !== 'undefined') props.max = doc.data.max_y
+          if (Array.isArray(doc.data.labels)) {
+            props.labels = doc.data.labels.map((block) => block.label)
+          }
+
+          if (source.url) {
+            props.source = {
+              text: doc.data.link_text || source.url.replace(/^https?:\/\//, ''),
               url: source.url
-            } : null
+            }
           }
 
           if (doc.data.description.length) {

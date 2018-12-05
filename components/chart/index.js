@@ -140,7 +140,7 @@ function wrapper (props, children) {
           <ol class="Chart-legend">
             ${props.series.map((data) => html`
               <li class="Chart-marque" id="legend${slugify(data.label)}">
-                <span>${data.label} (${data.value})</span>
+                <span>${data.label}${typeof data.value !== 'undefined' ? ` (${data.value})` : null}</span>
                 <span class="Chart-marker" style="color: ${data.color}"></span>
               </li>
             `)}
