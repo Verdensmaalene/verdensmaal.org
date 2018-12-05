@@ -57,6 +57,11 @@
   text-transform: uppercase;
 }
 
+.Chart-label--sm {
+  fill: #949494;
+  font-size: calc(0.6875rem * var(--Chart-scale-factor));
+}
+
 .Chart-label--md {
   font-size: calc(1.5rem * var(--Chart-scale-factor));
 }

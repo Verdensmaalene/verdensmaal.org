@@ -19,8 +19,8 @@ var chart = require('./lib/chart')
 var purge = require('./lib/purge')
 var scrape = require('./lib/scrape')
 var resolve = require('./lib/resolve')
+var { asText } = require('./components/base')
 var imageproxy = require('./lib/cloudinary-proxy')
-var { asText, colors } = require('./components/base')
 
 var app = jalla('index.js', { sw: 'sw.js' })
 
@@ -115,50 +115,21 @@ app.use(get('/:num(\\d{1,2})-:uid', function (ctx, num, uid, next) {
 }))
 
 // render statistics as image
-app.use(get(/\/(?:(\d{1,2}).*?\/)?(.+?)\.svg/, app.defer(async function (ctx, num, id, next) {
+app.use(get(/\/(?:(\d{1,2}).*?\/)?(.+?)\.svg/, app.defer(async function (ctx, goal, id, next) {
   try {
     let api = await Prismic.api(REPOSITORY, { req: ctx.req })
     let doc = await api.getByID(id)
     ctx.assert(doc, 404, 'Image not found')
 
-    if (!num) {
+    if (!goal) {
       // try and match goal by tag
       let tag = doc.tags.find((tag) => tag.indexOf('goal-') === 0)
       // fallback to random goal colors
-      num = tag ? tag.substr(5) : Math.ceil(Math.random() * 17)
-    }
-
-    let { title, value, color, source, link_text: linkText } = doc.data
-    let goalColors = [colors[`goal${num}`], colors[`goal${num}Shaded`]]
-
-    let series = []
-    if (doc.data.series) {
-      for (let i = 0, len = doc.data.series.length; i < len; i++) {
-        let serie = doc.data.series[i]
-        if (serie.items && serie.primary) {
-          series.push(Object.assign({}, serie.primary, {
-            color: serie.primary.color || goalColors[i] || '#F1F1F1',
-            data: serie.items
-          }))
-        } else {
-          series.push(Object.assign({}, serie, {
-            color: serie.color || goalColors[i] || '#F1F1F1'
-          }))
-        }
-      }
-    } else {
-      series.push({ value: value, color: color || goalColors[0] })
+      goal = tag ? tag.substr(5) : Math.ceil(Math.random() * 17)
     }
 
     ctx.set('Content-Type', 'image/svg+xml')
-    ctx.body = await chart(doc.type, {
-      title: title,
-      series: series,
-      source: source.url ? {
-        text: linkText || source.url.replace(/^https?:\/\//, ''),
-        url: source.url
-      } : null
-    })
+    ctx.body = chart(doc, goal)
   } catch (err) {
     if (ctx.accepts('html')) {
       app.emit('error', err)

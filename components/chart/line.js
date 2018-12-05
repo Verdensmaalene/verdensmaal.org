@@ -5,27 +5,39 @@ var split = require('./split')
 
 var LINE_HEIGHT = 26
 var WIDTH = 560
+var CHAR = 10
 
 var text = i18n(require('./lang.json'))
+var hasAnimation = typeof window !== 'undefined' && ('SVGAnimateElement' in window)
 
 module.exports = line
 
 function line (props, style = null) {
   var title = props.standalone ? split(props.title) : null
-  var offset = 0
+  var offset = LINE_HEIGHT / 2
   if (props.standalone) offset = LINE_HEIGHT * 2 + title.length * LINE_HEIGHT
-  var [min, max] = props.series.reduce(function ([min, max], serie) {
+  var min //= props.min
+  var max //= props.max
+  props.series.forEach(function (serie) {
     for (let i = 0, len = serie.data.length; i < len; i++) {
-      let value = parseFloat(serie.data[i].value)
+      let value = serie.data[i].value
       max = typeof max === 'undefined' || value > max ? value : max
       min = typeof min === 'undefined' || value < min ? value : min
     }
-    return [min, max]
-  }, [])
+  })
   var height = props.standalone ? WIDTH : WIDTH * 3 / 4
   var bottom = height - LINE_HEIGHT
   var canvas = bottom - offset
-  var factor = (canvas * 0.9) / Math.abs(max - min)
+  var range = Math.abs(max - min)
+  var factor = canvas / range
+
+  var tickWidth = -Infinity
+  var ticks = getTicks(min, max, height).map(function (value) {
+    var label = value.toString()
+    tickWidth = label.length > tickWidth ? label.length : tickWidth
+    return { label, y: bottom - (factor * (value - min)) }
+  })
+  var indent = tickWidth * (CHAR - tickWidth * CHAR * 0.05)
 
   var classAttr = className({
     'Chart Chart--line': props.standalone,
@@ -37,26 +49,43 @@ function line (props, style = null) {
     <svg width="${WIDTH}" height="${height}" viewBox="0 0 ${WIDTH} ${height}" class="${classAttr}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       ${style ? raw(style) : null}
       ${props.standalone ? heading() : null}
-      <path stroke="#999" stroke-width="1" d="M0,${offset} L${WIDTH},${offset}" />
-      <path stroke="#999" stroke-width="1" d="M0,${bottom} L${WIDTH},${bottom}" />
+      ${ticks.map(({ label, y }, index) => html`
+        <g class="Chart-label" style="animation-delay: ${100 * index}ms;">
+          <path stroke="#F1F1F1" stroke-width="1" d="M${label.length * (CHAR - label.length * CHAR * 0.05)},${y} L${WIDTH},${y}" />
+          <text class="Chart-label Chart-label--sm" x="0" y="${y}" dy="0.25em">${label}</text>
+        </g>
+      `)}
       ${props.series.map(serie)}
+      ${props.labels ? props.labels.map((label, index, list) => html`
+        <text class="Chart-label Chart-label--sm" x="${indent + WIDTH * 0.05 + ((WIDTH - indent) * 0.9 / (list.length - 1)) * index}" y="${height - LINE_HEIGHT * 0.25}" text-anchor="middle">
+          ${label}
+        </text>
+      `) : null}
     </svg>
   `
 
-  function serie (opts) {
-    var distance = WIDTH * 0.9 / (opts.data.length - 1)
-    var path = opts.data.reduce(function (str, { value }, index) {
-      var y = bottom - canvas * 0.05 - (Math.abs(parseFloat(value) - Math.abs(min)) * factor)
-      return index === 0 ? `M${WIDTH * 0.05},${y}` : (str + ` L${WIDTH * 0.05 + distance * index},${y}`)
-    }, '')
+  function serie (opts, index) {
+    var distance = (WIDTH - indent) * 0.9 / (opts.data.length - 1)
+    var skip = false
+    var id = opts.label.toLowerCase().replace(/\[^w\]+/g, '')
+    var to = ''
+    var from = ''
+    opts.data.forEach(function ({ value }, index) {
+      if (typeof value !== 'number') {
+        skip = true
+        return
+      }
+      skip = false
+      var y = bottom - (Math.abs(value - Math.abs(min)) * factor)
+      var x = index === 0 ? indent + WIDTH * 0.05 : indent + WIDTH * 0.05 + distance * index
+      to += index === 0 ? `M${x},${y}` : ` ${skip ? 'M' : 'L'}${x},${y}`
+      from += index === 0 ? `M${x},${bottom}` : ` ${skip ? 'M' : 'L'}${x},${bottom}`
+    })
+
     return html`
       <g>
-        <path fill="none" stroke="${opts.color}" stroke-width="5" d="${path}" />
-        ${opts.data.map(({ label }, index) => html`
-          <text x="${WIDTH * 0.05 + distance * index}" y="${height - LINE_HEIGHT * 0.25}" text-anchor="middle">
-            ${label}
-          </text>
-        `)}
+        <path id="${id}" fill="none" stroke="${opts.color}" stroke-width="5" d="${hasAnimation || props.standalone ? from : to}" />
+        <animate class="js-deferred" data-deferanimation="${100 * index}" xlink:href="#${id}" attributeName="d" dur="${ticks.length * 100 + 200}ms" begin="${props.standalone ? `${125 * index}ms` : 'indefinite'}" calcMode="spline" keyTimes="0;1" keySplines="0.19 1 0.22 1" values="${from};${to}" fill="freeze" />
       </g>
     `
   }
@@ -83,4 +112,53 @@ function line (props, style = null) {
       </g>
     `
   }
+}
+
+// modified version of tick distribution algorithm used in flot
+// https://github.com/flot/flot
+// (num, num, num) -> arr
+function getTicks (min, max, height) {
+  var noTicks = 0.3 * Math.sqrt(height)
+  var delta = (max - min) / noTicks
+  var dec = -Math.floor(Math.log(delta) / Math.LN10)
+  var magn = Math.pow(10, -dec)
+  var norm = delta / magn // norm is between 1.0 and 10.0
+  var size
+
+  if (norm < 1.5) {
+    size = 1
+  } else if (norm < 3) {
+    size = 2
+    // special case for 2.5, requires an extra decimal
+    if (norm > 2.25) {
+      size = 2.5
+      dec++
+    }
+  } else if (norm < 7.5) {
+    size = 5
+  } else {
+    size = 10
+  }
+
+  size *= magn
+
+  var start = floorInBase(min, size)
+  var value = -Infinity
+  var ticks = []
+  var i = 0
+  var prev
+
+  while (value < max && value !== prev) {
+    prev = value
+    value = start + i * size
+    ticks.push(value)
+    ++i
+  }
+
+  return ticks
+}
+
+// round to nearby lower multiple of base
+function floorInBase (n, base) {
+  return base * Math.floor(n / base)
 }

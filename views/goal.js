@@ -1,4 +1,3 @@
-var assert = require('assert')
 var html = require('choo/html')
 var nanoraf = require('nanoraf')
 var parse = require('date-fns/parse')
