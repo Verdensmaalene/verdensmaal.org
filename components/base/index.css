@@ -181,6 +181,10 @@ button {
   outline: 0;
 }
 
+::-moz-focus-inner {
+  border: 0;
+}
+
 /**
  * Provide enhanced focus styles for keyboard focus
  */
