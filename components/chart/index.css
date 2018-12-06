@@ -99,7 +99,7 @@
   transform: scale(1.1);
 }
 
-:root[scripting-enabled] .Chart:not(.has-fallback) .Chart-slice--fallback {
+:root[scripting-enabled] .Chart:not(.has-fallback) .Chart-fallback {
   display: none;
 }
 

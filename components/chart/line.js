@@ -16,6 +16,10 @@ function line (props, style = null) {
   var title = props.standalone ? split(props.title) : null
   var offset = LINE_HEIGHT / 2
   if (props.standalone) offset = LINE_HEIGHT * 2 + title.length * LINE_HEIGHT
+  var height = props.standalone ? WIDTH : WIDTH * 3 / 4
+  var bottom = height - LINE_HEIGHT
+
+  // calculate min/max values
   var min = props.min
   var max = props.max
   props.series.forEach(function (serie) {
@@ -25,9 +29,8 @@ function line (props, style = null) {
       min = typeof min === 'undefined' || value < min ? value : min
     }
   })
-  var height = props.standalone ? WIDTH : WIDTH * 3 / 4
-  var bottom = height - LINE_HEIGHT
 
+  // figure out tick values
   var tickWidth = -Infinity
   var ticks = getTicks(min, max, height)
   min = ticks[0]
@@ -35,17 +38,19 @@ function line (props, style = null) {
   var factor = (bottom - offset) / Math.abs(max - min)
   var grid = ticks.map(function (value) {
     var label = value.toString()
+    // trace the widest tick label for proper vertical alignment
     tickWidth = label.length > tickWidth ? label.length : tickWidth
     return { label, y: bottom - (factor * (value - min)) }
   })
 
-  console.log(bottom, ticks[0])
+  // estimate indent distance
   var indent = tickWidth * (CHAR - tickWidth * CHAR * 0.05)
 
   var classAttr = className({
     'Chart Chart--line': props.standalone,
     'Chart-graph Chart-graph--line': !props.standalone,
-    'Chart--standalone': props.standalone
+    'Chart--standalone': props.standalone,
+    'has-fallback': !props.standalone || !hasAnimation
   })
 
   return html`
@@ -58,7 +63,7 @@ function line (props, style = null) {
           <text class="Chart-label Chart-label--sm" x="0" y="${y}" dy="0.25em">${label}</text>
         </g>
       `)}
-      ${props.series.map(serie)}
+      ${props.series.map(line)}
       ${props.labels ? props.labels.map((label, index, list) => html`
         <text class="Chart-label Chart-label--sm" x="${indent + WIDTH * 0.05 + ((WIDTH - indent) * 0.9 / (list.length - 1)) * index}" y="${height - LINE_HEIGHT * 0.25}" text-anchor="middle">
           ${label}
@@ -67,12 +72,14 @@ function line (props, style = null) {
     </svg>
   `
 
-  function serie (opts, index) {
-    var distance = (WIDTH - indent) * 0.9 / (opts.data.length - 1)
-    var skip = false
+  // render line
+  // (opts, num) -> Element
+  function line (opts, index) {
     var id = opts.label.toLowerCase().replace(/\[^w\]+/g, '')
+    var distance = (WIDTH - indent) * 0.9 / (opts.data.length - 1)
     var to = ''
     var from = ''
+    var skip = false
     opts.data.forEach(function ({ value }, index) {
       if (typeof value !== 'number') {
         skip = true
@@ -87,12 +94,15 @@ function line (props, style = null) {
 
     return html`
       <g>
-        <path id="${id}" fill="none" stroke="${opts.color}" stroke-width="5" d="${hasAnimation || props.standalone ? from : to}" />
+        <path class="Chart-line" id="${id}" fill="none" stroke="${opts.color}" stroke-width="5" d="${hasAnimation || props.standalone ? from : to}" />
+        ${!props.standalone ? html`<path class="Chart-fallback" fill="none" stroke="${opts.color}" stroke-width="5" d="${to}" />` : null}
         <animate class="js-deferred" data-deferanimation="${100 * index}" xlink:href="#${id}" attributeName="d" dur="${ticks.length * 100 + 200}ms" begin="${props.standalone ? `${125 * index}ms` : 'indefinite'}" calcMode="spline" keyTimes="0;1" keySplines="0.19 1 0.22 1" values="${from};${to}" fill="freeze" />
       </g>
     `
   }
 
+  // render heading
+  // () -> Element
   function heading () {
     return html`
       <g class="Chart-heading">
@@ -162,6 +172,7 @@ function getTicks (min, max, height) {
 }
 
 // round to nearby lower multiple of base
+// (num, num) -> num
 function floorInBase (n, base) {
   return base * Math.floor(n / base)
 }

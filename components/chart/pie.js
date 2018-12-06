@@ -105,8 +105,8 @@ function pie (props, style = null) {
 
     return html`
       <g>
-        ${props.standalone || hasAnimation ? html`<path id="path${data.id}" d="${shrunk}" class="Chart-slice" fill="${data.color}" />` : null}
-        ${!props.standalone ? html`<path d="${path}" class="Chart-slice Chart-slice--fallback" fill="${data.color}" />` : null}
+        ${props.standalone || hasAnimation ? html`<path id="path${data.id}" d="${shrunk}" fill="${data.color}" />` : null}
+        ${!props.standalone ? html`<path d="${path}" class="Chart-fallback" fill="${data.color}" />` : null}
         <text x="${x}" y="${y}" dominant-baseline="central" text-anchor="middle" class="Chart-label Chart-label--md Chart-label--${theme}" style="animation-delay: ${300 + 125 * index}ms;">
             ${data.value}
         </text>
