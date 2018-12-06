@@ -18,7 +18,7 @@ var backgrounds = [
   () => import('./background/12'),
   () => import('./background/13'),
   () => import('./background/14-verdensmaalene'),
-  () => import('./background/15'),
+  () => import('./background/15-verdensmaalene'),
   () => import('./background/16-verdensmaalene'),
   () => import('./background/17')
 ]

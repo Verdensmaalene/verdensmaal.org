@@ -1,0 +1,398 @@
+/* @define Background15 */
+
+.Background15 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/**
+ * Generic item selector for animated appearence
+ */
+
+.Background15-inhabitant {
+  opacity: 0;
+  transform: translateY(100%);
+  animation: Background15-inhabitant--appear 600ms 200ms var(--ease-out) forwards;
+}
+
+@keyframes Background15-inhabitant--appear {
+  from {
+    opacity: 1;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+/**
+ * Sky
+ */
+
+.Background15-sky {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  animation: Background15-sky--rise 900ms cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+@keyframes Background15-sky--rise {
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+.Background15-cloud {
+  height: auto;
+  position: absolute;
+  color: #fff;
+  opacity: 0.2;
+  animation: Background15-cloud--appear 1500ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes Background15-cloud--appear {
+  0% {
+    transform: translateY(200%) translateY(50px);
+  }
+
+  25% {
+    transform: translateY(200%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.Background15-cloud--sm {
+  width: 6%;
+}
+
+.Background15-cloud--md {
+  width: 12%;
+}
+
+.Background15-cloud--lg {
+  visibility: hidden;
+}
+
+@media (min-width: 900px) {
+  .Background15-cloud--sm {
+    width: 2%;
+  }
+
+  .Background15-cloud--md {
+    width: 5%;
+  }
+
+  .Background15-cloud--lg {
+    visibility: visible;
+    width: 8%;
+  }
+}
+
+.Background15-cloud--dark {
+  opacity: 0.5;
+  color: rgb(var(--color-goal-15-shaded));
+}
+
+.Background15-cloud--light {
+  opacity: 0.6;
+  color: #fff;
+}
+
+.Background15-cloud--dim {
+  opacity: 0.2;
+  color: rgb(var(--color-goal-15-shaded));
+}
+
+.Background15-cloud:nth-child(1) {
+  top: 55%;
+  left: 4%;
+}
+
+.Background15-cloud:nth-child(2) {
+  top: 60%;
+  left: 10%;
+}
+
+.Background15-cloud:nth-child(3) {
+  top: 23%;
+  right: 17%;
+}
+
+.Background15-cloud:nth-child(4) {
+  top: 25%;
+  right: 12%;
+}
+
+.Background15-cloud:nth-child(5) {
+  top: 22%;
+  right: 3%;
+}
+
+.Background15-cloud:nth-child(6) {
+  top: 55%;
+  right: 5%;
+}
+
+.Background15--small .Background15-cloud {
+  display: none;
+}
+
+.Background15--small .Background15-cloud:nth-child(4) {
+  display: block;
+  top: -5%;
+  right: 12%;
+  width: 17%;
+  height: 17%;
+}
+
+.Background15--small .Background15-cloud:nth-child(5) {
+  display: block;
+  top: -2%;
+  right: 0%;
+  width: 23%;
+  height: 23%;
+  opacity: 0.5;
+}
+
+/**
+ * Bird
+ */
+
+.Background15-bird {
+  position: absolute;
+  height: auto;
+}
+
+.Background15-bird:nth-child(1),
+.Background15-bird:nth-child(3) {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .Background15-bird:nth-child(1),
+  .Background15-bird:nth-child(3) {
+    display: block;
+  }
+}
+
+.Background15-bird:nth-child(1) {
+  width: 6%;
+  top: 17%;
+  left: 24%;
+  color: rgb(var(--color-goal-15-shaded));
+  opacity: 0.6;
+  transform: rotate(7deg);
+}
+
+.Background15-bird:nth-child(2) {
+  width: 6%;
+  top: 29%;
+  right: 37%;
+  color: rgb(var(--color-goal-15-shaded));
+  opacity: 0.6;
+  transform: rotate(-18deg);
+}
+
+.Background15-bird:nth-child(3) {
+  width: 8%;
+  top: 23%;
+  left: 11%;
+  transform: rotate(-8deg);
+}
+
+.Background15-bird:nth-child(4) {
+  width: 8%;
+  top: 36%;
+  right: 27%;
+}
+
+@media (min-width: 900px) {
+  .Background15-bird:nth-child(1) {
+    width: 4%;
+    top: 15%;
+  }
+
+  .Background15-bird:nth-child(2) {
+    width: 3%;
+    top: 19%;
+  }
+
+  .Background15-bird:nth-child(3) {
+    width: 4%;
+    top: 23%;
+  }
+
+  .Background15-bird:nth-child(4) {
+    width: 6%;
+    top: 32%;
+  }
+
+  .Background15--small .Background15-bird:nth-child(1) {
+    width: 6%;
+    top: 12%;
+  }
+
+  .Background15--small .Background15-bird:nth-child(2) {
+    width: 6%;
+    top: 21%;
+    opacity: 1;
+    color: #fff;
+  }
+
+  .Background15--small .Background15-bird:nth-child(3) {
+    width: 4%;
+    top: 32%;
+    right: 31%;
+  }
+
+  .Background15--small .Background15-bird:nth-child(4) {
+    width: 6%;
+    top: 46%;
+    color: #fff;
+  }
+}
+
+/**
+ * Bear
+ */
+
+.Background15-bear {
+  width: 18%;
+  max-width: 117px;
+  height: auto;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  color: #fff;
+}
+
+@media (min-width: 900px) {
+  .Background15-bear {
+    width: 10%;
+  }
+}
+
+/**
+ * Hills
+ */
+
+.Background15-hills {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  transform: translateX(50%);
+}
+
+@media (min-width: 900px) {
+  .Background15-hills {
+    transform: translateX(0%);
+  }
+}
+
+.Background15-hill {
+  fill: #fff;
+  transform: scaleY(0);
+  transform-origin: 0 100%;
+  animation: Background15-hill--appear 350ms 100ms ease-out forwards;
+  will-change: transform;
+}
+
+.Background15-hill--dark {
+  fill: rgba(var(--color-goal-15-shaded), 0.5);
+}
+
+@keyframes Background15-hill--appear {
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.Background15-hill:nth-child(1) {
+  animation-delay: 200ms;
+}
+
+.Background15-hill:nth-child(2) {
+  animation-delay: 900ms;
+}
+
+.Background15-hill:nth-child(3) {
+  animation-delay: 850ms;
+}
+
+.Background15-hill:nth-child(4) {
+  animation-delay: 450ms;
+  animation-duration: 600ms;
+}
+
+/**
+ * Trees
+ */
+
+.Background15-trees {
+  height: auto;
+  width: 16%;
+  max-width: 120px;
+  position: absolute;
+  bottom: 0;
+  left: 9%;
+}
+
+@media (min-width: 900px) {
+  .Background15-trees {
+    width: 8%;
+    left: 20%;
+  }
+}
+
+/**
+ * Deer
+ */
+
+.Background15-deer {
+  display: none;
+  width: 9%;
+  height: auto;
+  max-width: 332px;
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+}
+
+@media (min-width: 900px) {
+  .Background15-deer {
+    display: block;
+  }
+}
+
+/**
+ * Puffin
+ */
+
+.Background15-puffin {
+  display: none;
+  width: 2.5%;
+  height: auto;
+  max-width: 98px;
+  position: absolute;
+  bottom: -3px;
+  left: 30%;
+}
+
+@media (min-width: 900px) {
+  .Background15-puffin {
+    display: block;
+  }
+}
