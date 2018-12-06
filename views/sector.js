@@ -9,13 +9,15 @@ var hero = require('../components/hero')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var Text = require('../components/text')
+var Chart = require('../components/chart')
 var embed = require('../components/embed')
 var Details = require('../components/details')
+var divide = require('../components/grid/divide')
 var { external } = require('../components/symbol')
 var blockquote = require('../components/blockquote')
 var serialize = require('../components/text/serialize')
 var intersection = require('../components/intersection')
-var { i18n, srcset, asText } = require('../components/base')
+var { i18n, srcset, asText, colors } = require('../components/base')
 
 var text = i18n()
 
@@ -334,9 +336,87 @@ function goal (state, emit) {
             </div>
           `
         }
+        case 'charts': {
+          var charts = slice.items.map(chart)
+          if (!charts.length) return null
+          if (state.prefetch) return Promise.all(charts)
+          return html`
+            <section id="statistics" class="View-section View-section--${camelCase(slice.slice_type)} u-md-container">
+              ${divide(charts)}
+            </section>
+          `
+        }
         default: return null
       }
     }
+  }
+
+  function chart (block) {
+    var { chart, theme } = block
+    return state.docs.getByID(chart.id, function (err, doc) {
+      if (err) throw err
+      if (!doc) return Chart.loading({ size: 'md', shrink: true })
+
+      if (!theme) {
+        // try and match goal by tag
+        let tag = doc.tags.find((tag) => tag.indexOf('goal-') === 0)
+        // fallback to random goal colors
+        theme = tag ? tag.substr(5) : Math.ceil(Math.random() * 17)
+      }
+
+      let { title, value, color, source } = doc.data
+      let goalColors = [colors[`goal${theme}`], colors[`goal${theme}Shaded`]]
+      let props = {
+        title,
+        size: 'md',
+        shrink: true,
+        series: []
+      }
+
+      if (typeof doc.data.min_y !== 'undefined') props.min = doc.data.min_y
+      if (typeof doc.data.max_y !== 'undefined') props.max = doc.data.max_y
+      if (Array.isArray(doc.data.labels)) {
+        props.labels = doc.data.labels.map((block) => block.label)
+      }
+
+      if (source.url) {
+        props.source = {
+          text: doc.data.link_text || source.url.replace(/^https?:\/\//, ''),
+          url: source.url
+        }
+      }
+
+      if (doc.data.description.length) {
+        props.description = asElement(doc.data.description)
+      }
+
+      if (doc.data.series) {
+        for (let i = 0, len = doc.data.series.length; i < len; i++) {
+          let serie = doc.data.series[i]
+          if (serie.items && serie.primary) {
+            props.series.push(Object.assign({}, serie.primary, {
+              color: serie.primary.color || goalColors[i] || '#F1F1F1',
+              data: serie.items
+            }))
+          } else {
+            props.series.push(Object.assign({}, serie, {
+              color: serie.color || goalColors[i] || '#F1F1F1'
+            }))
+          }
+        }
+      } else {
+        props.series.push({ value: value, color: color || goalColors[0] })
+      }
+
+      var types = {
+        'bar_chart': 'bar',
+        'numeric_chart': 'number',
+        'line_chart': 'line',
+        'pie_chart': 'pie'
+      }
+
+      return state.cache(Chart, doc.id, types[doc.type]).render(props)
+    })
   }
 
   // render link as card
