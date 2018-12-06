@@ -29,6 +29,7 @@ module.exports = class Background14 extends Component {
     })
 
     function replay () {
+      whale.classList.add('has-looped')
       whale.classList.remove('in-transition')
       window.setTimeout(() => {
         window.requestAnimationFrame(() => {
@@ -65,8 +66,8 @@ module.exports = class Background14 extends Component {
               <path d="M830.5 208.1c-1 1-2 2.2-2.7 3.5l-77.2 149.5-.8 1.3L715 414c-6.4 9.5 2.2 22 13.4 19.4l67.2-15.7c2.8-.6 5.4-2.3 7.1-4.6l103.7-135.4 58.4-69.6H830.5z" fill="currentColor"/>
             </g>
           </svg>
-          ${this.jellyfish.render()}
           ${this.fishes.map((fish) => fish.render())}
+          ${this.jellyfish.render()}
           ${this.bubbles.map((bubble) => bubble.render())}
         </div>
       </div>

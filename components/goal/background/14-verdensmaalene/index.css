@@ -89,7 +89,7 @@
 
 .Background14-fish--small {
   width: 57px;
-  color: #3BABE0;
+  color: #005A84;
 }
 
 .Background14-fish--medium {
@@ -142,9 +142,13 @@
   position: absolute;
   right: 100%;
   top: 50%;
-  transform: translate(0, -25%);
+  transform: translate(35%, -25%);
   color: #3BABE0;
   opacity: 0.75;
+}
+
+.Background14-whale.has-looped {
+  transform: translate(0%, -25%);
 }
 
 .Background14-whale.in-transition {

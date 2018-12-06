@@ -89,7 +89,7 @@
 
 .Background14-fish--small {
   width: 57px;
-  color: #3BABE0;
+  color: #005A84;
 }
 
 .Background14-fish--medium {
@@ -129,25 +129,4 @@
 .Background14-bubble--large {
   width: 32px;
   color: #fff;
-}
-
-/**
- * Whale
- */
-
-.Background14-whale {
-  width: 80%;
-  min-width: 140vh;
-  height: auto;
-  position: absolute;
-  right: 100%;
-  top: 50%;
-  transform: translate(0, -25%);
-  color: #3BABE0;
-  opacity: 0.75;
-}
-
-.Background14-whale.in-transition {
-  transform: translate(calc(100vw + 100%), -25%);
-  transition: transform 120s linear;
 }
