@@ -1,4 +1,6 @@
 :root {
+  -ms-high-contrast-adjust: none;
+
   --high-contrast-light: var(--default-background-color) !important;
   --high-contrast-dark: var(--default-color) !important;
 
