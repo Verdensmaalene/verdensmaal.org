@@ -237,29 +237,14 @@
     top: 32%;
   }
 
-  .Background15--small .Background15-bird:nth-child(1) {
-    width: 6%;
-    top: 12%;
-  }
-
   .Background15--small .Background15-bird:nth-child(2) {
     width: 6%;
-    top: 21%;
-    opacity: 1;
-    color: #fff;
   }
+}
 
-  .Background15--small .Background15-bird:nth-child(3) {
-    width: 4%;
-    top: 32%;
-    right: 31%;
-  }
-
-  .Background15--small .Background15-bird:nth-child(4) {
-    width: 6%;
-    top: 46%;
-    color: #fff;
-  }
+.Background15--small .Background15-bird:nth-child(1),
+.Background15--small .Background15-bird:nth-child(3) {
+  display: none;
 }
 
 /**
@@ -274,6 +259,11 @@
   left: 50%;
   bottom: 0;
   color: #fff;
+}
+
+.Background15--small .Background15-bear {
+  width: 13%;
+  left: 42%;
 }
 
 @media (min-width: 900px) {
@@ -294,6 +284,10 @@
   right: 0;
   bottom: 0;
   transform: translateX(50%);
+}
+
+.Background15--small .Background15-hills {
+  transform: translateX(25%);
 }
 
 @media (min-width: 900px) {
@@ -350,6 +344,10 @@
   left: 9%;
 }
 
+.Background15--small .Background15-trees {
+  display: none;
+}
+
 @media (min-width: 900px) {
   .Background15-trees {
     width: 8%;
@@ -372,7 +370,7 @@
 }
 
 @media (min-width: 900px) {
-  .Background15-deer {
+  .Background15:not(.Background15--small) .Background15-deer {
     display: block;
   }
 }
@@ -392,7 +390,7 @@
 }
 
 @media (min-width: 900px) {
-  .Background15-puffin {
+  .Background15:not(.Background15--small) .Background15-puffin {
     display: block;
   }
 }
