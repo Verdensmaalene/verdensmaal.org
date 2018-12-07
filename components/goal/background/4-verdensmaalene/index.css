@@ -1,0 +1,369 @@
+/* @define Background4 */
+
+.Background4 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Background4-letters {
+  width: 100%;
+  height: 100%;
+  max-width: 1280px;
+  border: solid transparent;
+  border-width: 0 24px;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 1000px) {
+  .Background4-letters {
+    border-width: 0 32px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Background4-letters {
+    border-width: 0 48px;
+  }
+}
+
+.Background4-letter {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  visibility: hidden;
+  font-weight: 600;
+  color: rgb(var(--color-goal-4));
+  background-color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.Background4--small .Background4-letter {
+  display: none;
+}
+
+.Background4--small .Background4-letter--a,
+.Background4--small .Background4-letter--b,
+.Background4--small .Background4-letter--c,
+.Background4--small .Background4-letter--d {
+  display: block;
+}
+
+.Background4--small .Background4-letters {
+  left: 106.3%;
+}
+
+.Background4-letter.in-transition {
+  visibility: visible;
+  transition: transform 800ms linear;
+}
+
+.Background4-letter.is-falling {
+  transform: rotate(8deg);
+}
+
+.Background4-letter.is-bouncing {
+  animation: Background4-letter--bounce 400ms ease-out forwards;
+}
+
+@keyframes Background4-letter--bounce {
+  0% {
+    transform: rotate(8deg);
+  }
+
+  50% {
+    transform: translateY(-20%) rotate(-6deg);
+  }
+
+  100% {
+    transform: translateY(0%) rotate(0deg);
+  }
+}
+
+.Background4-letter--d.is-bouncing,
+.Background4-letter--s.is-bouncing {
+  animation: Background4-letter--tilt 400ms ease-out forwards;
+}
+
+@keyframes Background4-letter--tilt {
+  0% {
+    transform: rotate(16deg);
+  }
+
+  50% {
+    transform: translateY(-27%) rotate(-16deg);
+  }
+
+  100% {
+    transform: translateY(-6px) rotate(-36deg);
+  }
+}
+
+.Background4-letter--dark {
+  color: #fff;
+  background-color: #5b0104;
+}
+
+/**
+ * Level 1
+ */
+
+.Background4-letter--a {
+  left: 0;
+}
+
+.Background4-letter--b {
+  left: 34px;
+}
+
+.Background4-letter--d {
+  left: 72px;
+  font-size: 0.9em;
+}
+
+.Background4-letter--e {
+  left: 160px;
+}
+
+.Background4-letter--f {
+  left: 296px;
+}
+
+.Background4-letter--g {
+  left: 348px;
+}
+
+.Background4-letter--h {
+  left: 382px;
+}
+
+.Background4-letter--i {
+  left: 416px;
+}
+
+.Background4-letter--m {
+  left: 625px;
+  z-index: 10;
+  pointer-events: all;
+  cursor: pointer;
+  font-size: 0.7em;
+}
+
+.Background4-letter--p {
+  left: 750px;
+}
+
+.Background4-letter--q {
+  left: 830px;
+}
+
+.Background4-letter--r {
+  left: 864px;
+}
+
+.Background4-letter--s {
+  left: 904px;
+}
+
+.Background4-letter--u {
+  left: 1000px;
+}
+
+.Background4-letter--v {
+  left: 1034px;
+}
+
+.Background4-letter--w {
+  left: 1068px;
+}
+
+.Background4-letter--z {
+  left: 1140px;
+}
+
+/**
+ * Level 2
+ */
+
+.Background4-letter--c {
+  left: 16px;
+  bottom: 34px;
+}
+
+.Background4-letter--j {
+  left: 390px;
+  bottom: 34px;
+}
+
+.Background4-letter--k {
+  left: 424px;
+  bottom: 34px;
+}
+
+.Background4-letter--n {
+  left: 632px;
+  bottom: 34px;
+}
+
+.Background4-letter--t {
+  left: 848px;
+  bottom: 34px;
+}
+
+.Background4-letter--x {
+  left: 990px;
+  bottom: 34px;
+}
+
+.Background4-letter--y {
+  left: 1024px;
+  bottom: 34px;
+}
+
+/**
+ * Level 3
+ */
+
+.Background4-letter--l {
+  left: 380px;
+  bottom: 68px;
+}
+
+.Background4-letter--o {
+  left: 620px;
+  bottom: 67px;
+}
+
+@media (max-width: 1280px) {
+  .Background4-letter:nth-child(25) ~ .Background4-letter {
+    display: none;
+  }
+}
+
+@media (max-width: 1175px) {
+  .Background4-letter:nth-child(20) ~ .Background4-letter {
+    display: none;
+  }
+}
+
+@media (max-width: 1020px) {
+  .Background4-letter:nth-child(16) ~ .Background4-letter {
+    display: none;
+  }
+}
+
+@media (max-width: 850px) {
+  .Background4-letter:nth-child(15) ~ .Background4-letter {
+    display: none;
+  }
+}
+
+@media (max-width: 770px) {
+  .Background4-letter:nth-child(12) ~ .Background4-letter {
+    display: none;
+  }
+}
+
+@media (max-width: 490px) {
+  .Background4-letter:nth-child(6) ~ .Background4-letter {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .Background4-letter:nth-child(5) ~ .Background4-letter {
+    display: none;
+  }
+}
+
+/**
+ * Legos
+ */
+
+.Background4-legos {
+  width: 25%;
+  height: auto;
+  max-width: 300px;
+  position: absolute;
+  bottom: 0;
+  left: 27%;
+  overflow: visible;
+}
+
+.Background4--small .Background4-legos {
+  display: none;
+}
+
+.Background4-coverup {
+  color: rgb(var(--color-goal-4));
+}
+
+.Background4-lego {
+  visibility: hidden;
+  transform-origin: 50% 50%;
+}
+
+.Background4-lego.in-transition {
+  visibility: visible;
+  transition: transform 800ms linear;
+}
+
+.Background4-lego.is-falling {
+  transform: rotate(3deg);
+}
+
+.Background4-lego.is-bouncing {
+  animation: Background4-lego--bounce 325ms ease-out forwards;
+}
+
+@keyframes Background4-lego--bounce {
+  0% {
+    transform: rotate(4deg);
+  }
+
+  50% {
+    transform: translateY(-3%) rotate(-3deg);
+  }
+
+  100% {
+    transform: translateY(0%) rotate(0deg);
+  }
+}
+
+.Background4-lego:nth-child(1) {
+  color: #fff;
+  transition-delay: 100ms;
+}
+
+.Background4-lego:nth-child(2) {
+  color: #fff;
+  transition-delay: 200ms;
+}
+
+.Background4-lego:nth-child(3) {
+  color: rgb(var(--color-goal-4-shaded));
+  transition-delay: 100ms;
+}
+
+.Background4-lego:nth-child(4) {
+  color: rgb(var(--color-goal-4-shaded));
+  transition-delay: 200ms;
+}
+
+.Background4-lego:nth-child(5) {
+  color: #fff;
+  transition-delay: 100ms;
+}
+
+.Background4-lego:nth-child(6) {
+  color: #fff;
+}
