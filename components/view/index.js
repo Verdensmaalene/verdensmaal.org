@@ -54,6 +54,7 @@ function createView (view, meta) {
     return state.docs.getSingle('website', function (err, doc) {
       if (err) throw err
 
+      var hasError = false
       var children
       try {
         children = view.call(self, state, emit)
@@ -67,6 +68,7 @@ function createView (view, meta) {
         }
         emit('meta', next)
       } catch (err) {
+        hasError = true
         if (state.prefetch) throw err
         err.status = err.status || 500
         children = error(err)
@@ -88,28 +90,31 @@ function createView (view, meta) {
 
       function getHeader () {
         var opts = { isHighContrast: state.ui.isHighContrast }
+
         var isGoal
-        var wildcard = state.params.wildcard
-        if (wildcard && wildcard.indexOf('/') === -1) {
-          let [, num] = (wildcard.match(GOAL_SLUG) || [])
-          var predicate = Predicates.at('my.goal.number', +num)
-          isGoal = num && state.docs.get(predicate, (err) => !err)
-          if (isGoal) {
-            opts.theme = +num === 7 ? 'black' : 'white'
-            opts.static = true
-            if (state.referrer === '') {
-              opts.back = { href: '/', text: text`Back to Goals` }
+        if (!hasError) {
+          let wildcard = state.params.wildcard
+          if (wildcard && wildcard.indexOf('/') === -1) {
+            let [, num] = (wildcard.match(GOAL_SLUG) || [])
+            let predicate = Predicates.at('my.goal.number', +num)
+            isGoal = num && state.docs.get(predicate, (err) => !err)
+            if (isGoal) {
+              opts.theme = +num === 7 ? 'black' : 'white'
+              opts.static = true
+              if (state.referrer === '') {
+                opts.back = { href: '/', text: text`Back to Goals` }
+              }
             }
           }
-        }
-        if (state.route === 'mission') {
-          opts.theme = 'white'
-          opts.static = true
+          if (state.route === 'mission') {
+            opts.theme = 'white'
+            opts.static = true
+          }
         }
 
         opts.slot = function () {
           return getFlag({
-            white: isGoal || state.route === 'mission',
+            white: !hasError && (isGoal || state.route === 'mission'),
             id: `header${isGoal ? '-white' : ''}`
           })
         }
