@@ -147,6 +147,10 @@
   opacity: 0.75;
 }
 
+.Background14--small .Background14-whale {
+  display: none;
+}
+
 .Background14-whale.has-looped {
   transform: translate(0%, -25%);
 }
