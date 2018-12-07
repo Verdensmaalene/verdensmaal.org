@@ -290,6 +290,7 @@
  */
 
 .Background4-legos {
+  display: none;
   width: 25%;
   height: auto;
   max-width: 300px;
@@ -299,8 +300,10 @@
   overflow: visible;
 }
 
-.Background4--small .Background4-legos {
-  display: none;
+@media (min-width: 600px) {
+  .Background4:not(.Background4--small) .Background4-legos {
+    display: block;
+  }
 }
 
 .Background4-coverup {
