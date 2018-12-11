@@ -244,11 +244,12 @@ class Home extends View {
             }))))
           }
           case 'news': {
-            let date = parse(slice.primary.link.first_publication_date)
-            props.date = {
-              datetime: date,
-              text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
-            }
+            // TODO: manually fetch document to get first_publication_date
+            // let date = parse(slice.primary.link.first_publication_date)
+            // props.date = {
+            //   datetime: date,
+            //   text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
+            // }
             return card(props)
           }
           default: return null
