@@ -79,7 +79,7 @@ function meta (state) {
     var attrs = {
       title: asText(doc.data.title),
       description: asText(doc.data.description),
-      'og:image': doc.data.social_image.url
+      'og:image': doc.data.social_image.url || doc.data.image.url
     }
 
     if (!attrs['og:image']) {
