@@ -14,15 +14,18 @@ function hero (props) {
   if (imgattrs && !imgattrs.alt) imgattrs.alt = ''
 
   return html`
-    <div class="Hero">
-      <figure class="Hero-figure">
-        ${props.image ? html`<img class="Hero-image" ${imgattrs} src=${src}>` : null}
-      </figure>
-      <div class="Hero-content">
-        <h1 class="Hero-title">${props.title}</h1>
-        <p class="Hero-body">${props.body}</p>
+    <figure class="Hero">
+      <div class="Hero-container">
+        <div class="Hero-figure">
+          ${props.image ? html`<img class="Hero-image" ${imgattrs} src=${src}>` : null}
+        </div>
+        <div class="Hero-content">
+          <h1 class="Hero-title">${props.title}</h1>
+          <p class="Hero-body">${props.body}</p>
+        </div>
       </div>
-    </div>
+      ${props.caption ? html`<figcaption class="Hero-caption">${props.caption}</figcaption>` : null}
+    </figure>
   `
 }
 

@@ -2,7 +2,7 @@
 
 /* @define Banner */
 .Banner {
-  display: flex;
+
 }
 
 .Banner-slot {
@@ -52,4 +52,13 @@
     transform: none;
     object-fit: cover;
   }
+}
+
+.Banner-caption {
+  display: block;
+  margin-top: 0.5rem;
+  max-width: 39em;
+  font-size: 0.8em;
+  line-height: var(--default-line-height);
+  color: rgb(var(--color-text-muted));
 }

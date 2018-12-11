@@ -47,11 +47,11 @@ function article (state, emit) {
     return html`
       <main class="View-main">
         <article>
-          <div class="js-banner">
-            ${banner(image(doc.data.image))}
-          </div>
-          <div class="u-container u-spaceT6">
-            <div class="u-cols">
+          <div class="u-container">
+            <div class="js-banner">
+              ${banner(image(doc.data.image))}
+            </div>
+            <div class="u-cols u-spaceT6">
               <div class="u-col u-lg-size2of3 u-spaceB4">
                 <div class="Text">
                   <time class="Text-muted" datetime="${date}">
@@ -155,7 +155,8 @@ function image (props) {
   return {
     width: props.dimensions.width,
     height: props.dimensions.height,
-    alt: props.alt,
+    caption: props.copyright,
+    alt: props.alt || '',
     src: props.url,
     sizes: '100vw',
     srcset: srcset(

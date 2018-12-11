@@ -28,7 +28,10 @@ function serialize (type, node, content, children) {
         return Math.min(size, node.dimensions.width * (index + 1))
       })
       return html`
-        <img sizes="39em" srcset="${srcset(node.url, sizes)}" src="${srcset(node.url, [800]).split(' ')[0]}" alt="${node.alt}">
+        <figure>
+          <img sizes="39em" srcset="${srcset(node.url, sizes)}" src="${srcset(node.url, [800]).split(' ')[0]}" alt="${node.alt || ''}">
+          ${node.copyright ? html`<figcaption><small class="Text-muted">${node.copyright}</small></figcaption>` : null}
+        </figure>
       `
     }
     default: return null

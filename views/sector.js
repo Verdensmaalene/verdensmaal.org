@@ -43,7 +43,7 @@ function goal (state, emit) {
       src: srcset(doc.data.image.url, [900], { aspect: 9 / 16 }).split(' ')[0],
       height: doc.data.image.dimensions.height,
       width: doc.data.image.dimensions.width,
-      alt: data.image.alt,
+      alt: data.image.alt || '',
       sizes: '100w',
       srcset: srcset(
         doc.data.image.url,
@@ -59,7 +59,7 @@ function goal (state, emit) {
 
     return html`
       <main class="View-main">
-        ${hero({ title, body, image })}
+        ${hero({ title, body, image, caption: data.image.copyright })}
         <div class="u-container">
           <div class="Text u-spaceV6">
             ${text`Shortcuts`}: ${shortcuts.map((slice, index, list) => html`
@@ -214,13 +214,15 @@ function goal (state, emit) {
         }
         case 'image': {
           if (!slice.primary.image.url) return null
+          let { url, alt, copyright, dimensions } = slice.primary.image
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <figure class="View-section View-section--${camelCase(slice.slice_type)} u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               <div class="Text u-sizeFull">
-                <img class="u-sizeFull" width="${slice.primary.image.dimensions.width}" height="${slice.primary.image.dimensions.height}" src="${slice.primary.image.url}" alt="${slice.primary.image.alt || ''}" />
+                <img class="u-sizeFull" width="${dimensions.width}" height="${dimensions.height}" sizes="100vw" srcset="${srcset(url, [400, 900, 1600, [2800, 'q_50'], [3600, 'q_30']])}" src="${srcset(url, [900]).split(' ')[0]}" alt="${alt || ''}" />
+                ${copyright ? html`<figcaption><small class="Text-muted">${copyright}</small></figcaption>` : null}
               </div>
-            </div>
+            </figure>
           `
         }
         case 'gallery': {

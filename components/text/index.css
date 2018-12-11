@@ -4,7 +4,7 @@
 .Text {
   color: rgb(var(--current-color));
   font-family: var(--default-font-family);
-  line-height: 1.5;
+  line-height: var(--default-line-height);
   font-size: 1rem;
   max-width: 39em;
   text-align: left;
@@ -84,6 +84,11 @@
 .Text pre:not(:last-child),
 .Text figure:not(:last-child) {
   margin-bottom: 1.5em;
+}
+
+.Text img + figcaption,
+.Text pre + figcaption {
+  margin-top: -1em;
 }
 
 .Text img {
