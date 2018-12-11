@@ -113,9 +113,10 @@ function createView (view, meta) {
         }
 
         opts.slot = function () {
+          var isWhite = !hasError && (isGoal || state.route === 'mission')
           return getFlag({
-            white: !hasError && (isGoal || state.route === 'mission'),
-            id: `header${isGoal ? '-white' : ''}`
+            white: isWhite,
+            id: `header${isWhite ? '-white' : ''}`
           })
         }
 
