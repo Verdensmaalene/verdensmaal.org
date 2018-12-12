@@ -337,27 +337,24 @@ class GoalPage extends View {
         }
 
         switch (slice.slice_type) {
-          case 'resource': return card(Object.assign({
-            link: {
-              href: slice.primary.file.url
-            }
-          }, props))
-          case 'event': return card(Object.assign({
-            link: {
-              href: state.docs.resolve(slice.primary.link)
-            }
-          }, props))
+          case 'resource': {
+            props.link = { href: slice.primary.file.url }
+            return card(props)
+          }
+          case 'event': {
+            props.link = { href: state.docs.resolve(slice.primary.link) }
+            return card(props)
+          }
           case 'news': {
-            let date = parse(slice.primary.link.first_publication_date)
-            return card(Object.assign({
-              date: !isNaN(date) ? {
+            props.link = { href: state.docs.resolve(slice.primary.link) }
+            if (slice.primary.link.first_publication_date) {
+              let date = parse(slice.primary.link.first_publication_date)
+              props.date = {
                 datetime: date,
                 text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
-              } : null,
-              link: {
-                href: state.docs.resolve(slice.primary.link)
               }
-            }, props))
+            }
+            return card(props)
           }
           default: return null
         }
