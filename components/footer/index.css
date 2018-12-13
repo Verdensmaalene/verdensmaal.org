@@ -40,6 +40,10 @@
   margin: 0.5rem 0;
 }
 
+.Footer-section:not(.Footer-section--4) .Footer-item {
+  min-width: 100%;
+}
+
 .Footer-link {
   padding: 0.5em;
   margin: -0.5em;
