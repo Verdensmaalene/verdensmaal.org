@@ -94,7 +94,6 @@
 .Text img {
   height: auto;
   max-width: 100%;
-  background: rgb(var(--color-gray-light));
 }
 
 .Text pre {
