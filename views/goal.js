@@ -111,20 +111,22 @@ class GoalPage extends View {
       var id = state.params.wildcard + (isHighContrast ? 'high-contrast' : '')
       var goal = state.cache(GoalClass, id)
       var props = { format: 'fullscreen', number: +num }
-
-      var featured = getFeatured()
       var header = state.docs.getSingle('website', getHeader)
-      var charts = doc.data.charts.map((block) => chart(block.chart))
 
-      if (state.prefetch) {
-        // exit early during prefetch exposing async elements
-        return Promise.all([featured, header, ...charts])
-      } else if (!response) {
+      if (!doc) {
         return html`
           <main class="View-main">
             ${goal.render(props)}
           </main>
         `
+      }
+
+      var featured = getFeatured()
+      var charts = doc.data.charts.map((block) => chart(block.chart))
+
+      if (state.prefetch) {
+        // exit early during prefetch exposing async elements
+        return Promise.all([featured, header, ...charts])
       }
 
       props.number = doc.data.number
