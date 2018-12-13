@@ -23,7 +23,7 @@ function banner (image, slot) {
         ` : null}
       </div>
       ${image.caption ? html`<figcaption class="Banner-caption">${image.caption}</figcaption>` : null}
-    </div>
+    </figure>
   `
 }
 
