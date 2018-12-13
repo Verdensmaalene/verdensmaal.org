@@ -1,6 +1,7 @@
 var assert = require('assert')
 var html = require('choo/html')
 var Component = require('choo/component')
+var popup = require('./popup')
 
 var mapboxgl = null
 var CLUSTER_THRESHOLD = 12
@@ -77,17 +78,20 @@ module.exports = class Map extends Component {
         style: 'mapbox://styles/verdensmaalene/cjpaabceg0rju2stjn3ga61zc'
       })
 
-      var offset = {
-        'top': [0, 0],
-        'top-left': [0, 0],
-        'top-right': [0, 0],
-        'bottom': [0, -28],
-        'bottom-left': [0, -28],
-        'bottom-right': [0, -28],
-        'left': [8, -20],
-        'right': [-8, -20]
-      }
-      var popup = new mapboxgl.Popup({ closeButton: false, closeOnClick: false, offset: offset })
+      var myPopup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        offset: {
+          'top': [0, 0],
+          'top-left': [0, 0],
+          'top-right': [0, 0],
+          'bottom': [0, -28],
+          'bottom-left': [0, -28],
+          'bottom-right': [0, -28],
+          'left': [8, -20],
+          'right': [-8, -20]
+        }
+      })
 
       map.on('error', onerror)
       map.on('load', onload)
@@ -149,12 +153,12 @@ module.exports = class Map extends Component {
           })
 
           if (!features.length) {
-            if (popup.isOpen()) popup.remove()
+            if (myPopup.isOpen()) myPopup.remove()
             return
           }
 
           if (features[0].properties.cluster) {
-            if (popup.isOpen()) popup.remove()
+            if (myPopup.isOpen()) myPopup.remove()
 
             // reveal all markers in cluster
             let clusterId = features[0].properties.cluster_id
@@ -171,12 +175,12 @@ module.exports = class Map extends Component {
               return props.id === features[0].properties.id
             })
 
-            // show popup for location
-            if (location && typeof location.popup === 'function') {
-              popup
+            // show myPopup for location
+            if (location) {
+              myPopup
                 .setLngLat(features[0].geometry.coordinates)
-                .setDOMContent(location.popup())
-              if (!popup.isOpen()) popup.addTo(map)
+                .setDOMContent(popup(location))
+              if (!myPopup.isOpen()) myPopup.addTo(map)
             }
           }
         })

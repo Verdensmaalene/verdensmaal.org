@@ -48,3 +48,53 @@
   transform: scale(1.2);
   transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
 }
+
+.Map-popup {
+  max-width: 280px;
+  padding: 1.25rem;
+  position: relative;
+}
+
+.Map-label {
+  display: inline-block;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.Map-heading {
+  font-size: 1.5rem;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
+  text-transform: uppercase;
+}
+
+.Map-subheading {
+  font-size: 0.75rem;
+  color: rgb(var(--color-gray));
+}
+
+.Map-link {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0.5em;
+  margin-top: 0.5em;
+  border-top: 1px solid rgb(var(--color-gray-light));
+  font-size: 1.25rem;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
+  text-transform: uppercase;
+  color: rgb(var(--color-link));
+}
+
+.Map-symbol {
+  display: inline-block;
+  margin-top: 0.2em;
+  font-size: 0.75rem;
+}
+
+.mapboxgl-popup-content {
+   padding: 0 !important;
+   border-radius: 0 !important;
+}

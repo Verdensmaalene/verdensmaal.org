@@ -10,7 +10,7 @@ var view = require('../components/view')
 var event = require('../components/event')
 var intro = require('../components/intro')
 var calendar = require('../components/calendar')
-var { i18n, srcset, asText } = require('../components/base')
+var { i18n, srcset, asText, timestamp } = require('../components/base')
 
 var text = i18n()
 
@@ -108,25 +108,26 @@ function events (state, emit) {
   // format document for use in map
   // obj -> obj
   function asLocation (doc) {
-    var date = parse(doc.data.datetime)
-    return {
+    var { city, country, title, start, location } = doc.data
+    var props = {
       id: doc.id,
-      latitude: doc.data.location.latitude,
-      longitude: doc.data.location.longitude,
-      popup () {
-        return html`
-          <p style="display: flex;">
-            <time datetime="${JSON.stringify(date).replace(/"/g, '')}" class="u-textHeading">
-              <span style="font-size: 3rem;">${('0' + date.getDate()).substr(-2)}</span><br>
-              ${text(`MONTH_${date.getMonth()}`)}
-            </time>
-            <div class="Text">
-              <a href="${state.docs.resolve(doc)}">${asText(doc.data.title)}</a>
-            </div>
-          </p>
-        `
-      }
+      latitude: location.latitude,
+      longitude: location.longitude,
+      heading: asText(title),
+      subheading: [city, country].filter(Boolean).join(', '),
+      href: state.docs.resolve(doc)
     }
+
+    if (start) {
+      let date = parse(start)
+      props.label = html`
+        <time datetime="${JSON.stringify(date).replace(/"/g, '')}">
+          ${date.getDate()} ${text(`MONTH_${date.getMonth()}`)}, ${timestamp(date)}
+        </time>
+      `
+    }
+
+    return props
   }
 
   // format doc as calendar compatible object

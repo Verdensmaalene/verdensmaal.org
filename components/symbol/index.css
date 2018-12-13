@@ -80,3 +80,12 @@
 .Symbol--mail.Symbol--cover:hover .Symbol-image {
   transform: rotate(10deg);
 }
+
+.Symbol--forward.Symbol--cover .Symbol-image {
+  transform: translateX(-0.2em);
+  transition: transform 100ms var(--ease-out);
+}
+
+.Symbol--forward.Symbol--cover:hover .Symbol-image {
+  transform: translateX(0em);
+}
