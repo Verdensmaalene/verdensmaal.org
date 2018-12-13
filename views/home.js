@@ -184,7 +184,7 @@ class Home extends View {
       // get featured link cards populated with news and events
       // () -> arr
       function getFeatured () {
-        var cards = doc ? doc.data.featured_links.map(asFeatured) : []
+        var cards = doc ? doc.data.featured_links.map(asFeatured).filter(Boolean) : []
 
         if (cards.length < 3) {
           let news = getNews(3)
@@ -215,6 +215,7 @@ class Home extends View {
       // render slice as card
       // obj -> Element
       function asFeatured (slice) {
+        if (slice.primary.link && slice.primary.link.isBroken) return null
         var data = slice.primary.link ? slice.primary.link.data : slice.primary
         var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
         var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
