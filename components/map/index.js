@@ -71,7 +71,7 @@ module.exports = class Map extends Component {
         dragRotate: false,
         zoom: 6,
         minZoom: 4,
-        maxZoom: 13,
+        maxZoom: 15,
         center: bounds.getCenter(),
         attributionControl: false,
         failIfMajorPerformanceCaveat: true,
@@ -82,16 +82,25 @@ module.exports = class Map extends Component {
         closeButton: false,
         closeOnClick: false,
         offset: {
-          'top': [0, 0],
-          'top-left': [0, 0],
-          'top-right': [0, 0],
-          'bottom': [0, -28],
-          'bottom-left': [0, -28],
-          'bottom-right': [0, -28],
-          'left': [8, -20],
-          'right': [-8, -20]
+          'top': [0, 14],
+          'top-left': [0, 14],
+          'top-right': [0, 14],
+          'bottom': [0, -42],
+          'bottom-left': [0, -42],
+          'bottom-right': [0, -42],
+          'left': [16, -22],
+          'right': [-16, -22]
         }
       })
+
+      var select = (function () {
+        var selected = null
+        return function (feature) {
+          if (selected) map.setFeatureState(selected, { selected: false })
+          if (feature) map.setFeatureState(feature, { selected: true })
+          selected = feature
+        }
+      }())
 
       map.on('error', onerror)
       map.on('load', onload)
@@ -103,6 +112,8 @@ module.exports = class Map extends Component {
       if (!self.local.bounds && map.getZoom() < 6) map.setZoom(6)
 
       function onload () {
+        map.addControl(new mapboxgl.NavigationControl({ showCompass: false }))
+
         map.addSource('locations', {
           type: 'geojson',
           data: {
@@ -122,7 +133,34 @@ module.exports = class Map extends Component {
           layout: {
             'icon-allow-overlap': true,
             'icon-image': 'marker',
-            'icon-offset': [0, -12]
+            'icon-offset': [0, -8]
+          },
+          paint: {
+            'icon-opacity': ['case',
+              ['boolean', ['feature-state', 'selected'], false],
+              0,
+              1
+            ]
+          }
+        })
+
+        // selected markers
+        map.addLayer({
+          id: 'locations-selected',
+          type: 'symbol',
+          source: 'locations',
+          filter: ['!has', 'point_count'],
+          layout: {
+            'icon-allow-overlap': true,
+            'icon-image': 'selected',
+            'icon-offset': [0, -14]
+          },
+          paint: {
+            'icon-opacity': ['case',
+              ['boolean', ['feature-state', 'selected'], false],
+              1,
+              0
+            ]
           }
         })
 
@@ -135,11 +173,11 @@ module.exports = class Map extends Component {
           layout: {
             'icon-allow-overlap': true,
             'icon-image': 'cluster',
-            'icon-offset': [0, -20],
+            'icon-offset': [0, -24],
             'text-field': '{point_count}',
             'text-font': ['Giorgio Sans Bold'],
-            'text-size': 16,
-            'text-offset': [0, -1.575] // em, relative to text-size
+            'text-size': 18,
+            'text-offset': [0, -1.75] // em, relative to text-size
           },
           paint: {
             'text-color': '#fff'
@@ -154,11 +192,15 @@ module.exports = class Map extends Component {
 
           if (!features.length) {
             if (myPopup.isOpen()) myPopup.remove()
+            select(null)
             return
           }
 
           if (features[0].properties.cluster) {
-            if (myPopup.isOpen()) myPopup.remove()
+            if (myPopup.isOpen()) {
+              myPopup.remove()
+              select(null)
+            }
 
             // reveal all markers in cluster
             let clusterId = features[0].properties.cluster_id
@@ -171,17 +213,15 @@ module.exports = class Map extends Component {
               })
             })
           } else {
+            // show myPopup for location
+            select(features[0])
             let location = self.local.locations.find(function (props) {
               return props.id === features[0].properties.id
             })
-
-            // show myPopup for location
-            if (location) {
-              myPopup
-                .setLngLat(features[0].geometry.coordinates)
-                .setDOMContent(popup(location))
-              if (!myPopup.isOpen()) myPopup.addTo(map)
-            }
+            myPopup
+              .setLngLat(features[0].geometry.coordinates)
+              .setDOMContent(popup(location))
+            if (!myPopup.isOpen()) myPopup.addTo(map)
           }
         })
 
@@ -214,7 +254,7 @@ module.exports = class Map extends Component {
   }
 
   throw (err) {
-    this.local.error = err
+    this.local.error = err.error || err
     this.rerender()
   }
 
@@ -235,13 +275,14 @@ module.exports = class Map extends Component {
   }
 }
 
-function asFeature (location) {
+function asFeature (location, index) {
   return {
     type: 'Feature',
     geometry: {
       type: 'Point',
       coordinates: [location.longitude, location.latitude]
     },
+    id: index,
     properties: location
   }
 }
