@@ -354,7 +354,10 @@ class GoalPage extends View {
                 text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
               }
             }
-            return card(props)
+            var slot = props.image ? null : html`
+              <div class="u-aspect4-3 u-bgGray u-bgCurrent"></div>
+            `
+            return card(props, slot)
           }
           default: return null
         }

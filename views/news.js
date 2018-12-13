@@ -95,16 +95,21 @@ function news (state, emit) {
     var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
     if (cols === 2) opts.aspect = 9 / 16
 
+    var image = doc.data.image.url ? {
+      alt: doc.data.image.alt,
+      sizes: sizes,
+      srcset: srcset(doc.data.image.url, [400, 600, 900, 1800], opts),
+      src: `/media/fetch/w_900/${doc.data.image.url}`,
+      caption: doc.data.image.copyright
+    } : null
+    var slot = image ? null : html`
+      <div class="u-aspect${cols === 2 ? '16-9' : '4-3'} u-bgGray u-bgCurrent"></div>
+    `
+
     return card({
       title: asText(doc.data.title),
       body: asText(doc.data.description),
-      image: doc.data.image.url ? {
-        alt: doc.data.image.alt,
-        sizes: sizes,
-        srcset: srcset(doc.data.image.url, [400, 600, 900, 1800], opts),
-        src: `/media/fetch/w_900/${doc.data.image.url}`,
-        caption: doc.data.image.copyright
-      } : null,
+      image: image,
       date: {
         datetime: date,
         text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
@@ -112,7 +117,7 @@ function news (state, emit) {
       link: {
         href: state.docs.resolve(doc)
       }
-    })
+    }, slot)
   }
 }
 
