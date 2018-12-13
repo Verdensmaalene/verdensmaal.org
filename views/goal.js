@@ -242,16 +242,25 @@ class GoalPage extends View {
 
       // get latest news with similar tags
       // (num?) -> arr
-      function getNews (num = 3) {
+      function getNews (num = 3, any = false) {
         var opts = {
           pageSize: num,
           orderings: '[document.first_publication_date desc]'
         }
+        var tags = doc.tags
+        if (any) tags = tags.concat('goal-any')
+        var onresponse = featureFiller(num)
 
         return state.docs.get([
           Predicates.at('document.type', 'news'),
-          Predicates.any('document.tags', doc.tags)
-        ], opts, featureFiller(num))
+          Predicates.any('document.tags', tags)
+        ], opts, function (err, response) {
+          if (err) throw err
+          if (!any && response && response.results_size < num) {
+            return getNews(num - response.results_size, true)
+          }
+          return onresponse(err, response)
+        })
       }
 
       // get upcoming events with similar tags
