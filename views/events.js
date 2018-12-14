@@ -156,21 +156,17 @@ function events (state, emit) {
       }
     }
 
-    if (doc.data.image.url) {
-      props.image = {
+    // wrap card with event and supply event content as card slot 🤯
+    return event.outer(card(props, event.inner(Object.assign({}, doc.data, {
+      start: date,
+      end: parse(doc.data.end),
+      image: doc.data.image.url ? {
         alt: doc.data.image.alt,
         sizes: '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw',
         srcset: srcset(doc.data.image.url, [400, 600, 900, 1800], opts),
         src: `/media/fetch/w_900/${doc.data.image.url}`,
         caption: doc.data.image.copyright
-      }
-      return card(props)
-    }
-
-    // wrap card with event and supply event content as card slot 🤯
-    return event.outer(card(props, event.inner(Object.assign({}, doc.data, {
-      start: date,
-      end: parse(doc.data.end)
+      } : null
     }))))
   }
 }

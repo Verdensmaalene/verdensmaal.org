@@ -111,6 +111,7 @@
   flex-basis: 100%;
   flex-wrap: wrap;
   align-content: baseline;
+  align-items: flex-end;
   display: flex;
   margin-right: 0;
   margin-left: 0;
@@ -218,7 +219,7 @@
   }
 
   .Footer-item {
-    margin-top: 1.5rem;
+    margin-top: 1.28rem;
   }
 
   .Footer-credit {

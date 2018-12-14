@@ -9,6 +9,7 @@ var card = require('../components/card')
 var intro = require('../components/intro')
 var grid = require('../components/grid')
 var Goal = require('../components/goal')
+var event = require('../components/event')
 var Flag = require('../components/flag')
 var Text = require('../components/text')
 var Chart = require('../components/chart')
@@ -331,17 +332,19 @@ class GoalPage extends View {
 
         var data = slice.primary.link ? slice.primary.link.data : slice.primary
         var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
+        var image = data.image.url ? {
+          alt: data.image.alt,
+          sizes: '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw',
+          srcset: srcset(data.image.url, [400, 600, 900, 1800], opts),
+          src: `/media/fetch/w_900/${data.image.url}`,
+          caption: data.image.copyright
+        } : null
         var props = {
           title: asText(data.title),
-          body: asText(data.description),
-          image: data.image.url ? {
-            alt: data.image.alt,
-            sizes: '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw',
-            srcset: srcset(data.image.url, [400, 600, 900, 1800], opts),
-            src: `/media/fetch/w_900/${data.image.url}`,
-            caption: data.image.copyright
-          } : null
+          body: asText(data.description)
         }
+
+        console.log(image)
 
         switch (slice.slice_type) {
           case 'resource': {
@@ -350,10 +353,17 @@ class GoalPage extends View {
           }
           case 'event': {
             props.link = { href: state.docs.resolve(slice.primary.link) }
-            return card(props)
+            let date = parse(data.start)
+            return event.outer(card(props, event.inner(Object.assign({}, data, {
+              start: date,
+              end: parse(data.end),
+              image: image
+            }))))
           }
           case 'news': {
             props.link = { href: state.docs.resolve(slice.primary.link) }
+            props.image = image
+            // TODO: manually fetch document to get first_publication_date
             if (slice.primary.link.first_publication_date) {
               let date = parse(slice.primary.link.first_publication_date)
               props.date = {

@@ -132,3 +132,33 @@
 .Event:not(.Event--static):not(.is-loading):hover .Event-shape--circle {
   transform: translate(10%, -20%);
 }
+
+.Event-figure {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(-180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.10) 30%, rgba(0, 0, 0, 0.10) 55%, rgba(0, 0, 0, 0.75) 100%);
+}
+
+.Event-image {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  max-height: 100%;
+  width: auto;
+  transform: translate(-50%, -50%);
+}
+
+@supports (object-fit: cover) {
+  .Event-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    transform: none;
+  }
+}

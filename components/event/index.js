@@ -1,5 +1,6 @@
+var assert = require('assert')
 var html = require('choo/html')
-var { i18n, timestamp, className } = require('../base')
+var { i18n, timestamp, className, pluck } = require('../base')
 
 var text = i18n()
 
@@ -15,18 +16,39 @@ function outer (children, opts = {}) {
   return html`<div class="${classes}">${children}</div>`
 }
 
+function icon () {
+  return html`
+    <svg class="Event-icon" width="60" height="60" viewBox="0 0 60 60">
+      <path d="M4 12v44h52V12H4zm44-4h12v52H0V8h12V0h4v8h28V0h4v8zM22 22v6h6v-6h-6zm10 0v6h6v-6h-6zm10 0v6h6v-6h-6zM12 32v6h6v-6h-6zm0 10v6h6v-6h-6zm10-10v6h6v-6h-6zm0 10v6h6v-6h-6zm10-10v6h6v-6h-6zm0 10v6h6v-6h-6zm10 0v6h6v-6h-6zm0-10v6h6v-6h-6zM12 12v4h4v-4h-4zm32 0v4h4v-4h-4z" fill="currentColor" />
+    </svg>
+  `
+}
+
+function figure (img) {
+  assert(img.src, 'event: src string is required')
+  var src = img.src
+  var attrs = pluck(img, 'width', 'height', 'srcset', 'sizes', 'alt')
+  attrs.alt = attrs.alt || ''
+
+  return html`
+    <figure class="Event-figure">
+      <img class="Event-image" ${attrs} src="${src}" />
+    </figure>
+  `
+}
+
 function inner (props) {
   return html`
     <div class="Event-content">
-      <div class="Event-shape Event-shape--circle"></div>
-      <div class="Event-shape Event-shape--big"></div>
-      <div class="Event-shape Event-shape--small"></div>
-      <svg class="Event-icon" width="11" height="11" viewBox="0 0 11 11">
-        <g fill="currentColor" fill-rule="nonzero">
-          <path d="M9.26 1.15v-.4a.63.63 0 0 0-1.27 0v.4H2.55v-.4A.63.63 0 0 0 1.9.12a.65.65 0 0 0-.65.63v.4H0V3.3h10.5V1.15H9.25z"/>
-          <path d="M.01 10.61h10.5V3.75H0v6.86zm7.35-5.94h2v1.88h-2V4.67zm0 2.97h2v1.88h-2V7.64zm-3.1-2.97h2v1.88h-2V4.67zm0 2.97h2v1.88h-2V7.64zM1.11 4.67h2.02v1.88H1.12V4.67zm0 2.97h2.02v1.88H1.12V7.64z"/>
-        </g>
-      </svg>
+      ${props.image ? figure(props.image) : html`
+        <div>
+          <div class="Event-shape Event-shape--circle"></div>
+          <div class="Event-shape Event-shape--big"></div>
+          <div class="Event-shape Event-shape--small"></div>
+          ${icon()}
+        </div>
+      `}
+      
       ${props ? html`
         <time datetime="${JSON.stringify(props.start).replace(/"/g, '')}">
           <span class="Event-date">
@@ -49,12 +71,7 @@ function loading () {
         <div class="Event-shape Event-shape--circle"></div>
         <div class="Event-shape Event-shape--big"></div>
         <div class="Event-shape Event-shape--small"></div>
-        <svg class="Event-icon" width="11" height="11" viewBox="0 0 11 11">
-          <g fill="currentColor" fill-rule="nonzero">
-            <path d="M9.26 1.15v-.4a.63.63 0 0 0-1.27 0v.4H2.55v-.4A.63.63 0 0 0 1.9.12a.65.65 0 0 0-.65.63v.4H0V3.3h10.5V1.15H9.25z"/>
-            <path d="M.01 10.61h10.5V3.75H0v6.86zm7.35-5.94h2v1.88h-2V4.67zm0 2.97h2v1.88h-2V7.64zm-3.1-2.97h2v1.88h-2V4.67zm0 2.97h2v1.88h-2V7.64zM1.11 4.67h2.02v1.88H1.12V4.67zm0 2.97h2.02v1.88H1.12V7.64z"/>
-          </g>
-        </svg>
+        ${icon()}
         <time>
           <span class="Event-date"><span class="u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span></span>
           <span class="Event-details">
