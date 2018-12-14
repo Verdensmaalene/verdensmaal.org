@@ -56,7 +56,7 @@ function inner (props) {
           </span>
           <span class="Event-details">
             <span class="Event-time">${timestamp(props.start)} – ${timestamp(props.end)}</span>
-            <span class="Event-location">${[props.venue, props.city, props.country].filter(Boolean).join(', ')}</span>
+            <span class="Event-location">${[props.venue, props.city, props.country].filter(Boolean).slice(0, 2).join(', ')}</span>
           </span>
         </time>
       ` : null}
