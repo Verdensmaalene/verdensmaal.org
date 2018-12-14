@@ -1,6 +1,7 @@
 var html = require('choo/html')
 var slugify = require('slugify')
 var parse = require('date-fns/parse')
+var subDays = require('date-fns/sub_days')
 var asElement = require('prismic-element')
 var { Predicates } = require('prismic-javascript')
 var Map = require('../components/map')
@@ -11,6 +12,7 @@ var card = require('../components/card')
 var Text = require('../components/text')
 var Chart = require('../components/chart')
 var embed = require('../components/embed')
+var event = require('../components/event')
 var Details = require('../components/details')
 var divide = require('../components/grid/divide')
 var { external } = require('../components/symbol')
@@ -130,8 +132,19 @@ function goal (state, emit) {
             Predicates.any('document.tags', doc.tags)
           ]
           let opts = { pageSize: pageSize - featured.length }
+
           if (slice.slice_type === 'news') {
             opts.orderings = '[document.first_publication_date desc]'
+          } else {
+            let yesterday = subDays(new Date(), 1)
+            let date = [
+              yesterday.getFullYear(),
+              ('0' + (yesterday.getMonth() + 1)).substr(-2),
+              ('0' + yesterday.getDate()).substr(-2)
+            ].join('-')
+
+            predicates.push(Predicates.dateAfter('my.event.end', date))
+            opts.orderings = '[my.event.start]'
           }
 
           // fetch the lates news with mathing tags
@@ -144,11 +157,10 @@ function goal (state, emit) {
               cells = featured.concat(response.results.map(render))
             }
 
-            var cols = cells.length % 3 === 0 ? 3 : 2
             return html`
               <div class="View-section View-section--${camelCase(slice.slice_type)} u-md-container">
                 <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
-                ${grid({ size: { md: '1of2', lg: `1of${cols}` }, carousel: true }, cells)}
+                ${grid({ size: { md: '1of2', lg: '1of3' }, carousel: true }, cells)}
               </div>
             `
           })
@@ -434,6 +446,7 @@ function goal (state, emit) {
     return card({
       title: asText(props.title),
       body: asText(props.description) || '',
+      truncate: Infinity,
       color: props.color,
       image: props.image.url ? {
         alt: props.image.alt,
@@ -473,23 +486,24 @@ function goal (state, emit) {
   // render document as card
   // obj -> Element
   function eventCard (doc) {
-    var date = parse(doc.data.start)
-    return card({
+    var props = Object.assign({}, doc.data, {
+      start: parse(doc.data.start),
       title: asText(doc.data.title),
       body: asText(doc.data.description) || '',
-      image: doc.data.image.url ? {
-        alt: doc.data.image.alt,
-        src: doc.data.image.url,
-        caption: doc.data.image.copyright
-      } : null,
-      date: {
-        datetime: date,
-        text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
-      },
       link: {
         href: state.docs.resolve(doc)
       }
     })
+
+    return event.outer(card(props, event.inner(Object.assign({}, props, {
+      start: parse(doc.data.start),
+      end: parse(doc.data.end),
+      image: doc.data.image.url ? {
+        alt: doc.data.image.alt,
+        src: doc.data.image.url,
+        caption: doc.data.image.copyright
+      } : null
+    }))))
   }
 }
 

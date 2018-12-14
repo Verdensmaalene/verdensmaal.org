@@ -30,10 +30,10 @@ function card (props = {}, slot) {
   if (fill) attrs.style = `--Card-background-color: ${hexToRgb(fill).join(', ')}`
 
   var cover = null
-  if (props.image) {
-    cover = figure(Object.assign({ background: props.background }, props.image))
-  } else if (slot) {
+  if (slot) {
     cover = typeof slot === 'function' ? slot() : slot
+  } else if (props.image) {
+    cover = figure(Object.assign({ background: props.background }, props.image))
   }
 
   return html`
@@ -47,7 +47,7 @@ function card (props = {}, slot) {
             </time>
           ` : null}
           <h1 class="Card-title">${props.title}</h1>
-          <p class="Card-text">${snippet(props.body, 170)}</p>
+          <p class="Card-text">${snippet(props.body, props.truncate || 170)}</p>
         </div>
         ${props.link ? html`
           <div class="Card-footer">
