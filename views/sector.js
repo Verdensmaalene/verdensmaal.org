@@ -287,11 +287,11 @@ function goal (state, emit) {
         }
         case 'map': {
           let locations = slice.items.map(function (item) {
-            var location = Object.assign({}, item.location)
-            if (item.text.length) {
-              location.popup = () => asElement(item.text, state.docs.resolve)
-            }
-            return location
+            var { link, text, location } = item
+            return Object.assign({
+              heading: text,
+              href: link.id || link.url ? state.docs.resolve(link) : null
+            }, location)
           })
           return html`
             <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">

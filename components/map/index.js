@@ -218,10 +218,13 @@ module.exports = class Map extends Component {
             let location = self.local.locations.find(function (props) {
               return props.id === features[0].properties.id
             })
-            myPopup
-              .setLngLat(features[0].geometry.coordinates)
-              .setDOMContent(popup(location))
-            if (!myPopup.isOpen()) myPopup.addTo(map)
+            let content = popup(location)
+            if (content) {
+              myPopup
+                .setLngLat(features[0].geometry.coordinates)
+                .setDOMContent(content)
+              if (!myPopup.isOpen()) myPopup.addTo(map)
+            }
           }
         })
 

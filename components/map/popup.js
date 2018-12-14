@@ -25,6 +25,8 @@ function popup (props) {
     `)
   }
 
+  if (!children.length) return null
+
   children = children.reduce(function (children, child, index, list) {
     if (child) children.push(child)
     if (index !== list.length - 1) children.push(html`<br>`)
