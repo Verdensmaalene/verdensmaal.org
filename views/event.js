@@ -166,10 +166,10 @@ function eventView (state, emit) {
                   }
                   return html`
                     <li class="Text u-spaceB2">
-                      <a class="u-block" href="${href}" ${attrs}>
-                        <span class="Text-large">${item.text}</span>
+                      <a class="u-block" href="${href || item.text}" ${attrs}>
+                        <span class="Text-large u-textBreakLongWords">${item.text}</span>
                         <br>
-                        <small class="Text-muted">${href}</small>
+                        <small class="Text-muted u-textTruncate">${href || item.text}</small>
                       </a>
                     </li>
                   `
