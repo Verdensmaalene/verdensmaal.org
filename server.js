@@ -6,7 +6,6 @@ var LAYOUTS = [
 ]
 
 var url = require('url')
-var ics = require('ics')
 var jalla = require('jalla')
 var dedent = require('dedent')
 var body = require('koa-body')
@@ -15,17 +14,30 @@ var compose = require('koa-compose')
 var parse = require('date-fns/parse')
 var { get, post } = require('koa-route')
 var Prismic = require('prismic-javascript')
+var ical = require('./lib/ical')
 var chart = require('./lib/chart')
 var purge = require('./lib/purge')
 var scrape = require('./lib/scrape')
 var resolve = require('./lib/resolve')
+var subscribe = require('./lib/subscribe')
 var { asText } = require('./components/base')
 var imageproxy = require('./lib/cloudinary-proxy')
 
 var app = jalla('index.js', { sw: 'sw.js' })
 
+app.use(post('/api/subscribe', compose([body(), async function (ctx, next) {
+  ctx.set('Cache-Control', 'no-cache, private, max-age=0')
+  var response = await subscribe(ctx.request.body)
+  if (ctx.accepts('html')) {
+    ctx.redirect('back')
+  } else {
+    ctx.type = 'application/json'
+    ctx.body = response
+  }
+}])))
+
 // internal meta data scraper api
-app.use(get('/scrape/:uri(.+)', async function (ctx, uri, next) {
+app.use(get('/api/scrape/:uri(.+)', async function (ctx, uri, next) {
   ctx.body = await scrape(uri)
   ctx.type = 'application/json'
   ctx.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 365}`)
@@ -43,7 +55,7 @@ app.use(get('/media/:type/:transform/:uri(.+)', async function (ctx, type, trans
 
 // disallow robots anywhere but live URL
 app.use(get('/robots.txt', function (ctx, next) {
-  // if (ctx.host === 'dk.globalgoals.org') return next()
+  // if (ctx.host !== process.env.npm_package_now_alias) return next()
   ctx.type = 'text/plain'
   ctx.body = dedent`
     User-agent: *
@@ -52,9 +64,9 @@ app.use(get('/robots.txt', function (ctx, next) {
 }))
 
 // add webhook for prismic updates
-app.use(post('/prismic-hook', compose([body(), function (ctx) {
+app.use(post('/api/prismic-hook', compose([body(), function (ctx) {
   var secret = ctx.request.body && ctx.request.body.secret
-  ctx.assert(secret === process.env.PRISMIC_VERDENSMAALENE_SECRET, 403, 'Secret mismatch')
+  ctx.assert(secret === process.env.PRISMIC_SECRET, 403, 'Secret mismatch')
   return new Promise(function (resolve, reject) {
     queried().then(function (urls) {
       purge(urls, function (err, response) {
@@ -68,7 +80,7 @@ app.use(post('/prismic-hook', compose([body(), function (ctx) {
 }])))
 
 // set preview cookie
-app.use(get('/prismic-preview', async function (ctx) {
+app.use(get('/api/prismic-preview', async function (ctx) {
   var host = process.env.NOW_URL && url.parse(process.env.NOW_URL).host
   if (host && ctx.host !== host) {
     return ctx.redirect(url.resolve(process.env.NOW_URL, ctx.url))
@@ -145,47 +157,18 @@ app.use(get('/events/:uid.ics', async function (ctx, uid) {
   var response = await api.query(Prismic.Predicates.at('my.event.uid', uid))
   var doc = response.results[0]
   ctx.assert(doc, 404, 'Event not found')
-  var start = parse(doc.data.start)
-  var end = parse(doc.data.end)
-  var event = {
-    start: [
-      start.getFullYear(),
-      start.getMonth() + 1,
-      start.getDate(),
-      start.getHours(),
-      start.getMinutes()
-    ],
-    end: [
-      end.getFullYear(),
-      end.getMonth() + 1,
-      end.getDate(),
-      end.getHours(),
-      end.getMinutes()
-    ],
+  ctx.type = 'text/calendar'
+  ctx.body = await ical(Object.assign({}, doc.data, {
     title: asText(doc.data.title),
     description: asText(doc.data.description),
-    location: [
-      doc.data.venue,
-      doc.data.street_address,
-      `${doc.data.zip_code} ${doc.data.city}`,
-      doc.data.country
-    ].filter(Boolean).join('\\n '),
-    url: 'https://dk.globalgoals.org' + resolve(doc),
-    geo: { lat: doc.data.location.latitude, lon: doc.data.location.longitude }
-  }
-
-  ctx.type = 'text/calendar'
-  ics.createEvent(event, function (err, value) {
-    if (err) ctx.throw(err)
-    if (doc.data.image.url) {
-      var image = `IMAGE;VALUE=URI;DISPLAY=FULLSIZE;FMTTYPE=image/png:https://res.cloudinary.com/dykmd8idd/image/fetch/f_png,w_900,q_auto/${doc.data.image.url}`
-    }
-    ctx.body = value.replace(/^LOCATION:.+$/m, `$&\n${image}`)
-  })
+    url: `https://${process.env.npm_package_now_alias + resolve(doc)}`,
+    start: parse(doc.data.start),
+    end: parse(doc.data.end)
+  }))
 }))
 
 // loopkup user location by ip
-app.use(get('/geoip', function (ctx, next) {
+app.use(get('/api/geoip', function (ctx, next) {
   ctx.set('Cache-Control', 'no-cache, private, max-age=0')
   ctx.type = 'application/json'
   var ip = ctx.headers['cf-connecting-ip'] || ctx.ip

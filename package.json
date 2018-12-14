@@ -28,12 +28,15 @@
     "alias": "dk.globalgoals.org",
     "env": {
       "NODE_ENV": "production",
-      "PRISMIC_VERDENSMAALENE_SECRET": "@prismic-verdensmaalene-secret",
-      "CLOUDFLARE_VERDENSMAALENE_ZONE": "@cloudflare-verdensmaalene-zone",
-      "CLOUDFLARE_CODEANDCONSPIRE_EMAIL": "@cloudflare-codeandconspire-email",
-      "CLOUDFLARE_CODEANDCONSPIRE_KEY": "@cloudflare-codeandconspire-key",
-      "CLOUDINARY_KEY": "@cloudinary-key",
-      "CLOUDINARY_SECRET": "@cloudinary-secret"
+      "PRISMIC_SECRET": "@prismic-verdensmaal-secret",
+      "CLOUDFLARE_ZONE": "@cloudflare-verdensmaalene-zone",
+      "CLOUDFLARE_ZONE_LIVE": "@cloudflare-verdensmaal-zone",
+      "CLOUDFLARE_EMAIL": "@cloudflare-codeandconspire-email",
+      "CLOUDFLARE_KEY": "@cloudflare-codeandconspire-key",
+      "CREATESEND_KEY": "@createsend-verdensmaal-key",
+      "CREATESEND_LIST": "@createsend-verdensmaal-list",
+      "CLOUDINARY_SECRET": "@cloudinary-secret",
+      "CLOUDINARY_KEY": "@cloudinary-key"
     }
   },
   "repository": {

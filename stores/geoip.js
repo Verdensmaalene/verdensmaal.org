@@ -9,7 +9,7 @@ function geoip (state, emitter) {
   }
 
   emitter.on('DOMContentLoaded', function () {
-    window.fetch('/geoip').then(function (response) {
+    window.fetch('/api/geoip').then(function (response) {
       if (!response.ok) throw new Error('Failed to fetch geoip')
       return response.json().then(function (geoip) {
         state.country = geoip.country
