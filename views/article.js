@@ -160,10 +160,10 @@ function image (props) {
     caption: props.copyright,
     alt: props.alt || '',
     src: props.url,
-    sizes: '100vw',
+    sizes: '90vw',
     srcset: srcset(
       props.url,
-      [400, 600, 900, 1800, [3000, 'q_60']],
+      [600, 900, 1800, [2400, 'q_60'], [3000, 'q_40']],
       { aspect: 9 / 16 }
     )
   }

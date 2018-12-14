@@ -44,10 +44,10 @@ function goal (state, emit) {
       height: doc.data.image.dimensions.height,
       width: doc.data.image.dimensions.width,
       alt: data.image.alt || '',
-      sizes: '100w',
+      sizes: '90vw',
       srcset: srcset(
         doc.data.image.url,
-        [400, 600, 900, 1800, [3600, 'q_30']],
+        [600, 900, 1800, [2400, 'q_60'], [3000, 'q_40']],
         { aspect: 9 / 16 }
       )
     } : null
