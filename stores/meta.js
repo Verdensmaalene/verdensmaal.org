@@ -18,7 +18,10 @@ function meta (state, emitter, app) {
 
     Object.keys(tags).forEach(function (key) {
       if (!tags[key]) return
-      state.meta[key] = tags[key].replace(/^\//, state.origin + '/')
+      var value = tags[key]
+        .replace(/"/g, '&quot;')
+        .replace(/^\//, state.origin + '/')
+      state.meta[key] = value
       if (typeof window === 'undefined') return
       var attribute = key.substr(0, 3) === 'og:' ? 'property' : 'name'
       var el = document.head.querySelector(`meta[${attribute}="${key}"]`)
