@@ -131,7 +131,8 @@ function createView (view, meta) {
         }
 
         // sort scores and pick out top score
-        var topscore = scores.sort(([a], [b]) => a > b ? -1 : 1)[0]
+        scores.sort(([a], [b]) => b - a)
+        var topscore = scores[0]
         var links = menu.slice()
         links[topscore[1]].selected = true
 

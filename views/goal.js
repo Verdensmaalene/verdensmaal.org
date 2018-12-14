@@ -344,8 +344,6 @@ class GoalPage extends View {
           body: asText(data.description)
         }
 
-        console.log(image)
-
         switch (slice.slice_type) {
           case 'resource': {
             props.link = { href: slice.primary.file.url }
