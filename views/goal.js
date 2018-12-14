@@ -243,24 +243,16 @@ class GoalPage extends View {
       // get latest news with similar tags
       // (num?) -> arr
       function getNews (num = 3, any = false) {
+        var tags = doc.tags.concat('goal-any')
         var opts = {
           pageSize: num,
           orderings: '[document.first_publication_date desc]'
         }
-        var tags = doc.tags
-        if (any) tags = tags.concat('goal-any')
-        var onresponse = featureFiller(num)
 
         return state.docs.get([
           Predicates.at('document.type', 'news'),
           Predicates.any('document.tags', tags)
-        ], opts, function (err, response) {
-          if (err) throw err
-          if (!any && response && response.results_size < num) {
-            return getNews(num - response.results_size, true)
-          }
-          return onresponse(err, response)
-        })
+        ], opts, featureFiller(num))
       }
 
       // get upcoming events with similar tags
@@ -270,6 +262,7 @@ class GoalPage extends View {
           pageSize: num,
           orderings: '[my.event.start]'
         }
+        var tags = doc.tags.concat('goal-any')
         var yesterday = subDays(new Date(), 1)
         var date = [
           yesterday.getFullYear(),
@@ -278,8 +271,8 @@ class GoalPage extends View {
         ].join('-')
 
         return state.docs.get([
+          Predicates.any('document.tags', tags),
           Predicates.at('document.type', 'event'),
-          Predicates.any('document.tags', doc.tags),
           Predicates.dateAfter('my.event.end', date)
         ], opts, featureFiller(num))
       }
