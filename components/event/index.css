@@ -133,7 +133,7 @@
   transform: translate(10%, -20%);
 }
 
-.Event-figure {
+.Event-figure::after {
   content: "";
   position: absolute;
   bottom: 0;
