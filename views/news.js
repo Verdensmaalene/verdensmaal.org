@@ -32,6 +32,8 @@ function news (state, emit) {
     var latest = news.slice(0, 2)
     var first = news.slice(2, PAGE_SIZE + 2)
     var rest = news.slice(PAGE_SIZE + 2, num * PAGE_SIZE + 2).filter(Boolean)
+    var more = news.length >= num * PAGE_SIZE + 2
+    console.log(rest)
 
     return html`
       <main class="View-main">
@@ -48,9 +50,9 @@ function news (state, emit) {
               <p>${text`Nothing to see here`}</p>
             </div>
           `}
-          ${news.length >= num * PAGE_SIZE + 2 ? html`
+          ${more ? html`
             <p class="u-textCenter">
-              ${button({ href: `/nyheder?page=${num + 1}`, text: text`Show more`, 'class': state.isLoading ? 'is-loading' : '', onclick: onclick })}
+              ${button({ href: `/nyheder?page=${num + 1}`, text: text`Show more`, 'disabled': state.ui.isLoading, onclick: onclick })}
             </p>
           ` : null}
         </div>
