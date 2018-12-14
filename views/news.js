@@ -32,8 +32,11 @@ function news (state, emit) {
     var latest = news.slice(0, 2)
     var first = news.slice(2, PAGE_SIZE + 2)
     var rest = news.slice(PAGE_SIZE + 2, num * PAGE_SIZE + 2).filter(Boolean)
-    var more = news.length >= num * PAGE_SIZE + 2
-    console.log(rest)
+    var hasMore = news.length >= num * PAGE_SIZE + 2
+
+    if (first.length && state.ui.isLoading) {
+      for (let i = 0; i < 3; i++) rest.push(null)
+    }
 
     return html`
       <main class="View-main">
@@ -41,8 +44,8 @@ function news (state, emit) {
           ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
           ${news.length ? html`
             <section>
-              ${grid({ size: { sm: '1of2' } }, latest.map((item) => item ? newsCard(item, 2) : card.loading({ date: true })))}
-              ${grid({ size: { sm: '1of2', lg: '1of3' } }, first.map((item) => item ? newsCard(item) : card.loading({ date: true })))}
+              ${grid({ size: { sm: '1of2' } }, latest.map((item) => newsCard(item, 2)))}
+              ${grid({ size: { sm: '1of2', lg: '1of3' } }, first.map(newsCard))}
               ${grid({ size: { sm: '1of2', lg: '1of3' }, appear: true }, rest.map(newsCard))}
             </section>
           ` : html`
@@ -50,9 +53,9 @@ function news (state, emit) {
               <p>${text`Nothing to see here`}</p>
             </div>
           `}
-          ${more ? html`
+          ${!state.ui.isLoading && hasMore ? html`
             <p class="u-textCenter">
-              ${button({ href: `/nyheder?page=${num + 1}`, text: text`Show more`, 'disabled': state.ui.isLoading, onclick: onclick })}
+              ${button({ href: `/nyheder?page=${num + 1}`, text: text`Show more`, onclick: onclick })}
             </p>
           ` : null}
         </div>
@@ -91,6 +94,8 @@ function news (state, emit) {
   // render document as card
   // obj -> Element
   function newsCard (doc, cols = 3) {
+    if (!doc) return card.loading({ date: true })
+
     var date = parse(doc.first_publication_date)
     var sizes = '(min-width: 400px) 50vw, 100vw'
     if (cols === 3) sizes = '(min-width: 1000px) 30vw, ' + sizes
