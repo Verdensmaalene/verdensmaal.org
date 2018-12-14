@@ -355,6 +355,8 @@ function goal (state, emit) {
 
   function chart (block) {
     var { chart, theme } = block
+    if (chart.isBroken || !chart.id) return null
+
     return state.docs.getByID(chart.id, function (err, doc) {
       if (err) throw err
       if (!doc) return Chart.loading({ size: 'md', shrink: true })

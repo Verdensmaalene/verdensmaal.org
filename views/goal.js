@@ -123,7 +123,7 @@ class GoalPage extends View {
       }
 
       var featured = getFeatured()
-      var charts = doc.data.charts.map((block) => chart(block.chart))
+      var charts = doc.data.charts.map((block) => chart(block.chart)).filter(Boolean)
 
       if (state.prefetch) {
         // exit early during prefetch exposing async elements
@@ -182,6 +182,8 @@ class GoalPage extends View {
       `
 
       function chart (link) {
+        if (link.isBroken || !link.id) return null
+
         return state.docs.getByID(link.id, function (err, doc) {
           if (err) throw err
           if (!doc) return Chart.loading({ size: 'md', shrink: true })
