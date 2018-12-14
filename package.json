@@ -28,6 +28,7 @@
     "alias": "dk.globalgoals.org",
     "env": {
       "NODE_ENV": "production",
+      "POLYFILL_FEATURES": "default-3.3,Array.prototype.find,Array.prototype.findIndex,Array.prototype.includes",
       "PRISMIC_SECRET": "@prismic-verdensmaal-secret",
       "CLOUDFLARE_ZONE": "@cloudflare-verdensmaalene-zone",
       "CLOUDFLARE_ZONE_LIVE": "@cloudflare-verdensmaal-zone",
