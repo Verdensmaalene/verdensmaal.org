@@ -53,8 +53,15 @@
   position: relative;
   border-top: 1px solid rgb(228, 228, 228);
   font-weight: 600;
-  color: rgb(var(--high-contrast-dark, 148, 148, 148));
+  color: rgb(var(--high-contrast-dark, var(--color-text-muted)));
+  user-select: none;
+  transition: color 50ms cubic-bezier(0,0,.2,1);
 }
+
+.Ticket-action:hover {
+  color: rgb(var(--high-contrast-dark, var(--color-text-muted-shaded)));
+}
+
 
 @media (min-width: 700px) {
   .Ticket {

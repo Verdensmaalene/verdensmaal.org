@@ -16,6 +16,7 @@
   --color-link-shaded: var(--color-theme-shaded, 16, 162, 198);
 
   --color-text-muted: 148, 148, 148;
+  --color-text-muted-shaded: 80, 80, 80;
 
   --max-width: 2000px;
   --page-gutter: 1.125rem;

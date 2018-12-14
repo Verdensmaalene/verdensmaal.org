@@ -9,6 +9,7 @@
   padding: 0.25em 0;
   position: relative;
   cursor: pointer;
+  user-select: none;
 }
 
 .ShareButton-icon {
@@ -19,9 +20,10 @@
 
 .ShareButton-text {
   display: inline-block;
-  color: rgba(var(--current-color), 0.6);
+  color: rgb(var(--high-contrast-dark, var(--color-text-muted)));
+  transition: color 50ms cubic-bezier(0,0,.2,1);
 }
 
 .ShareButton:hover .ShareButton-text {
-  color: rgba(var(--current-color), 1);
+  color: rgb(var(--high-contrast-dark, var(--color-text-muted-shaded)));
 }
