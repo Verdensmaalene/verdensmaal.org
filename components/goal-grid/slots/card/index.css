@@ -3,4 +3,5 @@
 /* GoalGrid */
 .GoalGrid-slot--card {
   display: flex;
+  flex: 1 1 100%;
 }
