@@ -7,16 +7,16 @@ var LEVELS = [
 ]
 
 var ALIAS = {
-  a: 'ﺕ',
+  a: 'b',
   b: 'c',
   c: 'a',
-  d: '刀',
-  o: 'ø',
+  d: 'd',
+  o: 'e',
   m: '</>',
-  q: '爱',
+  q: 'q',
   t: 'æ',
-  u: '写',
-  y: '书'
+  u: 'u',
+  y: 'ø'
 }
 var LETTERS = []
 var last = 'z'.charCodeAt(0)
