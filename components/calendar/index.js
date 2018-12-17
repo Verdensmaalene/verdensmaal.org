@@ -57,6 +57,7 @@ function calendar (entries, opts = {}) {
   // (obj, bool, bool) -> Element
   function item (props, index, showMonth, showDay) {
     var duration = Math.abs(differenceInDays(props.start, props.end))
+    var location = [props.city, props.country].filter(Boolean)
     var attrs = {
       class: className('Calendar-item', {
         'Calendar-item--firstOfDay': showDay,
@@ -82,7 +83,7 @@ function calendar (entries, opts = {}) {
             ` : null}
             <a class="Calendar-link" href="${props.href}">
               <time class="Calendar-datetime" datetime="${JSON.stringify(props.start).replace(/"/g, '')}">
-                ${duration > 0 ? text`${duration + 1} days` : timestamp(props.start)} – ${timestamp(props.end)} ${text`in ${props.city}, ${props.country}`}
+                ${duration > 0 ? text`${duration + 1} days` : timestamp(props.start)} – ${timestamp(props.end)} ${text`in ${location.join(', ')}`}
               </time>
               <h3 class="Calendar-title">${props.title}</h3>
             </a>
