@@ -1,5 +1,5 @@
 {
-  "name": "dk.globalgoals.org",
+  "name": "verdensmaal.org",
   "version": "0.0.1",
   "description": "The Official Website for The United Nation's Global Goals in Denmark",
   "main": "index.js",
@@ -25,13 +25,12 @@
     "parser": "babel-eslint"
   },
   "now": {
-    "alias": "dk.globalgoals.org",
+    "alias": "verdensmaal.org",
     "env": {
       "NODE_ENV": "production",
       "POLYFILL_FEATURES": "default-3.3,Array.prototype.find,Array.prototype.findIndex,Array.prototype.includes",
       "PRISMIC_SECRET": "@prismic-verdensmaal-secret",
-      "CLOUDFLARE_ZONE": "@cloudflare-verdensmaalene-zone",
-      "CLOUDFLARE_ZONE_LIVE": "@cloudflare-verdensmaal-zone",
+      "CLOUDFLARE_ZONE": "@cloudflare-verdensmaal-zone",
       "CLOUDFLARE_EMAIL": "@cloudflare-codeandconspire-email",
       "CLOUDFLARE_KEY": "@cloudflare-codeandconspire-key",
       "CREATESEND_KEY": "@createsend-verdensmaal-key",
@@ -42,14 +41,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codeandconspire/dk.globalgoals.org.git"
+    "url": "git+https://github.com/codeandconspire/verdensmaal.org.git"
   },
   "author": "code and conspire",
   "license": "CC-BY",
   "bugs": {
-    "url": "https://github.com/codeandconspire/dk.globalgoals.org/issues"
+    "url": "https://github.com/codeandconspire/verdensmaal.org/issues"
   },
-  "homepage": "https://github.com/codeandconspire/dk.globalgoals.org#readme",
+  "homepage": "https://github.com/codeandconspire/verdensmaal.org#readme",
   "dependencies": {
     "cccpurge": "^2.0.0",
     "choo": "^6.13.1",
