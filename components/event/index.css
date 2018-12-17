@@ -52,6 +52,7 @@
 }
 
 .Event-details {
+  max-width: 60%;
   position: absolute;
   right: 1.5rem;
   bottom: 1.6rem;
@@ -69,7 +70,7 @@
 
 .Event-location {
   display: block;
-  line-height: 0.9;
+  line-height: 1.2;
 }
 
 /**
@@ -140,7 +141,14 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-image: linear-gradient(-180deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.10) 30%, rgba(0, 0, 0, 0.10) 55%, rgba(0, 0, 0, 0.75) 100%);
+  background-image: linear-gradient(
+    -180deg,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.10) 30%,
+    rgba(0, 0, 0, 0.10) 55%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+  transition: background-image 180ms var(--ease-out);
 }
 
 .Event-image {
