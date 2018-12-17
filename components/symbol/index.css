@@ -63,21 +63,21 @@
   transform: translateY(-0.15em);
 }
 
-.Symbol--share.Symbol--cover .Symbol-arrow {
+.Symbol--share .Symbol-arrow {
   will-change: transform;
   transition: transform 100ms var(--ease-out);
 }
 
-.Symbol--share.Symbol--cover:hover .Symbol-arrow {
+.Symbol--share:hover .Symbol-arrow {
   transform: translateY(-0.1em);
 }
 
-.Symbol--mail.Symbol--cover .Symbol-image {
+.Symbol--mail .Symbol-image {
   transform-origin: 100% 100%;
   transition: transform 100ms var(--ease-out);
 }
 
-.Symbol--mail.Symbol--cover:hover .Symbol-image {
+.Symbol--mail:hover .Symbol-image {
   transform: rotate(10deg);
 }
 
@@ -85,20 +85,20 @@
   width: 1em;
 }
 
-.Symbol--forward.Symbol--cover .Symbol-image {
+.Symbol--forward .Symbol-image {
   transform: translateX(-0.2em);
   transition: transform 100ms var(--ease-out);
 }
 
-.Symbol--forward.Symbol--cover:hover .Symbol-image {
+.Symbol--forward:hover .Symbol-image {
   transform: translateX(0em);
 }
 
-.Symbol--download.Symbol--cover .Symbol-arrow {
+.Symbol--download .Symbol-arrow {
   transform: translateY(-0em);
   transition: transform 100ms var(--ease-out);
 }
 
-.Symbol--download.Symbol--cover:hover .Symbol-arrow {
+.Symbol--download:hover .Symbol-arrow {
   transform: translateY(0.1em);
 }

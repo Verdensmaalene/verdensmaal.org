@@ -8,11 +8,12 @@
  */
 
 .Target {
+  --collapse-body: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
-  --collapse-body: 0;
+  z-index: 0;
 }
 
 .Target.is-collapsed .Target-content {
@@ -25,6 +26,7 @@
   position: relative;
   color: rgb(var(--current-color));
   background: rgb(var(--current-background));
+  font-size: 1.75rem;
 }
 
 .Target-caption {
@@ -43,19 +45,54 @@
   transform: translate(-50%, -50%);
 }
 
+.Target-heading {
+  display: flex;
+  align-items: flex-start;
+  font-size: 1.5rem;
+}
+
+@media (min-width: 400px) {
+  .Target-heading {
+    font-size: 2rem;
+  }
+}
+
+.Target-action {
+  --current-background: var(--color-gray-light);
+  font-size: 0.4em;
+  position: relative;
+  z-index: 3;
+}
+
+.Target-action:hover {
+  --current-background: var(--color-gray);
+}
+
+@media (min-width: 800px) and (max-width: 1400px) {
+  .Target-heading .Target-action {
+    display: none;
+  }
+}
+
+@media (max-width: 800px), (min-width: 1400px) {
+  .Target-figure .Target-action {
+    display: none;
+  }
+}
+
 /**
  * 1. Move above fade
  */
 
 .Target-title {
+  margin-right: auto;
   position: relative;
   z-index: 1; /* 1 */
-  font-size: 1.5rem;
+  font-size: 1em;
 }
 
 @media (min-width: 400px) {
   .Target-title {
-    font-size: 2rem;
     margin-bottom: 0.5rem;
   }
 }
@@ -73,6 +110,7 @@
   }
 
   .Target:hover,
+  .Target:target,
   .Target:focus-within {
     outline: 4px solid rgb(var(--color-gray-light));
     outline-offset: -2px;
@@ -111,8 +149,7 @@
     margin-top: -0.2rem;
   }
 
-  .Target-title {
-    padding-right: 4rem;
+  .Target-heading {
     font-size: 1.75rem;
   }
 }
@@ -128,8 +165,11 @@
 }
 
 @media (min-width: 1000px) {
-  .Target-title {
+  .Target-heading {
     font-size: 2rem;
+  }
+
+  .Target-title {
     margin-bottom: 0.3rem;
   }
 }
@@ -173,7 +213,7 @@
   top: 0;
   left: 0;
   outline: 0;
-  z-index: 1;
+  z-index: 2;
 }
 
 :root:not([scripting-enabled]) .Target:target .Target-fade {

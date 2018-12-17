@@ -136,10 +136,14 @@ class GoalPage extends View {
 
       var targets = doc.data.targets
         .filter((target) => target.title.length && target.body.length)
-        .map((target) => Object.assign({}, target, {
-          title: asText(target.title),
-          body: asElement(target.body, state.docs.resolve)
-        }))
+        .map(function (target) {
+          return Object.assign({}, target, {
+            title: asText(target.title),
+            description: asText(target.body),
+            body: asElement(target.body, state.docs.resolve),
+            href: state.origin + state.href
+          })
+        })
 
       return html`
         <main class="View-main">

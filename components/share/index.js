@@ -49,7 +49,7 @@ class Share extends Component {
     var href = props.href.replace(/\/$/, '')
     var uri = encodeURIComponent(href)
     var close = () => this.render(null)
-    var description = props.description.split(' ')
+    var description = props.description && props.description.split(' ')
       .reduce(function (short, word) {
         return short + (short.length < 110 ? (' ' + word) : '')
       }, '')
@@ -115,7 +115,7 @@ class Share extends Component {
             ` : null}
             <div class="Share-meta">
               <h2 class="Share-title">${props.title}</h2>
-              <p class="Share-description">${description}…</p>
+              ${description ? html`<p class="Share-description">${description}…</p>` : null}
             </div>
           </div>
           <button class="Share-close js-close" onclick=${close}>
