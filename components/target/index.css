@@ -104,6 +104,10 @@
     padding: 1rem;
   }
 
+  .Target.is-calculating {
+    align-items: flex-start;
+  }
+
   .Target-body {
     padding-right: 1rem;
     margin-bottom: -0.3rem;

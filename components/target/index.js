@@ -32,6 +32,7 @@ module.exports = class Target extends Component {
       var fig = element.querySelector('.js-figure')
       var content = element.querySelector('.js-content')
       element.classList.remove('is-collapsed')
+      element.classList.add('is-calculating')
       if (!fig || !collapse) return
 
       if (content.offsetHeight > (fig.offsetHeight + 8) && !this.local.clicked) {
@@ -72,7 +73,7 @@ module.exports = class Target extends Component {
             </figure>
             <div class="u-flex u-colorBlack u-spaceT1">
               ${opts.href ? html`
-                <a class="Target-action u-spaceR1" href="${opts.href}#${text`target`}-${opts.id}" onclick=${onshare} title="${text`Share`}">
+                <a class="Target-action u-spaceH1" href="${opts.href}#${text`target`}-${opts.id}" onclick=${onshare} title="${text`Share`}">
                   <span class="u-hiddenVisually">${text`Share`}</span>
                   ${symbol('share', { circle: true })}
                 </a>
