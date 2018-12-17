@@ -25,7 +25,7 @@
     "parser": "babel-eslint"
   },
   "now": {
-    "alias": "verdensmaal.org",
+    "alias": "www.verdensmaal.org",
     "env": {
       "NODE_ENV": "production",
       "POLYFILL_FEATURES": "default-3.3,Array.prototype.find,Array.prototype.findIndex,Array.prototype.includes",
