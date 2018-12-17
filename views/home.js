@@ -136,8 +136,10 @@ class Home extends View {
 
       // get latest news with similar tags
       // (num?) -> arr
-      function getNews (num = 3) {
-        var predicate = Predicates.at('document.type', 'news')
+      function getNews (num = 3, exclude = []) {
+        var predicate = [
+          Predicates.at('document.type', 'news')
+        ].concat(exclude.map((id) => Predicates.not('document.id', id)))
         var opts = {
           pageSize: num,
           orderings: '[document.first_publication_date desc]'
@@ -148,7 +150,7 @@ class Home extends View {
 
       // get upcoming events with similar tags
       // (num?) -> arr
-      function getEvents (num = 3) {
+      function getEvents (num = 3, exclude = []) {
         var opts = {
           pageSize: num,
           orderings: '[my.event.start]'
@@ -159,11 +161,12 @@ class Home extends View {
           ('0' + (yesterday.getMonth() + 1)).substr(-2),
           ('0' + yesterday.getDate()).substr(-2)
         ].join('-')
-
-        return state.docs.get([
+        var predicates = [
           Predicates.at('document.type', 'event'),
           Predicates.dateAfter('my.event.end', date)
-        ], opts, featureFiller(num))
+        ].concat(exclude.map((id) => Predicates.not('document.id', id)))
+
+        return state.docs.get(predicates, opts, featureFiller(num))
       }
 
       // handle related content response rendering loading cards in place
@@ -185,17 +188,27 @@ class Home extends View {
       // () -> arr
       function getFeatured () {
         var cards = []
-        if (doc) cards = doc.data.featured_links.map(asFeatured).filter(Boolean)
+        var ids = []
+        if (doc) {
+          ids = doc.data.featured_links
+            .map((slice) => slice.primary.link && slice.primary.link.id)
+            .filter(Boolean)
+          cards = doc.data.featured_links.map(asFeatured).filter(Boolean)
+        }
 
-        if (cards.length < 3) {
-          let news = getNews(3)
-          let events = getEvents(1)
+        var fill = 6 - cards.length
+        if (fill > 0) {
+          let news = getNews(fill, ids)
+          let events = getEvents(1, ids)
 
           // expose nested fetch during ssr
           if (state.prefetch) return Promise.all([news, events])
 
-          if (events.length) cards.push(events[0])
-          cards.push.apply(cards, news.slice(0, 3 - cards.length))
+          if (events.length) {
+            fill--
+            cards.push(events[0])
+          }
+          cards.push.apply(cards, news.slice(0, fill))
         }
 
         return cards
@@ -218,21 +231,22 @@ class Home extends View {
       function asFeatured (slice) {
         if (slice.primary.link && slice.primary.link.isBroken) return null
 
-        var data = slice.primary.link ? slice.primary.link.data : slice.primary
+        var data = slice.primary.link.data || slice.primary
         var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
         var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
         var image = data.image.url ? {
           alt: data.image.alt,
           sizes: sizes,
           srcset: srcset(data.image.url, [400, 600, 900, 1800], opts),
-          src: `/media/fetch/w_900/${data.image.url}`,
+          src: srcset(data.image.url, [900], opts).split(' ')[0],
           caption: data.image.copyright
         } : null
         var props = {
           title: asText(data.title),
           body: asText(data.description),
           link: {
-            href: state.docs.resolve(slice.primary.link)
+            href: state.docs.resolve(slice.primary.link),
+            external: !!slice.primary.link.url
           }
         }
 
@@ -260,6 +274,11 @@ class Home extends View {
               <div class="u-aspect4-3 u-bgGray u-bgCurrent"></div>
             `
             return card(props, slot)
+          }
+          case 'custom_link': {
+            props.image = image
+            props.color = slice.primary.color
+            return card(props)
           }
           default: return null
         }

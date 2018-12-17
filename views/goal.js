@@ -330,15 +330,16 @@ class GoalPage extends View {
       // render slice as card
       // obj -> Element
       function asFeatured (slice) {
-        if (slice.primary.link && slice.primary.link.isBroken) return null
+        var { primary } = slice
+        if (primary.link && primary.link.isBroken) return null
 
-        var data = slice.primary.link ? slice.primary.link.data : slice.primary
+        var data = (primary.link && primary.link.data) || primary
         var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
         var image = data.image.url ? {
           alt: data.image.alt,
           sizes: '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw',
           srcset: srcset(data.image.url, [400, 600, 900, 1800], opts),
-          src: `/media/fetch/w_900/${data.image.url}`,
+          src: srcset(data.image.url, [900], opts).split(' ')[0],
           caption: data.image.copyright
         } : null
         var props = {
@@ -348,11 +349,12 @@ class GoalPage extends View {
 
         switch (slice.slice_type) {
           case 'resource': {
-            props.link = { href: slice.primary.file.url }
+            props.image = image
+            props.link = { href: primary.file.url }
             return card(props)
           }
           case 'event': {
-            props.link = { href: state.docs.resolve(slice.primary.link) }
+            props.link = { href: state.docs.resolve(primary.link) }
             let date = parse(data.start)
             return event.outer(card(props, event.inner(Object.assign({}, data, {
               start: date,
@@ -361,11 +363,11 @@ class GoalPage extends View {
             }))))
           }
           case 'news': {
-            props.link = { href: state.docs.resolve(slice.primary.link) }
+            props.link = { href: state.docs.resolve(primary.link) }
             props.image = image
             // TODO: manually fetch document to get first_publication_date
-            if (slice.primary.link.first_publication_date) {
-              let date = parse(slice.primary.link.first_publication_date)
+            if (primary.link.first_publication_date) {
+              let date = parse(primary.link.first_publication_date)
               props.date = {
                 datetime: date,
                 text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
@@ -375,6 +377,15 @@ class GoalPage extends View {
               <div class="u-aspect4-3 u-bgGray u-bgCurrent"></div>
             `
             return card(props, slot)
+          }
+          case 'custom_link': {
+            props.image = image
+            props.color = primary.color
+            props.link = {
+              href: state.docs.resolve(primary.link),
+              external: primary.link.url
+            }
+            return card(props)
           }
           default: return null
         }

@@ -456,7 +456,8 @@ function goal (state, emit) {
         caption: props.image.copyright
       } : null,
       link: {
-        href: state.docs.resolve(props.link)
+        href: state.docs.resolve(props.link),
+        external: !!props.link.url
       }
     })
   }

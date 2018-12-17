@@ -1,5 +1,6 @@
 var html = require('choo/html')
 var assert = require('assert')
+var symbol = require('../symbol')
 var { i18n, isSameDomain, filetype, className } = require('../base')
 
 var text = i18n(require('./lang.json'))
@@ -28,7 +29,7 @@ function link (opts = {}) {
   return html`
     <a ${attrs}>
       ${label(opts)}
-      ${icon(opts)}
+      <span class="Card-icon">${symbol(icon(opts), { cover: true })}</span>
     </a>
   `
 }
@@ -46,7 +47,7 @@ function label (opts) {
 
 function icon (opts) {
   if (opts.icon) return opts.icon
-  if (opts.file) return html`<span class="Card-icon Card-icon--file"></span>`
-  if (opts.external) return html`<span class="Card-icon Card-icon--external"></span>`
-  return html`<span class="Card-icon Card-icon--arrow"></span>`
+  if (opts.file) return 'download'
+  if (opts.external) return 'external'
+  return 'forward'
 }

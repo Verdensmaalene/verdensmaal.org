@@ -222,7 +222,9 @@
  */
 
 .Card-link {
-  display: inline-block;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
   line-height: 3.25rem;
   font-size: 1.5rem;
   color: rgb(var(--color-link));
@@ -249,17 +251,6 @@
   }
 }
 
-.Card-link--block::after {
-  content: "";
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  cursor: pointer;
-}
-
 .Card-link:not(.Card-link--silent):not(.Card-link--inherit):hover {
   background: rgba(var(--current-background, 0, 0, 0), 0.04);
   color: rgb(var(--color-link-shaded));
@@ -270,97 +261,8 @@
   color: inherit;
 }
 
-/* .Card-link-arrow {
-  border-style: solid;
-  width: 10px;
-  height: 10px;
-  margin-left: 5px;
-  border-width: 1px 1px 0 0;
-  transform: rotate(45deg);
-  transition: transform 180ms cubic-bezier(0, 0, .2, 1);
+.Card-icon {
+  padding-left: 0.5em;
+  font-size: 0.75em;
+  line-height: 0;
 }
-
-.Card-link:hover .Card-link-arrow {
-  transform: rotate(45deg) translate(2px, -2px);
-}
-
-.Card-link-download {
-  display: block;
-  margin-left: 8px;
-  height: 18px;
-  position: relative;
-  top: -1px;
-  right: -2px;
-}
-
-.Card-link-downloadArrow {
-  transform: translateY(1px);
-  transition: transform 180ms cubic-bezier(0, 0, .2, 1);
-}
-
-.Card-link:hover .Card-link-downloadArrow {
-  transform: translateY(2px);
-} */
-
-/**
- * 1. Fix text rendering jumping in Safari on hover
- */
-
-/* .Card-link-external {
-  display: block;
-  margin-left: 11px;
-  height: 15px;
-  width: 15px;
-  overflow: visible !important;
-}
-
-.Card-link-externalArrow {
-  will-change: transform;
-  transition: transform 180ms cubic-bezier(0, 0, .2, 1);
-}
-
-.Card-link:hover .Card-link-externalArrow {
-  transform: translate(2px, -2px);
-} */
-
-/**
- * Tweak the global focus states a little bit
- */
-
-/*
-
-.Card-link--fill .Card-link {
-  padding: 0;
-  width: 100%;
-  margin: 4px 0 -23px;
-}
-
-@media (min-width: 400px) {
-  .Card-link--fill .Card-link {
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding-top: 5px;
-    margin: 34px 0 -26px;
-  }
-}
-
-.Card-link--light .Card-link {
-  border-top-color: rgba(0, 0, 0, 0.1);
-}
-
-.Card-link--fill .Card-link,
-.Card-link--fill .Card-link:hover,
-:root.has-js .Card-link--fill:hover .Card-link {
-  color: #fff;
-}
-
-:root.has-js .Card-link--linked:not(.is-loading):hover .Card-link-content::before {
-  opacity: 1;
-}
-
-.Card-link--light .Card-link-content,
-.Card-link--light .Card-link-meta,
-.Card-link--light .Card-link,
-.Card-link--light .Card-link:hover,
-:root.has-js .Card-link--light:hover .Card-link {
-  color: rgba(0, 0, 0, 0.9);
-} */

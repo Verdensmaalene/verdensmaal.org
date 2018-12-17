@@ -56,8 +56,9 @@ module.exports.share = wrap('share', function share () {
 module.exports.download = wrap('download', function download () {
   return html`
     <svg class="Symbol-image" width="19" height="19" viewBox="0 0 19 19" aria-hidden="true">
-      <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="square">
-        <path d="M5.5.5v9M1 13.3h9M10 5.5L5.5 10M1 5.5L5.5 10" />
+      <g fill="currentColor" fill-rule="evenodd">
+        <path d="M3.8 16h11v1h-11z"/>
+        <path class="Symbol-arrow" d="M8.8 11V1h1v10l5-5 .7.7L9.3 13 3 6.7l.7-.7 5 5z"/>
       </g>
     </svg>
   `
