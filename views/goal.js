@@ -259,7 +259,7 @@ class GoalPage extends View {
         return state.docs.get([
           Predicates.at('document.type', 'news'),
           Predicates.any('document.tags', tags)
-        ], opts, featureFiller(num))
+        ], opts, featureFiller(num, true))
       }
 
       // get upcoming events with similar tags
@@ -286,14 +286,14 @@ class GoalPage extends View {
 
       // handle related content response rendering loading cards in place
       // num -> arr
-      function featureFiller (num) {
+      function featureFiller (num, date = false) {
         return function (err, response) {
           if (err) throw err
           var cells = []
           if (!response) {
-            for (let i = 0; i < num; i++) cells.push(card.loading())
+            for (let i = 0; i < num; i++) cells.push(card.loading({ date }))
           } else if (response.results.length) {
-            cells.push(...reduce(response.results, asSlice, asFeatured))
+            cells = response.results.map(asFeatured)
           }
           return cells
         }
@@ -303,41 +303,75 @@ class GoalPage extends View {
       // () -> arr
       function getFeatured () {
         var cards = []
-        if (doc) cards = doc.data.featured_links.map(asFeatured).filter(Boolean)
-
-        if (cards.length < 3) {
-          let news = getNews(3)
-          let events = getEvents(1)
-
-          // expose nested fetch during ssr
-          if (state.prefetch) return Promise.all([news, events])
-
-          if (events.length) cards.push(events[0])
-          cards.push.apply(cards, news.slice(0, 3 - cards.length))
+        if (!doc) {
+          for (let i = 0; i < 6; i++) cards.push(card.loading({ date: true }))
+          return cards
         }
 
-        return cards
-      }
+        // pluck out linked news and event page ids
+        var ids = doc.data.featured_links
+          .filter((slice) => /news|events/.test(slice.slice_type))
+          .map((slice) => slice.primary.link.isBroken || slice.primary.link.id)
+          .filter(Boolean)
 
-      // augument doc as slice for interoperability with featured slices
-      // obj -> obj
-      function asSlice (doc) {
-        return {
-          slice_type: doc.type,
-          primary: {
-            link: doc
-          },
-          items: []
-        }
+        // fetch linked pages
+        return state.docs.getByIDs(ids, function (err, response) {
+          if (err) throw err
+
+          // render cards in slice order
+          cards = doc.data.featured_links.map(function (slice) {
+            switch (slice.slice_type) {
+              case 'news':
+              case 'event': {
+                // fallback to bare link while fetching actual document
+                if (!response) return asFeatured(slice.primary.link)
+                var item = response.results.find(function (item) {
+                  return item.id === slice.primary.link.id
+                })
+                if (!item) return null
+                return asFeatured(item)
+              }
+              case 'resource': {
+                // augument document for resource slices
+                return asFeatured(Object.assign({
+                  data: slice.primary,
+                  type: slice.slice_type
+                }))
+              }
+              case 'custom_link': {
+                // augument document for custom link slices
+                return asFeatured(Object.assign({}, slice.primary.link, {
+                  data: slice.primary,
+                  type: slice.slice_type
+                }))
+              }
+              default: return null
+            }
+          }).filter(Boolean)
+
+          var fill = 3 - cards.length
+          if (fill > 0) {
+            let news = getNews(fill, ids)
+            let events = getEvents(1, ids)
+
+            // expose nested fetch during ssr
+            if (state.prefetch) return Promise.all([news, events])
+
+            if (events.length) {
+              fill--
+              cards.push(events[0])
+            }
+            cards.push.apply(cards, news.slice(0, fill))
+          }
+
+          return cards
+        })
       }
 
       // render slice as card
       // obj -> Element
-      function asFeatured (slice) {
-        var { primary } = slice
-        if (primary.link && primary.link.isBroken) return null
-
-        var data = (primary.link && primary.link.data) || primary
+      function asFeatured (item) {
+        var { data, type } = item
         var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
         var image = data.image.url ? {
           alt: data.image.alt,
@@ -351,14 +385,14 @@ class GoalPage extends View {
           body: asText(data.description)
         }
 
-        switch (slice.slice_type) {
+        switch (type) {
           case 'resource': {
             props.image = image
-            props.link = { href: primary.file.url }
+            props.link = { href: data.file.url }
             return card(props)
           }
           case 'event': {
-            props.link = { href: state.docs.resolve(primary.link) }
+            props.link = { href: state.docs.resolve(item) }
             let date = parse(data.start)
             return event.outer(card(props, event.inner(Object.assign({}, data, {
               start: date,
@@ -367,14 +401,18 @@ class GoalPage extends View {
             }))))
           }
           case 'news': {
-            props.link = { href: state.docs.resolve(primary.link) }
+            props.link = { href: state.docs.resolve(item) }
             props.image = image
-            // TODO: manually fetch document to get first_publication_date
-            if (primary.link.first_publication_date) {
-              let date = parse(primary.link.first_publication_date)
+            if (item.first_publication_date) {
+              let date = parse(item.first_publication_date)
               props.date = {
                 datetime: date,
                 text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
+              }
+            } else {
+              props.date = {
+                datetime: new Date(),
+                text: html`<span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`
               }
             }
             var slot = props.image ? null : html`
@@ -384,10 +422,10 @@ class GoalPage extends View {
           }
           case 'custom_link': {
             props.image = image
-            props.color = primary.color
+            props.color = data.color
             props.link = {
-              href: state.docs.resolve(primary.link),
-              external: primary.link.url
+              href: state.docs.resolve(data.link),
+              external: !item.id
             }
             return card(props)
           }
