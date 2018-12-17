@@ -14,6 +14,10 @@
   color: rgb(var(--color-text-muted));
 }
 
+.Text-small {
+  font-size: 0.8em;
+}
+
 .Text:first-child {
   margin-top: 0;
 }
@@ -45,6 +49,13 @@
 
 .Text small {
   font-size: 0.8em;
+}
+
+.Text-muted a,
+.Text-muted a:hover {
+  color: inherit;
+  text-decoration: underline;
+  font-weight: inherit;
 }
 
 /**

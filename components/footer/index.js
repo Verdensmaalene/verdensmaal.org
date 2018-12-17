@@ -6,7 +6,8 @@ var text = i18n(require('./lang.json'))
 
 module.exports = footer
 
-function footer (props, slot) {
+function footer (state, props) {
+  console.log(state, props)
   return html`
     <footer class="Footer">
       <div class=" u-container">
@@ -16,12 +17,10 @@ function footer (props, slot) {
               ${logo({ vertical: true })}
             </a>
             <br>
-
-            ${slot ? html`
-              <div class="Footer-slot">
-                ${slot()}
-              </div>
-            ` : null}
+            <a href="https://verdensbedstenyheder.dk/" rel="home" class="Footer-author">
+              <img class="Footer-img" src="/assets/verdens-bedste-nyheder.svg" alt="Verdens Bedste Nyheder">
+              <span class="u-hiddenVisually">${text`Visit website`}</span>
+            </a>
           </div>
           ${props.shortcuts.map((group, index) => html`
             <section class="Footer-section Footer-section--${index + 1}">
@@ -33,12 +32,27 @@ function footer (props, slot) {
               </nav>
             </section>
           `)}
-          ${props.credits ? html`
-            <section class="Footer-section Footer-section--credits">
-              <h2 class="Footer-title">${props.credits.heading}</h2>
-              ${props.credits.links.map(credit)}
-            </section>
-          ` : null}
+          <form class="Footer-section Footer-section--newsletter" action="/api/subscribe">
+            <h2 class="Footer-title">${props.newsletter.heading}</h2>
+            <div class="Text">${props.newsletter.body}</div>
+            <input type="text" name="name" placeholder="${text`Your name`}">
+            <input type="email" name="email" placeholder="${text`Your email`}">
+            <input type="hidden" name="page" value="${state.href}">
+            <input type="hidden" name="country" value="${state.country}">
+            <button class="Button" role="submit">Sign up</button>
+            <div class="Text"><div class="Text-muted Text-small">${props.newsletter.note}</div></div>
+          </form>
+          <section class="Footer-credits">
+            <div class="Footer-label">
+            <a class="Footer-credit" href="https://codeandconspire.com" target="_blank" rel="noopener noreferrer">
+              <img class="Footer-img" src="/assets/code-and-conspire.svg" alt="${text`code and conspire`}">
+              <span class="u-hiddenVisually">${text`Visit website`}</span>
+            </a>
+            <a class="Footer-credit" href="https://thenewdivision.world" target="_blank" rel="noopener noreferrer">
+              <img class="Footer-img" src="/assets/the-new-division.svg" alt="${text`The New Division`}">
+              <span class="u-hiddenVisually">${text`Visit website`}</span>
+            </a>
+          </section>
         </div>
       </div>
     </footer>
@@ -56,30 +70,5 @@ function link (props) {
     <li class="Footer-item">
       <a class="Footer-link" ${attrs}>${props.title}</a>
     </li>
-  `
-}
-
-function credit (props) {
-  var alt = props.alt || text`${props.title} logo in black and white`
-  var attrs = {}
-  if (props.external) {
-    attrs.target = '_blank'
-    attrs.rel = 'noopener noreferrer'
-  }
-
-  return html`
-    <div class="Footer-credit">
-      <figure class="Footer-figure">
-        <img class="Footer-img" src="${props.logo.url}" alt="${alt}">
-      </figure>
-
-      <span class="Footer-sub">${props.role}<span class="u-hiddenVisually">:</span></span>
-      ${props.title}
-      ${props.href ? html`
-        <a class="Footer-link" href="${props.href}" ${attrs}>
-          <span class="u-hiddenVisually">${text`Visit website`}</span>
-        </a>
-      ` : null}
-    </div>
   `
 }

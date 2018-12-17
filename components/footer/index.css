@@ -17,8 +17,7 @@
   margin: 3rem 0.5rem 0;
 }
 
-.Footer-section--logo,
-.Footer-section--credits {
+.Footer-section--logo {
   flex: 0 1 calc(50% - 1rem);
 }
 
@@ -107,7 +106,7 @@
   font-size: 0;
 }
 
-.Footer-section--credits {
+.Footer-section--form {
   flex-basis: 100%;
   flex-wrap: wrap;
   align-content: baseline;
@@ -117,7 +116,7 @@
   margin-left: 0;
 }
 
-.Footer-section--credits .Footer-title {
+.Footer-section--form .Footer-title {
   margin: 0 0.5rem;
 }
 
@@ -164,7 +163,7 @@
     flex-basis: calc((100% / 3) - 1rem);
   }
 
-  .Footer-section--credits {
+  .Footer-section--form {
     flex-basis: 100%;
   }
 
@@ -192,7 +191,7 @@
     margin-top: 2rem;
   }
 
-  .Footer-section--credits {
+  .Footer-section--form {
     flex: 0 0 calc((100% / 4) * 3);
   }
 
@@ -214,7 +213,7 @@
     display: block;
   }
 
-  .Footer-section--credits {
+  .Footer-section--form {
     flex-basis: calc((100% / 6) * 2);
   }
 

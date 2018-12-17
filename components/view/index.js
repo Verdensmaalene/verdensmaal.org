@@ -10,6 +10,7 @@ var Header = require('../header')
 var footer = require('../footer')
 var player = require('../embed/player')
 var { i18n, isSameDomain, asText } = require('../base')
+var asElement = require('prismic-element')
 
 var text = i18n()
 
@@ -161,23 +162,16 @@ function createView (view, meta) {
             links: menu,
             heading: asText(doc.data.main_menu_label)
           }].concat(doc.data.shortcuts.map(shortcut).filter(Boolean)).slice(0, 4),
-          credits: {
-            heading: asText(doc.data.credits_label),
-            links: doc.data.credits.map(function (item) {
-              return Object.assign({ logo: item.logo, role: item.role }, link(item))
-            })
-          },
-          social: doc.data.social_networks.map(function (item) {
-            return {
-              type: item.type,
-              href: resolve(item.link)
-            }
-          })
+          newsletter: {
+            heading: asText(doc.data.newsletter_label),
+            body: asElement(doc.data.newsletter_body),
+            note: asElement(doc.data.newsletter_note)
+          }
         }
 
         return html`
           <div class="View-footer">
-            ${footer(opts, () => getFlag({ id: 'footer', vertical: true }))}
+            ${footer(state, opts)}
           </div>
         `
       }
