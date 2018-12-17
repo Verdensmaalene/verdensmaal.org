@@ -7,7 +7,7 @@ var grid = require('../components/grid')
 var intro = require('../components/intro')
 var border = require('../components/border')
 var intersection = require('../components/intersection')
-var { i18n, reduce, asText } = require('../components/base')
+var { i18n, reduce, asText, srcset } = require('../components/base')
 
 var text = i18n()
 
@@ -84,12 +84,16 @@ function group (slice) {
 // render individual resource grid cell
 // obj -> Element
 function cell (item) {
+  var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
+  var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
   return card({
     title: asText(item.title),
     body: asText(item.description),
     image: item.image.url ? {
       alt: item.image.alt,
-      src: item.image.url,
+      sizes: sizes,
+      srcset: srcset(item.image.url, [400, 600, 900, 1800], opts),
+      src: srcset(item.image.url, [900], opts).split(' ')[0],
       caption: item.image.copyright
     } : null,
     link: {
