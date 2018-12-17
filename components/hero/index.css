@@ -33,7 +33,7 @@
   }
 }
 
-.Hero.is-loading {
+.Hero.is-loading .Hero-container {
   background-color: rgba(var(--color-gray-light), 0.6);
 }
 
