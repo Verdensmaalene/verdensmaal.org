@@ -120,6 +120,7 @@
 .u-highContrast *::after /* 1 */ {
   --high-contrast-light: var(--default-background-color) !important;
   --high-contrast-dark: var(--default-color) !important;
+  --high-contrast-on: 1 !important;
 
   --color-text-muted: var(--default-color) !important;
 

@@ -7,7 +7,7 @@ var Flag = require('../flag')
 var error = require('./error')
 var share = require('../share')
 var Header = require('../header')
-var footer = require('../footer')
+var Footer = require('../footer')
 var player = require('../embed/player')
 var { i18n, isSameDomain, asText } = require('../base')
 var asElement = require('prismic-element')
@@ -157,11 +157,12 @@ function createView (view, meta) {
       }
 
       function getFooter () {
+        var shortcuts = doc.data.shortcuts.map(shortcut).filter(Boolean)
         var opts = doc && {
           shortcuts: [{
             links: menu,
             heading: asText(doc.data.main_menu_label)
-          }].concat(doc.data.shortcuts.map(shortcut).filter(Boolean)).slice(0, 4),
+          }].concat(shortcuts).slice(0, 4),
           newsletter: {
             heading: asText(doc.data.newsletter_label),
             body: asElement(doc.data.newsletter_body),
@@ -171,7 +172,7 @@ function createView (view, meta) {
 
         return html`
           <div class="View-footer">
-            ${footer(state, opts)}
+            ${state.cache(Footer, 'footer').render(opts)}
           </div>
         `
       }

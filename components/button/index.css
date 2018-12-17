@@ -4,7 +4,7 @@
 .Button {
   display: inline-block;
   line-height: 3.25rem;
-  padding: 0 1rem;
+  padding: 0 1.2rem;
   min-width: 10rem;
   font-size: 1.5rem;
   color: rgb(var(--default-color));
@@ -20,17 +20,31 @@
   border-radius: 2px;
 }
 
-.Button:hover {
+.Button--small {
+  padding: 0 0.9rem;
+  min-width: 0;
+  line-height: 2.7rem;
+}
+
+.Button:not([disabled]):hover {
   background-color: rgba(var(--color-gray), 0.18);
 }
 
-.Button[disabled],
-.Button.is-disabled {
+.Button[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.Button--adapt {
-  color: rgb(var(--current-color));
-  background-color: rgba(var(--current-color), 0.25);
+/**
+ * Primary button
+ */
+
+.Button--primary {
+  background: rgb(var(--color-link));
+  color: rgb(var(--current-background));
+}
+
+.Button--primary:not([disabled]):hover {
+  background: rgb(var(--color-link-shaded));
+  color: #fff;
 }

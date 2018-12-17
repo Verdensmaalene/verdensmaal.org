@@ -21,6 +21,7 @@ app.use(require('./stores/navigation'))
 app.use(require('./stores/geoip'))
 app.use(require('./stores/meta'))
 app.use(require('./stores/ui'))
+app.use(require('./stores/subscribe'))
 
 app.route('/', require('./views/home'))
 app.route('/nyheder', require('./views/news'))
