@@ -51,11 +51,11 @@
 }
 
 .Goal--landscape::before {
-  padding-top: calc(((100% - var(--gutter, 0px) * 2) / 3) * 2 + var(--gutter, 0px)); /* 2 */
+  padding-top: calc(((100% - var(--gutter, 0.625rem) * 2) / 3) * 2 + var(--gutter, 0.625rem)); /* 2 */
 }
 
 .Goal--portrait::before {
-  padding-top: calc((((100% - var(--gutter, 0px)) / 2) * 3) + var(--gutter, 0px) * 2); /* 3 */
+  padding-top: calc((((100% - var(--gutter, 0.625rem)) / 2) * 3) + var(--gutter, 0.625rem) * 2); /* 3 */
 }
 
 .Goal[href]::after {
@@ -167,11 +167,11 @@
 }
 
 .Goal--landscape .Goal-cell {
-  width: calc((100% - var(--gutter, 0px) * 2) / 3);
+  width: calc((100% - var(--gutter, 0.625rem) * 2) / 3);
 }
 
 .Goal--portrait .Goal-cell {
-  width: calc((100% - var(--gutter, 0px)) / 2);
+  width: calc((100% - var(--gutter, 0.625rem)) / 2);
 }
 
 /**
