@@ -305,7 +305,8 @@
   width: 100%;
   max-width: 30ch;
   height: 3.5rem;
-  border: 3px solid rgb(var(--color-gray-light));
+  border: 3px solid;
+  border-color: rgb(var(--color-gray-light));
   padding: 0.875rem;
   margin: 1.5rem auto;
   position: relative;

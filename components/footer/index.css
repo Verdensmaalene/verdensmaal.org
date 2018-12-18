@@ -143,12 +143,24 @@
   width: 50%;
   min-width: 0;
   padding: 0.6rem 0.7rem;
-  border: 3px solid rgb(var(--high-contrast-dark, var(--color-gray-light)));
+  border: 3px solid;
+  border-color: rgb(var(--high-contrast-dark, var(--color-gray-light)));
   font-size: 1rem;
-  background: #fff;
+  background: rgb(var(--high-contrast-dark, 255, 255, 255));
+  color: rgb(var(--high-contrast-light, var(--default-color)));
   -webkit-appearance: none;
   border-radius: 0;
   user-select: text;
+}
+
+.Footer-field::placeholder {
+  color: rgb(var(--high-contrast-light, var(--color-text-muted)));
+  opacity: 1;
+}
+
+.Footer-field:focus-visible {
+  outline: 0;
+  border-color: rgb(var(--color-gray));
 }
 
 .Footer-controls {

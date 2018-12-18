@@ -26,7 +26,7 @@
 }
 
 .Button:not([disabled]):hover {
-  background-color: rgba(var(--color-gray), 0.18);
+  background-color: rgba(var(--color-gray), 0.22);
 }
 
 .Button[disabled] {
