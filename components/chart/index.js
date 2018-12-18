@@ -54,7 +54,7 @@ Chart.loading = function (props) {
       </div>
       <div class="u-aspect4-3"></div>
       <figcaption class="Text u-spaceT2">
-        <span class="u-loading">${text`LOADING_TEXT_LONG`}</span>
+        <span class="u-loading Text-small">${text`LOADING_TEXT_LONG`}</span>
       </figcaption>
     </figure>
   `
@@ -150,7 +150,7 @@ function wrapper (props, children) {
       ${children}
       ${props.description ? html`
         <figcaption class="Text u-spaceT2">
-          <div class="Text-muted">${props.description}</div>
+          <div class="Text-muted Text-small">${props.description}</div>
         </figcaption>
       ` : null}
     </figure>
