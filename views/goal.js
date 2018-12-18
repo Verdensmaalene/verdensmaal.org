@@ -310,8 +310,11 @@ class GoalPage extends View {
 
         // pluck out linked news and event page ids
         var ids = doc.data.featured_links
-          .filter((slice) => /news|events/.test(slice.slice_type))
-          .map((slice) => slice.primary.link.isBroken || slice.primary.link.id)
+          .filter(function (slice) {
+            if (slice.primary.link && slice.primary.link.isBroken) return false
+            return /news|events/.test(slice.slice_type)
+          })
+          .map((slice) => slice.primary.link.id)
           .filter(Boolean)
 
         // fetch linked pages
