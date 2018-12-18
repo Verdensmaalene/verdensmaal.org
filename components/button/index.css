@@ -17,7 +17,6 @@
   word-spacing: var(--heading-word-spacing);
   transition: 140ms var(--ease-out);
   transition-property: background-color, color;
-  border-radius: 2px;
 }
 
 .Button--small {

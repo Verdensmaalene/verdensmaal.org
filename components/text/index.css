@@ -108,7 +108,7 @@
 }
 
 .Text pre {
-  font-size: 12px;
+  font-size: 0.75rem;
   overflow: auto;
   background: rgb(var(--color-gray-light));
   padding: 1em;

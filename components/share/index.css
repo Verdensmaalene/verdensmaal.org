@@ -96,7 +96,7 @@
 .Share-heading {
   position: absolute;
   left: 0;
-  top: -4px;
+  top: -0.25rem;
   font-size: 1.5rem;
   text-transform: uppercase;
   font-family: var(--heading-font-family);
@@ -109,7 +109,7 @@
   .Share-heading {
     position: static;
     margin-bottom: 1.5rem;
-    font-size: 48px;
+    font-size: 3rem;
     text-align: center;
   }
 }
@@ -120,7 +120,7 @@
   align-items: center;
   align-content: center;
   justify-content: center;
-  margin: 0 -20px;
+  margin: 0 -1.25rem;
 }
 
 @media (min-width: 600px) {
@@ -349,12 +349,12 @@
   position: absolute;
   right: 0;
   top: 0;
-  box-shadow: inset -16px 0 1rem #fff;
+  box-shadow: inset -1rem 0 1rem #fff;
 }
 
 .Share-button {
   display: inline-block;
-  padding: 0 10px;
+  padding: 0 0.625rem;
   margin: -1rem -0.625rem 0 -1px;
   position: relative;
   color: rgb(var(--color-link));
