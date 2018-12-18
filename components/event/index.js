@@ -50,13 +50,13 @@ function inner (props) {
       `}
       
       ${props ? html`
-        <time datetime="${JSON.stringify(props.start).replace(/"/g, '')}">
+        <time class="Event-meta" datetime="${JSON.stringify(props.start).replace(/"/g, '')}">
           <span class="Event-date">
             ${('0' + props.start.getDate()).substr(-2)} ${text(`MONTH_${props.start.getMonth()}`).substr(0, 3)}
           </span>
           <span class="Event-details">
             <span class="Event-time">${timestamp(props.start)} – ${timestamp(props.end)}</span>
-            <span class="Event-location">${[props.venue, props.city, props.country].filter(Boolean).slice(0, 1).join(', ')}</span>
+            <span class="Event-location u-textTruncate">${[props.venue, props.city, props.country].filter(Boolean).slice(0, 2).join(', ')}</span>
           </span>
         </time>
       ` : null}
@@ -72,7 +72,7 @@ function loading () {
         <div class="Event-shape Event-shape--big"></div>
         <div class="Event-shape Event-shape--small"></div>
         ${icon()}
-        <time>
+        <time class="Event-time">
           <span class="Event-date"><span class="u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span></span>
           <span class="Event-details">
             <span class="Event-time"><span class="u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span></span>

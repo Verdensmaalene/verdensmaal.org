@@ -94,7 +94,7 @@ function events (state, emit) {
           var cells = []
           if (!response) for (let i = 0; i < 6; i++) cells.push(card.loading())
           else cells = response.results.map(asCard)
-          return grid({ size: { sm: '1of2', lg: '1of3' }, appear: state.ui.clock['event-tab-selected'] }, cells)
+          return grid({ size: { md: '1of2', lg: '1of3' }, appear: state.ui.clock['event-tab-selected'] }, cells)
         }
         case 'events-list-panel': {
           if (!response) return calendar.loading(6)
