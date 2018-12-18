@@ -301,10 +301,12 @@
   position: relative;
 }
 
-:root[scripting-enabled] .Text-expandable:not(.is-expanded) {
-  max-height: 13em;
-  overflow: hidden;
-  padding-bottom: 2em;
+@media not print {
+  :root[scripting-enabled] .Text-expandable:not(.is-expanded) {
+    max-height: 13em;
+    overflow: hidden;
+    padding-bottom: 2em;
+  }
 }
 
 .Text-expander {
@@ -317,8 +319,10 @@
   background-image: linear-gradient(rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0.95) 80%, rgba(255, 255, 255, 1) 88%);
 }
 
-:root[scripting-enabled] .Text-expander {
-  display: block;
+@media not print {
+  :root[scripting-enabled] .Text-expander {
+    display: block;
+  }
 }
 
 /**

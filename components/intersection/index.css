@@ -15,6 +15,12 @@
   text-align: left;
 }
 
+@media print {
+  .Intersection {
+    display: none !important;
+  }
+}
+
 .Intersection::before {
   content: "";
   height: 13vh;

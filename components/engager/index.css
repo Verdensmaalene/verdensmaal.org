@@ -29,7 +29,7 @@
 
 @media print {
   .Engager {
-    display: none;
+    display: none !important;
   }
 }
 

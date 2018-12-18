@@ -25,7 +25,7 @@
 
 @media print {
   .GoalGrid {
-    display: none;
+    display: none !important;
   }
 }
 

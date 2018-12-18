@@ -141,6 +141,12 @@
   margin-bottom: 2.5rem;
 }
 
+@media print {
+  .View-section {
+    margin-bottom: 4rem;
+  } 
+}
+
 /**
  * 1. Deduct trailing grid margin
  */

@@ -4,13 +4,13 @@
   --Grid-gutter: 1.5rem;
 }
 
-@media (mix-width: 600px) {
+@media (min-width: 600px), print {
   :root {
     --Grid-gutter: 2rem;
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1200px), print {
   :root {
     --Grid-gutter: 2.8rem;
   }
@@ -36,7 +36,7 @@
   flex-basis: 100%;
 }
 
-@media (max-width: 599px) {
+@media (max-width: 599px), screen {
   .Grid--carousel {
     width: 100%;
     margin: 0;
@@ -78,7 +78,7 @@
   border-top: 0;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 600px), print {
   .Grid--divided .Grid-cell {
     flex-basis: auto;
     width: 50%;

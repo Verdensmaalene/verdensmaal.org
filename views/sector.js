@@ -63,7 +63,7 @@ function goal (state, emit) {
       <main class="View-main">
         ${hero({ title, body, image, caption: data.image.copyright })}
         <div class="u-container">
-          <div class="Text u-spaceV6">
+          <div class="Text u-spaceV6 u-printHidden">
             ${text`Shortcuts`}: ${shortcuts.map((slice, index, list) => html`
               <span>
                 <a href="#${anchor(slice.primary.shortcut_name).id}" onclick=${scrollIntoView}>

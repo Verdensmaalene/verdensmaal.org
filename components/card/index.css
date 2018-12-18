@@ -10,6 +10,13 @@
   color: rgb(var(--current-color));
 }
 
+@media print {
+  .Card {
+    page-break-inside: avoid;
+    page-break-after: avoid;
+  }
+}
+
 .Card--background {
   --current-color: 255, 255, 255;
   --current-background: 0, 0, 0;
@@ -253,6 +260,12 @@
   transition: 140ms var(--ease-out);
   transition-property: background-color, color;
   border-radius: 2px;
+}
+
+@media print {
+  .Card-link {
+    display: none !important;
+  }
 }
 
 .Card-link:not(.Card-link--silent) {

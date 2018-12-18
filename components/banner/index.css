@@ -25,6 +25,17 @@
   min-height: 65vh;
 }
 
+/**
+ * 1. Maintain 16/9 aspect ratio in print
+ */
+
+@media print {
+  .Banner-figure {
+    padding-bottom: calc(100% * 9/16); /* 1 */
+    min-height: 0;
+  }
+}
+
 .Banner-image {
   position: absolute;
   top: 50%;

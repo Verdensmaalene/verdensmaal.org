@@ -16,6 +16,12 @@
   }
 }
 
+@media print {
+  .Hero {
+    margin-bottom: 4rem;
+  }
+}
+
 .Hero-container {
   display: flex;
   justify-content: center;
@@ -101,7 +107,7 @@
 
 .Hero-title {
   display: inline-block;
-  padding-top: 0.09em;
+  padding: 0.09em 1rem 0;
   margin-bottom: 0.09em;
   font-size: 4rem;
   font-family: var(--heading-font-family);

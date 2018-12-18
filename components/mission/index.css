@@ -1,6 +1,7 @@
 @import "../base";
 
 /** @define Mission */
+
 .Mission {
   display: flex;
   flex-direction: column;
@@ -249,4 +250,22 @@
   top: 5%;
   color: rgb(var(--color-goal-1-shaded));
   transform: rotate(-28deg);
+}
+
+@media print {
+  .Mission {
+    min-height: auto;
+    background: none;
+    margin: 0;
+  }
+
+  .Mission-body {
+    --current-color: var(--default-color);
+  }
+
+  .Mission-background,
+  .Mission::before,
+  .Mission-footer {
+    display: none;
+  }
 }

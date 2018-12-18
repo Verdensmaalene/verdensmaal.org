@@ -28,7 +28,7 @@
 
 @media print {
   .Header {
-    display: none;
+    display: none !important;
   }
 }
 

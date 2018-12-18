@@ -10,6 +10,12 @@
   position: relative;
 }
 
+@media print {
+  .Footer {
+    display: none !important;
+  }
+}
+
 .Footer-section {
   flex: 1 1 calc(50% - 1rem);
   margin: 3rem 0.5rem 0;

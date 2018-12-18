@@ -14,6 +14,16 @@
   max-height: 7rem;
 }
 
+@media print {
+  .Intro {
+    margin-top: 2rem !important;
+  }
+
+  .Intro::before {
+    display: none !important;
+  }
+}
+
 .Intro-title {
   max-width: 11em;
   margin: 0 0 0.2em;

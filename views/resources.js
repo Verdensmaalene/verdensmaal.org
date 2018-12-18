@@ -31,7 +31,7 @@ function resources (state, emit) {
     }
 
     var shortcuts = html`
-      <p>
+      <p class="u-printHidden">
         ${text`Shortcuts`}: ${reduce(doc.data.slices, shortcut).map((shortcut, index, list) => html`
           <span>
             ${shortcut}${index < (list.length - 1) ? ', ' : null}

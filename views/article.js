@@ -67,7 +67,7 @@ function article (state, emit) {
               <div class="View-sidebar u-col u-lg-size1of3">
                 <div class="u-sizeFull">
                   ${doc.data.related && doc.data.related.map(related)}
-                  <aside>
+                  <aside class="u-printHidden">
                     <div class="Text">
                       <h2 class="Text-h3 u-spaceB2">${text`Spread the word`}</h2>
                     </div>
