@@ -100,11 +100,11 @@
   top: 25%;
   transform: rotate(-20deg);
   transform-origin: 100% 0;
-  background-color: rgb(var(--high-contrast-dark, 253, 105, 37));
+  background-color: rgb(253, 105, 37);
 }
 
 .Event:not(.Event--static):not(.is-loading):hover .Event-shape--big {
-  transform: translateX(-5%) rotate(5deg);
+  transform: translateX(-2%) rotate(-10deg);
 }
 
 .Event-shape--small {
@@ -114,11 +114,11 @@
   transform: rotate(40deg);
   transform-origin: 0 0;
   background-color: #C5192D;
-  background-color: rgb(var(--high-contrast-dark, 197, 25, 45));
+  background-color: rgb(197, 25, 45);
 }
 
 .Event:not(.Event--static):not(.is-loading):hover .Event-shape--small {
-  transform: translateX(8%) rotate(15deg);
+  transform: translateX(2%) rotate(25deg);
 }
 
 .Event-shape--circle {
@@ -127,11 +127,11 @@
   top: 10%;
   border-radius: 100%;
   transform-origin: 50% 50%;
-  background-color: rgb(var(--high-contrast-dark, 255, 58, 33));
+  background-color: rgb(255, 58, 33);
 }
 
 .Event:not(.Event--static):not(.is-loading):hover .Event-shape--circle {
-  transform: translate(10%, -20%);
+  transform: translate(5%, -15%);
 }
 
 .Event-figure::after {
