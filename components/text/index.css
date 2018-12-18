@@ -342,6 +342,7 @@
   box-shadow:
     0.2em 0 0 var(--background-color),
     -0.2em 0 0 var(--background-color);
+  transition: color 140ms var(--ease-out);
 }
 
 .Text-toggle::before,
@@ -355,8 +356,13 @@
   transform-origin: center;
   transform: translateY(-50%);
   background-color: currentColor;
+  transition: background-color 140ms var(--ease-out);
 }
 
 .Text-toggle::after {
   transform: translateY(-50%) rotate(90deg);
+}
+
+.Text-expander:hover .Text-toggle {
+  color: rgb(var(--high-contrast-light, var(--default-color)));
 }
