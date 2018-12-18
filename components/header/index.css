@@ -610,7 +610,8 @@
   background: rgb(var(--default-color));
 }
 
-.Header-button:hover .Header-tooltip {
+.Header-button:hover .Header-tooltip,
+.Header-button:focus-visible .Header-tooltip {
   opacity: 1;
 }
 

@@ -42,8 +42,8 @@
   fill: #fff;
 }
 
-.Flag--white::after {
-  border-color: rgba(255, 255, 255, 0.1);
+.Flag--white .Flag-symbol::after {
+  border: 0;
 }
 
 .Flag-text {
