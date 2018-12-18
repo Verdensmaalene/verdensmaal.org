@@ -3,21 +3,13 @@
 @import "../global";
 
 .u-loading,
-.u-loadingOnGray,
-.u-loadingOnColor {
-  background: rgba(var(--color-gray-light), 0.6) !important;
+.u-loadingAdaptive {
+  background: rgba(0, 0, 0, 0.04) !important;
   display: inline !important;
-  box-shadow: inset 0 -0.09em #fff !important;
   color: transparent !important;
   user-select: none !important;
 }
 
-.u-loadingOnGray {
-  box-shadow: inset 0 -0.09em #f8f8f8 !important;
-  background: #e8e8e8 !important;
-}
-
-.u-loadingOnColor {
-  box-shadow: none !important;
-  background: rgba(255, 255, 255, 0.3) !important;
+.u-loadingAdaptive {
+  background: rgba(255, 255, 255, 0.2) !important;
 }

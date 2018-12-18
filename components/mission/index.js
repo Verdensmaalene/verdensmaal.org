@@ -23,14 +23,14 @@ module.exports = class Mission extends Component {
       <div class="Mission">
         <div class="Mission-content u-container">
           <div class="Mission-body">
-            ${intro.loading()}
+            ${intro.loading({ adaptive: true })}
           </div>
-        </div>
-        <div class="Mission-footer">
-          <div class="Mission-partners">
-            <span class="Mission-partner u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span>
-            <span class="Mission-partner u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span>
-            <span class="Mission-partner u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span>
+          <div class="Mission-footer">
+            <div class="Mission-partners">
+              <span class="Mission-partner u-loadingAdaptive">${text`LOADING_TEXT_SHORT`}</span>
+              <span class="Mission-partner u-loadingAdaptive">${text`LOADING_TEXT_SHORT`}</span>
+              <span class="Mission-partner u-loadingAdaptive">${text`LOADING_TEXT_SHORT`}</span>
+            </div>
           </div>
         </div>
       </div>

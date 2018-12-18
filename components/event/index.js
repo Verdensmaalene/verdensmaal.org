@@ -73,10 +73,10 @@ function loading () {
         <div class="Event-shape Event-shape--small"></div>
         ${icon()}
         <time class="Event-time">
-          <span class="Event-date"><span class="u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span></span>
+          <span class="Event-date"><span class="u-loadingAdaptive">${text`LOADING_TEXT_SHORT`}</span></span>
           <span class="Event-details">
-            <span class="Event-time"><span class="u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span></span>
-            <span class="Event-location"><span class="u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span></span>
+            <span class="Event-time"><span class="u-loadingAdaptive">${text`LOADING_TEXT_SHORT`}</span></span>
+            <span class="Event-location"><span class="u-loadingAdaptive">${text`LOADING_TEXT_SHORT`}</span></span>
           </span>
         </time>
       </div>

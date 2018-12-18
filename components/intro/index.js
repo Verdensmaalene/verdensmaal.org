@@ -31,9 +31,9 @@ function loading (opts = {}) {
   return html`
     <div class="Intro ${opts.secondary ? 'Intro--secondary' : ''}">
       <h1 class="Intro-title">
-        <span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>
+        <span class="u-loading${opts.adaptive ? 'Adaptive' : ''}">${text`LOADING_TEXT_SHORT`}</span>
       </h1>
-      <p class="Intro-body"><span class="u-loading">${text`LOADING_TEXT_LONG`}</span></p>
+      <p class="Intro-body"><span class="u-loading${opts.adaptive ? 'Adaptive' : ''}">${text`LOADING_TEXT_LONG`}</span></p>
     </div>
   `
 }

@@ -70,7 +70,6 @@ function loading (props = {}) {
           ` : null}
           <h1 class="Card-title"><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h1>
           <p class="Card-text"><span class="u-loading">${text`LOADING_TEXT_LONG`}</span></p>
-          ${link.loading()}
         </div>
       </div>
     </article>

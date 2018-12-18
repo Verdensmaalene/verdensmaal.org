@@ -35,7 +35,7 @@ function link (opts = {}) {
 }
 
 function loading (opts = {}) {
-  return html`<span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`
+  return html`<div><span class="u-loading">${text`LOADING_TEXT_SHORT`}</span></div>`
 }
 
 function label (opts) {

@@ -48,11 +48,11 @@ function bookmark (props) {
 function loading () {
   return html`
     <figure class="Bookmark is-loading">
-      <div class="Bookmark-thumbnail u-loadingOnGray"></div>
+      <div class="Bookmark-thumbnail u-loading"></div>
       <figcaption class="Bookmark-body">
-        <small class="u-loadingOnGray">${text`LOADING_TEXT_MEDIUM`}</small>
-        <h3 class="Bookmark-title"><span class="u-loadingOnGray">${text`LOADING_TEXT_MEDIUM`}</span></h3>
-        <p class="Bookmark-description"><span class="u-loadingOnGray">${snippet(text`LOADING_TEXT_LONG`)}</span></p>
+        <small class="u-loading">${text`LOADING_TEXT_MEDIUM`}</small>
+        <h3 class="Bookmark-title"><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h3>
+        <p class="Bookmark-description"><span class="u-loading">${snippet(text`LOADING_TEXT_LONG`)}</span></p>
       </figcaption>
     </figure>
   `

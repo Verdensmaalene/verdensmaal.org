@@ -35,10 +35,10 @@ function loading () {
       <div class="Hero-container">
         <div class="Hero-content">
           <h1 class="Hero-title">
-            <span class="u-loadingOnGray">${text`LOADING_TEXT_SHORT`}</span>
+            <span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>
           </h1>
           <p class="Hero-body">
-            <span class="u-loadingOnGray">${text`LOADING_TEXT_LONG`}</span>
+            <span class="u-loading">${text`LOADING_TEXT_LONG`}</span>
           </p>
         </div>
       </div>
