@@ -71,9 +71,9 @@ module.exports = class Target extends Component {
               <figcaption class="Target-caption u-textHeading">${text`Target`} ${opts.id}</figcaption>
               <img class="Target-icon" src="${opts.icon.url}" alt="${text`Target`} ${opts.id}" onload=${() => this.init()} />
             </figure>
-            <div class="u-flex u-colorBlack u-spaceT1">
+            <div class="Target-actions u-colorBlack u-spaceT1">
               ${opts.href ? html`
-                <a class="Target-action u-spaceH1" href="${opts.href}#${text`target`}-${opts.id}" onclick=${onshare} title="${text`Share`}">
+                <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick=${onshare} title="${text`Share`}">
                   <span class="u-hiddenVisually">${text`Share`}</span>
                   ${symbol('share', { circle: true })}
                 </a>
@@ -90,16 +90,18 @@ module.exports = class Target extends Component {
             <h3 class="Target-title u-textHeading">
               <span class="u-hiddenVisually">${text`Target`} ${opts.id} – </span> ${opts.title}
             </h3>
-            ${opts.href ? html`
-              <a class="Target-action u-spaceR1" href="${opts.href}#${text`target`}-${opts.id}" onclick=${onshare} title="${text`Share`}">
-                <span class="u-hiddenVisually">${text`Share`}</span>
-                ${symbol('share', { circle: true })}
+            <div class="Target-actions">
+              ${opts.href ? html`
+                <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick=${onshare} title="${text`Share`}">
+                  <span class="u-hiddenVisually">${text`Share`}</span>
+                  ${symbol('share', { circle: true })}
+                </a>
+              ` : null}
+              <a class="Target-action" href="${opts.icon.url}" title="${text`Download icon`}" download>
+                <span class="u-hiddenVisually">${text`Download icon`}</span>
+                ${symbol('download', { circle: true })}
               </a>
-            ` : null}
-            <a class="Target-action" href="${opts.icon.url}" title="${text`Download icon`}" download>
-              <span class="u-hiddenVisually">${text`Download icon`}</span>
-              ${symbol('download', { circle: true })}
-            </a>
+            </div>
           </div>
           <div class="Target-body">
             ${opts.body}

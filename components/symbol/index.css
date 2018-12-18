@@ -31,6 +31,7 @@
   color: rgb(var(--current-color));
   background-color: rgb(var(--current-background));
   border-radius: 100%;
+  transition: background-color 140ms var(--ease-out);
 }
 
 .Symbol--circle .Symbol-image {

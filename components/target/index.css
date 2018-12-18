@@ -35,19 +35,18 @@
   left: 0.75rem;
   font-size: 1.35rem;
   white-space: nowrap;
+  z-index: 1;
 }
 
 .Target-icon {
   width: 42%;
   position: absolute;
-  top: 50%;
+  top: 54%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
 .Target-heading {
-  display: flex;
-  align-items: flex-start;
   font-size: 1.5rem;
 }
 
@@ -57,24 +56,53 @@
   }
 }
 
-.Target-action {
-  --current-background: var(--color-gray-light);
-  font-size: 0.4em;
-  position: relative;
+@media (min-width: 600px) {
+  .Target-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.Target-actions {
+  display: flex;
+  position: absolute;
   z-index: 3;
+  top: 0.6rem;
+  right: 0.6rem;
+  font-size: 0.6rem;
+  --current-background: 255, 255, 255;
 }
 
-.Target-action:hover {
-  --current-background: var(--color-gray);
+.Target-action {
+  display: block;
 }
 
-@media (min-width: 800px) and (max-width: 1400px) {
+.Target-action + .Target-action {
+  margin-left: 0.6rem;
+}
+
+@media (min-width: 600px) {
+  .Target-actions {
+    --current-background: var(--color-gray-light);
+    position: relative;
+    top: auto;
+    right: auto;
+    font-size: 0.8rem;
+  }
+
+  .Target-action:hover {
+    --current-background: 200, 200, 200;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1399px) {
   .Target-heading .Target-action {
     display: none;
   }
 }
 
-@media (max-width: 800px), (min-width: 1400px) {
+@media (max-width: 800px), (min-width: 1399px) {
   .Target-figure .Target-action {
     display: none;
   }
@@ -93,6 +121,8 @@
 
 @media (min-width: 400px) {
   .Target-title {
+    margin-top: 0.2rem;
+    margin-right: 0.5rem;
     margin-bottom: 0.5rem;
   }
 }
@@ -192,6 +222,7 @@
 .Target-fade {
   width: 100%;
   height: 6rem;
+  padding-bottom: 0.3rem;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -204,6 +235,12 @@
   background-position: 0 1.3rem;
   background-repeat: no-repeat;
   transition: color 140ms var(--ease-out);
+}
+
+@media (min-width: 800px) and (max-width: 1399px) {
+  .Target-fade {
+    padding-bottom: 0;
+  }
 }
 
 .Target-fade > span {
