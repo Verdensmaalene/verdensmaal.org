@@ -56,7 +56,7 @@ function inner (props) {
           </span>
           <span class="Event-details">
             <span class="Event-time">${timestamp(props.start)} – ${timestamp(props.end)}</span>
-            <span class="Event-location">${[props.venue, props.city, props.country].filter(Boolean).slice(0, 2).join(', ')}</span>
+            <span class="Event-location">${[props.venue, props.city, props.country].filter(Boolean).slice(0, 1).join(', ')}</span>
           </span>
         </time>
       ` : null}
@@ -76,7 +76,7 @@ function loading () {
           <span class="Event-date"><span class="u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span></span>
           <span class="Event-details">
             <span class="Event-time"><span class="u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span></span>
-            <span class="Event-location"><span class="u-loadingOnColor">${text`LOADING_TEXT_MEDIUM`}</span></span>
+            <span class="Event-location"><span class="u-loadingOnColor">${text`LOADING_TEXT_SHORT`}</span></span>
           </span>
         </time>
       </div>
