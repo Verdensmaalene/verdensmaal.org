@@ -23,7 +23,7 @@
 }
 
 .Header--static {
-  --Header-size: 1 !important;
+  --Header-size: 1;
 }
 
 @media print {

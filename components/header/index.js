@@ -58,7 +58,16 @@ module.exports = class Header extends Component {
     }, false)
   }
 
+  afterupdate (element) {
+    this.load(element)
+  }
+
   load (element) {
+    if ('scale' in this.local.opts) {
+      if (typeof this.local.opts.scale === 'number') return
+      else if (!this.local.opts.scale) return
+    }
+
     if (this.local.isInitialized) return
     this.local.isInitialized = true
 
@@ -80,6 +89,7 @@ module.exports = class Header extends Component {
     window.addEventListener('resize', onresize)
     window.addEventListener('scroll', onscroll, { passive: true })
     this.unload = function () {
+      this.local.isInitialized = false
       window.removeEventListener('resize', onresize)
       window.removeEventListener('scroll', onscroll)
     }
@@ -88,6 +98,11 @@ module.exports = class Header extends Component {
   createElement (links, href, opts = {}) {
     this.local.opts = opts
     this.local.href = href.replace(/\/$/, '')
+
+    if ('scale' in opts) {
+      if (typeof opts.scale === 'number') this.local.size = opts.scale
+      else if (!opts.scale) this.local.size = 1
+    }
 
     var { id, isOpen } = this.local
     var selected = links.find((item) => item.selected)

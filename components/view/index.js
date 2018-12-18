@@ -102,6 +102,7 @@ function createView (view, meta) {
             if (isGoal) {
               opts.theme = +num === 7 ? 'black' : 'white'
               opts.static = true
+              opts.scale = false
               if (state.referrer === '') {
                 opts.back = { href: '/', text: text`Back to Goals` }
               }
@@ -110,6 +111,7 @@ function createView (view, meta) {
           if (state.route === 'mission') {
             opts.theme = 'white'
             opts.static = true
+            opts.scale = false
           }
         }
 
