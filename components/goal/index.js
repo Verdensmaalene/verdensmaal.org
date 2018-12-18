@@ -10,7 +10,7 @@ var backgrounds = [
   () => import('./background/4-verdensmaal'),
   () => import('./background/5'),
   () => import('./background/6'),
-  () => import('./background/7'),
+  () => import('./background/7-verdensmaal'),
   () => import('./background/8'),
   () => import('./background/9'),
   () => import('./background/10'),
@@ -280,7 +280,8 @@ module.exports = class Goal extends Component {
       class: className(`Goal Goal--${props.format}`, {
         [`Goal--${props.number}`]: !props.blank,
         'Goal--light': props.number === 7,
-        'Goal--blank': props.blank
+        'Goal--blank': props.blank,
+        'Goal--background': hasBackground
       })
     }
     if (this.local.height) attrs.style = `height: ${this.local.height}px;`

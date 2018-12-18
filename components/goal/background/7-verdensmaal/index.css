@@ -6,6 +6,7 @@
   position: absolute;
   left: 0;
   top: 0;
+  background-color: rgb(var(--color-goal-7));
 }
 
 .Background7-dimmer {
@@ -48,10 +49,11 @@
 }
 
 .Background7-building {
-  height: 150px;
-  max-height: 20vh;
+  height: 230px;
+  max-height: 17vh;
+  left: 7%;
+  width: auto;
   position: absolute;
-  left: 20%;
   bottom: 0;
   visibility: hidden;
   transform: translateY(100%);
@@ -64,6 +66,12 @@
   }
 }
 
+@media (min-width: 1200px) {
+  .Background7-building {
+    left: 17%;
+  }
+}
+
 .Background7--small .Background7-building {
   display: none;
 }
@@ -71,6 +79,24 @@
 @keyframes Background7-building--appear {
   to {
     transform: translateY(0%);
+  }
+}
+
+.Background7-turbines {
+  width: 100%;
+  max-width: 500px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.Background7--small .Background7-turbines {
+  max-width: 320px;
+}
+
+@media (min-width: 1200px) {
+  .Background7:not(.Background7--small) .Background7-turbines {
+    right: 7%;
   }
 }
 
@@ -88,41 +114,57 @@
 }
 
 .Background7-turbine:nth-child(1) {
-  height: 180px;
-  right: 14%;
+  height: 132px;
+  right: -8%;
 }
 
 .Background7-turbine:nth-child(2) {
-  height: 100px;
-  right: 40%;
+  height: 240px;
+  right: 11%;
 }
 
-@media (min-width: 900px) {
-  .Background7-turbine:nth-child(1) {
-    height: 250px;
-    right: 10%;
-  }
-
-  .Background7-turbine:nth-child(2) {
-    height: 130px;
-    right: 22%;
-  }
+.Background7-turbine:nth-child(3) {
+  height: 90px;
+  right: 29%;
+  opacity: 0.4;
 }
 
-.Background7--small .Background7-turbine:nth-child(1) {
-  height: 155px;
-  right: -9%;
+.Background7-turbine:nth-child(4) {
+  height: 150px;
+  right: 38%;
+  opacity: 0.65;
 }
 
-.Background7--small .Background7-turbine:nth-child(2) {
-  height: 100px;
-  right: 8%;
+.Background7-turbine:nth-child(5) {
+  height: 120px;
+  right: 57%;
+}
+
+.Background7-turbine:nth-child(6) {
+  height: 65px;
+  right: 65%;
+  opacity: 0.4;
+}
+
+.Background7--small .Background7-turbine {
+  max-height: 170px;
+}
+
+.Background7--small .Background7-turbine:nth-child(3) ~ .Background7-turbine {
+  display: none;
 }
 
 .Background7-blades {
   transform-origin: 50% 50%;
   animation: Background7-blades--spin 3000ms 1750ms linear infinite;
 }
+
+.Background7-turbine:nth-child(1) .Background7-blades { animation-delay: 1900ms; }
+.Background7-turbine:nth-child(2) .Background7-blades { animation-delay: 1750ms; }
+.Background7-turbine:nth-child(3) .Background7-blades { animation-delay: 2050ms; }
+.Background7-turbine:nth-child(4) .Background7-blades { animation-delay: 1950ms; }
+.Background7-turbine:nth-child(5) .Background7-blades { animation-delay: 1900ms; }
+.Background7-turbine:nth-child(6) .Background7-blades { animation-delay: 2100ms; }
 
 @keyframes Background7-blades--spin {
   from {

@@ -22,10 +22,22 @@ module.exports = class Background7 extends Component {
             <path d="M.948 231.688L5.903 3.244l6.192-2.48 4.95 230.924" fill="#FFF" fill-rule="evenodd"/>
           </symbol>
         </svg>
-        <svg class="Background7-building" viewBox="0 0 49 139">
-          <g fill="#FFF" fill-rule="evenodd">
-            <path d="M10.42 59.76l-3.77 1.32L27.45.44l5.94 2.02L14.5 57.3"/>
-            <path d="M43.4 58.62c0 .63-.5 1.13-1.12 1.13H28.53c-.64 0-1.14-.5-1.14-1.13v-8.6c0-.62.5-1.13 1.1-1.13h13.7c.6 0 1.1.5 1.1 1.1v8.6zm0 15.9c0 .6-.5 1.1-1.12 1.1H28.53c-.64 0-1.14-.5-1.14-1.1v-8.6c0-.63.5-1.14 1.1-1.14h13.7c.6 0 1.1.5 1.1 1.13v8.6zm0 15.87c0 .6-.5 1.1-1.12 1.1H28.53c-.64 0-1.14-.5-1.14-1.1v-8.6c0-.7.5-1.2 1.1-1.2h13.7c.6 0 1.1.5 1.1 1.1v8.6zm0 15.8c0 .6-.5 1.1-1.12 1.1H28.53c-.64 0-1.14-.5-1.14-1.15v-8.6c0-.6.5-1.1 1.1-1.1h13.7c.6 0 1.1.5 1.1 1.12v8.6zm-21-50.7v19c0 .6-.5 1.1-1.12 1.1H7.52c-.63 0-1.14-.5-1.14-1.13v-2.4c0-.14.04-.3.1-.4.02-.06.02-.08.06-.14.03-.07.07-.1.1-.16.04 0 .1-.1.13-.1 1.76-2.54 9.7-12.3 13.03-16.4l.34-.4c.24-.3.6-.5 1-.5.64 0 1.15.48 1.27 1.08v.5zm-.02 34.8c0 .6-.5 1.1-1.13 1.1H7.48c-.62 0-1.13-.5-1.13-1.1v-8.6c0-.65.5-1.15 1.13-1.15h13.77c.62 0 1.13.5 1.13 1.12v8.6zm0 15.85c0 .63-.5 1.13-1.13 1.13H7.48c-.62 0-1.13-.5-1.13-1.13v-8.6c0-.6.5-1.1 1.13-1.1h13.77c.62 0 1.13.5 1.13 1.14v8.6zm7.18-64.56l.32-.4c3.1-3.98 8.34-10.4 10.9-13.54l.32-.4c.25-.3.6-.45 1.02-.45.63 0 1.14.45 1.26 1.05v14.5c0 .7-.56 1.27-1.26 1.3H30.6c-.7-.04-1.25-.6-1.25-1.3 0-.3.1-.57.26-.78zm19.1-31.2c-.15-.5-.6-.88-1.16-.88-.25 0-.47.1-.66.2l-.08.06-.4.5L1 67.8l-.2.28c-.24.24-.4.55-.4.9v70.58c0 .62.5 1.12 1.13 1.12h15.3v-22.4c0-.53.43-.95.96-.95h13.6c.5 0 .9.42.9.94v22.4h15.3c.6 0 1.1-.5 1.1-1.1V10.9c0-.17-.07-.33-.1-.47z"/>
+        <svg class="Background7-building" viewBox="0 0 226 160">
+          <g fill="none" fill-rule="evenodd">
+            <g fill="#FFF">
+              <path fill-rule="nonzero" d="M146.9 57H78.6L86.4 40H139l7.9 16.8zm-68.3 2.3V160h26.6v-30.5h15V160H147V59.3H78.6zm21 90.8h-15v-20.8h15v20.8zm0-30.4h-15V99h15v20.7zm0-29.8h-15V69.3h15v20.6zm20.6 29.8h-15V99h15v20.7zm0-29.8h-15V69.3h15v20.6zm20.7 60.2h-15v-20.8h15v20.8zm0-30.4h-15V99h15v20.7zm0-29.8h-15V69.3h15v20.6z"/>
+              <path d="M134.6 75.3h6.9v1.5h-7v14h-1.4v-14h-8v-1.5h8v-6.1h1.5v6.1zm-41.4 0h6.9v1.5h-7v14h-1.4v-14h-8v-1.5h8v-6.1h1.5v6.1zm20.7 0h6.9v1.5h-7v14h-1.4v-14h-8v-1.5h8v-6.1h1.5v6.1zm20.7 29.8h6.9v1.5h-7v14h-1.4v-14h-8V105h8V99h1.5v6zm-41.4 0h6.9v1.5h-7v14h-1.4v-14h-8V105h8V99h1.5v6zm20.7 0h6.9v1.5h-7v14h-1.4v-14h-8V105h8V99h1.5v6zm20.7 30.5h6.9v1.5h-7v13h-1.4v-13h-8v-1.5h8v-7.1h1.5v7zm-41.4 0h6.9v1.5h-7v13h-1.4v-13h-8v-1.5h8v-7.1h1.5v7z"/>
+            </g>
+            <g fill="#FFF">
+              <g fill-rule="nonzero">
+                <path d="M206.3 153c0 3.6 2.8 6.5 6.4 6.5 3.5 0 6.4-3 6.4-6.5 0-3.7-2.9-6.6-6.4-6.6-3.5 0-6.4 3-6.4 6.6zm3 0c0-2 1.5-3.5 3.4-3.5 1.8 0 3.3 1.6 3.3 3.5s-1.5 3.4-3.3 3.4c-2 0-3.4-1.5-3.4-3.4zM174 153a6.4 6.4 0 1 0 12.8 0c0-3.7-2.8-6.6-6.3-6.6-3.6 0-6.4 3-6.4 6.6zm3 0c0-2 1.6-3.5 3.4-3.5 1.9 0 3.4 1.6 3.4 3.5s-1.6 3.4-3.4 3.4c-1.8 0-3.4-1.5-3.4-3.4z"/>
+                <path d="M167.8 145.6v6.2c0 2.2 1.4 2.7 2.2 2.7H173c.1 0 .3 0 .3-.2v-1-.3c0-4.1 3.2-7.5 7.3-7.5 4 0 7.3 3.3 7.3 7.5v1.3c0 .2.1.3.2.3h17l.3-.3V153c0-4 3.3-7.4 7.4-7.4 4 0 7.3 3.3 7.3 7.4v1.3l.2.3h4.3c.7 0 .7-1.1.7-1.1v-4a7 7 0 0 0-.2-1.8 6.6 6.6 0 0 0-1.6-2.5c-3.5-2.7-12.9-3.8-13.7-4-.7-.2-.7-.1-1-.3-.2-.2-3.3-4.2-6-5.5a24.3 24.3 0 0 0-11.2-2.2c-5.5 0-8.5 1.5-10.9 2.9-2.4 1.3-7 5.2-7.6 5.6l-.8.6s-1.3.7-2.4 1c-2 .3-2 2.3-2 2.3zm25.8-3.5v-6.3c8.1.3 11.5 5 12.1 5.8 0 0 .5.5 0 .5h-12.1zm-14-.6c.4-.5 4.1-5.2 12-5.7v6.3h-12s-.5 0 0-.6z"/>
+              </g>
+              <path fill-rule="nonzero" d="M167.9 149v3.5h-1.7c-2.5 0-4-1.8-4-4.5v-9c0-1-.2-1.2-1.1-1.2h-6.5v-3.5h6.5c2.9 0 4.6 1.8 4.6 4.8v8.9c0 .9 0 1 .5 1h1.7z"/>
+              <path d="M142.8 137.4H145.6V135H143s-.6-.1-.7-.6c0-.5.5-.7.5-.7h2.7l.1-.1v-1.4s0-.2.2-.2h3c.4 0 1.2 0 2.3 1 1 .5 1.4 1.2 1.5 2 0 .1 0 .2.3.2h2.4v1.8h-2.4c-.2 0-.3 0-.3.2-.1.8-.6 1.5-1.4 2.1a4 4 0 0 1-2.4 1h-3s-.3 0-.3-.2v-1.3s0-.2-.2-.2h-2.5s-.5 0-.6-.5c0-.5.3-.6.6-.7z"/>
+            </g>
+            <path fill="#FFF" d="M65.4 40.9v118.6h-33v-25.9c-.2-7.3-6.1-13.1-13.5-13.1s-13.3 5.8-13.5 13.1v25.8H.1V41l8.6-3v-.1L44 0 48 4 34 19v9.8l-13.7 4.9L34 19v9.8l31.4-11.3V41zm-38.3 70.7V84H8.3v27.7h18.8zM27 77V49.3H8.3V77h18.8zm29.5 76.6V126H38v27.7h18.7zm0-42V84H38v27.7h18.7zm0-34.6V49.3H38V77h18.7z"/>
+            <path stroke="#FFF" stroke-width="2" d="M17.8 92.7H8h9.8V84v8.7zm0 0h9.3-9.3V112 92.7zm29.4 0V83v9.7h-9.3 9.3zm0 0V112 92.7H57h-9.8zm0 42V125v9.7h-9.3 9.3zm0 0V154v-19.3H57h-9.8zm0-76.1h-9.3 9.3v-9.3 9.3zm0 0H57h-9.8V77 58.6zm-29.4 0H8h9.8v-9.3 9.3zm0 0V77 58.6h9.3-9.3z"/>
           </g>
         </svg>
         <svg class="Background7-energySun" viewBox="0 0 73 72" width="73" height="72">
@@ -47,7 +59,31 @@ module.exports = class Background7 extends Component {
             </g>
           </g>
         </svg>
-        <div>
+        <div class="Background7-turbines">
+          <svg viewBox="0 0 186 325" width="186" height="325" class="Background7-turbine">
+            <g transform="translate(0 -68)">
+              <use class="Background7-blades" xlink:href="#background7-turbine-blades" />
+            </g>
+            <use y="95" height="232" xlink:href="#background7-turbine-pole" />
+          </svg>
+          <svg viewBox="0 0 186 325" width="186" height="325" class="Background7-turbine">
+            <g transform="translate(0 -68)">
+              <use class="Background7-blades" xlink:href="#background7-turbine-blades" />
+            </g>
+            <use y="95" height="232" xlink:href="#background7-turbine-pole" />
+          </svg>
+          <svg viewBox="0 0 186 325" width="186" height="325" class="Background7-turbine">
+            <g transform="translate(0 -68)">
+              <use class="Background7-blades" xlink:href="#background7-turbine-blades" />
+            </g>
+            <use y="95" height="232" xlink:href="#background7-turbine-pole" />
+          </svg>
+          <svg viewBox="0 0 186 325" width="186" height="325" class="Background7-turbine">
+            <g transform="translate(0 -68)">
+              <use class="Background7-blades" xlink:href="#background7-turbine-blades" />
+            </g>
+            <use y="95" height="232" xlink:href="#background7-turbine-pole" />
+          </svg>
           <svg viewBox="0 0 186 325" width="186" height="325" class="Background7-turbine">
             <g transform="translate(0 -68)">
               <use class="Background7-blades" xlink:href="#background7-turbine-blades" />

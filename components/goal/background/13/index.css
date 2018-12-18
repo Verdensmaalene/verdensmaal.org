@@ -55,10 +55,10 @@
 }
 
 .Background13-eyeLidLine.is-visible {
-  animation: Hero-eyeLid--fill 1000ms cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
+  animation: Background13-eyeLid--fill 1000ms cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
 }
 
-@keyframes Hero-eyeLid--fill {
+@keyframes Background13-eyeLid--fill {
   to {
     stroke-dashoffset: 0;
   }
@@ -83,7 +83,7 @@
   top: 50%;
   opacity: 0;
   transform: translate(-50%, -50%);
-  animation: Hero-globe--appear 1400ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  animation: Background13-globe--appear 1400ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
 .Background13--small .Background13-globe {
@@ -97,7 +97,7 @@
     width: 38%;
     max-height: 70%;
     max-width: none;
-    animation: Hero-globe--appear 600ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation: Background13-globe--appear 600ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
   }
 
   :root[scripting-enabled] .Background13:not(.Background13--small) .Background13-globe {
@@ -105,11 +105,11 @@
   }
 
   :root[scripting-enabled] .Background13:not(.Background13--small) .Background13-globe.is-visible {
-    animation: Hero-globe--appear 800ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    animation: Background13-globe--appear 800ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
   }
 }
 
-@keyframes Hero-globe--appear {
+@keyframes Background13-globe--appear {
   from {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.4);
@@ -123,10 +123,10 @@
 
 .Background13-globeShape {
   transform-origin: 50% 50%;
-  animation: Hero-globeShape--spin 75000ms linear infinite;
+  animation: Background13-globeShape--spin 75000ms linear infinite;
 }
 
-@keyframes Hero-globeShape--spin {
+@keyframes Background13-globeShape--spin {
   from {
     transform: rotate(0deg);
   }

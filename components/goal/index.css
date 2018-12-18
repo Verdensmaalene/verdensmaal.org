@@ -15,6 +15,7 @@
   display: flex;
   align-items: stretch;
   width: 100%;
+  height: 100%;
   position: relative;
   z-index: 0;
   overflow: hidden;
@@ -38,6 +39,21 @@
   display: block;
   width: 0;
   height: 0;
+}
+
+/**
+ * 1. Highjack pseudo element to match dimmed down background of animation
+ */
+
+:root[scripting-enabled] .Goal--7.Goal--background::before,
+:root[scripting-enabled] .Goal--7.Goal--takeover::before {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  background-color: rgba(var(--color-goal-7-shaded), 0.6);
 }
 
 /**
