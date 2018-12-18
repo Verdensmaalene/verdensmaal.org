@@ -16,14 +16,14 @@
   }
 }
 
-.Background9-industryCloud {
+.Background9-cloud {
   position: absolute;
   color: #fff;
   opacity: 0.2;
-  animation: Background9-industryCloud--appear 1800ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  animation: Background9-cloud--appear 1800ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
-@keyframes Background9-industryCloud--appear {
+@keyframes Background9-cloud--appear {
   0% {
     transform: translateY(200%);
   }
@@ -33,121 +33,121 @@
   }
 }
 
-.Background9-industryCloud--sm {
+.Background9-cloud--sm {
   width: 2%;
   min-width: 25px;
 }
 
-.Background9-industryCloud--md {
+.Background9-cloud--md {
   width: 5%;
   min-width: 40px;
 }
 
-.Background9-industryCloud--lg {
+.Background9-cloud--lg {
   width: 8%;
   min-width: 60px;
 }
 
-.Background9-industryCloud--xl {
+.Background9-cloud--xl {
   width: 10%;
   min-width: 150px;
 }
 
-.Background9-industryCloud--light {
+.Background9-cloud--light {
   opacity: 0.6;
   color: #fff;
 }
 
-.Background9-industryCloud:nth-child(1) {
+.Background9-cloud:nth-child(1) {
   display: none;
 }
 
-.Background9-industryCloud:nth-child(2) {
+.Background9-cloud:nth-child(2) {
   bottom: 48%;
   left: 8%;
 }
 
-.Background9-industryCloud:nth-child(3) {
+.Background9-cloud:nth-child(3) {
   bottom: 76%;
   left: 14%;
 }
 
-.Background9-industryCloud:nth-child(4) {
+.Background9-cloud:nth-child(4) {
   top: 43%;
   left: 25%;
 }
 
-.Background9-industryCloud:nth-child(5) {
+.Background9-cloud:nth-child(5) {
   top: 20%;
   right: 25%;
 }
 
-.Background9-industryCloud:nth-child(6) {
+.Background9-cloud:nth-child(6) {
   top: 50%;
   right: 14%;
 }
 
-.Background9-industryCloud:nth-child(7) {
+.Background9-cloud:nth-child(7) {
   visibility: hidden;
   top: 36%;
   right: 6%;
 }
 
-.Background9-industryCloud:nth-child(8) {
+.Background9-cloud:nth-child(8) {
   top: 48%;
   right: 2%;
 }
 
 @media (min-width: 900px) {
-  .Background9-industryCloud:nth-child(1),
-  .Background9-industryCloud:nth-child(7) {
+  .Background9-cloud:nth-child(1),
+  .Background9-cloud:nth-child(7) {
     visibility: visible;
   }
 }
 
-.Background9-industryTurbine {
+.Background9-turbine {
   position: absolute;
   bottom: 0;
 }
 
-.Background9-industryTurbine:nth-child(1) {
+.Background9-turbine:nth-child(1) {
   height: 150px;
   right: 40%;
 }
 
-.Background9-industryTurbine:nth-child(2) {
+.Background9-turbine:nth-child(2) {
   height: 100px;
   right: 18%;
 }
 
 @media (min-width: 900px) {
-  .Background9-industryTurbine:nth-child(1) {
+  .Background9-turbine:nth-child(1) {
     height: 140px;
     right: 19%;
   }
 
-  .Background9-industryTurbine:nth-child(2) {
+  .Background9-turbine:nth-child(2) {
     height: 220px;
     right: 8%;
   }
 }
 
-.Background9--small .Background9-industryTurbine:nth-child(1) {
+.Background9--small .Background9-turbine:nth-child(1) {
   height: 210px;
   right: 18.5%;
 }
 
-.Background9--small .Background9-industryTurbine:nth-child(2) {
+.Background9--small .Background9-turbine:nth-child(2) {
   display: none;
 }
 
-.Background9-industryBlades {
+.Background9-blades {
   transform-origin: 50% 50%;
   will-change: transform;
-  animation: Background9-industryBlades--spin 3500ms linear infinite;
+  animation: Background9-blades--spin 3500ms linear infinite;
 }
 
-@keyframes Background9-industryBlades--spin {
+@keyframes Background9-blades--spin {
   from {
     transform: rotate(0deg);
   }

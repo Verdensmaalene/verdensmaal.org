@@ -24,16 +24,16 @@ module.exports = class Background9 extends Component {
         </svg>
 
         <div>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background9-industryCloud Background9-industryCloud--md Background9-industryCloud--light"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background9-industryCloud Background9-industryCloud--sm"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background9-industryCloud Background9-industryCloud--md"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background9-industryCloud Background9-industryCloud--lg"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
-          <svg viewBox="0 0 141 97" width="141" height="97" class="Background9-industryCloud Background9-industryCloud--xl">
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background9-cloud Background9-cloud--md Background9-cloud--light"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background9-cloud Background9-cloud--sm"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background9-cloud Background9-cloud--md"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background9-cloud Background9-cloud--lg"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 141 97" width="141" height="97" class="Background9-cloud Background9-cloud--xl">
             <path d="M21.993 88.693c6.74 0 12.764-3.038 16.8-7.813 2.785 2.513 6.465 4.055 10.513 4.055 3.77 0 7.22-1.327 9.93-3.534.953 8.774 8.376 15.6 17.402 15.6 7.735 0 14.28-5.012 16.6-11.963 4.996 3.78 11.2 6.047 17.95 6.047 16.466 0 29.812-13.346 29.812-29.81 0-10.58-5.527-19.846-13.837-25.138.07-.68.113-1.368.113-2.07 0-10.714-8.69-19.4-19.405-19.4-3.6 0-6.954 1-9.842 2.704C93.308 7.125 82.978 0 70.958 0 59.97 0 50.4 5.958 45.226 14.804c-3.896-3.884-9.27-6.288-15.208-6.288-11.886 0-21.53 9.64-21.53 21.526 0 6.206 2.642 11.78 6.84 15.706C6.443 48.573 0 56.884 0 66.703c0 12.144 9.848 21.99 21.993 21.99z" fill="currentColor" fill-rule="evenodd"/>
           </svg>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background9-industryCloud Background9-industryCloud--md"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background9-industryCloud Background9-industryCloud--lg Background9-industryCloud--light"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background9-industryCloud Background9-industryCloud--sm"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background9-cloud Background9-cloud--md"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background9-cloud Background9-cloud--lg Background9-cloud--light"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background9-cloud Background9-cloud--sm"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
         </div>
 
         <svg class="Background9-satellite" viewBox="0 0 86 56" width="86" height="56">
@@ -63,15 +63,15 @@ module.exports = class Background9 extends Component {
         </svg>
 
         <div>
-          <svg viewBox="0 0 186 325" width="186" height="325" class="Background9-industryTurbine">
+          <svg viewBox="0 0 186 325" width="186" height="325" class="Background9-turbine">
             <g transform="translate(0 -68)">
-              <use class="Background9-industryBlades" xlink:href="#background9-turbine-blades" />
+              <use class="Background9-blades" xlink:href="#background9-turbine-blades" />
             </g>
             <use y="95" height="232" xlink:href="#background9-turbine-pole" />
           </svg>
-          <svg viewBox="0 0 186 325" width="186" height="325" class="Background9-industryTurbine">
+          <svg viewBox="0 0 186 325" width="186" height="325" class="Background9-turbine">
             <g transform="translate(0 -68)">
-              <use class="Background9-industryBlades" xlink:href="#background9-turbine-blades" />
+              <use class="Background9-blades" xlink:href="#background9-turbine-blades" />
             </g>
             <use y="95" height="232" xlink:href="#background9-turbine-pole" />
           </svg>

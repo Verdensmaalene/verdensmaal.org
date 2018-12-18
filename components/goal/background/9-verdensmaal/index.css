@@ -1,0 +1,284 @@
+/* @define Background9 */
+
+.Background9 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(100%);
+  animation: Background9--appear 1400ms cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.Background9-bridge {
+  width: 90%;
+  height: auto;
+  position: absolute;
+  left: -35%;
+  bottom: 0;
+}
+
+.Background9--small .Background9-bridge {
+  display: none;
+}
+
+.Background9-radiotower {
+  width: 15%;
+  height: auto;
+  max-width: 120px;
+  margin-left: -1px;
+  position: absolute;
+  left: 55%;
+  bottom: -1px;
+}
+
+.Background9--small .Background9-radiotower {
+  display: none;
+}
+
+.Background9-carlsberg {
+  width: 14%;
+  height: auto;
+  max-width: 120px;
+  position: absolute;
+  left: 76%;
+  bottom: 0;
+}
+
+.Background9--small .Background9-carlsberg {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .Background9-bridge {
+    width: 65%;
+    left: 0;
+  }
+
+  .Background9-radiotower {
+    width: 10%;
+    left: 65%;
+  }
+
+  .Background9-carlsberg {
+    width: 10%;
+    left: 80%;
+  }
+}
+
+@media (min-width: 900px) {
+  .Background9-bridge {
+    width: 41%;
+  }
+
+  .Background9-radiotower {
+    width: 7%;
+    left: 41%;
+  }
+
+  .Background9-carlsberg {
+    width: 9%;
+    left: 51%;
+  }
+}
+
+@keyframes Background9--appear {
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.Background9-cloud {
+  height: auto;
+  position: absolute;
+  color: #fff;
+  animation: Background9-cloud--appear 2100ms cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+}
+
+@keyframes Background9-cloud--appear {
+  0% {
+    transform: translateY(500%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.Background9-cloud:nth-child(1) {
+  width: 16%;
+  left: -4.5%;
+  top: 24%;
+  opacity: 0.15;
+}
+
+.Background9-cloud:nth-child(2) {
+  width: 6%;
+  left: 18%;
+  top: 17%;
+  opacity: 0.3;
+}
+
+.Background9-cloud:nth-child(3) {
+  width: 4.5%;
+  left: 28%;
+  top: 21%;
+  opacity: 0.6;
+  color: rgb(var(--color-goal-9-shaded));
+}
+
+.Background9-cloud:nth-child(4) {
+  width: 6%;
+  right: 20%;
+  top: 15%;
+  opacity: 0.6;
+  color: rgb(var(--color-goal-9-shaded));
+}
+
+.Background9-cloud:nth-child(5) {
+  width: 7%;
+  right: 11%;
+  top: 24%;
+  opacity: 0.15;
+}
+
+.Background9-cloud:nth-child(6) {
+  width: 18%;
+  right: -3%;
+  top: 37%;
+  opacity: 0.2;
+}
+
+@media (min-width: 900px) {
+  .Background9-cloud:nth-child(1) {
+    width: 8%;
+    left: -4.5%;
+    top: 23%;
+  }
+
+  .Background9-cloud:nth-child(2) {
+    width: 3%;
+    left: 5%;
+    top: 53%;
+  }
+
+  .Background9-cloud:nth-child(3) {
+    width: 4.5%;
+    left: 9%;
+    top: 43%;
+  }
+
+  .Background9-cloud:nth-child(4) {
+    width: 2%;
+    right: 16%;
+    top: 29%;
+  }
+
+  .Background9-cloud:nth-child(5) {
+    width: 4%;
+    right: 11%;
+    top: 32%;
+  }
+
+  .Background9-cloud:nth-child(6) {
+    width: 8%;
+    right: -2%;
+    top: 17%;
+  }
+}
+
+.Background9-turbine {
+  position: absolute;
+  bottom: 0;
+}
+
+.Background9-turbine:nth-child(1) {
+  height: 75px;
+  right: 4%;
+}
+
+.Background9-turbine:nth-child(2) {
+  height: 220px;
+  right: 8%;
+}
+
+.Background9-turbine:nth-child(3) {
+  height: 140px;
+  right: 16%;
+}
+
+.Background9--small .Background9-turbine:nth-child(1) {
+  height: 210px;
+  right: 18.5%;
+}
+
+.Background9--small .Background9-turbine:nth-child(1) ~ .Background9-turbine {
+  display: none;
+}
+
+@media (max-width: 899px) {
+  .Background9:not(.Background9--small) .Background9-turbine {
+    display: none;
+  }
+}
+
+.Background9-blades {
+  transform-origin: 50% 50%;
+  will-change: transform;
+  animation: Background9-blades--spin 3500ms linear infinite;
+}
+
+@keyframes Background9-blades--spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Background9-satellite {
+  display: none;
+  width: 35px;
+  position: absolute;
+  left: 50%;
+  top: 13%;
+  will-change: transform;
+  transform-origin: 0 300vh;
+  animation: Background9-satellite--flying 24000ms linear infinite;
+}
+
+@media (min-width: 900px) {
+  .Background9-satellite {
+    display: block;
+  }
+}
+
+@keyframes Background9-satellite--flying {
+  from {
+    transform: rotate(-20deg);
+  }
+
+  to {
+    transform: rotate(20deg);
+  }
+}
+
+.Background9-tower {
+  display: none;
+  height: 230px;
+  position: absolute;
+  left: 12%;
+  bottom: 0;
+}
+
+@media (min-width: 900px) {
+  .Background9-tower {
+    display: block;
+  }
+}
+
+.Background9--small .Background9-tower {
+  display: none;
+}
