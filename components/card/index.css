@@ -79,13 +79,7 @@
   height: 100%;
   flex: 0 0 auto;
   min-height: auto;
-  background-image: linear-gradient(
-    -180deg,
-    rgba(0, 0, 0, 0.05) 0%,
-    rgba(0, 0, 0, 0.10) 30%,
-    rgba(0, 0, 0, 0.10) 55%,
-    rgba(0, 0, 0, 0.75) 100%
-  );
+  background-image: var(--figure-gradient);
 }
 
 /**
@@ -96,13 +90,16 @@
   flex-grow: 1;
   position: relative; /* 1 */
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 }
 
 .Card:not(.Card--fill) .Card-body {
   flex-grow: 0;
+}
+
+.Card--background .Card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .Card-meta {
