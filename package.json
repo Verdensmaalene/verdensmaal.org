@@ -54,6 +54,7 @@
     "choo": "^6.13.1",
     "choo-service-worker": "^2.4.0",
     "cloudinary": "^1.11.0",
+    "country-region-data": "^1.4.5",
     "date-fns": "^1.29.0",
     "dedent": "^0.7.0",
     "dotenv": "^6.0.0",
