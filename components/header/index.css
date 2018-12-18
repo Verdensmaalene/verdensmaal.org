@@ -615,7 +615,7 @@
   opacity: 1;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 999px) {
   .Header-tooltip {
     display: none;
   }
