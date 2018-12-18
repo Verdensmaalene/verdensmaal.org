@@ -94,42 +94,112 @@
   opacity: 1;
 }
 
-.Goal--blank { background: rgba(var(--color-gray-light), 0.6); }
+.Goal--blank {
+  --Goal-background: rgba(var(--color-gray-light), 0.6);
+  background: rgba(var(--color-gray-light), 0.6);
+}
 .Goal--blank[href]::after { background: rgba(var(--color-gray-light), 1); }
 
-.Goal--1, .Goal--1:hover, .Goal--1:active { background: rgb(var(--color-goal-1)); }
+.Goal--1, .Goal--1:hover, .Goal--1:active {
+  --Goal-background: rgb(var(--color-goal-1));
+  background: rgb(var(--color-goal-1));
+}
 .Goal--1[href]::after { background: rgba(var(--color-goal-1-shaded), 0.13); }
-.Goal--2, .Goal--2:hover, .Goal--2:active { background: rgb(var(--color-goal-2)); }
+
+.Goal--2, .Goal--2:hover, .Goal--2:active {
+  --Goal-background: rgb(var(--color-goal-2));
+  background: rgb(var(--color-goal-2));
+}
 .Goal--2[href]::after { background: rgba(var(--color-goal-2-shaded), 0.13); }
-.Goal--3, .Goal--3:hover, .Goal--3:active { background: rgb(var(--color-goal-3)); }
+
+.Goal--3, .Goal--3:hover, .Goal--3:active {
+  --Goal-background: rgb(var(--color-goal-3));
+  background: rgb(var(--color-goal-3));
+}
 .Goal--3[href]::after { background: rgba(var(--color-goal-3-shaded), 0.13); }
-.Goal--4, .Goal--4:hover, .Goal--4:active { background: rgb(var(--color-goal-4)); }
+
+.Goal--4, .Goal--4:hover, .Goal--4:active {
+  --Goal-background: rgb(var(--color-goal-4));
+  background: rgb(var(--color-goal-4));
+}
 .Goal--4[href]::after { background: rgba(var(--color-goal-4-shaded), 0.13); }
-.Goal--5, .Goal--5:hover, .Goal--5:active { background: rgb(var(--color-goal-5)); }
+
+.Goal--5, .Goal--5:hover, .Goal--5:active {
+  --Goal-background: rgb(var(--color-goal-5));
+  background: rgb(var(--color-goal-5));
+}
 .Goal--5[href]::after { background: rgba(var(--color-goal-5-shaded), 0.13); }
-.Goal--6, .Goal--6:hover, .Goal--6:active { background: rgb(var(--color-goal-6)); }
+
+.Goal--6, .Goal--6:hover, .Goal--6:active {
+  --Goal-background: rgb(var(--color-goal-6));
+  background: rgb(var(--color-goal-6));
+}
 .Goal--6[href]::after { background: rgba(var(--color-goal-6-shaded), 0.13); }
-.Goal--7, .Goal--7:hover, .Goal--7:active { background: rgb(var(--color-goal-7)); }
+
+.Goal--7, .Goal--7:hover, .Goal--7:active {
+  --Goal-background: rgb(var(--color-goal-7));
+  background: rgb(var(--color-goal-7));
+}
 .Goal--7[href]::after { background: rgba(var(--color-goal-7-shaded), 0.13); }
-.Goal--8, .Goal--8:hover, .Goal--8:active { background: rgb(var(--color-goal-8)); }
+
+.Goal--8, .Goal--8:hover, .Goal--8:active {
+  --Goal-background: rgb(var(--color-goal-8));
+  background: rgb(var(--color-goal-8));
+}
 .Goal--8[href]::after { background: rgba(var(--color-goal-8-shaded), 0.13); }
-.Goal--9, .Goal--9:hover, .Goal--9:active { background: rgb(var(--color-goal-9)); }
+
+.Goal--9, .Goal--9:hover, .Goal--9:active {
+  --Goal-background: rgb(var(--color-goal-9));
+  background: rgb(var(--color-goal-9));
+}
 .Goal--9[href]::after { background: rgba(var(--color-goal-9-shaded), 0.13); }
-.Goal--10, .Goal--10:hover, .Goal--10:active { background: rgb(var(--color-goal-10)); }
+
+.Goal--10, .Goal--10:hover, .Goal--10:active {
+  --Goal-background: rgb(var(--color-goal-10));
+  background: rgb(var(--color-goal-10));
+}
 .Goal--10[href]::after { background: rgba(var(--color-goal-10-shaded), 0.13); }
-.Goal--11, .Goal--11:hover, .Goal--11:active { background: rgb(var(--color-goal-11)); }
+
+.Goal--11, .Goal--11:hover, .Goal--11:active {
+  --Goal-background: rgb(var(--color-goal-11));
+  background: rgb(var(--color-goal-11));
+}
 .Goal--11[href]::after { background: rgba(var(--color-goal-11-shaded), 0.13); }
-.Goal--12, .Goal--12:hover, .Goal--12:active { background: rgb(var(--color-goal-12)); }
+
+.Goal--12, .Goal--12:hover, .Goal--12:active {
+  --Goal-background: rgb(var(--color-goal-12));
+  background: rgb(var(--color-goal-12));
+}
 .Goal--12[href]::after { background: rgba(var(--color-goal-12-shaded), 0.13); }
-.Goal--13, .Goal--13:hover, .Goal--13:active { background: rgb(var(--color-goal-13)); }
+
+.Goal--13, .Goal--13:hover, .Goal--13:active {
+  --Goal-background: rgb(var(--color-goal-13));
+  background: rgb(var(--color-goal-13));
+}
 .Goal--13[href]::after { background: rgba(var(--color-goal-13-shaded), 0.13); }
-.Goal--14, .Goal--14:hover, .Goal--14:active { background: rgb(var(--color-goal-14)); }
+
+.Goal--14, .Goal--14:hover, .Goal--14:active {
+  --Goal-background: rgb(var(--color-goal-14));
+  background: rgb(var(--color-goal-14));
+}
 .Goal--14[href]::after { background: rgba(var(--color-goal-14-shaded), 0.13); }
-.Goal--15, .Goal--15:hover, .Goal--15:active { background: rgb(var(--color-goal-15)); }
+
+.Goal--15, .Goal--15:hover, .Goal--15:active {
+  --Goal-background: rgb(var(--color-goal-15));
+  background: rgb(var(--color-goal-15));
+}
 .Goal--15[href]::after { background: rgba(var(--color-goal-15-shaded), 0.13); }
-.Goal--16, .Goal--16:hover, .Goal--16:active { background: rgb(var(--color-goal-16)); }
+
+.Goal--16, .Goal--16:hover, .Goal--16:active {
+  --Goal-background: rgb(var(--color-goal-16));
+  background: rgb(var(--color-goal-16));
+}
 .Goal--16[href]::after { background: rgba(var(--color-goal-16-shaded), 0.13); }
-.Goal--17, .Goal--17:hover, .Goal--17:active { background: rgb(var(--color-goal-17)); }
+
+.Goal--17, .Goal--17:hover, .Goal--17:active {
+  --Goal-background: rgb(var(--color-goal-17));
+  background: rgb(var(--color-goal-17));
+}
 .Goal--17[href]::after { background: rgba(var(--color-goal-17-shaded), 0.13); }
 
 /**
