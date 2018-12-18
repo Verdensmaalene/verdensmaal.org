@@ -216,7 +216,10 @@ class Home extends View {
               case 'news':
               case 'event': {
                 // fallback to bare link while fetching actual document
-                if (!response) return asFeatured(slice.primary.link)
+                if (!response) {
+                  if (slice.primary.link.isBroken) return null
+                  return asFeatured(slice.primary.link)
+                }
                 var item = response.results.find(function (item) {
                   return item.id === slice.primary.link.id
                 })
