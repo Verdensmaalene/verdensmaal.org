@@ -96,6 +96,7 @@ function symbol (num) {
 // construct text section as svg element
 // (num, str, str) -> Element
 function draw (number, text, lang = 'en') {
+  text = text.trim()
   var lines = text.split('\n')
   var isArabic = AR_LANGREG.test(lang)
   var multiplier = LANG_MULTIPLIERS[lang] || 1

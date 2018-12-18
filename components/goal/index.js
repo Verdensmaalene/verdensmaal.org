@@ -43,7 +43,13 @@ module.exports = class Goal extends Component {
     var background = backgrounds[index]
     background().then(
       (Background) => new Background(`background-${num}`),
-      (err) => ({ render () { throw err } })
+      (err) => ({
+        render () {
+          // fail silently in anything but development
+          if (process.env.NODE_ENV === 'development') throw err
+          return null
+        }
+      })
     ).then((background) => {
       this.background = (num, opts) => background.render(opts)
       if (this.element) this.rerender()

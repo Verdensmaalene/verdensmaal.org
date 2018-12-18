@@ -64,6 +64,16 @@
   }
 }
 
+.Background13-outline {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .Background13:not(.Background13--small) .Background13-outline {
+    display: block;
+  }
+}
+
 .Background13-globe {
   width: 140%;
   max-width: 600px;
