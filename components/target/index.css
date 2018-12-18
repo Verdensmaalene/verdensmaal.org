@@ -20,6 +20,13 @@
   overflow: hidden;
 }
 
+@media (max-width: 599px) {
+  .Target.is-calculating .Target-content {
+    max-height: 11.3rem;
+    overflow: hidden;
+  }
+}
+
 .Target-figure {
   padding-top: 55%;
   margin-bottom: 1rem;
