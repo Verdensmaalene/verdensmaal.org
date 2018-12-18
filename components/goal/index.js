@@ -5,9 +5,9 @@ var icon = require('./icon')
 
 var backgrounds = [
   () => import('./background/1'),
-  () => import('./background/2'),
+  () => import('./background/2-verdensmaal'),
   () => import('./background/3'),
-  () => import('./background/4-verdensmaalene'),
+  () => import('./background/4-verdensmaal'),
   () => import('./background/5'),
   () => import('./background/6'),
   () => import('./background/7'),
@@ -17,9 +17,9 @@ var backgrounds = [
   () => import('./background/11'),
   () => import('./background/12'),
   () => import('./background/13'),
-  () => import('./background/14-verdensmaalene'),
-  () => import('./background/15-verdensmaalene'),
-  () => import('./background/16-verdensmaalene'),
+  () => import('./background/14-verdensmaal'),
+  () => import('./background/15-verdensmaal'),
+  () => import('./background/16-verdensmaal'),
   () => import('./background/17')
 ]
 
