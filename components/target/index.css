@@ -258,7 +258,7 @@
 .Target-fade > span::before,
 .Target-fade > span::after {
   content: "";
-  width: 1px;
+  width: 2px;
   height: 0.7em;
   position: absolute;
   left: 0.35em;
