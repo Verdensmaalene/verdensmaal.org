@@ -50,8 +50,9 @@
 }
 
 .Map-popup {
-  max-width: 280px;
-  padding: 1.25rem;
+  max-width: 270px;
+  min-width: 220px;
+  padding: 1.2rem 1.25rem 0.75rem;
   position: relative;
 }
 
@@ -62,6 +63,7 @@
 }
 
 .Map-heading {
+  display: block;
   font-size: 1.5rem;
   font-family: var(--heading-font-family);
   line-height: var(--heading-line-height);
@@ -71,7 +73,9 @@
 
 .Map-subheading {
   font-size: 0.75rem;
-  color: rgb(var(--color-gray));
+  color: rgb(103, 103, 103);
+  margin: 0.2rem 0 0.3rem;
+  display: block;
 }
 
 .Map-link {
@@ -90,8 +94,8 @@
 
 .Map-symbol {
   display: inline-block;
-  margin-top: 0.2em;
-  font-size: 0.75rem;
+  margin-top: 0em;
+  font-size: 0.9rem;
 }
 
 .mapboxgl-popup-content {
@@ -100,12 +104,12 @@
 }
 
 .mapboxgl-popup-content {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.12) !important;
 }
 
 .mapboxgl-ctrl-group {
   border-radius: 0 !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.12) !important;
 }
 
 .mapboxgl-ctrl-top-left,
