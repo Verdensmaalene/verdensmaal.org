@@ -360,10 +360,11 @@
   color: rgb(var(--color-link));
   transition: transform 250ms var(--ease);
   height: 3.5rem;
+  font-weight: 600;
 }
 
 .Share-button:hover {
-  color: rgb(var(--color-link-enter));
+  color: rgb(var(--color-link-shaded));
 }
 
 .Share-button.is-active {
