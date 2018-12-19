@@ -26,10 +26,10 @@
 
   --figure-gradient: linear-gradient(
     -180deg,
-    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.08) 0%,
     rgba(0, 0, 0, 0.10) 30%,
-    rgba(0, 0, 0, 0.10) 55%,
-    rgba(0, 0, 0, 0.75) 100%
+    rgba(0, 0, 0, 0.11) 55%,
+    rgba(0, 0, 0, 0.7) 100%
   );
 
   /* Easing curves */

@@ -40,7 +40,7 @@
 }
 
 .Hero.is-loading .Hero-container {
-  background-color: rgba(var(--color-gray-light), 0.6);
+  background-image: var(--figure-gradient);
 }
 
 .Hero-figure {
@@ -81,12 +81,9 @@
   align-items: flex-start;
   flex-direction: column;
   position: relative;
-}
-
-@media (min-width: 600px) {
-  .Hero-content {
-    align-items: center;
-  }
+  align-items: center;
+  text-align: center;
+  transform: translateY(-10%);
 }
 
 /**
@@ -107,7 +104,7 @@
 
 .Hero-title {
   display: inline-block;
-  padding: 0.09em 1rem 0;
+  padding: 0.09em 3rem 0;
   margin-bottom: 0.09em;
   font-size: 4rem;
   font-family: var(--heading-font-family);
@@ -116,23 +113,34 @@
   text-transform: uppercase;
 }
 
-@media (min-width: 600px) {
-  .Hero-title {
-    font-size: 5rem;
-    white-space: nowrap;
-  }
-}
-
-@media (min-width: 900px) {
-  .Hero-title {
-    font-size: 10rem;
-    white-space: nowrap;
-  }
-}
-
 .Hero-body {
   font-size: 1.25rem;
-  max-width: 39em;
+  max-width: 30em;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 800px) {
+  .Hero-title {
+    font-size: 6rem;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Hero-title {
+    font-size: 8.5rem;
+    white-space: nowrap;
+  }
+
+  .Hero-body {
+    max-width: 34rem;
+  }
+}
+
+@media (min-width: 1600px) {
+  .Hero-title {
+    font-size: 10rem;
+  }
 }
 
 .Hero-caption {
