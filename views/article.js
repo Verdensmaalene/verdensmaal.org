@@ -54,7 +54,7 @@ function article (state, emit) {
               </div>
             ` : null}
             <div class="u-cols u-spaceT6">
-              <div class="u-col u-lg-size2of3 u-spaceB4">
+              <div class="u-col u-lg-size2of3 u-spaceB8">
                 <div class="Text">
                   <time class="Text-muted" datetime="${date}">
                     ${text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`}

@@ -73,7 +73,7 @@ function eventView (state, emit) {
               ${hero}
             </div>
             <div class="u-cols u-spaceT6">
-              <div class="u-col u-lg-size2of3 u-spaceB4">
+              <div class="u-col u-lg-size2of3 u-spaceB8">
                 <div class="Text">
                   <h1>${title}</h1>
                   <p class="Text-large">${description}</p>
