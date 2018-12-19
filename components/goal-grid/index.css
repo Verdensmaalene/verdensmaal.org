@@ -275,6 +275,10 @@
   padding-right: 1.5rem;
 }
 
+.GoalGrid-item--7 .GoalGrid-description {
+  color: rgb(0, 0, 0);
+}
+
 .GoalGrid-item--portrait .GoalGrid-description {
   max-width: 19em;
 }
@@ -315,13 +319,19 @@
   }
 }
 
+.GoalGrid-item--7 .GoalGrid-button {
+  background: #000;
+  text-shadow: none;
+  color: #fff;
+}
+
 .GoalGrid-item--1:hover .GoalGrid-button { color: rgba(var(--color-goal-1-shaded), 0.13); }
 .GoalGrid-item--2:hover .GoalGrid-button { color: rgba(var(--color-goal-2-shaded), 0.13); }
 .GoalGrid-item--3:hover .GoalGrid-button { color: rgba(var(--color-goal-3-shaded), 0.13); }
 .GoalGrid-item--4:hover .GoalGrid-button { color: rgba(var(--color-goal-4-shaded), 0.13); }
 .GoalGrid-item--5:hover .GoalGrid-button { color: rgba(var(--color-goal-5-shaded), 0.13); }
 .GoalGrid-item--6:hover .GoalGrid-button { color: rgba(var(--color-goal-6-shaded), 0.13); }
-.GoalGrid-item--7:hover .GoalGrid-button { color: rgba(var(--color-goal-7-shaded), 0.13); }
+.GoalGrid-item--7:hover .GoalGrid-button { color: #fff; }
 .GoalGrid-item--8:hover .GoalGrid-button { color: rgba(var(--color-goal-8-shaded), 0.13); }
 .GoalGrid-item--9:hover .GoalGrid-button { color: rgba(var(--color-goal-9-shaded), 0.13); }
 .GoalGrid-item--10:hover .GoalGrid-button { color: rgba(var(--color-goal-10-shaded), 0.13); }

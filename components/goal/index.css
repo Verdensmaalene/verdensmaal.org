@@ -231,6 +231,19 @@
 }
 
 /**
+ * Before the button is visible, some goal animations overlap the text.
+ * Let's move the text up until the button is visible
+ */
+
+@media (max-width: 999px) {
+  .Goal--portrait.Goal--2 .Goal-container,
+  .Goal--portrait.Goal--11 .Goal-container,
+  .Goal--portrait.Goal--4 .Goal-container {
+    justify-content: inherit;
+  }
+}
+
+/**
  * Multi purpose goal square cell
  */
 

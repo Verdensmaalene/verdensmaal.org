@@ -134,7 +134,14 @@
 
 .Background9--small .Background9-turbine:nth-child(1) {
   height: 210px;
-  right: 18.5%;
+  right: -3.5%;
+}
+
+@media (min-width: 1300px) {
+  .Background9--small .Background9-turbine:nth-child(1) {
+    height: 14.5rem;
+    right: 1rem;
+  }
 }
 
 .Background9--small .Background9-turbine:nth-child(2) {
