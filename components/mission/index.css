@@ -54,8 +54,13 @@
 }
 
 .Mission-body {
-  flex: 1 0 auto;
   --current-color: 255, 255, 255;
+}
+
+@media (min-width: 900px) {
+  .Mission-body {
+    flex: 1 0 auto;
+  }
 }
 
 .Mission-title {
@@ -87,7 +92,13 @@
   max-width: 45rem;
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 500px) and (min-height: 749px) {
+  .Mission-footer {
+    display: block;
+  }
+}
+
+@media (min-width: 900px) {
   .Mission-footer {
     display: block;
   }
