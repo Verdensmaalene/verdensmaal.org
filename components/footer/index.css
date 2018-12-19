@@ -311,10 +311,15 @@
     flex: 1 1 calc((100% / 7) - 1rem);
   }
 
-  .Footer-item {
+  .Footer-item,
+  .Footer-section--3 .Footer-item {
     margin-top: 1.28rem;
   }
 
+  .Footer-section--3 .Footer-list {
+    padding-top: 0.5rem;
+  }
+  
   .Footer-author {
     margin-top: 1rem;
   }
