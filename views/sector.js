@@ -304,7 +304,7 @@ function goal (state, emit) {
           let items = slice.items.map(function (item) {
             var { link } = item
             if ((!link.url && !link.id) || link.isBroken) return null
-            var attrs = { class: 'u-posRelative u-block u-spaceB2' }
+            var attrs = { }
             var href = state.docs.resolve(link)
             if (link.link_type === 'Web') {
               attrs.rel = 'noopener noreferrer'
@@ -315,19 +315,22 @@ function goal (state, emit) {
             var text = item.text || href.replace(/^https?:\/\//, '')
             var words = text.split(' ')
             return html`
-              <a href="${href}" ${attrs}>
-                <p class="u-color1 u-colorCurrent u-spaceB1">
-                  ${words.slice(0, words.length - 1).join(' ')} <span class="u-nowrap">
-                  ${words[words.length - 1]}<span class="u-spaceL1">${external({ cover: true })}</span>
+              <div class="Text">
+                <a class="u-block u-posRelative" href="${href}" ${attrs}>
+                  <span class="Text-large u-textBreakLongWords">
+                    ${words.slice(0, words.length - 1).join(' ')} <span class="u-nowrap">
+                    ${words[words.length - 1]}<span class="u-spaceL1">${external({ cover: true })}</span>
+                    </span>
                   </span>
-                </p>
-                ${item.description.length ? html`
-                  <div class="Text">
+                  <br>
+                  ${item.description.length ? html`
+                  <div class="Text u-textRegular u-spaceV1">
                     ${asElement(item.description, state.docs.resolve)}
                   </div>
                 ` : null}
-                <small class="Text-muted u-textWordBreak">${href.replace(/\/$/, '')}</small>
-              </a>
+                  <small class="Text-muted u-textTruncate u-textRegular">${href.replace(/\/$/, '')}</small>
+                </a>
+              </div>
             `
           }).filter(Boolean)
 

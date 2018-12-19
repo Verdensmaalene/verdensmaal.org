@@ -169,7 +169,7 @@ function eventView (state, emit) {
                       <a class="u-block" href="${href || item.text}" ${attrs}>
                         <span class="Text-large u-textBreakLongWords">${item.text}</span>
                         <br>
-                        <small class="Text-muted u-textTruncate">${href || item.text}</small>
+                        <small class="Text-muted u-textTruncate u-textRegular">${href || item.text}</small>
                       </a>
                     </li>
                   `

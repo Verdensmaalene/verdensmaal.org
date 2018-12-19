@@ -6,6 +6,10 @@
   font-weight: 600 !important;
 }
 
+.u-textRegular {
+  font-weight: normal !important;
+}
+
 .u-textItalic {
   font-style: italic !important;
 }

@@ -67,7 +67,7 @@ function missionView (state, emit) {
         `
         case 'link_list': {
           let items = slice.items.map(function (item) {
-            var attrs = { class: 'u-posRelative u-block u-spaceB2' }
+            var attrs = { }
             var href = state.docs.resolve(item.link)
             if (item.link.link_type === 'Web') {
               attrs.rel = 'noopener noreferrer'
@@ -77,17 +77,22 @@ function missionView (state, emit) {
 
             var words = item.text.split(' ')
             return html`
-              <a href="${href}" ${attrs}>
-                <p class="u-color1 u-colorCurrent u-spaceB1">
-                  ${words.slice(0, words.length - 1).join(' ')} <span class="u-nowrap">
-                  ${words[words.length - 1]}<span class="u-spaceL1">${external({ cover: true })}</span>
+              <div class="Text">
+                <a class="u-block u-posRelative" href="${href}" ${attrs}>
+                  <span class="Text-large u-textBreakLongWords">
+                    ${words.slice(0, words.length - 1).join(' ')} <span class="u-nowrap">
+                    ${words[words.length - 1]}<span class="u-spaceL1">${external({ cover: true })}</span>
+                    </span>
                   </span>
-                </p>
-                <div class="Text">
-                  ${asElement(item.description, state.docs.resolve)}
-                </div>
-                <small class="Text-muted">${href.replace(/\/$/, '')}</small>
-              </a>
+                  <br>
+                  ${item.description.length ? html`
+                  <div class="Text u-textRegular u-spaceV1">
+                    ${asElement(item.description, state.docs.resolve)}
+                  </div>
+                ` : null}
+                  <small class="Text-muted u-textTruncate u-textRegular">${href.replace(/\/$/, '')}</small>
+                </a>
+              </div>
             `
           }).filter(Boolean)
 
