@@ -43,6 +43,7 @@
   padding: 0.5em;
   margin: -0.5em;
   transition: background-color 140ms var(--ease-out);
+  text-decoration: var(--high-contrast-underline, none);
 }
 
 .Footer-link:hover {

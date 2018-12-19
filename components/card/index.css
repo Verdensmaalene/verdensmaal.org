@@ -263,6 +263,7 @@
   font-size: 1.5rem;
   color: rgb(var(--color-link));
   text-transform: uppercase;
+  text-decoration: var(--high-contrast-underline, none);
   font-family: var(--heading-font-family);
   font-weight: 600;
   white-space: nowrap;

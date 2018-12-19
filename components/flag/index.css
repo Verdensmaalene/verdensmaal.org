@@ -55,6 +55,7 @@
   display: block;
   font-size: 0.875rem;
   font-weight: 600;
+  text-decoration: var(--high-contrast-underline, none);
 }
 
 .Flag-sub {

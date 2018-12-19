@@ -363,6 +363,7 @@
 
 .Header-button--link {
   padding-right: 1.75rem;
+  text-decoration: var(--high-contrast-underline, none);
 }
 
 .Header-arrow {

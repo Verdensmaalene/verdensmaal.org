@@ -4,6 +4,7 @@
   --high-contrast-light: var(--default-background-color) !important;
   --high-contrast-dark: var(--default-color) !important;
   --high-contrast-on: 1 !important;
+  --high-contrast-underline: underline !important;
 
   --color-text-muted: var(--default-color) !important;
 
