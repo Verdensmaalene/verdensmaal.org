@@ -158,8 +158,12 @@
   }
 }
 
-.Card--dark {
+.Card--fill.Card--dark {
   --current-color: 255, 255, 255;
+}
+
+.Card--fill:not(.Card-dark) {
+  --current-color: var(--high-contrast-light, 255, 255, 255);
 }
 
 .Card--dark .Card-footer {
