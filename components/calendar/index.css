@@ -78,7 +78,8 @@
 }
 
 .Calendar-content:not(:last-child) {
-  border-bottom: 1px solid rgba(var(--color-gray-light), 0.6);
+  border-bottom: 1px solid;
+  border-bottom-color: rgba(var(--color-gray-light), 0.6);
 }
 
 .Calendar-body {
@@ -92,7 +93,7 @@
   display: block;
   line-height: 1.4;
   font-size: 0.8rem;
-  color: rgb(var(--color-gray));
+  color: rgb(var(--high-contrast-dark, 103, 103, 103));
 }
 
 @media (min-width: 600px) {
@@ -178,7 +179,7 @@
   left: -1em;
   top: -0.3rem;
   font-size: 0.8rem;
-  color: rgb(var(--high-contrast-light, var(--color-gray)));
+  color: rgb(var(--high-contrast-light, 103, 103, 103));
   border-radius: 2px;
 }
 
