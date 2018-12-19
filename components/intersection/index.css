@@ -47,13 +47,25 @@
   color: #fff;
 }
 
-.Intersection--secondary {
-  font-size: 1.35rem;
-  margin: 0;
+.Intersection--restrained {
+  font-size: 1.7rem;
+  margin: -2rem 0;
 }
 
-.Intersection--secondary::before {
+.Intersection--restrained::before {
   content: none;
+}
+
+@media (min-width: 800px) {
+  .Intersection--restrained {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .Intersection--restrained {
+    font-size: 1.5rem;
+  }
 }
 
 @media (min-width: 1000px) {
@@ -66,19 +78,25 @@
     min-height: 8rem;
   }
 
-  .Intersection--secondary {
+  .Intersection--restrained {
     font-size: 1.55rem;
   }
 }
 
+@media (min-width: 1100px) {
+  .Intersection--restrained {
+    font-size: 1.9rem;
+  }
+}
+
 @media (min-width: 1400px) {
-  .Intersection--secondary {
-    font-size: 1.6rem;
+  .Intersection--restrained {
+    font-size: 2.2rem;
   }
 }
 
 @media (min-width: 2000px) {
-  .Intersection--secondary {
-    font-size: 2.2rem;
+  .Intersection--restrained {
+    font-size: 2.4rem;
   }
 }

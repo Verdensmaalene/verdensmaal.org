@@ -129,7 +129,7 @@ class Home extends View {
           case 'small': {
             if (!doc || !doc.data.interlink_heading.length) return null
             return paddSlot(intersection({
-              secondary: true,
+              restrained: true,
               body: asElement(doc.data.interlink_text.map(function (block) {
                 return Object.assign({}, block, {
                   text: block.text.replace(/\n/g, ' ')
