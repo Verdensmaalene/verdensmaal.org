@@ -203,7 +203,7 @@
   transition: opacity 180ms var(--ease-out);
 }
 
-.Card:hover .Card-figure::after {
+.Card:not(.Card--interactive):hover .Card-figure:not(.is-loading)::after {
   opacity: 1;
 }
 
