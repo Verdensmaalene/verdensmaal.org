@@ -237,8 +237,9 @@
 
 @media (max-width: 999px) {
   .Goal--portrait.Goal--2 .Goal-container,
+  .Goal--portrait.Goal--4 .Goal-container,
   .Goal--portrait.Goal--11 .Goal-container,
-  .Goal--portrait.Goal--4 .Goal-container {
+  .Goal--portrait.Goal--16 .Goal-container {
     justify-content: inherit;
   }
 }
@@ -351,6 +352,30 @@
   }
 }
 
+.Goal--fullscreen .Goal-content {
+  max-width: 32rem;
+  padding-right: 2.5rem;
+  margin: 0;
+}
+
+.Goal--fullscreen.Goal--1 .Goal-content { margin-left: 13.1%; }
+.Goal--fullscreen.Goal--2 .Goal-content { margin-left: 9.6%; }
+.Goal--fullscreen.Goal--3 .Goal-content { margin-left: 9.6%; }
+.Goal--fullscreen.Goal--4 .Goal-content { margin-left: 9%; }
+.Goal--fullscreen.Goal--5 .Goal-content { margin-left: 9.6%; }
+.Goal--fullscreen.Goal--6 .Goal-content { margin-left: 9.6%; }
+.Goal--fullscreen.Goal--7 .Goal-content { margin-left: 10.1%; }
+.Goal--fullscreen.Goal--8 .Goal-content { margin-left: 9.5%; }
+.Goal--fullscreen.Goal--9 .Goal-content { margin-left: 7.6%; }
+.Goal--fullscreen.Goal--10 .Goal-content { margin-left: 8%; }
+.Goal--fullscreen.Goal--11 .Goal-content { margin-left: 9.6%; }
+.Goal--fullscreen.Goal--12 .Goal-content { margin-left: 8.3%; }
+.Goal--fullscreen.Goal--13 .Goal-content { margin-left: 8.2%; }
+.Goal--fullscreen.Goal--14 .Goal-content { margin-left: 8.1%; }
+.Goal--fullscreen.Goal--15 .Goal-content { margin-left: 8%; }
+.Goal--fullscreen.Goal--16 .Goal-content { margin-left: 6%; }
+.Goal--fullscreen.Goal--17 .Goal-content { margin-left: 8.6%; }
+
 /**
  * 1. Exclude children height from layout to preserve vertical align
  */
@@ -416,12 +441,13 @@
 .Goal--fullscreen .Goal-container {
   flex: 0 0 auto;
   width: 100%;
-  padding-left: 1.2rem;
-  padding-right: 1.2rem;
-  padding-left: calc(1.2rem + constant(safe-area-inset-right));
-  padding-right: calc(1.2rem + constant(safe-area-inset-right));
-  padding-left: calc(1.2rem + env(safe-area-inset-right));
-  padding-right: calc(1.2rem + env(safe-area-inset-right));
+  margin-top: -2%;
+}
+
+@media (min-width: 400px) {
+  .Goal.Goal--fullscreen .Goal-content {
+    font-size: 1.1875rem;
+  }
 }
 
 @media (min-width: 700px) {
@@ -429,10 +455,11 @@
     width: 700px;
   }
 
-  .Goal--fullscreen .Goal-content {
-    width: calc(100% - (177px + (var(--offset, 0) * 3px)));
-    margin-left: calc(177px + (var(--offset, 0) * 3px));
+  .Goal.Goal--fullscreen .Goal-content {
+    width: calc(100% - (189px + (var(--offset, 0) * 3px)));
+    margin-left: calc(189px + (var(--offset, 0) * 3px));
   }
+  
 }
 
 @media (min-width: 1000px) and (min-height: 600px) {
@@ -445,7 +472,7 @@
     padding: 0;
   }
 
-  .Goal--fullscreen .Goal-content {
+  .Goal.Goal--fullscreen .Goal-content {
     width: calc(100% - (232px + (var(--offset, 0) * 3.9px)));
     margin-left: calc(232px + (var(--offset, 0) * 3.9px));
   }
@@ -456,7 +483,7 @@
     width: 1200px;
   }
 
-  .Goal--fullscreen .Goal-content {
+  .Goal.Goal--fullscreen .Goal-content {
     width: calc(100% - (325px + (var(--offset, 0) * 5.8px)));
     margin-left: calc(325px + (var(--offset, 0) * 5.8px));
   }
@@ -558,3 +585,26 @@
   color: rgb(var(--high-contrast-light, var(--color-goal-17-shaded)));
 }
 
+.Goal-action {
+  display: inline-block;
+  padding: 0.5rem 0.65rem;
+  border-radius: 2px;
+  white-space: nowrap;
+  transition: background-color 180ms var(--ease-out);
+  margin: 0.6rem 0 0 -0.65rem;
+  user-select: none;
+}
+
+.Goal-action:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.Goal-arrow {
+  width: 1.4rem;
+  height: 1.4rem;
+  vertical-align: middle;
+  display: inline-block;
+  position: relative;
+  top: -0.15rem;
+  margin-right: 0.5rem;
+}

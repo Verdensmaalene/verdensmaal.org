@@ -2,6 +2,9 @@ var html = require('choo/html')
 var Component = require('choo/component')
 var { vw, vh, className } = require('../base')
 var icon = require('./icon')
+var { i18n } = require('../base')
+
+var text = i18n()
 
 var backgrounds = [
   () => import('./background/1'),
@@ -207,7 +210,7 @@ module.exports = class Goal extends Component {
             <div class="Goal-content" style="--offset: ${icon.offset(self.local.number, self.local.label)}">
               ${self.local.description ? html`
                 <div class="Text u-slideUp">
-                  <p><strong>${self.local.description}</strong></p>
+                  <p>${self.local.description}</p>
                 </div>
               ` : null}
             </div>
@@ -316,7 +319,7 @@ module.exports = class Goal extends Component {
           ${props.number && props.label && ((isFullscreen && props.description) || children) ? html`
             <div class="Goal-content ${isFullscreen ? 'u-slideUp' : ''}" style="--offset: ${icon.offset(props.number, props.label)}">
               ${props.description && isFullscreen ? html`
-                <p><strong>${props.description}</strong></p>
+                <p>${props.description}</p>
               ` : null}
               ${children ? html`
                 <div class="Goal-children">

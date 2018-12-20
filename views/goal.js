@@ -145,9 +145,23 @@ class GoalPage extends View {
           })
         })
 
+      function arrow () {
+        return html`
+          <svg class="Goal-arrow" width="20" height="20" viewBox="0 0 20 20"><g transform="rotate(90 10 10)" fill="none" fill-rule="evenodd"><path d="M11.52 10L8 13.52l.73.73L12.98 10 8.73 5.75 8 6.48 11.52 10z" fill="currentColor" /><circle stroke="currentColor" cx="10" cy="10" r="9.5" /></g></svg>
+        `
+      }
+
+      function action () {
+        return html`
+          <a class="Goal-action" href="#manifest">
+            ${arrow()} ${text(`Goal ${props.number} in Action`)}
+          </a>
+        `
+      }
+
       return html`
         <main class="View-main">
-          ${goal.render(props)}
+          ${goal.render(props, action())}
           ${header}
           ${doc.data.manifest && doc.data.manifest.length ? html`
             <section id="manifest" class="u-container">
