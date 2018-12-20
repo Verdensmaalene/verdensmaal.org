@@ -21,6 +21,8 @@ function Chart (id, state, emit, type) {
   this.type = type
   this.style = null
 
+  if (Chart[type]) this.load = this.init
+
   this.createElement = function (props) {
     var createElement = Chart[type]
     if (createElement) return wrapper.call(this, props, createElement(props))
