@@ -1,7 +1,7 @@
 var html = require('choo/html')
 var raw = require('choo/html/raw')
 var { i18n, className } = require('../base')
-var { rows, format } = require('./utils')
+var { rows, format, parse } = require('./utils')
 
 var SIZE = 560
 
@@ -42,9 +42,10 @@ function number (props, style = null) {
   }
 
   function value (data) {
+    var value = format(data.value)
     return html`
-      <text x="${SIZE / 2}" y="${height / 2 + (props.standalone ? 125 : 62.5)}" text-anchor="middle" class="Chart-label Chart-label--xl" fill="${data.color}">
-        ${format(data.value)}
+      <text x="${SIZE / 2}" y="${height / 2 + (props.standalone ? 125 : 62.5)}" text-anchor="middle" class="Chart-label Chart-label--${value.length > 5 ? 'xl' : 'xxl'}" fill="${data.color}">
+        ${value}
       </text>
     `
   }

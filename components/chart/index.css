@@ -57,7 +57,8 @@
 
 .Chart-label--md,
 .Chart-label--lg,
-.Chart-label--xl {
+.Chart-label--xl,
+.Chart-label--xxl {
   font-family: var(--heading-font-family);
   word-spacing: var(--heading-word-spacing);
   line-height: var(--heading-line-height);
@@ -78,6 +79,10 @@
 }
 
 .Chart-label--xl {
+  font-size: 9rem;
+}
+
+.Chart-label--xxl {
   font-size: 15rem;
 }
 
@@ -245,7 +250,9 @@
 }
 
 :root:not([scripting-enabled]) .Chart-label--xl,
-:root[scripting-enabled] .Chart.in-view .Chart-label--xl {
+:root[scripting-enabled] .Chart.in-view .Chart-label--xl,
+:root:not([scripting-enabled]) .Chart-label--xxl,
+:root[scripting-enabled] .Chart.in-view .Chart-label--xxl {
   animation-duration: 600ms;
 }
 

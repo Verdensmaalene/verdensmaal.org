@@ -38,7 +38,7 @@ exports.format = function format (val) {
   var [int, dec] = str.split('.')
   var chars = int.split('').reverse()
   for (let i = 0, len = chars.length; i < len; i++) {
-    res.push(i && !(i % 3) ? '.' + chars[i] : chars[i])
+    res.push(i && !(i % 3) ? chars[i] + '.' : chars[i])
   }
   return res.reverse().join('') + (dec ? ',' + dec : '') + (unit ? unit[0] : '')
 }
