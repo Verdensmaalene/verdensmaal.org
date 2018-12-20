@@ -329,7 +329,7 @@
   flex-grow: 1;
   width: 100%;
   border: 0;
-  color: rgb(var(--color-gray));
+  color: rgb(var(--color-text-muted));
   background: none;
   -webkit-appearance: none;
   border-radius: 0;
