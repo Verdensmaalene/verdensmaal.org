@@ -347,7 +347,7 @@ function goal (state, emit) {
           let cols = slice.items.length % 3 === 0 ? 3 : 2
           let cells = slice.items.map((item) => linkCard(item, cols))
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-md-container">
+            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${grid({ size: { md: '1of2', lg: `1of${cols}` }, carousel: true }, cells)}
             </div>
@@ -358,7 +358,7 @@ function goal (state, emit) {
           if (!charts.length) return null
           if (state.prefetch) return Promise.all(charts)
           return html`
-            <section id="statistics" class="View-section View-section--${camelCase(slice.slice_type)} u-md-container">
+            <section id="statistics" class="View-section View-section--${camelCase(slice.slice_type)} u-container">
               ${divide(charts)}
             </section>
           `
