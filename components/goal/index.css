@@ -445,7 +445,8 @@
 }
 
 @media (min-width: 400px) {
-  .Goal.Goal--fullscreen .Goal-content {
+  .Goal.Goal--fullscreen .Goal-content,
+  .Goal.Goal--takeover .Goal-content {
     font-size: 1.1875rem;
   }
 }

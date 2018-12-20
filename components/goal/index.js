@@ -207,11 +207,9 @@ module.exports = class Goal extends Component {
             <div class="Goal-label">
               ${icon.label(self.local.number, self.local.label)}
             </div>
-            <div class="Goal-content" style="--offset: ${icon.offset(self.local.number, self.local.label)}">
+            <div class="Goal-content u-slideUp" style="--offset: ${icon.offset(self.local.number, self.local.label)}">
               ${self.local.description ? html`
-                <div class="Text u-slideUp">
-                  <p>${self.local.description}</p>
-                </div>
+                <p>${self.local.description}</p>
               ` : null}
             </div>
           </div>
