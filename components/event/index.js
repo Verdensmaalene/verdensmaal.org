@@ -40,7 +40,7 @@ function figure (img) {
 function inner (props) {
   return html`
     <div class="Event-content">
-      ${props.image ? figure(props.image) : html`
+      ${props && props.image ? figure(props.image) : html`
         <div>
           <div class="Event-shape Event-shape--circle"></div>
           <div class="Event-shape Event-shape--big"></div>
@@ -48,7 +48,6 @@ function inner (props) {
           ${icon()}
         </div>
       `}
-      
       ${props ? html`
         <time class="Event-meta" datetime="${JSON.stringify(props.start).replace(/"/g, '')}">
           <span class="Event-date">
