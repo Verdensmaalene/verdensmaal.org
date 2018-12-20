@@ -47,12 +47,13 @@ function article (state, emit) {
     return html`
       <main class="View-main">
         <article>
+          ${doc.data.image.url ? html`
+            <div class="js-banner">
+              ${banner(image(doc.data.image))}
+            </div>
+          ` : null}
           <div class="u-container">
-            ${doc.data.image.url ? html`
-              <div class="js-banner">
-                ${banner(image(doc.data.image))}
-              </div>
-            ` : null}
+            
             <div class="u-cols u-spaceT6">
               <div class="u-col u-lg-size2of3 u-spaceB8">
                 <div class="Text">

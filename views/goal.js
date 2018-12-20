@@ -152,7 +152,7 @@ class GoalPage extends View {
       }
 
       function onclick (event) {
-        document.getElementById('secondary-header-container').scrollIntoView({ block: 'start' })
+        document.getElementById('secondary-header-container').scrollIntoView({ behavior: 'smooth', block: 'start' })
         event.preventDefault()
       }
 

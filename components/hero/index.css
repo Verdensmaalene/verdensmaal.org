@@ -7,15 +7,6 @@
   position: relative;
 }
 
-@media (min-width: 1200px) {
-  .Hero {
-    max-width: calc(var(--max-width) + (var(--page-gutter) * 2));
-    padding: 0 var(--page-gutter);
-    padding: 0 calc(var(--page-gutter) + constant(safe-area-inset-right));
-    padding: 0 calc(var(--page-gutter) + env(safe-area-inset-right));
-  }
-}
-
 @media print {
   .Hero {
     margin-bottom: 4rem;
