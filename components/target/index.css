@@ -153,8 +153,8 @@
   .Target:hover,
   .Target:target,
   .Target:focus-within {
-    outline: 4px solid rgb(var(--color-gray-light));
-    outline-offset: -2px;
+    outline: 4px solid rgb(var(--color-gray-light)) !important;
+    outline-offset: -2px !important;
   }
 
   .Target-figure {

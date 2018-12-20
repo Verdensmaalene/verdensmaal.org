@@ -178,11 +178,7 @@ button {
  */
 
 :focus:not(:focus-visible) {
-  outline: 0;
-}
-
-::-moz-focus-inner {
-  border: 0;
+  outline: 0 !important;
 }
 
 /**
@@ -190,7 +186,7 @@ button {
  */
 
 :focus-visible {
-  outline: rgb(var(--focus-ring-color)) solid var(--focus-ring-width);
+  outline: rgb(var(--focus-ring-color)) solid var(--focus-ring-width) !important;
 }
 
 /**

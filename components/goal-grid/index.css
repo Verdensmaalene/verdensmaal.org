@@ -39,8 +39,8 @@
   transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.GoalGrid-item:focus {
-  outline-color: #000;
+.GoalGrid-item:focus-visible {
+  outline-color: #000 !important;
 }
 
 .GoalGrid-item--portrait,

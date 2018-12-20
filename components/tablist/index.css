@@ -59,7 +59,7 @@
 }
 
 .Tablist-link:focus-visible {
-  outline: 0;
+  outline: 0 !important;
 }
 
 .Tablist-link:not(.is-active):focus-visible::after {
