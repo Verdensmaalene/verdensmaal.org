@@ -50,8 +50,8 @@
 }
 
 .Map-popup {
-  max-width: 270px;
-  min-width: 220px;
+  max-width: 16rem;
+  min-width: 13rem;
   padding: 1.2rem 1.25rem 0.75rem;
   position: relative;
 }
@@ -73,7 +73,7 @@
 
 .Map-subheading {
   font-size: 0.75rem;
-  color: rgb(103, 103, 103);
+  color: rgb(var(--color-text-muted));
   margin: 0.2rem 0 0.3rem;
   display: block;
 }
