@@ -194,7 +194,7 @@ module.exports = class Header extends Component {
                 `)}
                 <li class="Header-item">
                   <button class="Header-button Header-button--contrast ${opts.isHighContrast ? 'is-active' : ''}" onclick=${toggleContast}>
-                    <svg class="Header-toggle" height="26" viewBox="0 0 26 26" width="26"><mask id="a" fill="#fff"><path d="m13 23.5c5.7989899 0 10.5-4.7010101 10.5-10.5 0-5.79898987-4.7010101-10.5-10.5-10.5-5.79898987 0-10.5 4.70101013-10.5 10.5 0 5.7989899 4.70101013 10.5 10.5 10.5zm0 2.5c-7.17970175 0-13-5.8202983-13-13 0-7.17970175 5.82029825-13 13-13 7.1797017 0 13 5.82029825 13 13 0 7.1797017-5.8202983 13-13 13zm0-5c4.418278 0 8-3.581722 8-8s-3.581722-8-8-8z" fill="#fff" fill-rule="evenodd"/></mask><g fill="currentColor" fill-rule="evenodd" mask="url(#a)"><path d="m0 0h32v32h-32z" transform="translate(-3 -3)"/></g></svg>
+                    <svg class="Header-toggle" height="26" viewBox="0 0 26 26" width="26"><mask id="high-contrast-mask" fill="#fff"><path d="m13 23.5c5.7989899 0 10.5-4.7010101 10.5-10.5 0-5.79898987-4.7010101-10.5-10.5-10.5-5.79898987 0-10.5 4.70101013-10.5 10.5 0 5.7989899 4.70101013 10.5 10.5 10.5zm0 2.5c-7.17970175 0-13-5.8202983-13-13 0-7.17970175 5.82029825-13 13-13 7.1797017 0 13 5.82029825 13 13 0 7.1797017-5.8202983 13-13 13zm0-5c4.418278 0 8-3.581722 8-8s-3.581722-8-8-8z" fill="#fff" fill-rule="evenodd"/></mask><g fill="currentColor" fill-rule="evenodd" mask="url(#high-contrast-mask)"><path d="m0 0h32v32h-32z" transform="translate(-3 -3)"/></g></svg>
                     <span class="Header-tooltip">
                       ${opts.isHighContrast ? text`Turn off high contrast` : text`Turn on high contrast`}
                     </span>

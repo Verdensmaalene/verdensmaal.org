@@ -100,7 +100,7 @@
   top: 25%;
   transform: rotate(-20deg);
   transform-origin: 100% 0;
-  background-color: rgb(253, 105, 37);
+  background-color: rgb(197, 25, 45);
 }
 
 .Event:not(.Event--static):not(.is-loading):hover .Event-shape--big {
@@ -113,7 +113,6 @@
   top: 30%;
   transform: rotate(40deg);
   transform-origin: 0 0;
-  background-color: #C5192D;
   background-color: rgb(197, 25, 45);
 }
 

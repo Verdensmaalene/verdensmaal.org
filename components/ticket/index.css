@@ -53,7 +53,7 @@
   position: relative;
   border-top: 1px solid rgb(228, 228, 228);
   font-weight: 600;
-  color: rgb(var(--high-contrast-dark, var(--color-text-muted)));
+  color: rgb(var(--high-contrast-dark, 110, 110, 110));
   user-select: none;
   transition: color 50ms cubic-bezier(0,0,.2,1);
 }
