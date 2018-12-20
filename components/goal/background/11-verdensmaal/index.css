@@ -52,11 +52,12 @@
 }
 
 /**
- * Bus
+ * Train
  */
 
-.Background11-bus {
+.Background11-train {
   height: 4%;
+  width: auto;
   position: absolute;
   right: calc(100% + 1px);
   bottom: 0;
@@ -64,23 +65,22 @@
   transition-delay: 500ms;
 }
 
-.Background11-bus.is-coming {
+.Background11-train.is-coming {
   transition-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
 }
 
-.Background11-bus.is-leaving {
+.Background11-train.is-leaving {
   transition-timing-function: cubic-bezier(0.47, 0, 0.745, 0.715);
 }
 
 @media (min-width: 900px) {
-  .Background11-bus {
+  .Background11-train {
     transition-delay: 0ms;
-    max-width: 10vw;
     max-height: 3.5vh;
   }
 }
 
-:root[scripting-enabled] .Background11-bus.in-transition {
+:root[scripting-enabled] .Background11-train.in-transition {
   transition-property: transform;
 }
 
@@ -141,6 +141,10 @@
   animation: Background11-sky--rise 900ms cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
 }
 
+.Background11--small .Background11-sky {
+  top: 80%;
+}
+
 @keyframes Background11-sky--rise {
   to {
     transform: translateY(-100%);
@@ -195,6 +199,7 @@
 }
 
 .Background11-cloud {
+  height: auto;
   position: absolute;
   color: #fff;
   opacity: 0.2;
@@ -216,29 +221,15 @@
 }
 
 .Background11-cloud--sm {
-  width: 9%;
+  width: 2rem;
 }
 
 .Background11-cloud--md {
-  width: 15%;
+  width: 3rem;
 }
 
 .Background11-cloud--lg {
-  width: 24%;
-}
-
-@media (min-width: 900px) {
-  .Background11-cloud--sm {
-    width: 3%;
-  }
-
-  .Background11-cloud--md {
-    width: 5%;
-  }
-
-  .Background11-cloud--lg {
-    width: 8%;
-  }
+  width: 5rem;
 }
 
 .Background11-cloud--dark {

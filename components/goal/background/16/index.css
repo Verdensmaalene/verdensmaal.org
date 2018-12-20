@@ -241,28 +241,28 @@
   }
 }
 
-.Background16-cloud--small {
+.Background16-cloud--sm {
   width: 9%;
 }
 
-.Background16-cloud--medium {
+.Background16-cloud--md {
   width: 15%;
 }
 
-.Background16-cloud--large {
+.Background16-cloud--lg {
   width: 24%;
 }
 
 @media (min-width: 900px) {
-  .Background16-cloud--small {
+  .Background16-cloud--sm {
     width: 3%;
   }
 
-  .Background16-cloud--medium {
+  .Background16-cloud--md {
     width: 5%;
   }
 
-  .Background16-cloud--large {
+  .Background16-cloud--lg {
     width: 8%;
   }
 }

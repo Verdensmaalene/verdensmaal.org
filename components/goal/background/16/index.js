@@ -35,15 +35,15 @@ module.exports = class Background extends Component {
         </svg>
 
         <div class="Background16-sky">
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--medium Background16-cloud--light"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--small"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--small Background16-cloud--dark"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--medium"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--large"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--small Background16-cloud--light"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--small Background16-cloud--dark"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--large Background16-cloud--light"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
-          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--medium"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--md Background16-cloud--light"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--sm"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--sm Background16-cloud--dark"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--md"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--lg"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--sm Background16-cloud--light"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--sm Background16-cloud--dark"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--lg Background16-cloud--light"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
+          <svg viewBox="0 0 50 50" width="50" height="50" class="Background16-cloud Background16-cloud--md"><circle r="25" cx="25" cy="25" fill="currentColor" /></svg>
         </div>
 
         <div class="Background16-container">
