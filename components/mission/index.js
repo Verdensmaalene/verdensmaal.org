@@ -94,7 +94,7 @@ function background () {
         <svg class="Mission-bird" width="54" height="14"><use xlink:href="#mission-bird-symbol" /></svg>
         <svg class="Mission-bird" width="54" height="14"><use xlink:href="#mission-bird-symbol" /></svg>
       </div>
-      <svg class="Mission-vista" width="671" height="409" viewBox="0 0 671 409" aria-hidden="true" role="presentational">
+      <svg class="Mission-vista" width="671" height="409" viewBox="0 0 671 409" aria-hidden="true" role="presentation">
         <g fill="none" fill-rule="evenodd">
           <path class="Mission-hill" fill="#75001F" d="M671 409V257.6a234 234 0 0 0-172.7 41.3c-51 37.6-123.3 75.6-186.7 65.1a375.8 375.8 0 0 0-243 45H671z"/>
           <path class="Mission-bear" fill="#FFF" fill-rule="nonzero" d="M35.3 397.5l-5.8-1.4-1.8 4.4 3.3 6.2V407.9c0 .5.4.8.8 1H33l3.8-1.7c.3-.2.5-.4.6-.7l.3-2v-1l-2.4-6zm39.8-2L72 390l-4.3 8.2 2.6 6.9v1.5c0 .3.1.5.3.5l1.3.3h.3l4-2c.4-.1.7-.4.7-.8l.4-2.3v-.5l-2.2-6.2zM.9 386.7v.4c0 1 .7 1.8 1.7 2h.5l3.5-.6 2.6-.7 1 .1 6.6 3v.1c.3.1 1.3.5 1.3.8l-.1 2.5v.1L16 405.8c0 .3-.1.5-.3.7l-.3.3a1.4 1.4 0 0 0 1 2.2h4c.3 0 .6 0 .8-.3l1.9-1.5.4-.5 3-6.5 1.7-4.2c.3-.6 1-1 1.6-.8l6.9 1.6a104.3 104.3 0 0 0 14.1-1.3l1.9-.6c.4-.2 1 0 1.4.3l1 .9.4.8 1 8.8c0 .3 0 .5-.2.8l-.1.2c-.4.6-.2 1.4.4 1.8l.5.3.8.2h5.5c.4 0 .8-.2 1-.5l1.4-1.7c.2-.2.3-.5.3-.7l.6-8c0-.2 0-.4.2-.6l4.2-8.4.1-.1.1-.3 1.7-3.2.3.4c.3.5 1 .5 1.2 0l.3-.4c.3-.3.4-.8.2-1.3l-1.7-5.4c-.1-.3-.3-.5-.6-.7l-1-.6-7.7-5.2c-2.8-1.9-6-3-9.4-3.3h-1c-2-.2-4 0-6 .4l-11.1 2.5c-.7.1-1.4.2-2.1 0l-8-1.1c-.8-.1-1.7 0-2.5.2l-5.4 1.7h-5.9l-.5.1-5.2 2.3a2.5 2.5 0 0 0-1.2 1.1l-.3.4c-.3-.2-.7-.3-1-.1-.7.3-.9 1.3-.5 2.2L3 380l-.1.1c-.3.5-.4 1-.5 1.5v.3l-1.5 4.7z"/>

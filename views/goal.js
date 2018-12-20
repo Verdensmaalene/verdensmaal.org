@@ -151,9 +151,13 @@ class GoalPage extends View {
         `
       }
 
+      function onclick () {
+
+      }
+
       function action () {
         return html`
-          <a class="Goal-action" href="#manifest">
+          <a class="Goal-action" href="#manifest" onclick="${onclick}">
             ${arrow()} ${text(`Goal ${props.number} in Action`)}
           </a>
         `

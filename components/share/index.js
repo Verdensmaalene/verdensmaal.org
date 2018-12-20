@@ -102,10 +102,10 @@ class Share extends Component {
               </li>
             </ul>
             <label class="Share-raw" for="${URL_ID}">
-              <input onclick=${select} class="Share-url" id="${URL_ID}" onkeydown=${preventDefault} readonly value="${href}" />
+              <input onclick="${select}" class="Share-url" id="${URL_ID}" onkeydown=${preventDefault} readonly value="${href}" />
               <span class="Share-fade"></span>
               ${CAN_COPY ? html`
-                <button class="Share-button" onclick=${copy} data-oncopy="${text`Copied!`}">${text`Copy link`}</button>
+                <button class="Share-button" onclick="${copy}" data-oncopy="${text`Copied!`}">${text`Copy link`}</button>
               ` : null}
             </label>
           </div>
@@ -118,7 +118,7 @@ class Share extends Component {
               ${description ? html`<p class="Share-description">${description}…</p>` : null}
             </div>
           </div>
-          <button class="Share-close js-close" onclick=${close}>
+          <button class="Share-close js-close" onclick="${close}">
             <span class="u-hiddenVisually">${text`Close`}</span>
           </button>
         </div>

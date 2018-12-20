@@ -93,7 +93,7 @@ function logos () {
         ${logo({ vertical: true })}
       </a>
       <a href="https://verdensbedstenyheder.dk/" target="_blank" rel="noopener noreferrer" class="Footer-author">
-        <svg class="Footer-img" width="225" height="118" viewBox="0 0 225 118" alt="Verdens Bedste Nyheder">
+        <svg class="Footer-img" width="225" height="118" viewBox="0 0 225 118">
           <g fill="none" fill-rule="evenodd">
             <path d="M0 0h225v118H0z"/>
             <g fill="#f04b24">
@@ -112,7 +112,7 @@ function credits () {
     <section class="Footer-credits">
       <h2 class="Footer-label">${text`Code, digital design, branding and strategy`}:</h2>
       <a class="Footer-credit" href="https://codeandconspire.com" target="_blank" rel="noopener noreferrer">
-        <svg class="Footer-img" width="225" height="86" viewBox="0 0 225 86" alt="${text`code and conspire`}">
+        <svg class="Footer-img" width="225" height="86" viewBox="0 0 225 86">
           <g fill="none" fill-rule="evenodd">
             <path d="M0-1h225v87H0z"/>
             <path fill="#000" fill-rule="nonzero" d="M29.2 6.6H4.8V66H48V25.2H29.2V6.6zm4.6 3.2v10.9h11l-11-10.9zM.2 2h32.3l20 20v48.5H.2V2zm10.1 35.2l15 7V48l-15 7.6v-5l10-4.5-10-4v-5zM72 43c-4.4 0-7.7-2.8-7.7-7.3 0-4.4 3.3-7.3 7.7-7.3 2 0 3.5.5 5 1.4L75 33.3a5 5 0 0 0-3-.8c-1.7 0-3.3 1.2-3.3 3.2s1.6 3.2 3.4 3.2a5 5 0 0 0 3-.8l1.8 3.6c-1.5.9-3 1.3-5 1.3zm12.9-14.6c4.5 0 7.8 3 7.8 7.3 0 4.4-3.3 7.3-7.8 7.3S77 40.1 77 35.7s3.2-7.3 7.7-7.3zm0 4.1a3.1 3.1 0 0 0-3.2 3.2c0 2 1.4 3.2 3.2 3.2a3 3 0 0 0 3.2-3.2 3 3 0 0 0-3.2-3.2zM100.4 43c-3.6 0-6.6-2.5-6.6-7.3s3-7.3 6.6-7.3c2.2 0 3.6 1 4.5 2.3V23h4.5v19.7H105v-1.9c-.9 1.4-2.3 2.3-4.5 2.3zm1.2-4a3 3 0 0 0 3.2-3.3 3 3 0 0 0-3.2-3.2 3 3 0 0 0-3.2 3.2 3 3 0 0 0 3.2 3.2zm16.8-10.6c4.1 0 6.8 2.4 6.8 7.4v1h-9.9c.3 1.7 1.7 2.5 3.5 2.5 1.7 0 3.2-.7 4-1.3l1.7 3.4c-1.5 1-3.4 1.6-5.7 1.6-4.7 0-7.7-2.8-7.7-7.2 0-4.7 3-7.4 7.3-7.4zm-.2 3.2c-1.5 0-2.7.8-2.9 2.6h5.5c0-1.7-1.1-2.6-2.6-2.6zM72 64.2c-4.4 0-7.7-2.9-7.7-7.3s3.3-7.3 7.7-7.3c2 0 3.5.4 5 1.3L75 54.5a5 5 0 0 0-3-.8c-1.7 0-3.3 1.1-3.3 3.2 0 2 1.6 3.2 3.4 3.2a5 5 0 0 0 3-.8l1.8 3.6c-1.5.8-3 1.3-5 1.3zm12.9-14.6c4.5 0 7.8 2.9 7.8 7.3s-3.3 7.3-7.8 7.3-7.7-3-7.7-7.3c0-4.4 3.2-7.3 7.7-7.3zm0 4a3.1 3.1 0 0 0-3.2 3.3c0 2 1.4 3.2 3.2 3.2a3 3 0 0 0 3.2-3.2 3 3 0 0 0-3.2-3.2zm18.3-4c3.1 0 5.2 1.7 5.2 5.7v8.5H104v-7.3c0-2-.9-3-2.6-3-1.5 0-2.6 1-2.6 3.4v6.9h-4.5V50h4.4v2.1a5 5 0 0 1 4.5-2.5zm12.6 14.6c-1.8 0-4.1-.4-6.2-1.4l1.7-3.7c1.5.8 3.2 1.6 4.9 1.6.8 0 1.2-.2 1.2-.7 0-.5-.5-.6-1-.8l-2.3-1c-2.3-.8-3.4-2.1-3.4-4.2 0-2.8 2-4.4 6-4.4 1.5 0 3.1.2 4.9.8l-1.3 3.6c-1.4-.6-3-1-4-1s-1.2.3-1.2.6c0 .4.4.6 1 .9l2.5.9c2 .7 3.3 1.8 3.3 4.2 0 3.2-2.4 4.6-6 4.6zm7.8 5.5V50h4.5V52h.1c.9-1.4 2.3-2.3 4.5-2.3 3.6 0 6.6 2.5 6.6 7.3s-3 7.3-6.6 7.3c-2.2 0-3.6-1-4.5-2.3v7.8h-4.6zm7.9-9.6a3 3 0 0 0 3.1-3.2 3 3 0 0 0-3.1-3.2 3 3 0 0 0-3.2 3.2 3 3 0 0 0 3.2 3.2zm9.4 3.7V50h4.5v13.8h-4.5zm16-14.2v4.5h-.4c-3 0-4.3 1-4.3 4.6v5h-4.5V50h4.5v2.8c.8-2.2 2.4-3.2 4.6-3.2zm8.2 0c4.1 0 6.8 2.4 6.8 7.3v1H162c.3 1.8 1.7 2.6 3.6 2.6 1.6 0 3.1-.7 4-1.3l1.6 3.4c-1.4.9-3.3 1.6-5.7 1.6-4.6 0-7.7-2.9-7.7-7.3 0-4.6 3-7.3 7.3-7.3zm-.2 3.2c-1.5 0-2.6.7-2.8 2.5h5.5c0-1.6-1.2-2.5-2.7-2.5zm-14.7-19a41 41 0 0 1-3.2 4.8l3 4h-5l-1-1.2v.1a9.3 9.3 0 0 1-5.4 1.6c-4.7 0-7.6-2.5-7.6-7a6 6 0 0 1 4.4-6.1h.1v-.1a6 6 0 0 1-.8-3c0-2.6 1.8-4.1 5.2-4.1 1.5 0 3.2.3 4.8.8l-1 3.6c-1.5-.4-2.4-.6-3.2-.6-.8 0-1.3.3-1.3 1 0 .5.2 1 .6 1.5l4.6 6v.2l.1-.1 2.2-3.5 3.5 2.1zM138.4 39c1 0 2-.3 3-.9l-3.7-5c-1.6.4-2.5 1.5-2.5 2.9 0 1.8 1.3 3 3.2 3zM24.6 56.4H42v4.5H24.6v-4.5z"/>
@@ -121,7 +121,7 @@ function credits () {
         <span class="u-hiddenVisually">${text`Visit website`}</span>
       </a>
       <a class="Footer-credit" href="https://thenewdivision.world" target="_blank" rel="noopener noreferrer">
-        <svg class="Footer-img" width="225" height="86" viewBox="0 0 225 86" alt="${text`The New Division`}">
+        <svg class="Footer-img" width="225" height="86" viewBox="0 0 225 86">
           <g fill="none" fill-rule="evenodd">
             <path d="M0 0h225v86H0z"/>
             <g fill="#000" fill-rule="nonzero">

@@ -58,7 +58,7 @@ function loading (num, lang) {
   return html`
     <div class="Goal-icon Goal-icon--${num}">
       <span class="u-hiddenVisually">${text`LOADING_TEXT_MEDIUM`}</span>
-      <svg role="presentational" aria-hidden="true" class="Goal-label" viewBox="0 0 200 ${height}" style="-ms-flex: 1 1 ${height}px;" preserveAspectRatio="xMidYMin meet">
+      <svg role="presentation" aria-hidden="true" class="Goal-label" viewBox="0 0 200 ${height}" style="-ms-flex: 1 1 ${height}px;" preserveAspectRatio="xMidYMin meet">
         <g transform="scale(0.94)">
           <text class="Goal-number" font-size="59.4" fill="currentColor" text-anchor="middle" alignment-baseline="hanging">
             <tspan x="${digitPos}" y="41" letter-spacing="-0.1" text-anchor="middle">${translate(num, lang)}</tspan>

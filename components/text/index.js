@@ -36,7 +36,7 @@ module.exports = class Text extends Component {
               ${asElement(block, this.resolve, serialize)}
             </div>
             ${!this.local.expanded ? html`
-              <button class="Text-expander" onclick=${onclick}>
+              <button class="Text-expander" onclick="${onclick}">
                 <span class="Text-toggle">${text`Show more`}</span>
               </button>
             ` : null}

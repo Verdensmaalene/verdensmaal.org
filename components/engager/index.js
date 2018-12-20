@@ -57,7 +57,7 @@ module.exports = class Engager extends Component {
 
       return html`
         <div class="Engager-block">
-          <a href="#${props.id}" onclick=${onclick} class="Engager-button Engager-button--row ${isSelected ? 'is-expanded' : ''}" role="button" aria-selected="${isSelected ? 'true' : 'false'}" aria-controls="${props.id}" id="${props.id}-label">
+          <a href="#${props.id}" onclick="${onclick}" class="Engager-button Engager-button--row ${isSelected ? 'is-expanded' : ''}" role="button" aria-selected="${isSelected ? 'true' : 'false'}" aria-controls="${props.id}" id="${props.id}-label">
             <span class="Engager-buttonText">${props.label}</span>
           </a>
           <div class="Engager-panel ${isSelected ? 'is-expanded' : ''}" role="tabpanel" tabindex="0" ${hidden} aria-labelledby="${props.id}-label" id="${props.id}">
@@ -101,7 +101,7 @@ module.exports = class Engager extends Component {
       var isSelected = props.id === self.local.selected
 
       return html`
-        <a href="#${props.id}" onclick=${onclick} class="${className('Engager-button', { 'js-active': isSelected })}" role="tab" aria-selected="${isSelected ? 'true' : 'false'}" aria-controls="${props.id}">
+        <a href="#${props.id}" onclick="${onclick}" class="${className('Engager-button', { 'js-active': isSelected })}" role="tab" aria-selected="${isSelected ? 'true' : 'false'}" aria-controls="${props.id}">
           ${props.label}
         </a>
       `

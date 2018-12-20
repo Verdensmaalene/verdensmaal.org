@@ -43,7 +43,7 @@ class Player extends Component {
             </div>
           ` : content}
         </div>
-        <button class="Embed-close" onclick=${() => this.close(onclose)}>
+        <button class="Embed-close" onclick="${() => this.close(onclose)}">
           <span class="Embed-cross">
             <span class="u-hiddenVisually">${text`Close`}</span>
           </span>

@@ -73,7 +73,7 @@ module.exports = class Target extends Component {
             </figure>
             <div class="Target-actions u-colorBlack u-spaceT1">
               ${opts.href ? html`
-                <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick=${onshare} title="${text`Share`}">
+                <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick="${onshare}" title="${text`Share`}">
                   <span class="u-hiddenVisually">${text`Share`}</span>
                   ${symbol('share', { circle: true })}
                 </a>
@@ -92,7 +92,7 @@ module.exports = class Target extends Component {
             </h3>
             <div class="Target-actions">
               ${opts.href ? html`
-                <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick=${onshare} title="${text`Share`}">
+                <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick="${onshare}" title="${text`Share`}">
                   <span class="u-hiddenVisually">${text`Share`}</span>
                   ${symbol('share', { circle: true })}
                 </a>
@@ -111,7 +111,7 @@ module.exports = class Target extends Component {
           ` : null}
         </div>
         ${this.local.collapsed ? html`
-          <a href="#${text`target`}-${opts.id}" class="Target-button" onclick=${onexpand}><span class="u-hiddenVisually">${text`Show more`}</span></a>
+          <a href="#${text`target`}-${opts.id}" class="Target-button" onclick="${onexpand}"><span class="u-hiddenVisually">${text`Show more`}</span></a>
         ` : null}
       </div>
     `

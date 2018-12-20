@@ -86,7 +86,7 @@ module.exports = class Background4 extends Component {
       <div class="Background4 ${opts.size === 'small' ? 'Background4--small' : ''}" id="background-4">
         <div class="Background4-letters">
           ${LETTERS.map((letter, index) => html`
-            <div class="Background4-letter Background4-letter--${letter} ${(index + 1) % 4 ? '' : 'Background4-letter--dark'} js-letter" onclick=${letter === 'm' ? easter : null}>
+            <div class="Background4-letter Background4-letter--${letter} ${(index + 1) % 4 ? '' : 'Background4-letter--dark'} js-letter" onclick="${letter === 'm' ? easter : null}">
               ${ALIAS[letter] || letter}
             </div>
           `)}

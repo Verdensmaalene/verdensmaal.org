@@ -30,7 +30,7 @@
 }
 
 .Share-container {
-  flex: 1 1 0;
+  flex: 1 1 0%;
   width: 100%;
   display: flex;
   flex-direction: column;
