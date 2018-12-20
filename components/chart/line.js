@@ -1,7 +1,7 @@
 var html = require('choo/html')
 var raw = require('choo/html/raw')
 var { i18n, className } = require('../base')
-var split = require('./split')
+var { rows, format } = require('./utils')
 
 var LINE_HEIGHT = 26
 var WIDTH = 560
@@ -13,7 +13,7 @@ var hasAnimation = typeof window !== 'undefined' && ('SVGAnimateElement' in wind
 module.exports = line
 
 function line (props, style = null) {
-  var title = props.standalone ? split(props.title) : null
+  var title = props.standalone ? rows(props.title) : null
   var offset = LINE_HEIGHT / 2
   if (props.standalone) offset = LINE_HEIGHT * 2 + title.length * LINE_HEIGHT
   var height = props.standalone ? WIDTH : WIDTH * 3 / 4
@@ -60,13 +60,13 @@ function line (props, style = null) {
       ${grid.map(({ label, y }, index) => html`
         <g class="Chart-label" style="animation-delay: ${100 * index}ms;">
           <path stroke="#F1F1F1" stroke-width="1" d="M${label.length * (CHAR - label.length * CHAR * 0.05)},${y} L${WIDTH},${y}" />
-          <text class="Chart-label Chart-label--sm" x="0" y="${y}" dy="0.25em">${label}</text>
+          <text class="Chart-label Chart-label--sm" x="0" y="${y}" dy="0.25em">${format(label)}</text>
         </g>
       `)}
       ${props.series.map(line)}
       ${props.labels ? props.labels.map((label, index, list) => html`
         <text class="Chart-label Chart-label--sm" x="${indent + WIDTH * 0.05 + ((WIDTH - indent) * 0.9 / (list.length - 1)) * index}" y="${height - LINE_HEIGHT * 0.25}" text-anchor="middle">
-          ${label}
+          ${format(label)}
         </text>
       `) : null}
     </svg>
@@ -116,7 +116,11 @@ function line (props, style = null) {
         </text>
         <g class="Chart-legend">
           <text x="0" y="0" text-anchor="end">
-            ${props.series.map((data, index) => html`<tspan x="${WIDTH - 20}" dy="${index ? 1.5 : 0.75}em">${data.label}</tspan>`)}
+            ${props.series.map((data, index) => html`
+              <tspan x="${WIDTH - 20}" dy="${index ? 1.5 : 0.75}em">
+                ${data.label}${typeof data.value !== 'undefined' ? ` (${format(data.value)})` : null}
+              </tspan>
+            `)}
           </text>
           ${props.series.map((data, index) => html`
             <rect width="14" height="14" x="${WIDTH - 14}" y="${1.45 * index + 0.08 * index}em" fill="${data.color}" />

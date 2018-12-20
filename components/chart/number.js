@@ -1,7 +1,7 @@
 var html = require('choo/html')
 var raw = require('choo/html/raw')
-var split = require('./split')
 var { i18n, className } = require('../base')
+var { rows, format } = require('./utils')
 
 var SIZE = 560
 
@@ -10,7 +10,7 @@ var text = i18n(require('./lang.json'))
 module.exports = number
 
 function number (props, style = null) {
-  var title = props.standalone ? split(props.title) : null
+  var title = props.standalone ? rows(props.title) : null
   var height = props.standalone ? SIZE : SIZE * 3 / 4
   var classAttr = className({
     'Chart Chart--number': props.standalone,
@@ -44,7 +44,7 @@ function number (props, style = null) {
   function value (data) {
     return html`
       <text x="${SIZE / 2}" y="${height / 2 + (props.standalone ? 125 : 62.5)}" text-anchor="middle" class="Chart-label Chart-label--xl" fill="${data.color}">
-        ${data.value}
+        ${format(data.value)}
       </text>
     `
   }

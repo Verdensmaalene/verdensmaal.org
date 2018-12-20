@@ -1,7 +1,7 @@
 var html = require('choo/html')
 var raw = require('choo/html/raw')
 var { i18n, luma, className } = require('../base')
-var split = require('./split')
+var { rows, parse, format } = require('./utils')
 
 var LINE_HEIGHT = 26
 var WIDTH = 560
@@ -11,12 +11,12 @@ var text = i18n(require('./lang.json'))
 module.exports = bar
 
 function bar (props, style = null) {
-  var title = props.standalone ? split(props.title) : null
+  var title = props.standalone ? rows(props.title) : null
   var offset = 0
   if (props.standalone) offset = LINE_HEIGHT * 5 + title.length * LINE_HEIGHT
   var barWidth = WIDTH / props.series.length
   var max = props.series.reduce(function (prev, data) {
-    var value = parseFloat(data.value)
+    var value = parse(data.value)
     return value > prev ? value : prev
   }, 0)
   var factor = 100 / max
@@ -51,7 +51,11 @@ function bar (props, style = null) {
         </text>
         <g class="Chart-legend">
           <text x="0" y="0" text-anchor="end">
-            ${props.series.map((data, index) => html`<tspan x="${WIDTH - 20}" dy="${index ? 1.5 : 0.75}em">${data.label}</tspan>`)}
+            ${props.series.map((data, index) => html`
+              <tspan x="${WIDTH - 20}" dy="${index ? 1.5 : 0.75}em">
+                ${data.label}${typeof data.value !== 'undefined' ? ` (${format(data.value)})` : null}
+              </tspan>
+            `)}
           </text>
           ${props.series.map((data, index) => html`
             <rect width="14" height="14" x="${WIDTH - 14}" y="${1.45 * index + 0.08 * index}em" fill="${data.color}" />
@@ -62,7 +66,7 @@ function bar (props, style = null) {
   }
 
   function bar (data, index) {
-    var value = parseFloat(data.value)
+    var value = parse(data.value)
     if (value === max) value = 100
     else value = value * factor
     var barHeight = (height - offset) * value / 100
@@ -77,7 +81,7 @@ function bar (props, style = null) {
         <rect x="${index * barWidth}" y="${height - barHeight}" width="${barWidth}" height="${barHeight}" style="animation-delay: ${200 * index}ms;" class="Chart-bar" fill="${data.color}" />
         ${data.trend ? arrow() : null}
         <text x="${20 + barWidth * index}" y="${numberPos}" dominant-baseline="${barHeight > 110 ? 'hanging' : 'central'}" class="${className(`Chart-label Chart-label--lg Chart-label--${theme}`, { 'Chart-label--outside': isShort })}" style="animation-delay: ${800 + 200 * index}ms;">
-          ${data.value}
+          ${format(data.value)}
         </text>
         <text x="${20 + barWidth * index}" y="${labelPos}" dominant-baseline="${barHeight > 110 ? 'hanging' : 'central'}" class="${className(`Chart-label Chart-label--${theme}`, { 'Chart-label--outside': isShort })}" style="animation-delay: ${950 + 200 * index}ms;">
           ${data.label}

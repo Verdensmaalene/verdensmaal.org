@@ -1,7 +1,7 @@
 var html = require('choo/html')
 var raw = require('choo/html/raw')
-var split = require('./split')
 var { i18n, luma, className } = require('../base')
+var { rows, parse, format } = require('./utils')
 
 var LINE_HEIGHT = 26
 var RADIUS = 170
@@ -13,9 +13,9 @@ var text = i18n(require('./lang.json'))
 module.exports = pie
 
 function pie (props, style = null) {
-  var title = props.standalone ? split(props.title) : null
+  var title = props.standalone ? rows(props.title) : null
   var half = Math.floor(props.series.length / 2)
-  var values = props.series.map((data) => parseFloat(data.value))
+  var values = props.series.map((data) => parse(data.value))
   var total = values.reduce((total, value) => total + value, 0)
   var angles = values.map((value) => 360 * (value / total))
   var height = props.standalone ? WIDTH + (title.length + half + 2) * LINE_HEIGHT : WIDTH * 3 / 4
@@ -73,7 +73,11 @@ function pie (props, style = null) {
           ${cols.map((rows, col) => html`
             <g transform="translate(${col ? WIDTH / 2 : 0} ${position + LINE_HEIGHT * 2})">
               <text x="0" y="0">
-                ${rows.map((data, index) => html`<tspan id="legend${data.id}" x="${20}" dy="${index ? 1.5 : 0.75}em">${data.label}</tspan>`)}
+                ${rows.map((data, index) => html`
+                  <tspan id="legend${data.id}" x="${20}" dy="${index ? 1.5 : 0.75}em">
+                    ${data.label}${typeof data.value !== 'undefined' ? ` (${format(data.value)})` : null}
+                  </tspan>
+                `)}
               </text>
               ${rows.map((data, index) => html`
                 <rect id="marker${data.id}" width="14" height="14" x="0" y="${1.45 * index + 0.08 * index}em" class="Chart-color" fill="${data.color}" />
@@ -108,7 +112,7 @@ function pie (props, style = null) {
         ${props.standalone || hasAnimation ? html`<path id="path${data.id}" d="${shrunk}" fill="${data.color}" />` : null}
         ${!props.standalone ? html`<path d="${path}" class="Chart-fallback" fill="${data.color}" />` : null}
         <text x="${x}" y="${y}" dominant-baseline="central" text-anchor="middle" class="Chart-label Chart-label--md Chart-label--${theme}" style="animation-delay: ${300 + 125 * index}ms;">
-            ${data.value}
+            ${format(data.value)}
         </text>
         ${props.standalone || hasAnimation ? html`
           <g>

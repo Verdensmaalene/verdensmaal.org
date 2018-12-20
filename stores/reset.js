@@ -15,5 +15,5 @@ function reset (state, emitter) {
   })
 
   // ensure document language
-  state.language = 'dn'
+  state.language = 'da'
 }

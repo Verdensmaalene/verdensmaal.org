@@ -2,6 +2,7 @@ var html = require('choo/html')
 var nanoraf = require('nanoraf')
 var Component = require('choo/component')
 var { vh, i18n } = require('../base')
+var { format } = require('./utils')
 
 var text = i18n(require('./lang.json'))
 
@@ -121,10 +122,12 @@ Chart.prototype.update = function () {
 }
 
 function wrapper (props, children) {
-  var link = { href: props.source.url, class: 'Chart-link' }
-  if (props.source.target) {
-    link.target = props.source.target
-    if (link.target === '_blank') link.rel = 'noopener noreferrer'
+  if (props.source) {
+    var link = { href: props.source.url, class: 'Chart-link' }
+    if (props.source.target) {
+      link.target = props.source.target
+      if (link.target === '_blank') link.rel = 'noopener noreferrer'
+    }
   }
 
   return html`
@@ -142,7 +145,7 @@ function wrapper (props, children) {
           <ol class="Chart-legend">
             ${props.series.map((data) => html`
               <li class="Chart-marque" id="legend${slugify(data.label)}">
-                <span>${data.label}${typeof data.value !== 'undefined' ? ` (${data.value})` : null}</span>
+                <span>${data.label}${typeof data.value !== 'undefined' ? ` (${format(data.value)})` : null}</span>
                 <span class="Chart-marker" style="color: ${data.color}"></span>
               </li>
             `)}
