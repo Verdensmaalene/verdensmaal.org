@@ -114,19 +114,8 @@ function draw (number, text, opts = {}) {
   digitPos -= longerLine ? 4 : 0
   if (isArabic) digitPos = 200 - digitPos
 
-  var attrs = {
-    role: 'presentation',
-    'aria-hidden': 'true',
-    class: className('Goal-label js-label', { 'u-rtl': isArabic }),
-    height: height * 0.92,
-    width: 200,
-    viewBox: `0 0 200 ${height}`,
-    preserveAspectRatio: 'xMidYMin meet'
-  }
-  if (opts.flex) attrs.style = `-ms-flex: 1 1 ${height}px;`
-
   return html`
-    <svg ${attrs}>
+    <svg role="presentation" aria-hidden="true" class="${className('Goal-label js-label', { 'u-rtl': isArabic })}" height="${height * 0.92}" width="200" viewBox="0 0 200 ${height}" preserveAspectRatio="xMidYMin meet" style="${opts.flex ? `-ms-flex: 1 1 ${height}px;` : ''}">
       <g transform="scale(0.94)">
         <text class="Goal-number" font-size="59.4" fill="currentColor" text-anchor="middle" alignment-baseline="hanging">
           <tspan x="${digitPos}" y="41" letter-spacing="${isArabic ? '-0.1' : ''}" text-anchor="middle">
