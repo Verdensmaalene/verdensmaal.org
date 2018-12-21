@@ -3,6 +3,14 @@ var { i18n } = require('../base')
 
 var text = i18n()
 
+var DEBUG = process.env.NODE_ENV === 'development'
+if (typeof window !== 'undefined') {
+  try {
+    let flag = window.localStorage.DEBUG
+    DEBUG = DEBUG || (flag && JSON.parse(flag))
+  } catch (err) {}
+}
+
 module.exports = error
 
 function error (err) {
@@ -25,9 +33,7 @@ function error (err) {
                 <a href="/">${text`the homepage`}</a>.
               </p>
             `}
-            ${process.env.NODE_ENV === 'development' ? html`
-              <pre>${err.stack}</pre>
-            ` : null}
+            ${DEBUG ? html`<pre>${err.stack}</pre>` : null}
           </div>
         </div>
       </div>
