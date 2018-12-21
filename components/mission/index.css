@@ -167,7 +167,7 @@
 .Mission-hill,
 .Mission-bear {
   transform: translateY(100%);
-  animation: Mission-item--appear 400ms forwards var(--ease-out);
+  animation: Mission-item--appear 250ms forwards var(--ease-out);
 }
 
 @keyframes Mission-item--appear {
@@ -177,21 +177,21 @@
 }
 
 .Mission-house:nth-child(1) { animation-delay: 200ms; }
-.Mission-house:nth-child(2) { animation-delay: 450ms; }
-.Mission-house:nth-child(3) { animation-delay: 575ms; }
-.Mission-house:nth-child(4) { animation-delay: 350ms; }
-.Mission-house:nth-child(5) { animation-delay: 250ms; }
+.Mission-house:nth-child(2) { animation-delay: 400ms; }
+.Mission-house:nth-child(3) { animation-delay: 525ms; }
+.Mission-house:nth-child(4) { animation-delay: 300ms; }
+.Mission-house:nth-child(5) { animation-delay: 225ms; }
 
 .Mission-hill { animation-delay: 700ms; }
 .Mission-bear {
   animation-duration: 600ms;
-  animation-delay: 825ms;
+  animation-delay: 500ms;
 }
 
 .Mission-cloud {
   display: none;
   transform: translateY(calc(50vh + 50%));
-  animation: Mission-cloud--appear 600ms forwards cubic-bezier(0.23, 1, 0.32, 1);
+  animation: Mission-cloud--appear 600ms forwards cubic-bezier(0.23, 0.92, 0.28, 1);
 }
 
 @media (min-height: 800px) and (min-width: 480px), (min-width: 900px) {
@@ -203,7 +203,7 @@
 .Mission-cloud:nth-child(1) { animation-delay: 450ms; }
 .Mission-cloud:nth-child(2) { animation-delay: 590ms; }
 .Mission-cloud:nth-child(3) { animation-delay: 575ms; }
-.Mission-cloud:nth-child(4) { animation-delay: 725ms; }
+.Mission-cloud:nth-child(4) { animation-delay: 650ms; }
 .Mission-cloud:nth-child(5) { animation-delay: 500ms; }
 
 @keyframes Mission-cloud--appear {
@@ -212,12 +212,7 @@
   }
 }
 
-.Mission-birdPath:not(.is-animated) {
-  display: none;
-}
-
 .Mission-birds {
-  display: none;
   width: 100%;
   height: 40%;
   position: absolute;
@@ -229,7 +224,7 @@
 }
 
 @media (min-height: 800px) and (min-width: 480px), (min-width: 900px) {
-  .Mission.is-loaded .Mission-birds {
+  .Mission .Mission-birds {
     display: block;
   }
 }

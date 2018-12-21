@@ -6,6 +6,7 @@ var { i18n } = require('../base')
 var text = i18n()
 
 var BIRD_WING_FLAP = 'M13.774.01C9.294.01 2.172 2.586 1.408 3.26c-.764.675-.826 1.707-.397 2.35.43.645 2.092.414 2.57.2.478-.214 3.01-.287 6.168-.287 3.258 0 9.663 3.873 15.858 9.648.513.456 1.006.684 1.48.684.472 0 .95-.223 1.43-.67 6.225-5.79 12.62-9.662 15.882-9.662 3.174 0 5.59.025 6.18.287.59.262 1.95.595 2.593-.2.645-.793.29-1.7-.282-2.218S44.918 0 40.375 0c-6.204 0-11.313 5.462-13.29 7.025C25.162 5.522 20.03.01 13.775.01z'
+var BIRD_WING_ORIGIN = 'M13.774.01C9.294.01 2.172 4.586 1.408 5.26c-.764.675-.826 1.707-.397 2.35.43.645 2.092.414 2.57.2.478-.214 3.01-1.287 6.168-1.287 3.258 0 9.663.873 15.858 6.648.513.456 1.006.684 1.48.684.472 0 .95-.223 1.43-.67 6.225-5.79 12.62-6.662 15.882-6.662 3.174 0 5.59 1.025 6.18 1.287.59.262 1.95.595 2.593-.2.645-.793.29-1.7-.282-2.218S44.918 0 40.375 0c-6.204 0-11.313 3.462-13.29 5.025C25.162 3.522 20.03.01 13.775.01z'
 
 module.exports = class Mission extends Component {
   constructor (id, state, emit) {
@@ -45,16 +46,6 @@ module.exports = class Mission extends Component {
     return false
   }
 
-  load (element) {
-    this.local.isLoaded = true
-    element.classList.add('is-loaded')
-
-    var bird = element.querySelector('.js-bird')
-    bird.appendChild(html`
-      <animate attributeName="d" begin="0s" dur="1200ms" repeatCount="indefinite" values="${[BIRD_WING_FLAP, bird.getAttribute('d'), BIRD_WING_FLAP].join(';')}" />
-    `)
-  }
-
   createElement (props) {
     return html`
       <div class="Mission ${this.local.isLoaded ? 'is-loaded' : ''}" id="${this.local.id}">
@@ -85,7 +76,8 @@ function background () {
     <div class="Mission-background">
       <svg hidden>
         <symbol viewBox="0 0 54 14" id="mission-bird-symbol">
-          <path class="js-bird" d="M13.774.01C9.294.01 2.172 4.586 1.408 5.26c-.764.675-.826 1.707-.397 2.35.43.645 2.092.414 2.57.2.478-.214 3.01-1.287 6.168-1.287 3.258 0 9.663.873 15.858 6.648.513.456 1.006.684 1.48.684.472 0 .95-.223 1.43-.67 6.225-5.79 12.62-6.662 15.882-6.662 3.174 0 5.59 1.025 6.18 1.287.59.262 1.95.595 2.593-.2.645-.793.29-1.7-.282-2.218S44.918 0 40.375 0c-6.204 0-11.313 3.462-13.29 5.025C25.162 3.522 20.03.01 13.775.01z" fill="currentColor" fill-rule="evenodd"/>
+          <path id="mission-bird" d="${BIRD_WING_ORIGIN}" fill="currentColor" fill-rule="evenodd"/>
+          <animate xlink:href="#mission-bird" attributeName="d" begin="0s" dur="1200ms" repeatCount="indefinite" values="${[BIRD_WING_FLAP, BIRD_WING_ORIGIN, BIRD_WING_FLAP].join(';')}" />
         </symbol>
       </svg>
       <div class="Mission-birds">
