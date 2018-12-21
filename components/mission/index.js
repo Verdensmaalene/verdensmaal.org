@@ -24,7 +24,9 @@ module.exports = class Mission extends Component {
       <div class="Mission">
         <div class="Mission-content u-container">
           <div class="Mission-body">
-            ${intro.loading({ adaptive: true })}
+            <div class="View-spaceLarge">
+              ${intro.loading({ adaptive: true })}
+            </div>    
           </div>
           <div class="Mission-footer">
             <div class="Mission-partners">
@@ -52,7 +54,9 @@ module.exports = class Mission extends Component {
         ${!this.local.isHighContrast ? background() : null}
         <div class="Mission-content u-container">
           <div class="Mission-body">
-            ${intro({ title: props.title, body: props.description })}
+            <div class="View-spaceLarge">
+              ${intro({ title: props.title, body: props.description })}
+            </div>
           </div>
           ${!this.local.isHighContrast && props.partners ? html`
             <div class="Mission-footer">

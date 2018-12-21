@@ -29,7 +29,8 @@ function eventView (state, emit) {
           <article>
             ${banner.loading()}
             <div class="u-container">
-              <div class="Text u-spaceT6">
+              <div class="Text">
+                <span class="first-child-helper"></span>
                 <h1><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h1>
                 <p class="Text-large"><span class="u-loading">${text`LOADING_TEXT_LONG`}</span></p>
               </div>
@@ -55,7 +56,7 @@ function eventView (state, emit) {
       alt: image.alt || '',
       caption: image.copyright
     }, asTicket(doc)) : html`
-      <div class="u-cols u-spaceB8">
+      <div class="u-cols">
         <div class="u-col u-lg-size2of3">
           ${event.outer(event.inner(), { static: true, type: 'banner' })}
         </div>
@@ -72,9 +73,10 @@ function eventView (state, emit) {
             ${hero}
           </div>
           <div class="u-container">
-            <div class="u-cols u-spaceT6">
-              <div class="u-col u-lg-size2of3 u-spaceB8">
+            <div class="u-cols">
+              <div class="u-col u-lg-size2of3">
                 <div class="Text">
+                  <span class="first-child-helper"></span>
                   <h1>${title}</h1>
                   <p class="Text-large">${description}</p>
                   ${body}
@@ -85,7 +87,8 @@ function eventView (state, emit) {
                   ${doc.data.related.map(related)}
                   <aside>
                     <div class="Text">
-                      <h2 class="Text-h3 u-spaceB2">${text`Spread the word`}</h2>
+                      <span class="first-child-helper"></span>
+                      <h3>${text`Spread the word`}</h3>
                     </div>
                     <ul>
                       <li>
@@ -141,8 +144,9 @@ function eventView (state, emit) {
           )
         }
         return html`
-          <aside class="Text u-spaceB8">
-            <h2 class="Text-h3 u-spaceB2">${asText(slice.primary.heading)}</h2>
+          <aside class="Text">
+            <span class="first-child-helper"></span>
+            <h3>${asText(slice.primary.heading)}</h3>
             <dl>
               ${list}
             </dl>
@@ -151,9 +155,10 @@ function eventView (state, emit) {
       }
       case 'links': {
         return html`
-          <aside class="u-spaceB8">
+          <aside>
             <div class="Text">
-              <h2 class="Text-h3 u-spaceB2">${asText(slice.primary.heading)}</h2>
+              <span class="first-child-helper"></span>
+              <h3>${asText(slice.primary.heading)}</h3>
             </div>
             <ol>
               ${/* eslint-disable indent */

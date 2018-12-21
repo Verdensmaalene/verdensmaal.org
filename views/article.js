@@ -26,7 +26,7 @@ function article (state, emit) {
         <main class="View-main">
           <article>
             ${banner.loading()}
-            <div class="u-container u-spaceT6">
+            <div class="u-container">
               <div class="Text">
                 <span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span>
                 <h1><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h1>
@@ -54,8 +54,8 @@ function article (state, emit) {
           ` : null}
           <div class="u-container">
             
-            <div class="u-cols u-spaceT6">
-              <div class="u-col u-lg-size2of3 u-spaceB8">
+            <div class="u-cols">
+              <div class="u-col u-lg-size2of3">
                 <div class="Text">
                   <time class="Text-muted" datetime="${date}">
                     ${text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`}
@@ -70,7 +70,8 @@ function article (state, emit) {
                   ${doc.data.related && doc.data.related.map(related)}
                   <aside class="u-printHidden">
                     <div class="Text">
-                      <h2 class="Text-h3 u-spaceB2">${text`Spread the word`}</h2>
+                      <span class="first-child-helper"></span>
+                      <h3>${text`Spread the word`}</h3>
                     </div>
                     <ul>
                       <li>
@@ -119,9 +120,10 @@ function article (state, emit) {
     switch (slice.slice_type) {
       case 'links': {
         return html`
-          <aside class="u-spaceB8">
+          <aside>
             <div class="Text">
-              <h2 class="Text-h3 u-spaceB2">${asText(slice.primary.heading)}</h2>
+              <span class="first-child-helper"></span>
+              <h3>${asText(slice.primary.heading)}</h3>
             </div>
             <ol>
               ${/* eslint-disable indent */

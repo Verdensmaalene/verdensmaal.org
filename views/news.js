@@ -41,7 +41,9 @@ function news (state, emit) {
     return html`
       <main class="View-main">
         <div class="u-container">
-          ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
+          <div class="View-spaceLarge">
+            ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
+          </div>
           ${news.length ? html`
             <section>
               ${grid({ size: { sm: '1of2' } }, latest.map((item) => newsCard(item, 2)))}

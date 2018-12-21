@@ -43,7 +43,7 @@ module.exports = class Tabs extends Component {
 
     return html`
       <div class="Tabs" id="${this.local.id}">
-        <div class="u-spaceB6">
+        <div>
           ${this.tablist.render(tabs, this.local.selected, onselect)}
         </div>
         ${tabs.map(getPanel)}

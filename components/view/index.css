@@ -96,19 +96,17 @@
  * Footer
  */
 
-.View-footer {
-  margin-top: 4rem;
-}
-
-@media (min-width: 600px) {
-  .View-footer {
-    margin-top: 5rem;
-  }
+.View-footer::before {
+  content: "";
+  height: 13vh;
+  display: block;
+  max-height: 7rem;
 }
 
 @media (min-width: 1000px) {
-  .View-footer {
-    margin-top: 10rem;
+  .View-footer::before {
+    max-height: none;
+    min-height: 8rem;
   }
 }
 
@@ -133,46 +131,75 @@
  * Sections
  */
 
-.View-section {
-  margin-bottom: 7rem;
+.View-space {
+  margin: 3rem 0;
 }
 
-.View-section--heading {
-  margin-bottom: 2.5rem;
+@media (min-width: 1000px) {
+  .View-space {
+    margin: 4rem 0;
+  }
 }
 
-@media print {
-  .View-section {
-    margin-bottom: 4rem;
-  } 
-}
-
-/**
- * 1. Deduct trailing grid margin
- */
-
-.View-section--news + .View-section,
-.View-section--events + .View-section {
-  margin-top: calc(var(--Grid-gutter) * -1); /* 1 */
+@media (min-width: 1200px) {
+  .View-space {
+    margin: 5rem 0;
+  }
 }
 
 /**
- * 1. Deduct margin to augument Grid spacing
+ * Small
  */
 
-.View-section--image + .View-section--video,
-.View-section--image + .View-section--gallery,
-.View-section--video + .View-section--image,
-.View-section--video + .View-section--gallery,
-.View-section--video + .View-section--video {
-  margin-top: calc((7rem - var(--Grid-gutter)) * -1); /* 1 */
+.View-spaceSmall {
+  margin: 2em 0;
+}
+@media (min-width: 1000px) {
+  .View-spaceSmall {
+    margin: 2.5em 0;
+  }
 }
 
 /**
- * 1. Rely on gutter cell bottom to apply appropiate spacing
+ * Large
  */
 
-.View-section--gallery + .View-section--image,
-.View-section--gallery + .View-section--video {
-  margin-top: -7rem; /* 1 */
+.View-spaceLarge {
+  margin-bottom: 2rem;
+}
+
+.View-spaceLarge::before {
+  content: "";
+  height: 17vh;
+  display: block;
+  max-height: 7rem;
+}
+
+.View-space + .View-spaceLarge {
+  margin-top: -3rem;
+}
+
+.View-spaceSmall + .View-spaceLarge {
+  margin-top: -2rem;
+}
+
+@media (min-width: 1000px) {
+  .View-space + .View-spaceLarge {
+    margin-top: -4rem;
+  }
+
+  .View-spaceSmall + .View-spaceLarge {
+    margin-top: -2.5em;
+  }
+
+  .View-spaceLarge::before {
+    max-height: none;
+    min-height: 10rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .View-space + .View-spaceLarge {
+    margin-top: -5rem;
+  }
 }

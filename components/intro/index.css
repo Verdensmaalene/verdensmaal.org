@@ -2,30 +2,13 @@
 
 /* @define Intro */
 .Intro {
-  margin-bottom: 2rem;
-}
-
-.Intro::before {
-  content: "";
-  height: 17vh;
-  display: block;
-  max-height: 7rem;
-}
-
-@media print {
-  .Intro {
-    margin-top: 2rem !important;
-  }
-
-  .Intro::before {
-    display: none !important;
-  }
+  color: rgb(var(--current-color));
 }
 
 .Intro-title {
   max-width: 11em;
   margin: 0 0 0.2em;
-  font-size: 4rem;
+  font-size: 3rem;
   line-height: .95;
   font-weight: 600;
   hyphens: auto;
@@ -34,8 +17,20 @@
   word-spacing: var(--heading-word-spacing);
 }
 
+@media (min-width: 350px) {
+  .Intro-title {
+    font-size: 4rem;
+  }
+}
+
 .Intro--secondary .Intro-title {
-  font-size: 3rem;
+  font-size: 2.5rem;
+}
+
+@media (min-width: 350px) {
+  .Intro--secondary .Intro-title {
+    font-size: 3rem;
+  }
 }
 
 .Intro-body {
@@ -43,8 +38,12 @@
   max-width: 39em;
 }
 
-.Intro-body p:not(:last-child) {
-  margin-bottom: 1em;
+.Text p:not(:first-child) {
+  margin-top: 1.3em;
+}
+
+.Text p:not(:last-child) {
+  margin-bottom: 1.3em;
 }
 
 .Intro a {
@@ -59,15 +58,6 @@
 }
 
 @media (min-width: 1000px) {
-  .Intro {
-    margin-bottom: 4rem;
-  }
-
-  .Intro::before {
-    max-height: none;
-    min-height: 10rem;
-  }
-
   .Intro-title {
     max-width: 8em;
     font-size: 6rem;

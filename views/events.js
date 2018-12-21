@@ -40,7 +40,9 @@ function events (state, emit) {
       return html`
         <main class="View-main">
           <div class="u-container">
-            ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
+            <div class="View-spaceLarge">
+              ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
+            </div>
             ${content(response)}
           </div>
         </main>
@@ -73,7 +75,7 @@ function events (state, emit) {
 
     return html`
       <div>
-        <div class="u-spaceB5">
+        <div>
           ${state.cache(Map, 'events-map').render(locations, bounds)}
         </div>
         ${state.cache(Tabs, 'events-tabs', 'events-grid-panel').render(tabs, panel, onselect)}

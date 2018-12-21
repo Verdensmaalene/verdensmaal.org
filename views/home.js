@@ -87,14 +87,18 @@ class Home extends View {
       return html`
         <main class="View-main">
           <div class="u-container">
-            ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
+            <div class="View-spaceLarge">
+              ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
+            </div>
             <section>
               ${state.cache(Grid, id).render(goals, state.ui.gridLayout, slot)}
             </section>
           </div>
           <section>
             <div class="u-container">
-              ${doc ? intro({ secondary: true, title: asText(doc.data.featured_heading), body: asText(doc.data.featured_text, state.docs.resolve) }) : intro.loading({ secondary: true })}
+              <div class="View-spaceLarge">
+                ${doc ? intro({ secondary: true, title: asText(doc.data.featured_heading), body: asText(doc.data.featured_text, state.docs.resolve) }) : intro.loading({ secondary: true })}
+              </div>
             </div>
             <div class="u-md-container">
               ${grid({ size: { md: '1of2', lg: '1of3' }, carousel: true }, featured)}
@@ -102,7 +106,9 @@ class Home extends View {
           </section>
           ${doc ? html`
             <div class="u-container">
-              ${doc.data.interlink_heading.length ? intersection({ title: asText(doc.data.interlink_heading), body: asElement(doc.data.interlink_text, state.docs.resolve) }) : intersection.loading()}
+              <div class="View-spaceLarge">
+                ${doc.data.interlink_heading.length ? intersection({ title: asText(doc.data.interlink_heading), body: asElement(doc.data.interlink_text, state.docs.resolve) }) : intersection.loading()}
+              </div>
             </div>
           ` : null}
         </main>

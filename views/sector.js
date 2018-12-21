@@ -63,14 +63,16 @@ function goal (state, emit) {
       <main class="View-main">
         ${hero({ title, body, image, caption: data.image.copyright })}
         <div class="u-container">
-          <div class="Text u-spaceV6 u-printHidden">
-            ${text`Shortcuts`}: ${shortcuts.map((slice, index, list) => html`
-              <span>
-                <a href="#${anchor(slice.primary.shortcut_name).id}" onclick=${scrollIntoView}>
-                  ${slice.primary.shortcut_name}
-                </a>${index < (list.length - 1) ? ', ' : null}
-              </span>
-            `)}
+          <div class="View-spaceSmall">
+            <div class="Text Text--large u-printHidden">
+              ${text`Shortcuts`}: ${shortcuts.map((slice, index, list) => html`
+                <span>
+                  <a href="#${anchor(slice.primary.shortcut_name).id}" onclick=${scrollIntoView}>
+                    ${slice.primary.shortcut_name}
+                  </a>${index < (list.length - 1) ? ', ' : null}
+                </span>
+              `)}
+            </div>
           </div>
         </div>
         ${slices}
@@ -105,7 +107,7 @@ function goal (state, emit) {
           }
 
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <div class="View-spaceSmall u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${children}
             </div>
@@ -158,7 +160,7 @@ function goal (state, emit) {
             }
 
             return html`
-              <div class="View-section View-section--${camelCase(slice.slice_type)} u-md-container">
+              <div class="View-space View-space--${camelCase(slice.slice_type)} u-md-container">
                 <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
                 ${grid({ size: { md: '1of2', lg: '1of3' }, carousel: true }, cells)}
               </div>
@@ -170,7 +172,7 @@ function goal (state, emit) {
           return result
         }
         case 'heading': return html`
-          <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+          <div class="View-spaceLarge u-container">
             <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
             <div class="Text">
               <h2 class="Text-h1 u-spaceB1 u-textHyphens">${asText(slice.primary.heading)}</h2>
@@ -198,7 +200,7 @@ function goal (state, emit) {
           if (state.prefetch) return Promise.all(items)
 
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <div class="View-space View-space--${camelCase(slice.slice_type)} u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${items}
             </div>
@@ -207,7 +209,7 @@ function goal (state, emit) {
         case 'quote': {
           if (!slice.primary.quote.length) return null
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <div class="View-spaceSmall u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${blockquote({ body: asElement(slice.primary.quote, state.docs.resolve), caption: slice.primary.author })}
             </div>
@@ -218,7 +220,7 @@ function goal (state, emit) {
           let children = video(slice.primary.video)
           if (!children) return null
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <div class="View-space View-space--${camelCase(slice.slice_type)} u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${children}
             </div>
@@ -228,7 +230,7 @@ function goal (state, emit) {
           if (!slice.primary.image.url) return null
           let { url, alt, copyright, dimensions } = slice.primary.image
           return html`
-            <figure class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <figure class="View-space View-space--${camelCase(slice.slice_type)} u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               <div class="Text u-sizeFull">
                 <img class="u-sizeFull" width="${dimensions.width}" height="${dimensions.height}" sizes="100vw" srcset="${srcset(url, [400, 900, 1600, [2800, 'q_50'], [3600, 'q_30']])}" src="${srcset(url, [900]).split(' ')[0]}" alt="${alt || ''}" />
@@ -268,7 +270,7 @@ function goal (state, emit) {
           }).filter(Boolean)
 
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <div class="View-space View-space--${camelCase(slice.slice_type)} u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${grid({ size: { md: '1of2' } }, items)}
             </div>
@@ -279,7 +281,7 @@ function goal (state, emit) {
           let title = asText(heading)
           let body = text.length ? asElement(text, state.docs.resolve) : null
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <div class="View-spaceLarge u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${intersection({ title, body })}
             </div>
@@ -294,7 +296,7 @@ function goal (state, emit) {
             }, location)
           })
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <div class="View-space View-space--${camelCase(slice.slice_type)} u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${state.cache(Map, `${doc.id}-${index}`).render(locations)}
             </div>
@@ -336,7 +338,7 @@ function goal (state, emit) {
 
           if (!items.length) return null
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <div class="View-space View-space--${camelCase(slice.slice_type)} u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${grid({ size: { md: '1of2', lg: '1of3' } }, items)}
             </div>
@@ -347,7 +349,7 @@ function goal (state, emit) {
           let cols = slice.items.length % 3 === 0 ? 3 : 2
           let cells = slice.items.map((item) => linkCard(item, cols))
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <div class="View-space View-space--${camelCase(slice.slice_type)} u-md-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               ${grid({ size: { md: '1of2', lg: `1of${cols}` }, carousel: true }, cells)}
             </div>
@@ -358,7 +360,7 @@ function goal (state, emit) {
           if (!charts.length) return null
           if (state.prefetch) return Promise.all(charts)
           return html`
-            <section id="statistics" class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <section id="statistics" class="View-space View-space--${camelCase(slice.slice_type)} u-container">
               ${divide(charts)}
             </section>
           `

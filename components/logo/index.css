@@ -37,6 +37,7 @@
   font-size: 0.6em;
   letter-spacing: -0.01em;
   line-height: 1em;
+  white-space: nowrap;
   margin-top: -0.1em;
   margin-left: 0.1em;
 }

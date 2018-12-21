@@ -22,7 +22,9 @@ function resources (state, emit) {
       return html`
         <main class="View-main">
           <div class="u-container">
-            ${intro.loading()}
+            <div class="View-spaceLarge">
+              ${intro.loading()}
+            </div>
             ${border.loading()}
           </div>
           ${grid({ size: { md: '1of3' }, carousel: true }, cells)}
@@ -43,13 +45,15 @@ function resources (state, emit) {
     return html`
       <main class="View-main">
         <div class="u-container">
-          <div class="u-spaceB4">
+          <div class="View-spaceLarge">
             ${intro({ title: asText(doc.data.title), body: [asElement(doc.data.description), shortcuts] })}
           </div>
         </div>
         ${reduce(doc.data.slices, group)}
         <div class="u-container">
-          ${reduce(doc.data.slices, interlink)}
+          <div class="View-spaceLarge">
+            ${reduce(doc.data.slices, interlink)}
+          </div>
         </div>
       </main>
     `

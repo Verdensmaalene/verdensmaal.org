@@ -4,7 +4,7 @@
   --Grid-gutter: 1.5rem;
 }
 
-@media (min-width: 600px), print {
+@media (min-width: 1000px), print {
   :root {
     --Grid-gutter: 2rem;
   }
@@ -12,7 +12,7 @@
 
 @media (min-width: 1200px), print {
   :root {
-    --Grid-gutter: 2.8rem;
+    --Grid-gutter: 2.75rem;
   }
 }
 
@@ -22,6 +22,7 @@
   flex-wrap: wrap;
   width: calc(100% + var(--Grid-gutter));
   margin: 0 calc(var(--Grid-gutter) * -0.5);
+  margin-bottom: calc(var(--Grid-gutter) * -1);
 }
 
 /**
@@ -60,6 +61,7 @@
     padding-left: var(--page-gutter);
     padding-right: 0;
     scroll-snap-align: start;
+    margin-bottom: 0;
   }
 
   .Grid--carousel .Grid-cell:last-child {

@@ -54,7 +54,10 @@
 .Footer-section--logos {
   display: flex;
   width: calc(100% - 1rem);
+  flex-basis: calc(100% - 1rem);
   user-select: none;
+  margin-top: 0;
+  overflow: hidden;
 }
 
 .Footer-section--logos .Footer-img {

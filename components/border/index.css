@@ -4,7 +4,6 @@
 .Border {
   padding: 0 1rem;
   margin-bottom: 1.5rem;
-  margin-top: 4.5rem;
   background-color: rgb(var(--current-color));
   color: rgb(var(--current-background));
 }
@@ -40,7 +39,7 @@
     color: rgb(var(--current-color));
     background-color: rgb(var(--current-background));
     padding: 0 !important;
-    margin-top: 5rem !important;
+    margin-top: 3rem !important;
   }
 
   .Border-text {

@@ -18,11 +18,13 @@ function page (state, emit) {
         <main class="View-main">
           <article>
             ${banner.loading()}
-            <div class="u-container u-spaceT6">
-              <div class="Text">
-                <span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span>
-                <h1><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h1>
-                <p class="u-loading">${text`LOADING_TEXT_LONG`}</p>
+            <div class="u-container">
+              <div class="View-space">
+                <div class="Text">
+                  <span class="u-loading">${text`LOADING_TEXT_SMALL`}</span>
+                  <h1><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h1>
+                  <p class="u-loading">${text`LOADING_TEXT_LONG`}</p>
+                </div>
               </div>
             </div>
           </article>
@@ -38,14 +40,18 @@ function page (state, emit) {
     return html`
       <main class="View-main">
         <article class="u-container">
-          ${doc.data.image.url ? banner(image(doc.data.image)) : intro({ title, body: description })}
-          <div class="Text u-spaceT6">
-            ${doc.data.image.url ? html`
-              <div>
-                <h1 class="u-spaceT3">${title}</h1>
+          ${doc.data.image.url ? banner(image(doc.data.image)) : html`
+            <div class="View-spaceLarge">${intro({ title, body: description })}</div>
+          `}
+          ${doc.data.image.url ? html`
+            <div class="View-space">
+              <div class="Text">
+                <h1>${title}</h1>
                 <p>${description}</p>
               </div>
-            ` : null}
+            </div>
+          ` : null}
+          <div class="Text">
             ${body}
           </div>
         </article>

@@ -1,10 +1,6 @@
 @import "../base";
 
 /* @define Banner */
-.Banner {
-
-}
-
 .Banner-slot {
   display: flex;
   order: 1;

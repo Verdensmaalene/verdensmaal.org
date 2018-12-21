@@ -95,17 +95,22 @@
 
 .Hero-title {
   display: inline-block;
-  padding: 0.09em 3rem 0;
+  padding: 0.09em 1rem 0;
   margin-bottom: 0.09em;
-  font-size: 4rem;
+  font-size: 3rem;
   font-family: var(--heading-font-family);
   line-height: 1;
   word-spacing: var(--heading-word-spacing);
   text-transform: uppercase;
 }
 
+@media (min-width: 350px) {
+  .Hero-title {
+    font-size: 4rem;
+  }
+}
+
 .Hero-body {
-  font-size: 1.25rem;
   max-width: 30em;
   padding: 0 1.5rem;
 }
@@ -125,6 +130,7 @@
 
   .Hero-body {
     max-width: 34rem;
+    font-size: 1.1875rem;
   }
 }
 

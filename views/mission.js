@@ -55,13 +55,13 @@ function missionView (state, emit) {
           var id = doc.id + '-text-' + index
           var opts = { size: 'large' }
           return html`
-            <div class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+            <div class="View-space View-space--${camelCase(slice.slice_type)} u-container">
               ${state.cache(Text, id, opts).render(slice.primary.text)}
             </div>
           `
         }
         case 'link_text': return html`
-          <section class="View-section View-section--${camelCase(slice.slice_type)} u-container">
+          <section class="View-space View-space--${camelCase(slice.slice_type)} u-container">
             ${intersection({ title: asText(slice.primary.heading), body: asElement(slice.primary.text, state.docs.resolve) })}
           </section>
         `
@@ -99,8 +99,10 @@ function missionView (state, emit) {
           if (!items.length) return null
           return html`
             <section class="u-container">
-              ${intro({ secondary: true, title: asText(slice.primary.heading), body: asElement(slice.primary.text) })}
-              <div class="View-section View-section--${camelCase(slice.slice_type)}">
+              <div class="View-spaceLarge">
+                ${intro({ secondary: true, title: asText(slice.primary.heading), body: asElement(slice.primary.text) })}
+              </div>
+              <div class="View-space View-space--${camelCase(slice.slice_type)}">
                 ${grid({ size: { md: '1of2', lg: '1of3' } }, items)}
               </div>
             </section>
