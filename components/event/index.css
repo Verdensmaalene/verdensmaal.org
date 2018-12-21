@@ -32,19 +32,26 @@
 }
 
 .Event-icon {
-  width: 4rem;
-  height: 4rem;
+  width: 3.3rem;
+  height: 3.3rem;
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 46%;
   transform: translate(-50%, -50%);
+}
+
+@media (min-width: 350px) {
+  .Event-icon {
+    width: 4rem;
+    height: 4rem;
+  }
 }
 
 .Event-date {
   position: absolute;
-  left: 1.5rem;
-  bottom: 1rem;
-  font-size: 3.5rem;
+  left: 5%;
+  bottom: 0.8rem;
+  font-size: 3rem;
   line-height: 1;
   text-transform: uppercase;
   font-family: var(--heading-font-family);
@@ -52,20 +59,38 @@
 }
 
 .Event-details {
-  max-width: calc(100% - 11rem);
+  max-width: calc(100% - 9rem);
   position: absolute;
-  right: 1.5rem;
-  bottom: 1.6rem;
+  right: 5%;
+  bottom: 1.1rem;
   text-align: right;
+  white-space: nowrap;
 }
 
 .Event-time {
   display: block;
-  font-size: 1.75rem;
-  line-height: 1;
-  text-transform: uppercase;
-  font-family: var(--heading-font-family);
-  word-spacing: var(--heading-word-spacing);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 350px) {
+  .Event-details {
+    max-width: calc(100% - 11rem);
+    bottom: 1.25rem;
+  }
+
+  .Event-time {
+    font-size: 1.75rem;
+    line-height: 1;
+    text-transform: uppercase;
+    font-family: var(--heading-font-family);
+    word-spacing: var(--heading-word-spacing);
+    letter-spacing: 0;
+  }
+
+  .Event-date {
+    font-size: 3.5rem;
+  }
 }
 
 .Event-location {
