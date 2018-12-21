@@ -10,7 +10,7 @@ var intro = require('../components/intro')
 var grid = require('../components/grid')
 var Goal = require('../components/goal')
 var event = require('../components/event')
-var Flag = require('../components/flag')
+var flag = require('../components/flag')
 var Text = require('../components/text')
 var Chart = require('../components/chart')
 var Header = require('../components/header')
@@ -468,7 +468,7 @@ class GoalPage extends View {
         }
 
         var headerVisible = state.ui.hasOverlay ? 1 : self.local.headerVisible
-        var opts = { isHighContrast: isHighContrast, slot: flag, static: true }
+        var opts = { isHighContrast: isHighContrast, slot: getFlag, static: true }
         var header = state.cache(Header, 'secondary-header')
         var links = website.data.main_menu.map(menuLink)
         return html`
@@ -509,13 +509,13 @@ class GoalPage extends View {
 
       // render header flag
       // () -> Element
-      function flag () {
+      function getFlag () {
         var opts = {
           href: '/mission',
           title: text`Denmark`,
           text: text`Greenland, Faroe Islands`
         }
-        return state.cache(Flag, 'secondary-header-flag').render(html`
+        return flag(html`
           <svg viewBox="0 0 192 128">
             <path fill="#E81C35" fill-rule="nonzero" d="M0 76h52v52H0V76zM0 0h52v52H0V0zm192 52H76V0h116v52zm0 76H76V76h116v52z"/>
           </svg>

@@ -2,6 +2,7 @@ var html = require('choo/html')
 var nanoraf = require('nanoraf')
 var Component = require('choo/component')
 var logo = require('../logo')
+var symbol = require('../symbol')
 var { className, i18n } = require('../base')
 
 var text = i18n(require('./lang.json'))
@@ -23,8 +24,8 @@ module.exports = class Header extends Component {
     var preventScroll = (event) => event.preventDefault()
     this.toggle = function (next = !self.local.isOpen) {
       self.local.isOpen = next
-      self.rerender()
       emit('header:toggle', next)
+      self.rerender()
       window.requestAnimationFrame(function () {
         self.element.querySelector('.js-toggle').focus()
       })
@@ -155,7 +156,7 @@ module.exports = class Header extends Component {
               <div class="${className('Header-burger', { 'Header-burger--cross': isOpen })}">
                 <div class="Header-beanPatty"></div>
               </div>
-              <span class="Header-toggleText">
+              <span class="Header-text">
                 <span class="u-hiddenVisually">${isOpen ? text`Hide menu` : text`Show menu`}</span>
                 ${isOpen ? text`Close` : text`Menu`}
               </span>
@@ -164,7 +165,7 @@ module.exports = class Header extends Component {
               <div class="Header-burger Header-burger--cross">
                 <div class="Header-beanPatty"></div>
               </div>
-              <span class="Header-toggleText">
+              <span class="Header-text">
                 <span class="u-hiddenVisually">${text`Hide menu`}</span>
                 ${text`Close`}
               </span>
@@ -182,13 +183,15 @@ module.exports = class Header extends Component {
                       target="${item.external ? '_blank' : ''}"
                       rel="${item.external ? 'noopener noreferrer' : ''}"
                       class="${className('Header-button Header-button--link', { 'is-current': selected ? item.selected : item.href.replace(/\/$/, '') === href })}">
-                      ${item.title}
+                      <span class="Header-text">
+                        ${item.title}
+                        <span class="Header-symbol">${symbol(item.external ? 'external' : 'forward', { cover: true })}</span>
+                      </span>
                       ${item.external ? html`
                         <span class="Header-tooltip">
                           ${item.description ? text`Go to ${item.description}` : text`Opens in new tab`}
                         </span>
                       ` : null}
-                      <div class="Header-arrow"></div>
                     </a>
                   </li>
                 `)}
@@ -201,10 +204,8 @@ module.exports = class Header extends Component {
                   </button>
                 </li>
                 ${opts.slot ? html`
-                  <li>
-                    <div class="Header-slot">
-                      ${opts.slot()}
-                    </div>
+                  <li class="Header-slot">
+                    ${opts.slot()}
                   </li>
                 ` : null}
               </ul>

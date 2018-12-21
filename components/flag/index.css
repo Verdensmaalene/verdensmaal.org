@@ -6,8 +6,11 @@
   align-items: center;
   text-align: right;
   line-height: 1;
-  margin: -0.5rem;
-  padding: 0.5rem;
+}
+
+.Flag--reverse {
+  flex-direction: row-reverse;
+  text-align: left;
 }
 
 .Flag-symbol {
@@ -18,6 +21,11 @@
   position: relative;
   overflow: hidden;
   transition: transform 150ms var(--ease);
+}
+
+.Flag--reverse .Flag-symbol {
+  margin-left: 0;
+  margin-right: 0.9rem;
 }
 
 .Flag-symbol > * {

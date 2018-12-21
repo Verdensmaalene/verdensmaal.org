@@ -1,38 +1,37 @@
 var html = require('choo/html')
-var Component = require('choo/component')
+var { className } = require('../base')
 
-module.exports = class Flag extends Component {
-  update () {
-    return false
-  }
+module.exports = flag
 
-  createElement (symbol, opts = {}) {
-    var className = 'Flag'
-    if (opts.vertical) className += ' Flag--vertical'
-    if (opts.white) className += ' Flag--white'
+function flag (symbol, opts = {}) {
+  var classList = className('Flag', {
+    'Flag--vertical': opts.vertical,
+    'Flag--reverse': opts.reverse,
+    'Flag--white': opts.white,
+    'Flag--fill': opts.fill
+  })
 
-    var text = html`
-      <div class="Flag-text">
-        <span class="Flag-title">${opts.title}</span>
-        <span class="u-hiddenVisually"> – </span>
-        <span class="Flag-sub">${opts.text}</span>
+  var text = html`
+    <div class="Flag-text">
+      <span class="Flag-title">${opts.title}</span>
+      <span class="u-hiddenVisually"> – </span>
+      <span class="Flag-sub">${opts.text}</span>
+    </div>
+  `
+
+  if (opts.href) {
+    return html`
+      <a class="${classList}" href="${opts.href}">
+        <div class="Flag-symbol">${symbol}</div>
+        ${text}
+      </a>
+    `
+  } else {
+    return html`
+      <div class="${classList}">
+        <div class="Flag-symbol">${symbol}</div>
+        ${text}
       </div>
     `
-
-    if (opts.href) {
-      return html`
-        <a class="${className}" href="${opts.href}">
-          <div class="Flag-symbol">${symbol}</div>
-          ${text}
-        </a>
-      `
-    } else {
-      return html`
-        <div class="${className}">
-          <div class="Flag-symbol">${symbol}</div>
-          ${text}
-        </div>
-      `
-    }
   }
 }

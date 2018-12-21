@@ -3,7 +3,7 @@ var raw = require('choo/html/raw')
 var html = require('choo/html')
 var Component = require('choo/component')
 var { Predicates } = require('prismic-javascript')
-var Flag = require('../flag')
+var flag = require('../flag')
 var error = require('./error')
 var share = require('../share')
 var Header = require('../header')
@@ -119,6 +119,7 @@ function createView (view, meta) {
           var isWhite = !hasError && (isGoal || state.route === 'mission')
           return getFlag({
             white: isWhite,
+            reverse: state.ui.hasOverlay,
             id: `header${isWhite ? '-white' : ''}`
           })
         }
@@ -185,8 +186,9 @@ function createView (view, meta) {
           title: text`Denmark`,
           text: text`Greenland, Faroe Islands`
         }, opts)
-        return state.cache(Flag, `${opts.id}-flag`).render(html`
+        return flag(html`
           <svg viewBox="0 0 192 128">
+            ${opts.white ? null : html`<rect x="0" y="0" width="192" height="128" fill="#FFF" />`}
             <path fill="#E81C35" fill-rule="nonzero" d="M0 76h52v52H0V76zM0 0h52v52H0V0zm192 52H76V0h116v52zm0 76H76V76h116v52z"/>
           </svg>
         `, opts)
