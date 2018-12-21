@@ -199,6 +199,10 @@
   transition: opacity 140ms var(--ease-out);
 }
 
+.Footer-credit {
+  display: block;
+}
+
 .Footer-credit + .Footer-credit {
   margin-left: 0.8rem;
   position: relative;
@@ -212,7 +216,7 @@
 .Footer-credits .Footer-img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 2.294rem;
 }
 
 @media (min-width: 500px) {
