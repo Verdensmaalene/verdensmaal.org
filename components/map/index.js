@@ -74,7 +74,7 @@ module.exports = class Map extends Component {
         maxZoom: 15,
         center: bounds.getCenter(),
         attributionControl: false,
-        failIfMajorPerformanceCaveat: true,
+        failIfMajorPerformanceCaveat: false,
         style: 'mapbox://styles/verdensmaalene/cjpaabceg0rju2stjn3ga61zc'
       })
 

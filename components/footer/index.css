@@ -17,7 +17,8 @@
 }
 
 .Footer-section {
-  flex: 1 1 calc(50% - 1rem);
+  flex: 1 1 auto;
+  flex-basis: calc(50% - 1rem);
   margin: 3rem 0.5rem 0;
 }
 
@@ -66,7 +67,8 @@
 .Footer-author {
   display: flex;
   padding: 0.5rem;
-  flex: 1 0 calc(50% + 0.5rem);
+  flex: 1 0 auto;
+  flex-basis: calc(50% + 0.5rem);
   align-items: center;
 }
 
@@ -88,7 +90,8 @@
 }
 
 .Footer-section--3 .Footer-item {
-  flex: 0 0 calc(50% - 1rem);
+  flex: 0 0 auto;
+  flex-basis: calc(50% - 1rem);
   margin: 0 0.5rem 0.5rem;
 }
 
@@ -219,7 +222,7 @@
 
   .Footer-section--logos,
   .Footer-section--newsletter {
-    flex-basis: 100%; 
+    flex-basis: 100%;
   }
 
   .Footer-section--3 .Footer-list {
@@ -234,7 +237,8 @@
 
   .Footer-logo,
   .Footer-author {
-    flex: 0 0 calc(100% / 3 + 0.25rem);
+    flex: 0 0 auto;
+    flex-basis: calc(100% / 3 + 0.25rem);
   }
 
   .Footer-label {
@@ -260,7 +264,8 @@
   .Footer-section--3 {
     max-width: none;
     min-width: 0;
-    flex: 0 0 calc((100% / 2) - 1rem);
+    flex: 0 0 auto;
+    flex-basis: calc((100% / 2) - 1rem);
   }
 
   .Footer-section--3 .Footer-list {
@@ -284,7 +289,8 @@
 
   .Footer-logo,
   .Footer-author {
-    flex: 0 0 calc((100% / 2) + 0.5rem);
+    flex: 0 0 auto;
+    flex-basis: calc((100% / 2) + 0.5rem);
   }
 }
 
@@ -309,7 +315,8 @@
 
 @media (min-width: 1100px) {
   .Footer-section {
-    flex: 1 1 calc((100% / 7) - 1rem);
+    flex: 1 1 auto;
+    flex-basis: calc((100% / 7) - 1rem);
   }
 
   .Footer-item,
@@ -320,7 +327,7 @@
   .Footer-section--3 .Footer-list {
     padding-top: 0.5rem;
   }
-  
+
   .Footer-author {
     margin-top: 1rem;
   }
@@ -337,6 +344,11 @@
     flex-basis: calc((100% / 7) * 2);
     max-width: 22.4rem;
     margin-left: 2rem;
+  }
+
+  .Footer-logo,
+  .Footer-author {
+    flex-basis: auto;
   }
 }
 

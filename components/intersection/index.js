@@ -9,7 +9,7 @@ module.exports.loading = loading
 function intersection (opts = {}) {
   return html`
     <div class="Intersection ${opts.restrained ? 'Intersection--restrained' : ''}">
-      ${opts.title ? html`<h1 class="Intersection-title">${opts.title}</h1>` : null}
+      ${opts.title ? html`<h2 class="Intersection-title">${opts.title}</h2>` : null}
       ${opts.body}
     </div>
   `

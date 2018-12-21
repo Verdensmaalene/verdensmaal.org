@@ -34,6 +34,8 @@ app.route('/*', require('./views/catchall'))
 
 try {
   module.exports = app.mount('body')
+  // remove parse guard added in header
+  window.onerror = null
 } catch (err) {
   if (typeof window !== 'undefined') {
     document.documentElement.removeAttribute('scripting-enabled')

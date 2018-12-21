@@ -74,23 +74,33 @@
   padding-top: calc((((100% - var(--gutter, 0.625rem)) / 2) * 3) + var(--gutter, 0.625rem) * 2); /* 3 */
 }
 
-.Goal[href]::after {
-  content: "";
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: -1;
-  opacity: 0;
-  background: var(--Goal-background);
-  transition: opacity 180ms var(--ease-out);
-}
+/**
+ * 1. Exclude in IE to avoid rendering issue with svg text
+ */
 
-.Goal--fullscreen::after,
-.Goal--takeover::after,
-.Goal--transition::after {
-  content: none;
+@supports (display: block) /* 1 */ {
+  .Goal[href]::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    opacity: 0;
+    background: var(--Goal-background);
+    transition: opacity 180ms var(--ease-out);
+  }
+
+  .Goal--fullscreen::after,
+  .Goal--takeover::after,
+  .Goal--transition::after {
+    content: none;
+  }
+
+  .Goal:hover::after {
+    opacity: 1;
+  }
 }
 
 /**
@@ -104,10 +114,6 @@
   left: 0;
   top: 0;
   z-index: -1; /* 1 */
-}
-
-.Goal:hover::after {
-  opacity: 1;
 }
 
 .Goal--blank {
@@ -249,9 +255,7 @@
  */
 
 .Goal-cell {
-  display: flex;
-  align-items: stretch;
-  align-self: flex-start;
+  position: relative;
 }
 
 .Goal-cell::before {
@@ -284,6 +288,10 @@
   justify-content: flex-start;
   align-items: stretch;
   width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
   user-select: none;
   white-space: nowrap;
 }
@@ -329,13 +337,14 @@
   will-change: transform;
 }
 
-.Goal[href]:hover .Goal-symbol {
-  transform: scale(1.08);
-}
+/**
+ * 1. Exclude in IE to avoid rendering issue with svg text
+ */
 
-.Goal-icon {
-  width: 100%;
-  height: auto;
+@supports (display: block) /* 1 */ {
+  .Goal[href]:hover .Goal-symbol {
+    transform: scale(1.08);
+  }
 }
 
 /**
@@ -460,7 +469,7 @@
     width: calc(100% - (189px + (var(--offset, 0) * 3px)));
     margin-left: calc(189px + (var(--offset, 0) * 3px));
   }
-  
+
 }
 
 @media (min-width: 1000px) and (min-height: 600px) {
@@ -494,6 +503,11 @@
 .Goal--transition .Goal-label,
 .Goal--takeover .Goal-label {
   margin: 0;
+}
+
+.Goal--fullscreen .Goal-icon,
+.Goal--takeover .Goal-icon {
+  position: relative;
 }
 
 .Goal--1.Goal--fullscreen .Goal-number,

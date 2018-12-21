@@ -46,7 +46,7 @@ function card (props = {}, slot) {
               ${props.date.text}
             </time>
           ` : null}
-          <h1 class="Card-title">${props.title}</h1>
+          <h3 class="Card-title">${props.title}</h3>
           <p class="Card-text">${snippet(props.body, props.truncate || 170)}</p>
         </div>
         ${props.link ? html`
@@ -68,7 +68,7 @@ function loading (props = {}) {
           ${props.date ? html`
             <time class="Card-meta"><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></time>
           ` : null}
-          <h1 class="Card-title"><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h1>
+          <h3 class="Card-title"><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h3>
           <p class="Card-text"><span class="u-loading">${text`LOADING_TEXT_LONG`}</span></p>
         </div>
       </div>

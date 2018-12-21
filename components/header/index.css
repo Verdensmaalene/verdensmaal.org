@@ -88,11 +88,6 @@
     will-change: transform;
   }
 
-  /* .Header--static .Header-fill {
-    transform-origin: top center;
-    transform: translateY(calc((-1 * var(--Header-displace)) * 0));
-  } */
-
   .Header-slot {
     display: block;
     margin-left: 1.8rem;
@@ -114,14 +109,15 @@
     top: calc((var(--Header-displace) / 2) * -1);
   }
 
+  /**
+   * 1. Workaround IE 11 not supporting calc in transform functions
+   */
+
   .Header-content {
+    transform: translateY(1rem); /* 1 */
     transform: translateY(calc((var(--Header-displace) / 2) * var(--Header-size)));
     will-change: transform;
   }
-
-  /* .Header--static .Header-content {
-    transform: translateY(calc((var(--Header-displace, 1) / 2) * (1 - 0)));
-  } */
 }
 
 .Header-nav {
@@ -138,11 +134,6 @@
     transform-origin: center right;
     transform: scale(calc(1.2 - (0.2 * (1 - var(--Header-size)))));
   }
-
-  /* .Header--static .Header-list {
-    transform-origin: center right;
-    transform: scale(calc(1.2 - (0.2 * 0)));
-  } */
 
   .Header-button--back {
     transform-origin: center left;

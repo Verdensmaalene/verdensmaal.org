@@ -56,6 +56,8 @@
 }
 
 .Calendar-content {
+  display: flex;
+  flex-wrap: wrap;
   min-height: 4rem;
   padding: 1rem 0 0;
   position: relative;
@@ -83,6 +85,7 @@
 }
 
 .Calendar-body {
+  flex: 1 1 auto;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -103,7 +106,7 @@
 }
 
 .Calendar-date {
-  --current-color: 255, 255, 255;
+  flex: 0 0 auto;
   display: flex;
   justify-content: center;
   float: left;
@@ -115,7 +118,8 @@
   top: 0.1rem;
   border-radius: 100%;
   font-size: 1.25rem;
-  color: rgb(var(--current-color));
+  color: #fff;
+  background: rgb(var(--color-theme));
   background: rgb(var(--high-contrast-dark, var(--color-theme)));
   font-family: var(--heading-font-family);
   line-height: 2.1;
@@ -148,6 +152,7 @@
 .Calendar-link {
   display: block;
   flex: 1 1 auto;
+  margin-right: 1rem;
 }
 
 .Calendar-link::before {

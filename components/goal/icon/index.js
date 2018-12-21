@@ -1,7 +1,7 @@
 var html = require('choo/html')
 var { className, i18n } = require('../../base')
 
-var icons = [
+var glyphs = [
   require('./1'),
   require('./2'),
   require('./3'),
@@ -44,7 +44,7 @@ function icon (num, title, lang) {
   return html`
     <div class="Goal-icon Goal-icon--${num} js-icon">
       ${draw(num, title, lang)}
-      <div class="Goal-symbol js-symbol">${icons[num - 1]()}</div>
+      <div class="Goal-symbol js-symbol">${glyphs[num - 1]()}</div>
     </div>
   `
 }
@@ -88,7 +88,7 @@ function label (num, title, lang) {
 function symbol (num) {
   return html`
     <div class="Goal-icon Goal-icon--${num}">
-      <div class="Goal-symbol js-symbol">${icons[num - 1]()}</div>
+      <div class="Goal-symbol js-symbol">${glyphs[num - 1]()}</div>
     </div>
   `
 }
@@ -114,7 +114,7 @@ function draw (number, text, lang = 'en') {
   if (isArabic) digitPos = 200 - digitPos
 
   return html`
-    <svg role="presentational" aria-hidden="true" class="${className('Goal-label js-label', { 'u-rtl': isArabic })}" height="${height * 0.92}" viewBox="0 0 200 ${height}" style="-ms-flex: 1 1 ${height}px;" preserveAspectRatio="xMidYMin meet">
+    <svg role="presentation" aria-hidden="true" class="${className('Goal-label js-label', { 'u-rtl': isArabic })}" height="${height * 0.92}" width="200" viewBox="0 0 200 ${height}" style="-ms-flex: 1 1 ${height}px;" preserveAspectRatio="xMidYMin meet">
       <g transform="scale(0.94)">
         <text class="Goal-number" font-size="59.4" fill="currentColor" text-anchor="middle" alignment-baseline="hanging">
           <tspan x="${digitPos}" y="41" letter-spacing="${isArabic ? '-0.1' : ''}" text-anchor="middle">
