@@ -119,6 +119,10 @@
     padding-left: 2rem;
     border-left: 1px solid rgb(var(--color-gray-light));
   }
+
+  .View-sidebar > * {
+    width: 100%;
+  }
 }
 
 @media (min-width: 1200px) {

@@ -83,7 +83,7 @@ function eventView (state, emit) {
                 </div>
               </div>
               <div class="View-sidebar u-col u-lg-size1of3">
-                <div class="u-sizeFull">
+                <div>
                   ${doc.data.related.map(related)}
                   <aside>
                     <div class="Text">
