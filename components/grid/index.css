@@ -25,6 +25,10 @@
   margin-bottom: calc(var(--Grid-gutter) * -1);
 }
 
+.Grid + .Grid {
+  margin-top: var(--Grid-gutter);
+}
+
 /**
  * 1. Add support for truncated text within the grid
  */
@@ -37,7 +41,7 @@
   margin-bottom: var(--Grid-gutter);
 }
 
-.Grid-cell > *{
+.Grid-cell > * {
   flex-basis: 100%;
   min-width: 0; /* 1 */
 }

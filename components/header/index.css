@@ -228,7 +228,7 @@
 .Header-button--toggle {
   display: flex;
   align-items: center;
-  padding: 0.9rem;
+  padding: 0.6rem 0.9rem 0.5rem 0.9rem;
   position: absolute;
   right: 0.9rem;
   z-index: 1;

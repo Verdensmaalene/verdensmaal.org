@@ -147,7 +147,7 @@
 }
 
 .Text li + li {
-  padding-top: 1em;
+  padding-top: 0.8em;
 }
 
 .Text dl {
