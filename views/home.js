@@ -224,6 +224,7 @@ class Home extends View {
                 // fallback to bare link while fetching actual document
                 if (!response) {
                   if (slice.primary.link.isBroken) return null
+                  if (!slice.primary.link.id) return null
                   return asFeatured(slice.primary.link)
                 }
                 var item = response.results.find(function (item) {
