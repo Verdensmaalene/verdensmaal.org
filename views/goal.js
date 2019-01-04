@@ -132,6 +132,7 @@ class GoalPage extends View {
 
       props.number = doc.data.number
       props.label = asText(doc.data.label)
+      props.action = doc.data.action
       props.description = asText(doc.data.description)
 
       var targets = doc.data.targets
@@ -159,7 +160,7 @@ class GoalPage extends View {
       function action () {
         return html`
           <a class="Goal-action" href="#manifest" onclick="${onclick}">
-            ${arrow()} ${text(`Goal ${props.number} in Action`)}
+            ${arrow()} ${props.action}
           </a>
         `
       }
