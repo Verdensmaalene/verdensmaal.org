@@ -94,6 +94,10 @@
   transform: translateX(-0.15rem);
 }
 
+.Flag--reverse:hover .Flag-text {
+  transform: translateX(0.15rem);
+}
+
 .Flag--vertical:hover .Flag-text {
   transform: translateY(0.15rem);
 }

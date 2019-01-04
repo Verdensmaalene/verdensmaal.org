@@ -329,7 +329,6 @@
   display: none;
   height: auto;
   padding: 0.4rem;
-  border-radius: 50%;
   transform-origin: center center;
   transition: transform 150ms var(--ease);
 }
@@ -357,12 +356,8 @@
   }
 
   :root[scripting-enabled] .Header-button--contrast {
-    padding: 0.9rem;
+    padding: 0.68rem 0.9rem;
   }
-}
-
-.Header-button--contrast:hover {
-  transform: scale(1.1);
 }
 
 .Header-button--contrast.is-active .Header-toggle {
@@ -475,7 +470,7 @@
   .Header-button--link.is-current,
   .Header-button--link.is-current:hover {
     color: inherit;
-    background: rgba(var(--color-gray-light), 0.05);
+    background: none;
   }
 }
 
@@ -519,6 +514,14 @@
 
   .Header-item {
     margin-left: 0.75rem;
+  }
+
+  .Header-button--contrast {
+    border-radius: 50%;
+  }
+
+  .Header-button--contrast:hover {
+    transform: scale(1.1);
   }
 }
 
