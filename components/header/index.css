@@ -354,7 +354,7 @@
   .Header {
     --focus-ring-color: 255, 255, 255;
   }
-  
+
   .Header-toggle {
     margin-right: 1rem;
   }
@@ -372,10 +372,6 @@
  * The symbols for the links and back button
  */
 
-.Header-button--back {
-  padding-left: 1.75rem;
-}
-
 .Header-button--link {
   text-decoration: var(--high-contrast-underline, none);
 }
@@ -383,6 +379,10 @@
 .Header-symbol {
   font-size: 0.6em;
   margin: -0.2em 0 0 0.3em;
+}
+
+.Header-button--back .Header-symbol {
+  margin: -0.2em 0.3em 0 0;
 }
 
 /**

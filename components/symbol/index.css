@@ -83,15 +83,21 @@
   transform: rotate(10deg);
 }
 
+.Symbol--backward .Symbol-image,
 .Symbol--forward .Symbol-image {
   width: 1em;
+  transition: transform 100ms var(--ease-out);
+}
+
+.Symbol--backward .Symbol-image {
+  transform: translateX(0.2em);
 }
 
 .Symbol--forward .Symbol-image {
   transform: translateX(-0.2em);
-  transition: transform 100ms var(--ease-out);
 }
 
+.Symbol--backward:hover .Symbol-image,
 .Symbol--forward:hover .Symbol-image {
   transform: translateX(0em);
 }

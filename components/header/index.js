@@ -137,8 +137,10 @@ module.exports = class Header extends Component {
           <div class="Header-content u-container">
             ${opts.back ? html`
               <a class="Header-button Header-button--back" onclick="${onback}" href="${opts.back.href}">
-                ${opts.back.text}
-                <div class="Header-arrow"></div>
+                <span class="Header-text">
+                  <span class="Header-symbol">${symbol('backward', { cover: true })}</span>
+                  ${opts.back.text}
+                </span>
               </a>
             ` : html`
               <a class="Header-logo" href="/" rel="home">
