@@ -13,6 +13,16 @@ function card (props = {}, slot) {
   var fill = props.color || null
   assert(!fill || /^#/.test(fill), 'Card: props.color should be hex string color code')
 
+  var body = props.body
+  if (typeof window === 'undefined') {
+    if (Array.isArray(body) || body[0] === '<') html`<div class="Card-text Text">${body}</div>`
+    else body = html`<p class="Card-text">${snippet(body, props.truncate || 170)}</p>`
+  } else if (Array.isArray(body) || body instanceof window.Element) {
+    body = html`<div class="Card-text Text">${body}</div>`
+  } else {
+    body = html`<p class="Card-text">${snippet(body, props.truncate || 170)}</p>`
+  }
+
   if (props.link) {
     props.link.block = true
     if (fill) props.link.silent = true
@@ -47,7 +57,7 @@ function card (props = {}, slot) {
             </time>
           ` : null}
           <h3 class="Card-title">${props.title}</h3>
-          <p class="Card-text">${snippet(props.body, props.truncate || 170)}</p>
+          ${body}
         </div>
         ${props.link ? html`
           <div class="Card-footer">

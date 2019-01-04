@@ -92,7 +92,7 @@ function cell (item) {
   var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
   return card({
     title: asText(item.title),
-    body: asText(item.description),
+    body: asElement(item.description),
     image: item.image.url ? {
       alt: item.image.alt,
       sizes: sizes,
