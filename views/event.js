@@ -216,6 +216,8 @@ function eventView (state, emit) {
       venue: doc.data.venue,
       city: doc.data.city,
       country: doc.data.country,
+      zip: doc.data.zip_code,
+      streetAddress: doc.data.street_address,
       end: parse(doc.data.end),
       links: links
     })

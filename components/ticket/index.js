@@ -8,10 +8,24 @@ module.exports = ticket
 
 function ticket (props) {
   var duration = Math.abs(differenceInDays(props.start, props.end))
+  var tail = props.city && [props.zip, props.city].filter(Boolean).join(', ')
+  var location = [props.venue, props.streetAddress, tail].filter(Boolean)
   var info
-  if (props.venue && props.organizer) info = text`Taking place at ${props.venue} and being organized by ${props.organizer}.`
-  if (props.venue) info = text`Taking place at ${props.venue}.`
-  if (props.organizer) info = text`This event is being organized by ${props.organizer}.`
+  if (location.length) {
+    if (location.length >= 2) {
+      info = []
+      for (let i = 0, len = location.length; i < len; i++) {
+        info.push(location[i], html`<br>`)
+      }
+      if (props.organizer) info.push(text`This event is being organized by ${props.organizer}.`)
+    } else if (props.organizer) {
+      info = text`Taking place at ${location.join(', ')} and being organized by ${props.organizer}.`
+    } else {
+      info = text`Taking place at ${location.join(', ')}.`
+    }
+  } else if (props.organizer) {
+    info = text`This event is being organized by ${props.organizer}.`
+  }
 
   return html`
     <div class="Ticket">
