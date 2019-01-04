@@ -609,4 +609,10 @@
   .Header-button:focus-visible .Header-tooltip {
     opacity: 1;
   }
+
+  .Header-button--contrast:focus-visible {
+    outline: 0 !important;
+    border: var(--focus-ring-width) solid rgb(var(--focus-ring-color)) !important;
+    margin: calc(var(--focus-ring-width) * -1);
+  }
 }
