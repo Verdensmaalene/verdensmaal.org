@@ -6,14 +6,7 @@
 }
 
 .Event--banner {
-  height: 65vh;
-  max-height: 75vw;
-}
-
-@media (min-width: 600px) {
-  .Event--banner {
-    max-height: 45vw;
-  }
+  min-height: 65vh;
 }
 
 .Event-content {

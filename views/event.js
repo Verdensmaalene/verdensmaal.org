@@ -73,10 +73,9 @@ function eventView (state, emit) {
             ${hero}
           </div>
           <div class="u-container">
-            <div class="u-cols">
+            <div class="View-space u-cols">
               <div class="u-col u-lg-size2of3">
                 <div class="Text">
-                  <span class="first-child-helper"></span>
                   <h1>${title}</h1>
                   <p class="Text-large">${description}</p>
                   ${body}
@@ -87,7 +86,6 @@ function eventView (state, emit) {
                   ${doc.data.related.map(related)}
                   <aside>
                     <div class="Text">
-                      <span class="first-child-helper"></span>
                       <h3>${text`Spread the word`}</h3>
                     </div>
                     <ul>
@@ -133,19 +131,23 @@ function eventView (state, emit) {
 
   // render slice as element
   // (obj, num, arr) -> Element
-  function related (slice) {
+  function related (slice, index) {
     switch (slice.slice_type) {
       case 'schedule': {
         let list = []
         for (let i = 0, len = slice.items.length; i < len; i++) {
-          list.push(
-            html`<dt class="Text-muted">${slice.items[i].time}</dt>`,
-            html`<dd>${slice.items[i].text}</dd>`
-          )
+          let item = slice.items[i]
+          if (item.time && item.text) {
+            list.push(
+              html`<dt class="Text-muted">${item.time}</dt>`,
+              html`<dd>${item.text}</dd>`
+            )
+          }
         }
+        if (!list.length) return null
         return html`
           <aside class="Text">
-            <span class="first-child-helper"></span>
+            ${index !== 0 ? html`<span class="first-child-helper"></span>` : null}
             <h3>${asText(slice.primary.heading)}</h3>
             <dl>
               ${list}
@@ -154,10 +156,11 @@ function eventView (state, emit) {
         `
       }
       case 'links': {
+        if (!slice.primary.heading.length) return null
         return html`
           <aside>
             <div class="Text">
-              <span class="first-child-helper"></span>
+              ${index !== 0 ? html`<span class="first-child-helper"></span>` : null}
               <h3>${asText(slice.primary.heading)}</h3>
             </div>
             <ol>
