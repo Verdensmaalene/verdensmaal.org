@@ -1,5 +1,6 @@
 var assert = require('assert')
 var html = require('choo/html')
+var differenceInDays = require('date-fns/difference_in_days')
 var { i18n, timestamp, className, pluck } = require('../base')
 
 var text = i18n()
@@ -38,6 +39,7 @@ function figure (img) {
 }
 
 function inner (props) {
+  var duration = props && Math.abs(differenceInDays(props.start, props.end))
   return html`
     <div class="Event-content">
       ${props && props.image ? figure(props.image) : html`
@@ -54,7 +56,7 @@ function inner (props) {
             ${('0' + props.start.getDate()).substr(-2)} ${text(`MONTH_${props.start.getMonth()}`).substr(0, 3)}
           </span>
           <span class="Event-details">
-            <span class="Event-time">${timestamp(props.start)} – ${timestamp(props.end)}</span>
+            <span class="Event-time">${duration > 0 ? text`${duration + 1} days` : timestamp(props.start)} – ${timestamp(props.end)}</span>
             <span class="Event-location u-textTruncate">${[props.venue, props.city, props.country].filter(Boolean).slice(0, 2).join(', ')}</span>
           </span>
         </time>
