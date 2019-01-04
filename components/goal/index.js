@@ -2,9 +2,6 @@ var html = require('choo/html')
 var Component = require('choo/component')
 var { vw, vh, className } = require('../base')
 var icon = require('./icon')
-var { i18n } = require('../base')
-
-var text = i18n()
 
 var backgrounds = [
   () => import('./background/1'),

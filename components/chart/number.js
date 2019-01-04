@@ -1,7 +1,7 @@
 var html = require('choo/html')
 var raw = require('choo/html/raw')
 var { i18n, className } = require('../base')
-var { rows, format, parse } = require('./utils')
+var { rows, format } = require('./utils')
 
 var SIZE = 560
 
