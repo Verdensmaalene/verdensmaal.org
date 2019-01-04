@@ -37,13 +37,23 @@ function events (state, emit) {
 
     return state.docs.get(predicates, opts, function (err, response) {
       if (err) throw err
+
+      predicates = [
+        Predicates.at('document.type', 'event'),
+        Predicates.dateBefore('my.event.end', date)
+      ]
+      var past = state.docs.get(predicates, opts, function (err, response) {
+        if (err) throw err
+        return response
+      })
+
       return html`
         <main class="View-main">
           <div class="u-container">
             <div class="View-spaceLarge">
               ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
             </div>
-            ${content(response)}
+            ${content(response, past)}
           </div>
         </main>
       `
@@ -52,17 +62,11 @@ function events (state, emit) {
 
   // render page content
   // obj -> Element
-  function content (response) {
-    var locations = []
+  function content (upcoming, past) {
     var bounds = state.bounds[state.country] || state.bounds['DK']
-    if (response && !response.results_size) {
-      return html`
-        <div class="Text u-textCenter u-sizeFull">
-          <p>${text`Nothing to see here`}</p>
-        </div>
-      `
-    } else if (response) {
-      locations = response.results.map(asLocation)
+    var locations = []
+    if (upcoming && upcoming.results_size) {
+      locations = upcoming.results.map(asLocation)
     }
 
     var tabs = [{
@@ -71,11 +75,14 @@ function events (state, emit) {
     }, {
       id: 'events-list-panel',
       label: text`Calendar`
+    }, {
+      id: 'past-events-list-panel',
+      label: text`Past events`
     }]
 
     return html`
       <div>
-        <div>
+        <div class="View-spaceSmall">
           ${state.cache(Map, 'events-map').render(locations, bounds)}
         </div>
         ${state.cache(Tabs, 'events-tabs', 'events-grid-panel').render(tabs, panel, onselect)}
@@ -94,17 +101,46 @@ function events (state, emit) {
       switch (id) {
         case 'events-grid-panel': {
           var cells = []
-          if (!response) for (let i = 0; i < 6; i++) cells.push(card.loading())
-          else cells = response.results.map(asCard)
-          return grid({ size: { md: '1of2', lg: '1of3' }, appear: state.ui.clock['event-tab-selected'] }, cells)
+          if (!upcoming) for (let i = 0; i < 6; i++) cells.push(card.loading())
+          else if (!upcoming.results_size) return empty()
+          else cells = upcoming.results.map(asCard)
+          return html`
+            <div class="View-spaceSmall">
+              ${grid({ size: { md: '1of2', lg: '1of3' }, appear: state.ui.clock['event-tab-selected'] }, cells)}
+            </div>
+          `
         }
         case 'events-list-panel': {
-          if (!response) return calendar.loading(6)
-          return calendar(response.results.map(asCalendar), { appear: state.ui.clock['event-tab-selected'] })
+          if (!upcoming) return calendar.loading(6)
+          else if (!upcoming.results_size) return empty()
+          return html`
+            <div class="View-spaceSmall">
+              ${calendar(upcoming.results.map(asCalendar), { appear: state.ui.clock['event-tab-selected'] })}
+            </div>
+          `
+        }
+        case 'past-events-list-panel': {
+          if (!past) return calendar.loading(6)
+          else if (!past.results_size) return empty()
+          return html`
+            <div class="View-spaceSmall">
+              ${calendar(past.results.map(asCalendar), { appear: state.ui.clock['event-tab-selected'] })}
+            </div>
+          `
         }
         default: return null
       }
     }
+  }
+
+  function empty () {
+    return html`
+      <div class="View-space">
+        <div class="Text u-textCenter u-sizeFull">
+          <p>${text`Nothing to see here`}</p>
+        </div>
+      </div>
+    `
   }
 
   // format document for use in map

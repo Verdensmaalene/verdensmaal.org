@@ -1,7 +1,6 @@
-/* @define View */
-
 @import "../base";
 
+/* @define View */
 .View {
   display: flex;
   flex-direction: column;
