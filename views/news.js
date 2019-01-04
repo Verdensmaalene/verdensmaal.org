@@ -56,7 +56,7 @@ function news (state, emit) {
             </div>
           `}
           ${!state.ui.isLoading && hasMore ? html`
-            <p class="u-textCenter u-printHidden">
+            <p class="u-textCenter View-space">
               ${button({ href: `/nyheder?page=${num + 1}`, text: text`Show more`, onclick: onclick })}
             </p>
           ` : null}
