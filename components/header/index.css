@@ -351,6 +351,10 @@
 }
 
 @media (max-width: 999px) {
+  .Header {
+    --focus-ring-color: 255, 255, 255;
+  }
+  
   .Header-toggle {
     margin-right: 1rem;
   }
