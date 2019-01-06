@@ -7,6 +7,14 @@ var mapboxgl = null
 var CLUSTER_THRESHOLD = 12
 var ACCESS_TOKEN = 'pk.eyJ1IjoidmVyZGVuc21hYWxlbmUiLCJhIjoiY2psNm1pYW5wMno3NTNwcWpwY3RhbWZvNyJ9.j7N5jTy1QGekjHKLpx8TvQ'
 
+var DEBUG = process.env.NODE_ENV === 'development'
+if (typeof window !== 'undefined') {
+  try {
+    let flag = window.localStorage.DEBUG
+    DEBUG = DEBUG || (flag && JSON.parse(flag))
+  } catch (err) {}
+}
+
 module.exports = class Map extends Component {
   constructor (id, state, emit) {
     super(id)
@@ -267,9 +275,8 @@ module.exports = class Map extends Component {
     this.local.locations = locations
     return html`
       <div class="Map ${this.local.error ? 'has-error' : ''}">
-        ${this.local.error && process.env.NODE_ENV === 'development' ? html`
-          <div>
-            <pre>${this.local.error.name}: ${this.local.error.message}</pre>
+        ${this.local.error && DEBUG ? html`
+          <div class="Text u-sizeFull">
             <pre>${this.local.error.stack}</pre>
           </div>
         ` : null}
