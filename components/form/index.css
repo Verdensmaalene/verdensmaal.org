@@ -1,0 +1,40 @@
+@import "../base";
+
+/** @define Form */
+.Form {}
+
+.Form-field {
+  display: block;
+  font-size: 1rem;
+}
+
+.Form-field + .Form-field {
+  margin-top: 1.5em;
+}
+
+.Form-label {
+  display: block;
+  margin-bottom: 0.8em;
+  font-size: 0.9em;
+}
+
+.Form-control {
+  display: block;
+  width: 100%;
+  padding: 0.8em 0.9em 1em;
+  border: 2px solid rgb(var(--color-gray-light));
+  font-size: 1rem;
+}
+
+.Form-control::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: rgba(var(--color-gray-dark), 0.5);
+  font-size: 0.9em;
+}
+.Form-control::-moz-placeholder { /* Firefox 19+ */
+  color: rgba(var(--color-gray-dark), 0.5);
+  font-size: 0.9em;
+}
+.Form-control:-ms-input-placeholder { /* IE 10+ */
+  color: rgba(var(--color-gray-dark), 0.5);
+  font-size: 0.9em;
+}

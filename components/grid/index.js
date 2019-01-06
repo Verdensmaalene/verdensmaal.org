@@ -14,17 +14,8 @@ function grid (opts, children) {
     </div>
   `
 
-  function sizes () {
-    var size = ''
-    if (opts.size.xs) size += `u-size${opts.size.xs} `
-    if (opts.size.sm) size += `u-sm-size${opts.size.sm} `
-    if (opts.size.md) size += `u-md-size${opts.size.md} `
-    if (opts.size.lg) size += `u-lg-size${opts.size.lg} `
-    return size
-  }
-
   function cell (render, index) {
-    var attrs = { class: `Grid-cell ${opts.size ? sizes() : ''}` }
+    var attrs = { class: `Grid-cell ${opts.size ? sizes(opts.size) : ''}` }
     if (opts.appear) {
       attrs.class += ' Grid-cell--appear'
       attrs.style = `animation-delay: ${index * 100}ms`
@@ -36,4 +27,13 @@ function grid (opts, children) {
       </div>
     `
   }
+}
+
+function sizes (opts) {
+  var size = ''
+  if (opts.xs) size += `u-size${opts.xs} `
+  if (opts.sm) size += `u-sm-size${opts.sm} `
+  if (opts.md) size += `u-md-size${opts.md} `
+  if (opts.lg) size += `u-lg-size${opts.lg} `
+  return size
 }

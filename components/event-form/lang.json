@@ -1,0 +1,15 @@
+{
+  "Submit event": "Indsend event",
+  "Your name": "Dit navn",
+  "Your email address": "Din email adresse",
+  "Organization": "Organisation",
+  "Link to event": "Link til event",
+  "E.g. %s": "F.eks. %s",
+  "Event title": "Eventnavn",
+  "Address": "Adresse",
+  "Event description": "Event beskrivelse",
+  "Date and time": "Dato og tid",
+  "Submit another event": "Indsend en anden begivenhed",
+  "Please enter a valid webpage address": "Indtast venligst en gyldig websideadresse",
+  "Something didn't quite go as expected. Please, check that all required fields are filled in and try again.": "Noget gik ikke helt som forventet. Vær venlig at kontrollere, at alle obligatoriske felter er udfyldt, og prøv igen."
+}

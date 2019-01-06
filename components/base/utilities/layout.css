@@ -31,6 +31,16 @@
 .u-flex { display: flex !important; }
 
 /**
+ * Flex
+ */
+
+.u-flexWrap { flex-Wrap: wrap !important; }
+.u-alignCenter { align-items: center !important; }
+.u-alignStart { align-items: flex-start !important; }
+.u-alignEnd { align-items: flex-end !important; }
+.u-justifyCenter { justify-content: center !important; }
+
+/**
  * Positioning
  */
 

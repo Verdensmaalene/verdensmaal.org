@@ -1,6 +1,7 @@
 var html = require('choo/html')
 var parse = require('date-fns/parse')
 var subDays = require('date-fns/sub_days')
+var asElement = require('prismic-element')
 var { Predicates } = require('prismic-javascript')
 var Map = require('../components/map')
 var Tabs = require('../components/tabs')
@@ -10,6 +11,8 @@ var view = require('../components/view')
 var event = require('../components/event')
 var intro = require('../components/intro')
 var calendar = require('../components/calendar')
+var EventForm = require('../components/event-form')
+var serialize = require('../components/text/serialize')
 var { i18n, srcset, asText, timestamp } = require('../components/base')
 
 var text = i18n()
@@ -53,7 +56,7 @@ function events (state, emit) {
             <div class="View-spaceLarge">
               ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
             </div>
-            ${content(response, past)}
+            ${content(doc, response, past)}
           </div>
         </main>
       `
@@ -62,7 +65,7 @@ function events (state, emit) {
 
   // render page content
   // obj -> Element
-  function content (upcoming, past) {
+  function content (doc, upcoming, past) {
     var bounds = state.bounds[state.country] || state.bounds['DK']
     var locations = []
     if (upcoming && upcoming.results_size) {
@@ -75,10 +78,13 @@ function events (state, emit) {
     }, {
       id: 'events-list-panel',
       label: text`Calendar`
-    }, {
+    }, past && past.results_size ? {
       id: 'past-events-list-panel',
       label: text`Past events`
-    }]
+    } : null, {
+      id: 'submit-event-panel',
+      label: text`Submit event`
+    }].filter(Boolean)
 
     return html`
       <div>
@@ -125,6 +131,23 @@ function events (state, emit) {
           return html`
             <div class="View-spaceSmall">
               ${calendar(past.results.map(asCalendar), { appear: state.ui.clock['event-tab-selected'] })}
+            </div>
+          `
+        }
+        case 'submit-event-panel': {
+          var opts = {
+            url: '/api/submit-event',
+            disclaimer: asElement(doc.data.form_disclaimer, state.docs.resolve, serialize),
+            success: asElement(doc.data.form_success, state.docs.resolve, serialize)
+          }
+
+          return html`
+            <div class="View-spaceSmall u-slideUp">
+              <div class="Text u-spaceB8">
+                <h2>${asText(doc.data.form_title)}</h2>
+                ${asElement(doc.data.form_description, state.docs.resolve, serialize)}
+              </div>
+              ${state.cache(EventForm, 'event-form').render(opts)}
             </div>
           `
         }

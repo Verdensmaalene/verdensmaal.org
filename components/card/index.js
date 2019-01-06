@@ -14,13 +14,15 @@ function card (props = {}, slot) {
   assert(!fill || /^#/.test(fill), 'Card: props.color should be hex string color code')
 
   var body = props.body
-  if (typeof window === 'undefined') {
-    if (Array.isArray(body) || body[0] === '<') html`<div class="Card-text Text">${body}</div>`
-    else body = html`<p class="Card-text">${snippet(body, props.truncate || 170)}</p>`
-  } else if (Array.isArray(body) || body instanceof window.Element) {
-    body = html`<div class="Card-text Text">${body}</div>`
-  } else {
-    body = html`<p class="Card-text">${snippet(body, props.truncate || 170)}</p>`
+  if (body) {
+    if (typeof window === 'undefined') {
+      if (Array.isArray(body) || body[0] === '<') html`<div class="Card-text Text">${body}</div>`
+      else body = html`<p class="Card-text">${snippet(body, props.truncate || 170)}</p>`
+    } else if (Array.isArray(body) || body instanceof window.Element) {
+      body = html`<div class="Card-text Text">${body}</div>`
+    } else {
+      body = html`<p class="Card-text">${snippet(body, props.truncate || 170)}</p>`
+    }
   }
 
   if (props.link) {

@@ -17,7 +17,10 @@ function button (props) {
   for (let i = 0, len = keys.length; i < len; i++) {
     if (props[keys[i]]) attrs[keys[i]] = props[keys[i]]
   }
-  attrs.class = className('Button', { [props.class]: props.class })
+  attrs.class = className('Button', {
+    [props.class]: props.class,
+    'Button--primary': props.primary
+  })
   if (attrs.href) return html`<a ${attrs}>${props.text}</a>`
   return html`<button ${attrs}>${props.text}</button>`
 }

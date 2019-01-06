@@ -21,6 +21,7 @@ var scrape = require('./lib/scrape')
 var resolve = require('./lib/resolve')
 var subscribe = require('./lib/subscribe')
 var { asText } = require('./components/base')
+var submitEvent = require('./lib/submit-event')
 var imageproxy = require('./lib/cloudinary-proxy')
 
 var app = jalla('index.js', { sw: 'sw.js' })
@@ -33,6 +34,18 @@ app.use(post('/api/subscribe', compose([body(), async function (ctx, next) {
   } else {
     ctx.type = 'application/json'
     ctx.body = response
+  }
+}])))
+
+// proxy google form
+app.use(post('/api/submit-event', compose([body({ multipart: true }), async function (ctx, next) {
+  ctx.set('Cache-Control', 'no-cache, private, max-age=0')
+  await submitEvent(ctx.request.body.fields || ctx.request.body)
+  if (ctx.accepts('html')) {
+    ctx.redirect('back')
+  } else {
+    ctx.type = 'application/json'
+    ctx.body = {}
   }
 }])))
 
