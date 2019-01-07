@@ -175,15 +175,24 @@ class GoalPage extends View {
           ` : null}
           ${charts.length ? html`
             <section id="statistics" class="u-container">
+              <div class="View-spaceLarge">
+                ${doc ? intro({ secondary: true, title: asText(doc.data.stats_title), body: asElement(doc.data.stats_description, state.docs.resolve) }) : intro.loading({ secondary: true })}
+              </div>
               ${divide(charts)}
             </section>
           ` : null}
-          <section id="action">
+          ${targets.length ? html`
+            <section id="targets" class="u-container">
+              <div class="View-spaceLarge ">
+                ${doc ? intro({ secondary: true, title: asText(doc.data.targets_title), body: asElement(doc.data.targets_description, state.docs.resolve) }) : intro.loading({ secondary: true })}
+              </div>
+              ${state.cache(TargetGrid, `${doc.data.number}-targets`).render(doc.data.number, targets)}
+            </section>
+          ` : null}
+          <section id="action" class="View-spaceLarge">
             ${doc.data.featured_heading && doc.data.featured_heading.length ? html`
               <div class="u-container">
-                <div class="View-spaceLarge">
-                  ${doc ? intro({ title: asText(doc.data.featured_heading), body: asElement(doc.data.featured_text, state.docs.resolve) }) : intro.loading()}
-                </div>
+                ${doc ? intro({ title: asText(doc.data.featured_heading), body: asElement(doc.data.featured_text, state.docs.resolve) }) : intro.loading()}
               </div>
             ` : null}
             ${featured.length ? html`
@@ -192,19 +201,9 @@ class GoalPage extends View {
               </div>
             ` : null}
           </section>
-          ${targets.length ? html`
-            <section id="targets" class="u-container">
-              <div class="View-spaceLarge">
-                ${doc ? intro({ secondary: true, title: asText(doc.data.targets_title), body: asElement(doc.data.targets_description, state.docs.resolve) }) : intro.loading({ secondary: true })}
-              </div>
-              ${state.cache(TargetGrid, `${doc.data.number}-targets`).render(doc.data.number, targets)}
-            </section>
-          ` : null}
           ${doc.data.interlink_heading && doc.data.interlink_heading.length ? html`
-            <div class="u-container">
-              <div class="View-spaceLarge">
-                ${intersection({ title: asText(doc.data.interlink_heading), body: asElement(doc.data.interlink_text, state.docs.resolve) })}
-              </div>
+            <div class="View-spaceLarge u-container">
+              ${intersection({ title: asText(doc.data.interlink_heading), body: asElement(doc.data.interlink_text, state.docs.resolve) })}
             </div>
           ` : null}
         </main>
