@@ -135,19 +135,26 @@ function events (state, emit) {
           `
         }
         case 'submit-event-panel': {
-          var opts = {
+          let opts = {
             url: '/api/submit-event',
-            disclaimer: asElement(doc.data.form_disclaimer, state.docs.resolve, serialize),
-            success: asElement(doc.data.form_success, state.docs.resolve, serialize)
+            disclaimer: asElement(doc.data.form_disclaimer, state.docs.resolve, serialize)
+          }
+          let body = (sent) => {
+            return html`
+              <div class="Text">
+                ${sent ? asElement(doc.data.form_success, state.docs.resolve, serialize) : html`
+                  <div>
+                    <h2>${asText(doc.data.form_title)}</h2>
+                    ${asElement(doc.data.form_description, state.docs.resolve, serialize)}
+                  </div>
+                `}
+              </div>
+            `
           }
 
           return html`
             <div class="View-spaceSmall u-slideUp">
-              <div class="Text u-spaceB8">
-                <h2>${asText(doc.data.form_title)}</h2>
-                ${asElement(doc.data.form_description, state.docs.resolve, serialize)}
-              </div>
-              ${state.cache(EventForm, 'event-form').render(opts)}
+              ${state.cache(EventForm, 'event-form').render(opts, body)}
             </div>
           `
         }

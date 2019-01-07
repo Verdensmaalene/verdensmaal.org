@@ -228,7 +228,7 @@ function timestamp (date) {
   return [
     ('0' + date.getHours()).substr(-2),
     ('0' + date.getMinutes()).substr(-2)
-  ].join(':')
+  ].join('.')
 }
 
 // nullable text getter for Prismic text fields

@@ -28,7 +28,8 @@ module.exports = class EventForm extends Component {
     return false
   }
 
-  createElement (opts = {}) {
+  createElement (opts = {}, body) {
+    body = typeof body === 'function' ? body(this.local.sent) : body
     var self = this
     var cols = [
       ['name', 'email', 'org'],
@@ -44,29 +45,29 @@ module.exports = class EventForm extends Component {
     })
 
     return html`
-      <form method="POST" action="${opts.url}" onsubmit=${onsubmit}>
+      <form method="post" action="${opts.url}" enctype="multipart/form-data" onsubmit=${onsubmit}>
+        ${body ? html`
+          <div class="u-spaceB${this.local.sent ? '4' : '8'}">
+            ${body}
+          </div>
+        ` : null}
+        ${this.local.sent ? button({ text: text`Submit another event`, primary: true, type: 'button', onclick: reset }) : null}
         ${this.local.error ? html`
           <div class="Text u-spaceB4">
             <h3>${text`Oops`}</h3>
             <p>${text`Something didn't quite go as expected. Please, check that all required fields are filled in and try again.`}</p>
           </div>
         ` : null}
-        ${this.local.sent && opts.success ? html`
-          <div>
-            <div class="Text u-spaceB4">
-              ${opts.success}
-            </div>
-            ${button({ text: text`Submit another event`, primary: true, type: 'button', onclick: reset })}
-          </div>
-        ` : html`
+        ${!this.local.sent ? html`
           <div>
             ${grid({ size: { md: '1of3', lg: '1of3' } }, fields)}
+            ${input({ label: 'Upload images', comment: text`Max 5mb`, type: 'file', name: 'images', multiple: 'multiple', disabled: this.local.loading })}
             <div class="u-flex u-flexWrap u-alignCenter">
-              <div class="u-spaceR3 u-spaceT4">
+              <div class="u-spaceR3 u-spaceT3">
                 ${button({ text: text`Submit event`, primary: true, disabled: this.local.loading })}
               </div>
               ${opts.disclaimer ? html`
-                <div class="Text Text-small u-spaceT4">
+                <div class="Text Text-small u-spaceT3">
                   <div class="Text-muted">
                     ${opts.disclaimer}
                   </div>
@@ -74,7 +75,7 @@ module.exports = class EventForm extends Component {
               ` : null}
             </div>
           </div>
-        `}
+        ` : null}
       </form>
     `
 
@@ -94,9 +95,10 @@ module.exports = class EventForm extends Component {
         event: { label: text`Event title`, name: 'entry.653597200', type: 'text', required: true },
         address: { label: text`Address`, name: 'entry.1133502983', type: 'text', required: true, autocomplete: 'street-address', placeholder: text`E.g. ${'Farvergade 27D, 1. sal 1463 København K'}` },
         description: { label: text`Event description`, name: 'entry.1251436786', rows: 7 },
-        date: { label: text`Date and time`, name: 'entry.1844141974', type: 'text', required: true, placeholder: text`E.g. ${'25 August 2018, kl 13:00'}` }
+        date: { label: text`Date and time`, name: 'entry.1844141974', type: 'text', required: true, placeholder: text`E.g. ${'25. august 2019, kl. 13.00 – 17.30'}` }
       }[key]
       attrs.oninput = oninput
+      attrs.disabled = self.local.loading
       attrs.value = self.local.fields[attrs.name] || ''
       return attrs
     }
@@ -117,12 +119,13 @@ module.exports = class EventForm extends Component {
       if (!event.target.checkValidity()) {
         event.target.reportValidity()
       } else {
+        var body = new window.FormData(event.target)
         self.local.loading = true
         self.local.error = null
         self.rerender()
         window.fetch(opts.url, {
           method: 'POST',
-          body: new window.FormData(event.target)
+          body: body
         }).then(function (res) {
           if (!res.ok) throw new Error(res.statusText)
           self.local.loading = false

@@ -5,12 +5,9 @@
 
 .Form-field {
   display: block;
+  margin: 0 0 1.5em;
   font-size: 1rem;
   position: relative;
-}
-
-.Form-field + .Form-field {
-  margin-top: 1.5em;
 }
 
 .Form-label {
@@ -48,4 +45,69 @@ textarea.Form-control {
 .Form-control:focus-visible {
   outline: 0 !important;
   border-color: rgb(var(--color-gray));
+}
+
+.Form-control--file {
+  border: 0;
+  padding: 0;
+}
+
+.Form-control--file::-webkit-file-upload-button {
+  display: inline-block;
+  line-height: 3.25rem;
+  padding: 0 1.2rem;
+  min-width: 10rem;
+  border: solid rgb(var(--current-background));
+  border-width: 0 0.5em 0 0;
+  outline: none;
+  font-size: 1.5rem;
+  color: rgb(var(--default-color));
+  background-color: rgba(var(--color-gray), 0.12);
+  text-transform: uppercase;
+  font-weight: 600;
+  white-space: nowrap;
+  user-select: none;
+  font-family: var(--heading-font-family);
+  word-spacing: var(--heading-word-spacing);
+  transition: 140ms var(--ease-out);
+  transition-property: background-color, color;
+}
+
+.Form-control--file:not([disabled]):hover::-webkit-file-upload-button {
+  background-color: rgba(var(--color-gray), 0.22);
+}
+
+.Form-control--file[disabled]::-webkit-file-upload-button {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.Form-control--file::-ms-browse {
+  display: inline-block;
+  line-height: 3.25rem;
+  padding: 0 1.2rem;
+  min-width: 10rem;
+  border: solid rgb(var(--current-background));
+  border-width: 0 0.5em 0 0;
+  outline: none;
+  font-size: 1.5rem;
+  color: rgb(var(--default-color));
+  background-color: rgba(var(--color-gray), 0.12);
+  text-transform: uppercase;
+  font-weight: 600;
+  white-space: nowrap;
+  user-select: none;
+  font-family: var(--heading-font-family);
+  word-spacing: var(--heading-word-spacing);
+  transition: 140ms var(--ease-out);
+  transition-property: background-color, color;
+}
+
+.Form-control--file:not([disabled]):hover::-ms-browse {
+  background-color: rgba(var(--color-gray), 0.22);
+}
+
+.Form-control--file[disabled]::-ms-browse {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

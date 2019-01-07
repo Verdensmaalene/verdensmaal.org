@@ -38,16 +38,32 @@ app.use(post('/api/subscribe', compose([body(), async function (ctx, next) {
 }])))
 
 // proxy google form
-app.use(post('/api/submit-event', compose([body({ multipart: true }), async function (ctx, next) {
-  ctx.set('Cache-Control', 'no-cache, private, max-age=0')
-  await submitEvent(ctx.request.body.fields || ctx.request.body)
-  if (ctx.accepts('html')) {
-    ctx.redirect('back')
-  } else {
-    ctx.type = 'application/json'
-    ctx.body = {}
+app.use(post('/api/submit-event', compose([
+  body({
+    multipart: true,
+    formidable: {
+      maxFieldsSize: 5 * 1024 * 1024,
+      keepExtensions: true,
+      multiples: true
+    }
+  }),
+  async function (ctx, next) {
+    ctx.set('Cache-Control', 'no-cache, private, max-age=0')
+    var files = Object.values(ctx.request.files).reduce(function (list, value) {
+      if (Array.isArray(value)) value = value.map((item) => item.path)
+      else value = value.path
+      return list.concat(value)
+    }, [])
+
+    await submitEvent(ctx.request.body, files)
+    if (ctx.accepts('html')) {
+      ctx.redirect('back')
+    } else {
+      ctx.type = 'application/json'
+      ctx.body = {}
+    }
   }
-}])))
+])))
 
 // internal meta data scraper api
 app.use(get('/api/scrape/:uri(.+)', async function (ctx, uri, next) {
