@@ -25,6 +25,7 @@ self.addEventListener('activate', function onactivate (event) {
 self.addEventListener('fetch', function onfetch (event) {
   var req = event.request
   var url = new self.URL(req.url)
+  var isSameOrigin = self.location.origin === url.origin
 
   // proxy requests for start page with a random layout query
   if (url.pathname === '/' && !/layout=\d+/.test(url.search)) {
@@ -45,24 +46,28 @@ self.addEventListener('fetch', function onfetch (event) {
         }
 
         return self.fetch(req).then(function (response) {
-          if (!response.ok) throw response
-          else cache.put(req, response.clone())
+          if (!response.ok) {
+            if (fallback) return fallback
+            else if (isSameOrigin && url.pathname === '/') return findCachedLayout()
+            else return response
+          }
+          cache.put(req, response.clone())
           return response
-        }).catch(function (err) {
+        }, function (err) {
           if (fallback) return fallback
-          if (url.pathname === '/') return findCachedFallback()
-          else return err
+          if (isSameOrigin && url.pathname === '/') return findCachedLayout()
+          return err
         })
       }
 
       // lookup cached layout
       // (Response, num) -> Promise
-      function findCachedFallback (layout = 0) {
+      function findCachedLayout (layout = 0) {
         var next = layout ? addLayout(event.request, url, layout) : event.request
         return cache.match(next).then(function (cached) {
           if (cached) return cached
           if (layout === 9) return Promise.reject(Error('no-match'))
-          return findCachedFallback(layout + 1)
+          return findCachedLayout(layout + 1)
         })
       }
     })
