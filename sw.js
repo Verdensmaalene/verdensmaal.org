@@ -51,7 +51,7 @@ self.addEventListener('fetch', function onfetch (event) {
         }).catch(function (err) {
           if (fallback) return fallback
           if (url.pathname === '/') return findCachedFallback()
-          else throw err
+          else return err
         })
       }
 
