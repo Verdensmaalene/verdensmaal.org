@@ -57,8 +57,9 @@ textarea.Form-control {
   line-height: 3.25rem;
   padding: 0 1.2rem;
   min-width: 10rem;
-  border: solid rgb(var(--current-background));
+  border: solid #fff;
   border-width: 0 0.5em 0 0;
+  border-radius: 0;
   outline: none;
   font-size: 1.5rem;
   color: rgb(var(--default-color));
@@ -87,8 +88,9 @@ textarea.Form-control {
   line-height: 3.25rem;
   padding: 0 1.2rem;
   min-width: 10rem;
-  border: solid rgb(var(--current-background));
+  border: solid #fff;
   border-width: 0 0.5em 0 0;
+  border-radius: 0;
   outline: none;
   font-size: 1.5rem;
   color: rgb(var(--default-color));
