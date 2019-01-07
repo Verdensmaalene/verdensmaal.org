@@ -3,7 +3,7 @@ var nanoraf = require('nanoraf')
 var Component = require('choo/component')
 var logo = require('../logo')
 var symbol = require('../symbol')
-var { className, i18n } = require('../base')
+var { className, i18n, vh } = require('../base')
 
 var text = i18n(require('./lang.json'))
 var SCROLL_MIN = 50
@@ -174,7 +174,7 @@ module.exports = class Header extends Component {
             </a>
 
             <strong class="u-hiddenVisually">${text`Menu`}</strong>
-            <nav class="Header-nav" id="${id}-navigation">
+            <nav class="Header-nav" style="${isOpen ? `max-height: ${vh()}px` : ''}" id="${id}-navigation">
               <ul class="Header-list">
                 ${links.map((item) => typeof item === 'function' ? html`
                   <li class="Header-item">${item()}</li>
