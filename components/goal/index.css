@@ -434,7 +434,7 @@
   width: var(--width);
   left: var(--left);
   top: var(--top);
-  z-index: 3;
+  z-index: 7;
   background: transparent;
   transform-origin: 0 0;
   transform:
