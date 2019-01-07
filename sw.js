@@ -1,7 +1,5 @@
 /* eslint-env serviceworker */
 
-var TRACKING_REGEX = /https?:\/\/((www|ssl)\.)?google-analytics\.com/
-var IS_DEVELOPMENT = process.env.NODE_ENV === 'development'
 var CACHE_KEY = getCacheKey()
 var FILES = [
   '/',
@@ -15,7 +13,7 @@ self.addEventListener('install', function oninstall (event) {
   event.waitUntil(
     caches
       .open(CACHE_KEY)
-      .then(cache => cache.addAll(FILES))
+      .then((cache) => cache.addAll(FILES))
       .then(() => self.skipWaiting())
   )
 })
@@ -27,58 +25,63 @@ self.addEventListener('activate', function onactivate (event) {
 self.addEventListener('fetch', function onfetch (event) {
   var req = event.request
   var url = new self.URL(req.url)
-  var isSameOrigin = self.location.origin === url.origin
-  var isHTML = req.headers.get('accept').includes('text/html')
 
   // proxy requests for start page with a random layout query
   if (url.pathname === '/' && !/layout=\d+/.test(url.search)) {
-    let layout = Math.ceil(Math.random() * 9)
-    let query = `${url.search ? '&' : '?'}layout=${layout}`
-    url = new self.URL(url.href + query)
-    req = new self.Request(url.href, {
-      body: req.body,
-      method: req.method,
-      headers: req.heders,
-      referrer: req.referrer,
-      credentials: 'include'
-    })
+    req = addLayout(req, url, Math.ceil(Math.random() * 9))
   }
 
   event.respondWith(
     caches.open(CACHE_KEY).then(function (cache) {
       return cache.match(req).then(function (cached) {
-        // bypass cache for certain types
-        if ((isHTML && isSameOrigin) || IS_DEVELOPMENT) {
-          return update(cache, req, cached)
+        return update(req, cached)
+      })
+
+      // fetch request and update cache
+      // (Cache, Request, Response?) -> Response|Promise
+      function update (req, fallback) {
+        if (req.cache === 'only-if-cached' && req.mode !== 'same-origin') {
+          return fallback
         }
 
-        // bypass cache for tracking scripts
-        if (TRACKING_REGEX.test(url.href)) return self.fetch(req)
+        return self.fetch(req).then(function (response) {
+          if (!response.ok) throw response
+          else cache.put(req, response.clone())
+          return response
+        }).catch(function (err) {
+          if (fallback) return fallback
+          if (url.pathname === '/') return findCachedFallback()
+          else throw err
+        })
+      }
 
-        // use cached response
-        return cached || update(cache, req)
-      })
+      // lookup cached layout
+      // (Response, num) -> Promise
+      function findCachedFallback (layout = 0) {
+        var next = layout ? addLayout(event.request, url, layout) : event.request
+        return cache.match(next).then(function (cached) {
+          if (cached) return cached
+          if (layout === 9) return Promise.reject(Error('no-match'))
+          return findCachedFallback(layout + 1)
+        })
+      }
     })
   )
-
-  // fetch request and update cache
-  // (Cache, Request, Response?) -> Response|Promise
-  function update (cache, req, fallback) {
-    if (req.cache === 'only-if-cached' && req.mode !== 'same-origin') {
-      return fallback
-    }
-
-    return self.fetch(req).then(function (response) {
-      if (!response.ok) {
-        if (req !== event.request) return update(cache, event.request, fallback)
-        if (fallback) return fallback
-      } else {
-        cache.put(req, response.clone())
-      }
-      return response
-    })
-  }
 })
+
+// add layout query to cloned request
+// (Request, URL, num) -> Request
+function addLayout (req, url, layout) {
+  var query = `${url.search ? '&' : '?'}layout=${layout}`
+  url = new self.URL(url.href + query)
+  return new self.Request(url.href, {
+    body: req.body,
+    method: req.method,
+    headers: req.heders,
+    referrer: req.referrer,
+    credentials: 'include'
+  })
+}
 
 // clear application cache
 // () -> Promise
