@@ -8,6 +8,7 @@ var { className, i18n, vh } = require('../base')
 var text = i18n(require('./lang.json'))
 var SCROLL_MIN = 50
 var SCROLL_MAX = 150
+var preventScroll = (event) => event.preventDefault()
 
 module.exports = class Header extends Component {
   constructor (id, state, emit) {
@@ -21,7 +22,6 @@ module.exports = class Header extends Component {
     }
 
     var self = this
-    var preventScroll = (event) => event.preventDefault()
     this.toggle = function (next = !self.local.isOpen) {
       self.local.isOpen = next
       emit('header:toggle', next)
