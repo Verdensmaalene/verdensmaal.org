@@ -122,6 +122,7 @@
   --high-contrast-dark: var(--default-color) !important;
   --high-contrast-on: 1 !important;
   --high-contrast-underline: underline !important;
+  --high-contrast-bold: 600 !important;
 
   --color-text-muted: var(--default-color) !important;
 

@@ -33,7 +33,7 @@ module.exports = class EventForm extends Component {
     var cols = [
       ['name', 'email', 'org'],
       ['link', 'event', 'address'],
-      ['description', 'date']
+      ['date', 'description']
     ]
     var fields = cols.map(function (fields) {
       return html`

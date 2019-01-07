@@ -20,8 +20,14 @@
 
 .Tablist-tab {
   display: flex;
-  margin-right: 1.5em;
+  margin-right: 0.9em;
   margin-bottom: -1px;
+}
+
+@media (min-width: 400px) {
+  .Tablist-tab {
+    margin-right: 1.5em;
+  }
 }
 
 @media (min-width: 900px) {
