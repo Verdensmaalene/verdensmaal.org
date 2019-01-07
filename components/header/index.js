@@ -30,7 +30,7 @@ module.exports = class Header extends Component {
         self.element.querySelector('.js-toggle').focus()
       })
 
-      if (next) {
+      if (self.local.isOpen) {
         window.addEventListener('wheel', preventScroll)
         window.addEventListener('touchmove', preventScroll)
       } else {
@@ -51,6 +51,8 @@ module.exports = class Header extends Component {
 
   update (links, href, opts) {
     if (href !== this.local.href) {
+      window.removeEventListener('wheel', preventScroll)
+      window.removeEventListener('touchmove', preventScroll)
       this.local.isOpen = false
       return true
     }
