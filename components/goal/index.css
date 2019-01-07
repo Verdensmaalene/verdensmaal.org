@@ -644,6 +644,10 @@
   will-change: transform;
 }
 
+.Goal-pagination:focus-visible {
+  outline: 0 !important;
+}
+
 @media (max-width: 599px) {
   .Goal-pagination {
     display: none;
@@ -664,19 +668,23 @@
   opacity: 0;
   transform: translateX(0);
   white-space: nowrap;
+  position: relative;
+  top: 0.07rem;
   transition:
     opacity 150ms var(--ease-out),
     transform 150ms var(--ease-out);
   will-change: transform, opacity;
 }
 
+
+.Goal-pagination:focus-visible .Goal-pageTitle,
 .Goal-pagination:hover .Goal-pageTitle {
   opacity: 1;
 }
 
 .Goal-pagination--prev {
   flex-direction: row-reverse;
-  padding-left: 1rem;
+  padding-left: 3vw;
   left: 0;
   transform: translateX(-100%);
 }
@@ -686,7 +694,7 @@
 }
 
 .Goal-pagination--next {
-  padding-right: 1rem;
+  padding-right: 3vw;
   right: 0;
   text-align: right;
   transform: translateX(100%);
@@ -694,4 +702,10 @@
 
 .Goal-pagination--next:hover .Goal-pageTitle {
   transform: translateX(-0.5rem);
+}
+
+@media (min-width: 800px) {
+  .Goal-pagination {
+    font-size: 1.4rem;
+  }
 }

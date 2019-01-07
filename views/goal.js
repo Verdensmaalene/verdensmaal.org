@@ -221,8 +221,7 @@ class GoalPage extends View {
             href: state.docs.resolve(response.results[0]),
             text: html`
               <span>
-                ${text`Goal ${num}`}<br>
-                ${asElement(response.results[0].data.label, state.docs.resolve, serialize)}
+                ${text`Goal ${num}`}
               </span>
             `
           })
