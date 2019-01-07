@@ -28,7 +28,7 @@ function error (err) {
             ` : html`
               <p>
                 ${text`We apologize, an error has occured on our site. It may be temporary and you could` + ' '}
-                <a href="">${text`try again`}</a>
+                <a href="" onclick=${reload}>${text`try again`}</a>
                 ${' ' + text`or go back to` + ' '}
                 <a href="/">${text`the homepage`}</a>.
               </p>
@@ -39,4 +39,9 @@ function error (err) {
       </div>
     </main>
   `
+
+  function reload (event) {
+    window.location.reload()
+    event.preventDefault()
+  }
 }
