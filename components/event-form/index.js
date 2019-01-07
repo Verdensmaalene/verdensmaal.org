@@ -131,12 +131,12 @@ module.exports = class EventForm extends Component {
           self.local.loading = false
           self.local.sent = true
           window.sessionStorage.removeItem(self.local.id)
-          self.rerender()
         }).catch(function (err) {
           self.local.loading = false
           self.local.error = err
+        }).then(function () {
           self.rerender()
-          self.element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          self.element.scrollIntoView({ behavior: 'smooth', block: 'center' })
         })
       }
       event.preventDefault()
