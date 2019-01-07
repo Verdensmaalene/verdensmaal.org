@@ -217,7 +217,8 @@
   text-transform: uppercase;
 }
 
-.Header-button--toggle .Header-text {
+.Header-button--toggle .Header-text,
+.Header-button--back .Header-text {
   font-size: 1.5rem;
 }
 
@@ -228,9 +229,9 @@
 .Header-button--toggle {
   display: flex;
   align-items: center;
-  padding: 0.6rem 0.9rem 0.5rem 0.9rem;
+  padding: 0.6rem 0.75rem 0.5rem 0.9rem;
   position: absolute;
-  right: 0.9rem;
+  right: 0.35rem;
   z-index: 1;
   text-align: right;
 }
@@ -247,9 +248,9 @@
   display: flex;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 600px) {
   .Header-button--toggle {
-    right: 0.7rem;
+    right: 0.75rem;
   }
 }
 
