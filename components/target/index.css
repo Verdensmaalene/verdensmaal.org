@@ -109,7 +109,7 @@
   }
 }
 
-@media (max-width: 800px), (min-width: 1399px) {
+@media (max-width: 799px), (min-width: 1399px) {
   .Target-figure .Target-action {
     display: none;
   }

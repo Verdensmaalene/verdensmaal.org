@@ -114,7 +114,6 @@
 .Header-nav {
   flex: 1 0 auto;
   pointer-events: auto;
-  overflow: hidden;
 }
 
 .Header-list {
@@ -391,7 +390,7 @@
  * Narrow viewports with vertical navigation. Note the max-width query.
  */
 
-@media (max-width: 1000px) {
+@media (max-width: 999px) {
   .Header-list,
   .Header-button--back {
     transform: none !important;
@@ -410,6 +409,7 @@
     transform: translateY(var(--Header-displace));
     transition: 300ms 100ms var(--ease-out);
     transition-property: transform, opacity;
+    overflow: hidden;
   }
 
   /**
@@ -484,7 +484,7 @@
  * Give the items in the vertical navigation a bit more space when possible.
  */
 
-@media (max-width: 1000px) and (min-height: 500px) {
+@media (max-width: 999px) and (min-height: 500px) {
   .Header-text {
     font-size: 3rem;
   }

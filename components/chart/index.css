@@ -115,7 +115,7 @@
   display: none;
 }
 
-@media (min-width: 600px) and (max-width: 1000px) {
+@media (min-width: 600px) and (max-width: 999px) {
   .Chart--shrink {
     --Chart-scale-factor: 1.4;
   }
@@ -156,7 +156,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 479px) {
   :root {
     --Chart-scale-factor: 1.4;
   }
@@ -209,7 +209,7 @@
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 319px) {
   :root {
     --Chart-scale-factor: 1.8;
   }

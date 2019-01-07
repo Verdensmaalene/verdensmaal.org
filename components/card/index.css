@@ -305,7 +305,8 @@
 }
 
 .Card-icon {
-  padding-left: 0.5em;
+  padding-left: 0.4em;
   font-size: 0.75em;
   line-height: 0;
+  margin-right: -0.3rem;
 }
