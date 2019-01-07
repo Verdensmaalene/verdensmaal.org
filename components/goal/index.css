@@ -364,26 +364,26 @@
 .Goal--fullscreen .Goal-content {
   max-width: 32rem;
   padding-right: 2.5rem;
-  margin: 0;
+  margin: 0.5rem 0 0;
 }
 
-.Goal--fullscreen.Goal--1 .Goal-content { margin-left: 13.1%; }
-.Goal--fullscreen.Goal--2 .Goal-content { margin-left: 9.6%; }
-.Goal--fullscreen.Goal--3 .Goal-content { margin-left: 9.6%; }
-.Goal--fullscreen.Goal--4 .Goal-content { margin-left: 9%; }
-.Goal--fullscreen.Goal--5 .Goal-content { margin-left: 9.6%; }
-.Goal--fullscreen.Goal--6 .Goal-content { margin-left: 9.6%; }
-.Goal--fullscreen.Goal--7 .Goal-content { margin-left: 10.1%; }
-.Goal--fullscreen.Goal--8 .Goal-content { margin-left: 9.5%; }
-.Goal--fullscreen.Goal--9 .Goal-content { margin-left: 7.6%; }
-.Goal--fullscreen.Goal--10 .Goal-content { margin-left: 8%; }
-.Goal--fullscreen.Goal--11 .Goal-content { margin-left: 9.6%; }
-.Goal--fullscreen.Goal--12 .Goal-content { margin-left: 8.3%; }
-.Goal--fullscreen.Goal--13 .Goal-content { margin-left: 8.2%; }
-.Goal--fullscreen.Goal--14 .Goal-content { margin-left: 8.1%; }
-.Goal--fullscreen.Goal--15 .Goal-content { margin-left: 8%; }
-.Goal--fullscreen.Goal--16 .Goal-content { margin-left: 6%; }
-.Goal--fullscreen.Goal--17 .Goal-content { margin-left: 8.6%; }
+.Goal--fullscreen.Goal--1 .Goal-content { margin-left: 16.1%; }
+.Goal--fullscreen.Goal--2 .Goal-content { margin-left: 12.8%; }
+.Goal--fullscreen.Goal--3 .Goal-content { margin-left: 12.8%; }
+.Goal--fullscreen.Goal--4 .Goal-content { margin-left: 12.2%; }
+.Goal--fullscreen.Goal--5 .Goal-content { margin-left: 12.9%; }
+.Goal--fullscreen.Goal--6 .Goal-content { margin-left: 12.9%; }
+.Goal--fullscreen.Goal--7 .Goal-content { margin-left: 13.5%; }
+.Goal--fullscreen.Goal--8 .Goal-content { margin-left: 12.6%; }
+.Goal--fullscreen.Goal--9 .Goal-content { margin-left: 11%; }
+.Goal--fullscreen.Goal--10 .Goal-content { margin-left: 11.1%; }
+.Goal--fullscreen.Goal--11 .Goal-content { margin-left: 12.9%; }
+.Goal--fullscreen.Goal--12 .Goal-content { margin-left: 11.4%; }
+.Goal--fullscreen.Goal--13 .Goal-content { margin-left: 11.4%; }
+.Goal--fullscreen.Goal--14 .Goal-content { margin-left: 11.1%; }
+.Goal--fullscreen.Goal--15 .Goal-content { margin-left: 11.3%; }
+.Goal--fullscreen.Goal--16 .Goal-content { margin-left: 9.3%; }
+.Goal--fullscreen.Goal--17 .Goal-content { margin-left: 11.9%; }
 
 /**
  * 1. Exclude children height from layout to preserve vertical align
@@ -467,7 +467,8 @@
 
   .Goal.Goal--fullscreen .Goal-content {
     width: calc(100% - (189px + (var(--offset, 0) * 3px)));
-    margin-left: calc(189px + (var(--offset, 0) * 3px));
+    margin-left: calc(203px + (var(--offset, 0) * 3px));
+    margin-top: 0;
   }
 
 }
@@ -484,7 +485,7 @@
 
   .Goal.Goal--fullscreen .Goal-content {
     width: calc(100% - (232px + (var(--offset, 0) * 3.9px)));
-    margin-left: calc(232px + (var(--offset, 0) * 3.9px));
+    margin-left: calc(247px + (var(--offset, 0) * 3.9px));
   }
 }
 
@@ -495,7 +496,7 @@
 
   .Goal.Goal--fullscreen .Goal-content {
     width: calc(100% - (325px + (var(--offset, 0) * 5.8px)));
-    margin-left: calc(325px + (var(--offset, 0) * 5.8px));
+    margin-left: calc(344px + (var(--offset, 0) * 5.8px));
   }
 }
 
