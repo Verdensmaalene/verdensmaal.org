@@ -96,7 +96,7 @@
 .Share-heading {
   position: absolute;
   left: 0;
-  top: -0.25rem;
+  top: 0;
   font-size: 1.5rem;
   text-transform: uppercase;
   font-family: var(--heading-font-family);
@@ -335,6 +335,10 @@
   border-radius: 0;
   user-select: text;
   min-width: 0;
+}
+
+.Share-url:focus-visible {
+  outline: 0 !important;
 }
 
 .Share-fade {
