@@ -312,7 +312,7 @@
   height: auto;
   min-height: 0;
   margin-top: 8%;
-  z-index: 1;
+  z-index: 0;
   font-family: var(--heading-font-family);
   line-height: var(--heading-line-height);
   word-spacing: var(--heading-word-spacing);
@@ -414,7 +414,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 3;
+  z-index: 6;
   transform-origin: 0 0;
   transform:
     translateX(calc(1px * (var(--left) + var(--width) * (1 - var(--shrink, 1)) / 2)))
@@ -600,6 +600,10 @@
   color: rgb(var(--high-contrast-light, var(--color-goal-17-shaded)));
 }
 
+/**
+ * Action button
+ */
+
 .Goal-action {
   display: inline-block;
   padding: 0.5rem 0.65rem;
@@ -622,4 +626,72 @@
   position: relative;
   top: -0.15rem;
   margin-right: 0.5rem;
+}
+
+/**
+ * Pagination
+ */
+
+.Goal-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 15%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  animation: Goal-pagination--appear 150ms forwards var(--ease-out);
+  will-change: transform;
+}
+
+@media (max-width: 599px) {
+  .Goal-pagination {
+    display: none;
+  }
+}
+
+@keyframes Goal-pagination--appear {
+  to {
+    transform: translateX(0);
+  }
+}
+
+.Goal-pageTitle {
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateX(0);
+  white-space: nowrap;
+  transition:
+    opacity 150ms var(--ease-out),
+    transform 150ms var(--ease-out);
+  will-change: transform, opacity;
+}
+
+.Goal-pagination:hover .Goal-pageTitle {
+  opacity: 1;
+}
+
+.Goal-pagination--prev {
+  flex-direction: row-reverse;
+  padding-left: 1rem;
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.Goal-pagination--prev:hover .Goal-pageTitle {
+  transform: translateX(0.5rem);
+}
+
+.Goal-pagination--next {
+  padding-right: 1rem;
+  right: 0;
+  text-align: right;
+  transform: translateX(100%);
+}
+
+.Goal-pagination--next:hover .Goal-pageTitle {
+  transform: translateX(-0.5rem);
 }

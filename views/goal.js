@@ -15,8 +15,11 @@ var Text = require('../components/text')
 var Chart = require('../components/chart')
 var Header = require('../components/header')
 var divide = require('../components/grid/divide')
+var goalAction = require('../components/goal/action')
 var TargetGrid = require('../components/target-grid')
+var serialize = require('../components/text/serialize')
 var intersection = require('../components/intersection')
+var goalPagination = require('../components/goal/pagination')
 var { i18n, isSameDomain, className, srcset, asText, colors } = require('../components/base')
 
 var text = i18n()
@@ -132,7 +135,6 @@ class GoalPage extends View {
 
       props.number = doc.data.number
       props.label = asText(doc.data.label)
-      props.action = doc.data.action
       props.description = asText(doc.data.description)
 
       var targets = doc.data.targets
@@ -146,33 +148,30 @@ class GoalPage extends View {
           })
         })
 
-      function arrow () {
-        return html`
-          <svg class="Goal-arrow" width="20" height="20" viewBox="0 0 20 20"><g transform="rotate(90 10 10)" fill="none" fill-rule="evenodd"><path d="M11.52 10L8 13.52l.73.73L12.98 10 8.73 5.75 8 6.48 11.52 10z" fill="currentColor" /><circle stroke="currentColor" cx="10" cy="10" r="9.5" /></g></svg>
-        `
+      var pagination = null
+      if (typeof window !== 'undefined') {
+        pagination = [doc.data.number - 1, doc.data.number + 1].map(getPaginator)
       }
 
-      function onclick (event) {
-        document.getElementById('secondary-header-container').scrollIntoView({ behavior: 'smooth', block: 'start' })
-        event.preventDefault()
-      }
-
-      function action () {
+      function goalContent () {
         return html`
-          <a class="Goal-action" href="#manifest" onclick="${onclick}">
-            ${arrow()} ${props.action}
-          </a>
+          <div>
+            <div class="u-slideUp">${goalAction({ href: '#secondary-header-container', text: doc.data.action })}</div>
+            ${pagination}
+          </div>
         `
       }
 
       return html`
         <main class="View-main">
-          ${goal.render(props, action())}
+          ${goal.render(props, goalContent)}
           ${header}
           ${doc.data.manifest && doc.data.manifest.length ? html`
-            <section id="manifest" class="u-container">
-              ${state.cache(Text, `${state.params.wildcard}-manifest`, { size: 'large' }).render(doc.data.manifest)}
-            </section>
+            <div class="View-space">
+              <section id="manifest" class="u-container">
+                ${state.cache(Text, `${state.params.wildcard}-manifest`, { size: 'large' }).render(doc.data.manifest)}
+              </section>
+            </div>
           ` : null}
           ${charts.length ? html`
             <section id="statistics" class="u-container">
@@ -210,6 +209,26 @@ class GoalPage extends View {
           ` : null}
         </main>
       `
+
+      function getPaginator (num) {
+        var dir = num > doc.data.number ? 'next' : 'prev'
+        if (!num) num = 17
+        else if (num > 17) num = 1
+        var predicate = Predicates.at('my.goal.number', +num)
+        return state.docs.get(predicate, function (err, response) {
+          if (err || !response) return null
+          return goalPagination({
+            dir: dir,
+            href: state.docs.resolve(response.results[0]),
+            text: html`
+              <span>
+                ${text`Goal ${num}`}<br>
+                ${asElement(response.results[0].data.label, state.docs.resolve, serialize)}
+              </span>
+            `
+          })
+        })
+      }
 
       function chart (link) {
         if (link.isBroken || !link.id) return null

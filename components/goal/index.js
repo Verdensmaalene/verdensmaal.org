@@ -204,9 +204,9 @@ module.exports = class Goal extends Component {
             <div class="Goal-label">
               ${icon.label(self.local.number, self.local.label)}
             </div>
-            <div class="Goal-content u-slideUp" style="--offset: ${icon.offset(self.local.number, self.local.label)}">
+            <div class="Goal-content" style="--offset: ${icon.offset(self.local.number, self.local.label)}">
               ${self.local.description ? html`
-                <p>${self.local.description}</p>
+                <p class="u-slideUp">${self.local.description}</p>
               ` : null}
             </div>
           </div>
@@ -312,9 +312,9 @@ module.exports = class Goal extends Component {
             </div>
           ` : null}
           ${props.number && props.label && ((isFullscreen && props.description) || children) ? html`
-            <div class="Goal-content ${isFullscreen ? 'u-slideUp' : ''}" style="--offset: ${icon.offset(props.number, props.label)}">
+            <div class="Goal-content" style="--offset: ${icon.offset(props.number, props.label)}">
               ${props.description && isFullscreen ? html`
-                <p>${props.description}</p>
+                <p class="${isFullscreen ? 'u-slideUp' : ''}">${props.description}</p>
               ` : null}
               ${children ? html`
                 <div class="Goal-children">

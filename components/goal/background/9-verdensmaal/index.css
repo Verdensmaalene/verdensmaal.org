@@ -39,6 +39,7 @@
 .Background9-carlsberg {
   width: 14%;
   height: auto;
+  max-height: 190px;
   max-width: 120px;
   position: absolute;
   left: 76%;

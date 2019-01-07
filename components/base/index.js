@@ -10,8 +10,9 @@ if (typeof window !== 'undefined') {
     if (typeof opts === 'boolean') {
       if (opts) opts = { block: 'start', inline: 'nearest' }
       else opts = { block: 'end', inline: 'nearest' }
+    } else {
+      opts = { block: 'start' }
     }
-    opts = opts || {}
     opts.behavior = opts.behavior || 'smooth'
     return scrollIntoView.call(this, opts)
   }
