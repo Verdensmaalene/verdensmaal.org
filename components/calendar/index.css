@@ -57,7 +57,7 @@
 
 .Calendar-content {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   min-height: 4rem;
   padding: 1rem 0 0;
   position: relative;
@@ -179,11 +179,11 @@
   order: 1;
   display: flex;
   align-items: center;
-  padding: 0.7em 1em 0.6em calc(1em - 0.3em);
+  padding: 0.7em 0.7em 0.6em 0.7em;
   margin-top: 0.5em;
   position: relative;
   z-index: 1;
-  left: -1em;
+  left: -0.7em;
   top: -0.3rem;
   font-size: 0.8rem;
   color: rgb(var(--high-contrast-light, var(--color-text-muted)));
