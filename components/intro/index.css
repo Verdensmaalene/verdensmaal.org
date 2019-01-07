@@ -38,11 +38,11 @@
   max-width: 39em;
 }
 
-.Text p:not(:first-child) {
+.Intro p:not(:first-child) {
   margin-top: 1.3em;
 }
 
-.Text p:not(:last-child) {
+.Intro p:not(:last-child) {
   margin-bottom: 1.3em;
 }
 

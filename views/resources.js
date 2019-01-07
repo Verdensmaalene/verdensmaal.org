@@ -65,24 +65,26 @@ function resources (state, emit) {
     if (slice.slice_type !== 'interlink_navigation') return null
     return intersection({ title: asText(slice.primary.heading), body: asElement(slice.primary.text, state.docs.resolve) })
   }
-}
 
-// render collection of resources
-// obj -> Element
-function group (slice) {
-  if (slice.slice_type !== 'resource_group') return null
-  var heading = asText(slice.primary.heading)
-  var slug = slice.primary.shortcut_name || heading
-  return html`
-    <section id="${slugify(slug, { lower: true })}">
-      <div class="u-container">
-        ${border(heading)}
-      </div>
-      <div class="u-md-container">
-        ${grid({ size: { md: '1of3' }, carousel: true }, slice.items.map(cell))}
-      </div>
-    </section>
-  `
+  // render collection of resources
+  // obj -> Element
+  function group (slice) {
+    if (slice.slice_type !== 'resource_group') return null
+    var heading = asText(slice.primary.heading)
+    var slug = slice.primary.shortcut_name || heading
+    var carousel = slice.items.length > 1
+    return html`
+      <section>
+        <div class="u-container View-space u-spaceB5">
+          <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" id="${slugify(slug, { lower: true })}"></div>
+          ${border(heading)}
+        </div>
+        <div class="${carousel ? 'u-md-container' : 'u-container'}">
+          ${grid({ size: { md: '1of3' }, carousel: carousel }, slice.items.map(cell))}
+        </div>
+      </section>
+    `
+  }
 }
 
 // render individual resource grid cell
@@ -114,7 +116,15 @@ function shortcut (slice) {
     slug = slug || asText(slice.primary.heading)
   }
   if (!slug) return null
-  return html`<a href="#${slugify(slug, { lower: true })}">${slug}</a>`
+  return html`<a onclick=${scrollIntoView} href="#${slugify(slug, { lower: true })}">${slug}</a>`
+}
+
+function scrollIntoView (event) {
+  var el = document.getElementById(event.target.hash.substr(1))
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    event.preventDefault()
+  }
 }
 
 function meta (state) {
