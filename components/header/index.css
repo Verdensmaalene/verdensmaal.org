@@ -114,6 +114,7 @@
 .Header-nav {
   flex: 1 0 auto;
   pointer-events: auto;
+  overflow: hidden;
 }
 
 .Header-list {
