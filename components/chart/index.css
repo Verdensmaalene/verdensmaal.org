@@ -27,6 +27,8 @@
 
 .Chart-legend {
   cursor: default;
+  font-size: 0.7rem;
+  margin-top: 0.2rem;
 }
 
 .Chart-heading {
@@ -37,6 +39,11 @@
 
 .Chart-title {
   flex: 1 1 50%;
+  font-weight: 600;
+}
+
+.Chart-source {
+  font-weight: normal;
 }
 
 .Chart-legend {
@@ -135,7 +142,6 @@
     justify-content: flex-end;
     flex-direction: row-reverse;
     align-items: baseline;
-    font-size: 0.75rem;
   }
 
   .Chart--shrink .Chart-marque:nth-child(2n+1) {
@@ -176,7 +182,6 @@
     justify-content: flex-end;
     flex-direction: row-reverse;
     align-items: baseline;
-    font-size: 0.75rem;
   }
 
   .Chart-marque:nth-child(2n+1) {

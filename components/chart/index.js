@@ -135,7 +135,7 @@ function wrapper (props, children) {
       <div class="Chart-heading">
         <p class="Chart-title">
           ${props.title}${props.source ? html`
-            <span>
+            <span class="Chart-source">
               <br>
               ${text`Source`}: <a ${link}>${props.source.text}</a>
             </span>
