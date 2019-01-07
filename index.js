@@ -33,6 +33,7 @@ app.route('/mission', require('./views/mission'))
 app.route('/*', require('./views/catchall'))
 
 try {
+  if (typeof window !== 'undefined' && window.BLOCKED) throw Error('BLOCKED')
   module.exports = app.mount('body')
   // remove parse guard added in header
   window.onerror = null
