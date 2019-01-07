@@ -167,7 +167,7 @@ class GoalPage extends View {
           ${goal.render(props, goalContent)}
           ${header}
           ${doc.data.manifest && doc.data.manifest.length ? html`
-            <div class="View-space">
+            <div class="View-space u-spaceB0">
               <section id="manifest" class="u-container">
                 ${state.cache(Text, `${state.params.wildcard}-manifest`, { size: 'large' }).render(doc.data.manifest)}
               </section>
@@ -189,10 +189,10 @@ class GoalPage extends View {
               ${state.cache(TargetGrid, `${doc.data.number}-targets`).render(doc.data.number, targets)}
             </section>
           ` : null}
-          <section id="action" class="View-spaceLarge">
+          <section id="action">
             ${doc.data.featured_heading && doc.data.featured_heading.length ? html`
-              <div class="u-container">
-                ${doc ? intro({ title: asText(doc.data.featured_heading), body: asElement(doc.data.featured_text, state.docs.resolve) }) : intro.loading()}
+              <div class="View-spaceLarge u-container">
+                ${doc ? intro({ secondary: true, title: asText(doc.data.featured_heading), body: asElement(doc.data.featured_text, state.docs.resolve) }) : intro.loading()}
               </div>
             ` : null}
             ${featured.length ? html`
