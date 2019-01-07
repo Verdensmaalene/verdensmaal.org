@@ -41,7 +41,7 @@ function missionView (state, emit) {
       <main class="View-main">
         ${state.cache(Mission, doc.id + '-mission').render({ title, description, partners })}
         <section class="u-container">
-          ${state.cache(Text, `${state.params.wildcard}-manifest`, { size: 'large' }).render(doc.data.body)}
+          ${state.cache(Text, `${state.params.wildcard}-manifest`, { size: 'large', expanded: true }).render(doc.data.body)}
         </section>
         ${doc.data.slices.map(fromSlice)}
       </main>
