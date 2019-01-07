@@ -40,6 +40,14 @@
   }
 }
 
+@media (min-width: 500px) {
+  .Event--banner .Event-icon {
+    width: 8rem;
+    height: 8rem;
+  }
+}
+
+
 .Event-date {
   position: absolute;
   left: 5%;

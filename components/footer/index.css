@@ -357,6 +357,10 @@
   .Footer-author {
     flex-basis: auto;
   }
+
+  .Footer-section--newsletter .Footer-title {
+    margin-bottom: 1.8rem;
+  }
 }
 
 @media (min-width: 1300px) {

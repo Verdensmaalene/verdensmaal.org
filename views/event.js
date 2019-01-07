@@ -56,7 +56,7 @@ function eventView (state, emit) {
       alt: image.alt || '',
       caption: image.copyright
     }, asTicket(doc)) : html`
-      <div class="u-cols">
+      <div class="u-cols u-xl-container">
         <div class="u-col u-lg-size2of3">
           ${event.outer(event.inner(), { static: true, type: 'banner' })}
         </div>
@@ -74,7 +74,7 @@ function eventView (state, emit) {
           </div>
           <div class="u-container">
             <div class="View-space u-cols">
-              <div class="u-col u-lg-size2of3">
+              <div class="u-col u-lg-size2of3 u-spaceB3">
                 <div class="Text">
                   <h1>${title}</h1>
                   <p class="Text-large">${description}</p>
