@@ -1,3 +1,5 @@
+/* global gtag */
+
 var { Predicates } = require('prismic-javascript')
 
 module.exports = navigation
@@ -7,6 +9,10 @@ function navigation (state, emitter) {
 
   emitter.prependListener('navigate', function () {
     state.referrer = state.href
+    gtag('config', 'UA-131830829-1', {
+      'page_title': state.title,
+      'page_path': state.href
+    })
   })
 
   var maintainScroll = false
