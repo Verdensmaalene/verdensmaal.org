@@ -84,11 +84,10 @@ app.use(get('/media/:type/:transform/:uri(.+)', async function (ctx, type, trans
 
 // disallow robots anywhere but live URL
 app.use(get('/robots.txt', function (ctx, next) {
-  if (ctx.host === process.env.npm_package_now_alias) return next()
   ctx.type = 'text/plain'
   ctx.body = dedent`
     User-agent: *
-    Disallow: /
+    Disallow: ${app.env === 'production' ? '' : '/'}
   `
 }))
 
