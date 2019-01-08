@@ -91,7 +91,7 @@ module.exports = class EventForm extends Component {
         name: { label: text`Your name`, name: 'entry.607605804', type: 'text', autocomplete: 'name', required: true },
         email: { label: text`Your email address`, name: 'emailAddress', type: 'email', autocomplete: 'email', required: true },
         org: { label: text`Organization`, name: 'entry.1278340014', type: 'text', autocomplete: 'organization' },
-        link: { label: text`Link to event`, name: 'entry.1771646671', type: 'text', pattern: '\\w+\\.\\w+', title: text`Please enter a valid webpage address`, required: true, placeholder: text`E.g. ${'http://www.domain.com/event/'}` },
+        link: { label: text`Link to event`, name: 'entry.1771646671', type: 'text', title: text`Please enter a valid webpage address`, required: true, placeholder: text`E.g. ${'http://www.domain.com/event/'}` },
         event: { label: text`Event title`, name: 'entry.653597200', type: 'text', required: true },
         address: { label: text`Address`, name: 'entry.1133502983', type: 'text', required: true, autocomplete: 'street-address', placeholder: text`E.g. ${'Farvergade 27D, 1. sal 1463 København K'}` },
         description: { label: text`Event description`, name: 'entry.1251436786', rows: 7 },
