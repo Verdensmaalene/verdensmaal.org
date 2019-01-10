@@ -1,6 +1,6 @@
 {
   "name": "verdensmaal.org",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "The Official Website for The United Nation's Global Goals in Denmark",
   "main": "index.js",
   "scripts": {
