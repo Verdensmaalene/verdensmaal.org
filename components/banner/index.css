@@ -19,6 +19,7 @@
   overflow: hidden;
   position: relative;
   min-height: 65vh;
+  background: rgb(215, 215, 215);
 }
 
 /**
