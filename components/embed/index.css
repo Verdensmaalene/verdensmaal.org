@@ -5,6 +5,8 @@
   width: 100%;
   position: relative;
   color: rgb(var(--current-background));
+  min-height: 6rem;
+  background: rgba(0, 0, 0, 0.04);
 }
 
 .Embed-link {
