@@ -50,6 +50,7 @@
   },
   "homepage": "https://github.com/codeandconspire/verdensmaal.org#readme",
   "dependencies": {
+    "archiver": "^3.0.0",
     "cccpurge": "^2.0.0",
     "choo": "^6.13.1",
     "choo-service-worker": "^2.4.0",

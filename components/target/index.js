@@ -55,6 +55,9 @@ module.exports = class Target extends Component {
   createElement (opts = {}) {
     var color = opts.goal === 7 ? 'u-colorBlack' : 'u-colorWhite'
     var bg = 'u-bg' + opts.goal
+    var url = opts.url || opts.icon.url
+    var filename = url.split('/')
+    filename = filename[filename.length - 1]
 
     var onexpand = (event) => {
       this.local.clicked = true
@@ -78,7 +81,7 @@ module.exports = class Target extends Component {
                   ${symbol('share', { circle: true })}
                 </a>
               ` : null}
-              <a class="Target-action" href="${opts.icon.url}" title="${text`Download icon`}" download>
+              <a class="Target-action" href="${url}" title="${text`Download icon`}" download="${filename}">
                 <span class="u-hiddenVisually">${text`Download icon`}</span>
                 ${symbol('download', { circle: true })}
               </a>
@@ -97,7 +100,7 @@ module.exports = class Target extends Component {
                   ${symbol('share', { circle: true })}
                 </a>
               ` : null}
-              <a class="Target-action" href="${opts.icon.url}" title="${text`Download icon`}" download>
+              <a class="Target-action" href="${url}" title="${text`Download icon`}" download="${filename}">
                 <span class="u-hiddenVisually">${text`Download icon`}</span>
                 ${symbol('download', { circle: true })}
               </a>

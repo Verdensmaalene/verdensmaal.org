@@ -18,6 +18,7 @@ var ical = require('./lib/ical')
 var chart = require('./lib/chart')
 var purge = require('./lib/purge')
 var scrape = require('./lib/scrape')
+var zip = require('./lib/zip-target')
 var resolve = require('./lib/resolve')
 var subscribe = require('./lib/subscribe')
 var { asText } = require('./components/base')
@@ -152,6 +153,24 @@ app.use(get('/:num(\\d{1,2})-:uid', function (ctx, num, uid, next) {
     ctx.append('Link', `<${ctx.assets[key].url}>; rel=preload; as=script`)
   }
   return next()
+}))
+
+// bundle target icons as zip archives
+app.use(get('/delmaal-:num.:id.zip', async function (ctx, num, id, next) {
+  var identifier = num + '.' + id
+  try {
+    let api = await Prismic.api(REPOSITORY, { req: ctx.req })
+    let response = await api.query([
+      Prismic.Predicates.at('document.type', 'goal'),
+      Prismic.Predicates.at('my.goal.number', +num)
+    ])
+    let doc = response.results[0]
+    let target = doc.data.targets.find((target) => target.id === identifier)
+    ctx.set('Cache-Control', `max-age=${60 * 60 * 24 * 365}`)
+    ctx.body = await zip(target.icon.url, `delmål-${identifier}`)
+  } catch (err) {
+    ctx.throw(err.status || 400)
+  }
 }))
 
 // render statistics as image

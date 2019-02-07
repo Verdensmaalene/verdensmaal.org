@@ -17,7 +17,6 @@ var Header = require('../components/header')
 var divide = require('../components/grid/divide')
 var goalAction = require('../components/goal/action')
 var TargetGrid = require('../components/target-grid')
-var serialize = require('../components/text/serialize')
 var intersection = require('../components/intersection')
 var goalPagination = require('../components/goal/pagination')
 var { i18n, isSameDomain, className, srcset, asText, colors } = require('../components/base')
@@ -144,7 +143,8 @@ class GoalPage extends View {
             title: asText(target.title),
             description: asText(target.body),
             body: asElement(target.body, state.docs.resolve),
-            href: state.origin + state.href
+            href: state.origin + state.href,
+            url: `/delmaal-${target.id}.zip`
           })
         })
 
