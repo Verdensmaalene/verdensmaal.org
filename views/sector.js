@@ -116,23 +116,24 @@ function goal (state, emit) {
         case 'news':
         case 'events': {
           let render = slice.slice_type === 'events' ? eventCard : newsCard
-          let featured = slice.items
+          let ids = slice.items
             .filter((item) => item.link && item.link.id && !item.link.isBroken)
-            .map(function (item) {
-              // fetch featured news
-              return state.docs.getByID(item.link.id, function (err, doc) {
-                if (err) throw err
-                if (!doc) return card.loading()
-                return render(doc)
-              })
+            .map((item) => item.link.id)
+          let featured = ids.map(function (id) {
+            // fetch featured news
+            return state.docs.getByID(id, function (err, doc) {
+              if (err) throw err
+              if (!doc) return card.loading()
+              return render(doc)
             })
+          })
 
+          let pageSize = 3
           let type = slice.slice_type === 'events' ? 'event' : 'news'
-          let pageSize = slice.slice_type === 'events' ? 3 : 6
           let predicates = [
             Predicates.at('document.type', type),
             Predicates.any('document.tags', doc.tags)
-          ]
+          ].concat(ids.map((id) => Predicates.not('document.id', id)))
           let opts = { pageSize: pageSize - featured.length }
 
           if (slice.slice_type === 'news') {
