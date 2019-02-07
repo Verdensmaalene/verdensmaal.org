@@ -553,14 +553,19 @@
  * Black theme
  */
 
-.Header--black,
-.Header--black .Header-button--link.is-current,
-.Header--black .Header-button--link.is-current:hover {
+.Header--black:not(.is-open) .Header-logo path {
+  fill: rgb(var(--high-contrast-light, 0, 0, 0));
+}
+
+.Header--black {
   color: rgb(var(--high-contrast-light, 0, 0, 0));
 }
 
-.Header--black:not(.is-open) .Header-logo path {
-  fill: rgb(var(--high-contrast-light, 0, 0, 0));
+@media (min-width: 1000px) {
+  .Header--black .Header-button--link.is-current,
+  .Header--black .Header-button--link.is-current:hover {
+    color: rgb(var(--high-contrast-light, 0, 0, 0));
+  }
 }
 
 /**
