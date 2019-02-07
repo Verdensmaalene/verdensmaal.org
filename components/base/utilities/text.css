@@ -6,6 +6,10 @@
   font-weight: 600 !important;
 }
 
+.u-textSemiBold {
+  font-weight: 500 !important;
+}
+
 .u-textRegular {
   font-weight: normal !important;
 }
