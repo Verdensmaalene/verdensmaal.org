@@ -492,7 +492,8 @@ class GoalPage extends View {
           return html`<div hidden aria-hidden="true" id="secondary-header-container"></div>`
         }
 
-        var headerVisible = state.ui.hasOverlay ? 1 : self.local.headerVisible
+        var secondaryMenuIsOpen = state.ui.hasOverlay && self.local.headerVisible > 0
+        var headerVisible = secondaryMenuIsOpen ? 1 : self.local.headerVisible
         var opts = { isHighContrast: isHighContrast, slot: getFlag, static: true }
         var header = state.cache(Header, 'secondary-header')
         var links = website.data.main_menu.map(menuLink)
