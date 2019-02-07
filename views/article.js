@@ -44,6 +44,8 @@ function article (state, emit) {
     var title = asText(doc.data.title)
     var description = asText(doc.data.description)
     var date = parse(doc.first_publication_date)
+    var byline = doc.data.byline
+
     return html`
       <main class="View-main">
         <article>
@@ -57,11 +59,12 @@ function article (state, emit) {
             <div class="u-cols">
               <div class="u-col u-lg-size2of3">
                 <div class="Text">
-                  <time class="Text-muted" datetime="${date}">
+                  <h1 class="u-spaceT4">${title}</h1>
+                  <p class="Text-large"><strong class="u-textSemiBold">${description}</strong></p>
+                  <time class="Text-muted u-inlineBlock" datetime="${date}">
                     ${text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`}
+                    <span class="u-nowrap">${byline ? ' – ' + text(`By %s`, byline) : null}</span>
                   </time>
-                  <h1 class="u-spaceT3">${title}</h1>
-                  <p>${description}</p>
                   ${body}
                 </div>
               </div>
