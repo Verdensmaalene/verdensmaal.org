@@ -7,7 +7,7 @@ function flag (symbol, opts = {}) {
   var classList = className('Flag', {
     'Flag--vertical': opts.vertical,
     'Flag--reverse': opts.reverse,
-    'Flag--white': opts.white,
+    'Flag--adapt': opts.adapt,
     'Flag--fill': opts.fill
   })
 

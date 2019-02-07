@@ -49,11 +49,11 @@
   left: 0;
 }
 
-.Flag--white path {
-  fill: #fff;
+.Flag--adapt path {
+  fill: currentColor;
 }
 
-.Flag--white .Flag-symbol::after {
+.Flag--adapt .Flag-symbol::after {
   border: 0;
 }
 

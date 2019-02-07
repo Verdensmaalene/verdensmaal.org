@@ -116,11 +116,11 @@ function createView (view, meta) {
         }
 
         opts.slot = function () {
-          var isWhite = !hasError && (isGoal || state.route === 'mission')
+          var isAdaptive = !hasError && (isGoal || state.route === 'mission')
           return getFlag({
-            white: isWhite,
+            adapt: isAdaptive,
             reverse: state.ui.hasOverlay,
-            id: `header${isWhite ? '-white' : ''}`
+            id: `header${isAdaptive ? '-adaptive' : ''}`
           })
         }
 
@@ -188,7 +188,7 @@ function createView (view, meta) {
         }, opts)
         return flag(html`
           <svg viewBox="0 0 192 128">
-            ${opts.white ? null : html`<rect x="0" y="0" width="192" height="128" fill="#FFF" />`}
+            ${opts.adapt ? null : html`<rect x="0" y="0" width="192" height="128" fill="#fff" />`}
             <path fill="#E81C35" fill-rule="nonzero" d="M0 76h52v52H0V76zM0 0h52v52H0V0zm192 52H76V0h116v52zm0 76H76V76h116v52z"/>
           </svg>
         `, opts)

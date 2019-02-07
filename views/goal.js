@@ -538,10 +538,13 @@ class GoalPage extends View {
         var opts = {
           href: '/mission',
           title: text`Denmark`,
-          text: text`Greenland, Faroe Islands`
+          text: text`Greenland, Faroe Islands`,
+          adapt: false,
+          reverse: true
         }
         return flag(html`
           <svg viewBox="0 0 192 128">
+            <rect x="0" y="0" width="192" height="128" fill="#fff"/>
             <path fill="#E81C35" fill-rule="nonzero" d="M0 76h52v52H0V76zM0 0h52v52H0V0zm192 52H76V0h116v52zm0 76H76V76h116v52z"/>
           </svg>
         `, opts)
