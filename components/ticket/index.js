@@ -14,10 +14,12 @@ function ticket (props) {
   if (location.length) {
     if (location.length >= 2) {
       info = []
+      if (props.organizer) {
+        info.push(text`Organized by ${props.organizer}.`, html`<br>`)
+      }
       for (let i = 0, len = location.length; i < len; i++) {
         info.push(location[i], html`<br>`)
       }
-      if (props.organizer) info.push(text`This event is being organized by ${props.organizer}.`)
     } else if (props.organizer) {
       info = text`Taking place at ${location.join(', ')} and being organized by ${props.organizer}.`
     } else {

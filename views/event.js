@@ -216,6 +216,7 @@ function eventView (state, emit) {
     return ticket({
       title: asText(doc.data.title),
       start: parse(doc.data.start),
+      organizer: doc.data.organizer,
       venue: doc.data.venue,
       city: doc.data.city,
       country: doc.data.country,
