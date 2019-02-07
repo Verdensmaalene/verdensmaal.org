@@ -15,7 +15,8 @@ function link (opts = {}) {
   opts.external = opts.external ? opts.external : !isSameDomain(opts.href)
 
   var attrs = { class: 'Card-link', href: opts.href }
-  if (opts.external && !opts.file) {
+  // Files should only open in new tab if it's a (pdf) document
+  if ((opts.external && !opts.file) || opts.file === 'document') {
     attrs.rel = 'noopener noreferrer'
     attrs.target = '_blank'
   }
