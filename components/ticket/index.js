@@ -55,7 +55,13 @@ function ticket (props) {
 // obj -> Element
 function link (props) {
   var attrs = { class: 'Ticket-action', href: props.href }
-  if (/\.\w+$/.test(props.href)) attrs.download = 'download'
+  console.log(props.href)
+  if (/\.ics+$/.test(props.href)) {
+    attrs.download = 'download'
+  } else if (!/^mailto/.test(props.href)) {
+    attrs.target = '_blank'
+    attrs.rel = 'noreferrer noopener'
+  }
   return html`
     <li class="Ticket-item">
       <a ${attrs}>${props.text}${props.icon || null}</a>
