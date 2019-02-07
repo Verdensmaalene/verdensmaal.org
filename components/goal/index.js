@@ -185,8 +185,8 @@ module.exports = class Goal extends Component {
       isPressed = false
       window.removeEventListener('keydown', onescape)
       window.removeEventListener('scroll', abort, { passive: true })
-      window.addEventListener('touchmove', preventDefault)
-      window.addEventListener('wheel', preventDefault)
+      window.addEventListener('touchmove', preventDefault, { passive: false })
+      window.addEventListener('wheel', preventDefault, { passive: false })
 
       var style = `height: ${vh()}px;`
 
@@ -245,8 +245,8 @@ module.exports = class Goal extends Component {
         // clean up and pushState when label is in place
         label.addEventListener('transitionend', function ontransitionend (event) {
           if (event.target === label) {
-            window.removeEventListener('touchmove', preventDefault)
-            window.removeEventListener('wheel', preventDefault)
+            window.removeEventListener('touchmove', preventDefault, { passive: false })
+            window.removeEventListener('wheel', preventDefault, { passive: false })
             self.emit('goal:transitionend', self.local.id)
           }
         })

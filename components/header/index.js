@@ -31,11 +31,11 @@ module.exports = class Header extends Component {
       })
 
       if (self.local.isOpen) {
-        window.addEventListener('wheel', preventScroll)
-        window.addEventListener('touchmove', preventScroll)
+        window.addEventListener('wheel', preventScroll, { passive: false })
+        window.addEventListener('touchmove', preventScroll, { passive: false })
       } else {
-        window.removeEventListener('wheel', preventScroll)
-        window.removeEventListener('touchmove', preventScroll)
+        window.removeEventListener('wheel', preventScroll, { passive: false })
+        window.removeEventListener('touchmove', preventScroll, { passive: false })
       }
     }
 
@@ -51,8 +51,8 @@ module.exports = class Header extends Component {
 
   update (links, href, opts) {
     if (href !== this.local.href) {
-      window.removeEventListener('wheel', preventScroll)
-      window.removeEventListener('touchmove', preventScroll)
+      window.removeEventListener('wheel', preventScroll, { passive: false })
+      window.removeEventListener('touchmove', preventScroll, { passive: false })
       this.local.isOpen = false
       return true
     }

@@ -33,11 +33,11 @@ class Share extends Component {
 
     // prevent scroll while share dialog is open
     var preventScroll = (event) => event.preventDefault()
-    window.addEventListener('wheel', preventScroll)
-    window.addEventListener('touchmove', preventScroll)
+    window.addEventListener('wheel', preventScroll, { passive: false })
+    window.addEventListener('touchmove', preventScroll, { passive: false })
     this.unload = function () {
-      window.removeEventListener('wheel', preventScroll)
-      window.removeEventListener('touchmove', preventScroll)
+      window.removeEventListener('wheel', preventScroll, { passive: false })
+      window.removeEventListener('touchmove', preventScroll, { passive: false })
     }
   }
 

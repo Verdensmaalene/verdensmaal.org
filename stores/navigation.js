@@ -56,11 +56,11 @@ function navigation (state, emitter) {
     if (!(fetching[id] instanceof Promise)) return navigate()
 
     // defer navigation until prefetch is done preventing scroll in the meantime
-    window.addEventListener('wheel', preventScroll)
-    window.addEventListener('touchmove', preventScroll)
+    window.addEventListener('wheel', preventScroll, { passive: false })
+    window.addEventListener('touchmove', preventScroll, { passive: false })
     fetching[id].then(function () {
-      window.removeEventListener('wheel', preventScroll)
-      window.removeEventListener('touchmove', preventScroll)
+      window.removeEventListener('wheel', preventScroll, { passive: false })
+      window.removeEventListener('touchmove', preventScroll, { passive: false })
       navigate()
     })
 

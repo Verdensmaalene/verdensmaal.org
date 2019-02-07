@@ -8,8 +8,8 @@ class Player extends Component {
   update (content) {
     var shouldUpdate = content !== this.content
     if (shouldUpdate && content) {
-      window.addEventListener('wheel', preventScroll)
-      window.addEventListener('touchmove', preventScroll)
+      window.addEventListener('wheel', preventScroll, { passive: false })
+      window.addEventListener('touchmove', preventScroll, { passive: false })
       window.requestAnimationFrame(() => this.element.focus())
     }
     return shouldUpdate
@@ -19,8 +19,8 @@ class Player extends Component {
     var element = this.element
     var onanimationend = () => {
       element.removeEventListener('animationend', onanimationend)
-      window.removeEventListener('wheel', preventScroll)
-      window.removeEventListener('touchmove', preventScroll)
+      window.removeEventListener('wheel', preventScroll, { passive: false })
+      window.removeEventListener('touchmove', preventScroll, { passive: false })
       this.render(null)
     }
     element.addEventListener('animationend', onanimationend)
