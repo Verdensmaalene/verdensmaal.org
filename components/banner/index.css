@@ -64,8 +64,8 @@
 
 .Banner-caption {
   display: block;
-  margin: 0.5rem var(--page-gutter);
-  max-width: 39em;
+  margin: 0.5rem var(--page-gutter) 0;
+  max-width: 50em;
   font-size: 0.8em;
   line-height: var(--default-line-height);
   color: rgb(var(--color-text-muted));
@@ -87,6 +87,6 @@
 
 @media (min-width: 1200px) {
   .Banner-caption {
-    margin: 0.5rem 0 0;
+    margin: 0.5rem 0 0 0;
   }
 }
