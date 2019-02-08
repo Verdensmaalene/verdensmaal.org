@@ -145,10 +145,14 @@
   margin: 1rem 0;
 }
 
-.Footer-field {
+.Footer-label {
   flex: 1 1 50%;
   width: 50%;
   min-width: 0;
+}
+
+.Footer-field {
+  width: 100%;
   padding: 0.6rem 0.7rem;
   border: 3px solid;
   border-color: rgb(var(--high-contrast-dark, var(--color-gray-light)));

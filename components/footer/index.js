@@ -50,10 +50,14 @@ module.exports = class Footer extends Component {
             <h2 class="Footer-title">${props.newsletter.heading}</h2>
             <div class="Text">${props.newsletter.body}</div>
             <div class="Footer-fields">
-              <label class="u-hiddenVisually" for="${this.local.id}-name">${text`Your name`}</label>
-              <input class="Footer-field u-spaceR1" type="text" name="name" id="${this.local.id}-name" placeholder="${text`Your name`}" required>
-              <label class="u-hiddenVisually" for="${this.local.id}-email">${text`Your email`}</label>
-              <input class="Footer-field" type="email" name="email" id="${this.local.id}-email" placeholder="${text`Your email`}" required>
+              <label class="Footer-label">
+                <span class="u-hiddenVisually">${text`Your name`}</span>
+                <input class="Footer-field u-spaceR1" type="text" name="name" placeholder="${text`Your name`}" required>
+              </label>
+              <label class="Footer-label">
+                <span class="u-hiddenVisually">${text`Your email`}</span>
+                <input class="Footer-field" type="email" name="email" placeholder="${text`Your email`}" required>
+              </label>
               <input type="hidden" name="page" value="${this.state.origin}">
               <input type="hidden" name="country" value="${this.state.country}">
             </div>
