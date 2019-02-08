@@ -151,6 +151,10 @@
   min-width: 0;
 }
 
+.Footer-label + .Footer-label {
+  margin-left: 1.5rem;
+}
+
 .Footer-field {
   width: 100%;
   padding: 0.6rem 0.7rem;
@@ -191,7 +195,7 @@
   order: 2;
 }
 
-.Footer-label {
+.Footer-byline {
   max-width: 10rem;
   margin-right: 15rem;
   margin-bottom: 1rem;
@@ -252,7 +256,7 @@
     flex-basis: calc(100% / 3 + 0.25rem);
   }
 
-  .Footer-label {
+  .Footer-byline {
     margin: 0 1rem 0 0;
   }
 
@@ -316,7 +320,7 @@
     text-align: right;
   }
 
-  .Footer-label {
+  .Footer-byline {
     margin: 0 2.1rem 0 0;
     position: relative;
     top: -0.2rem;

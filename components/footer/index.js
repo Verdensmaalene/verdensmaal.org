@@ -114,7 +114,7 @@ function logos () {
 function credits () {
   return html`
     <section class="Footer-credits">
-      <h2 class="Footer-label">${text`Code, digital design, branding and strategy`}:</h2>
+      <h2 class="Footer-byline">${text`Code, digital design, branding and strategy`}:</h2>
       <a class="Footer-credit" href="https://codeandconspire.com" target="_blank" rel="noopener noreferrer">
         <svg class="Footer-img" width="225" height="86" viewBox="0 0 225 86">
           <g fill="none" fill-rule="evenodd">
