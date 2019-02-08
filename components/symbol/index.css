@@ -29,7 +29,9 @@
   align-items: center;
   width: 2.5em;
   height: 2.5em;
+  color: rgb(var(--current-color));
   color: rgb(var(--high-contrast-light, var(--current-color)));
+  background-color: rgb(var(--current-background));
   background-color: rgb(var(--high-contrast-dark, var(--current-background)));
   border-radius: 100%;
   transition: background-color 140ms var(--ease-out);

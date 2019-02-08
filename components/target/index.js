@@ -1,9 +1,9 @@
 var html = require('choo/html')
 var nanoraf = require('nanoraf')
 var Component = require('choo/component')
-var { i18n } = require('../base')
-var symbol = require('../symbol')
 var share = require('../share')
+var symbol = require('../symbol')
+var { i18n, vw } = require('../base')
 
 var text = i18n(require('./lang.json'))
 
@@ -27,8 +27,7 @@ module.exports = class Target extends Component {
 
     var element = this.element
     var resize = nanoraf(() => {
-      var styles = window.getComputedStyle(element)
-      var collapse = Number(styles.getPropertyValue('--collapse-body'))
+      var collapse = vw() > 600
       var fig = element.querySelector('.js-figure')
       var content = element.querySelector('.js-content')
       element.classList.remove('is-collapsed')
@@ -69,8 +68,8 @@ module.exports = class Target extends Component {
     return html`
       <div class="Target ${this.local.collapsed ? 'is-collapsed' : ''}" id="${text`target`}-${opts.id}">
         ${opts.icon ? html`
-          <div class="Target-figure ${color} ${bg}">
-            <figure class="u-sizeFill js-figure">
+          <div class="Target-figure ${color} ${bg} js-figure">
+            <figure class="u-sizeFill">
               <figcaption class="Target-caption u-textHeading">${text`Target`} ${opts.id}</figcaption>
               <img class="Target-icon" src="${opts.icon.url}" alt="${text`Target`} ${opts.id}" onload=${() => this.init()} />
             </figure>
