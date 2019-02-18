@@ -57,7 +57,6 @@ function ticket (props) {
 // obj -> Element
 function link (props) {
   var attrs = { class: 'Ticket-action', href: props.href }
-  console.log(props.href)
   if (/\.ics+$/.test(props.href)) {
     attrs.download = 'download'
   } else if (!/^mailto/.test(props.href)) {

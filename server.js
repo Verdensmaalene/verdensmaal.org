@@ -68,7 +68,7 @@ app.use(post('/api/submit-event', compose([
 
 // internal meta data scraper api
 app.use(get('/api/scrape/:uri(.+)', async function (ctx, uri, next) {
-  ctx.body = await scrape(uri)
+  ctx.body = await scrape(decodeURI(uri))
   ctx.type = 'application/json'
   ctx.set('Cache-Control', `public, max-age=${60 * 60 * 24 * 365}`)
 }))
