@@ -236,6 +236,8 @@ function linkedData (doc, state) {
     '@type': 'Event',
     name: asText(doc.data.title),
     description: asText(doc.data.description),
+    performer: doc.data.organizer,
+    offers: '',
     startDate: parse(doc.data.start),
     endDate: parse(doc.data.end),
     location: {
