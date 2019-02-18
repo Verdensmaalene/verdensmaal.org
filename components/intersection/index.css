@@ -38,6 +38,7 @@
   white-space: nowrap;
   font-weight: normal;
   transition: background-color 140ms var(--ease-out);
+  hyphens: none;
 }
 
 .Intersection a:hover {
