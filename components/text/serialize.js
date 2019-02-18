@@ -9,9 +9,10 @@ module.exports = serialize
 function serialize (type, node, content, children) {
   switch (type) {
     case Elements.embed: {
-      let provider = node.oembed.provider_name.toLowerCase()
+      console.log(node.oembed)
+      let provider = node.oembed.provider_name ? node.oembed.provider_name.toLowerCase() : null
       let id = embed.id(node.oembed)
-      if (!id) return bookmark(node.oembed.meta)
+      if (!id || !provider) return bookmark(node.oembed.meta)
 
       return embed({
         url: node.oembed.embed_url,
