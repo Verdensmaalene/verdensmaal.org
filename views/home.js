@@ -88,7 +88,7 @@ class Home extends View {
         <main class="View-main">
           <div class="u-container">
             <div class="View-spaceLarge">
-              ${doc ? intro({ title: asText(doc.data.title), body: asText(doc.data.description) }) : intro.loading()}
+              ${doc ? intro({ title: asText(doc.data.title), body: asElement(doc.data.description) }) : intro.loading()}
             </div>
             <section>
               ${state.cache(Grid, id).render(goals, state.ui.gridLayout, slot)}
@@ -97,7 +97,7 @@ class Home extends View {
           <section>
             <div class="u-container">
               <div class="View-spaceLarge">
-                ${doc ? intro({ secondary: true, title: asText(doc.data.featured_heading), body: asText(doc.data.featured_text, state.docs.resolve) }) : intro.loading({ secondary: true })}
+                ${doc ? intro({ secondary: true, title: asText(doc.data.featured_heading), body: asElement(doc.data.featured_text, state.docs.resolve) }) : intro.loading({ secondary: true })}
               </div>
             </div>
             <div class="u-md-container">
