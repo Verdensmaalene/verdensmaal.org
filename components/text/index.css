@@ -38,7 +38,7 @@
  * 1. Sorry: make links usable when used within interactive cards (Card)
  */
 
-.Text a:not(.Embed > *) {
+.Text a:not(.Embed-link) {
   position: relative; /* 1 */ 
   z-index: 2; /* 1 */ 
   font-weight: 600;
@@ -47,7 +47,7 @@
   text-decoration: var(--high-contrast-underline, none);
 }
 
-.Text a:not(.Embed > *):hover {
+.Text a:not(.Embed-link):hover {
   color: rgb(var(--color-link-shaded));
 }
 
@@ -55,8 +55,8 @@
   font-size: 0.8em;
 }
 
-.Text-muted a:not(.Embed > *),
-.Text-muted a:not(.Embed > *):hover {
+.Text-muted a:not(.Embed-link),
+.Text-muted a:not(.Embed-link):hover {
   color: inherit;
   text-decoration: underline;
   font-weight: inherit;
