@@ -1,0 +1,51 @@
+@import "../base";
+
+/* @define Popular */
+.Popular {
+  position: relative;
+}
+
+.Popular-heading {
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: rgb(var(--color-gray));
+}
+
+.Popular-item {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  padding: 1rem 0;
+  border-top: 1px solid rgb(var(--color-gray-light));
+}
+
+.Popular-image {
+  flex: 0 0 90px;
+  height: auto;
+  margin-right: 1.5rem;
+}
+
+.Popular-body {
+  flex: 1 1 auto;
+  line-height: 1.3;
+  padding-right: 1rem;
+}
+
+.Popular-date {
+  display: block;
+  margin-bottom: 0.2em;
+  font-size: 0.8rem;
+  color: rgba(var(--color-text-muted));
+}
+
+.Popular-title {
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+.Popular-link {
+  align-self: center;
+  font-size: 0.8rem;
+  color: rgb(var(--color-gray));
+}

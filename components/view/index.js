@@ -50,31 +50,29 @@ function createClass (Class, id) {
 
 function createView (view, meta) {
   return function (state, emit) {
-    var self = this
+    var hasError = false
+    var children
+    try {
+      children = view.call(this, state, emit)
+      let next = meta.call(this, state)
+
+      // forward nested promises for deep prefetching to work
+      if (state.prefetch) return Promise.all([children, next])
+
+      if (next.title && next.title !== DEFAULT_TITLE) {
+        next.title = `${next.title} | ${DEFAULT_TITLE}`
+      }
+      emit('meta', next)
+    } catch (err) {
+      hasError = true
+      if (state.prefetch) throw err
+      err.status = err.status || 500
+      children = error(err)
+      emit('meta', { title: `${text`Oops`} | ${DEFAULT_TITLE}` })
+    }
 
     return state.docs.getSingle('website', function (err, doc) {
       if (err) throw err
-
-      var hasError = false
-      var children
-      try {
-        children = view.call(self, state, emit)
-        let next = meta.call(self, state)
-
-        // forward nested promises for deep prefetching to work
-        if (state.prefetch) return Promise.all([children, next])
-
-        if (next.title && next.title !== DEFAULT_TITLE) {
-          next.title = `${next.title} | ${DEFAULT_TITLE}`
-        }
-        emit('meta', next)
-      } catch (err) {
-        hasError = true
-        if (state.prefetch) throw err
-        err.status = err.status || 500
-        children = error(err)
-        emit('meta', { title: `${text`Oops`} | ${DEFAULT_TITLE}` })
-      }
 
       var menu = doc && doc.data.main_menu.map(link)
 

@@ -1,32 +1,51 @@
 var html = require('choo/html')
+var { className } = require('../base')
 
 module.exports = grid
+module.exports.cell = cell
 
+// render children in grid cells
+// (obj?, arr) -> Element
 function grid (opts, children) {
-  if (Array.isArray(opts)) {
+  if (!children) {
     children = opts
     opts = {}
   }
 
-  return html`
-    <div class="Grid ${opts.carousel ? 'Grid--carousel' : ''}">
-      ${children.map(cell)}
-    </div>
-  `
+  var classes = className('Grid', { 'Grid--carousel': opts.carousel, 'Grid--slim': opts.slim })
+  if (opts.ordered) return html`<ol class="${classes}">${children.map(child)}</ol>`
+  return html`<div class="${classes}">${children.map(child)}</div>`
 
-  function cell (render, index) {
-    var attrs = { class: `Grid-cell ${opts.size ? sizes(opts.size) : ''}` }
-    if (opts.appear) {
+  // render grid cell
+  // (Element|obj -> num) -> Element
+  function child (props, index) {
+    var attrs = { class: 'Grid-cell' }
+
+    var children = props
+    if (children.render) children = children.render
+    if (typeof children === 'function') children = children()
+
+    var size = props.size || opts.size
+    if (size) attrs.class += ' ' + sizes(size)
+
+    if (opts.appear || props.appear) {
       attrs.class += ' Grid-cell--appear'
       attrs.style = `animation-delay: ${index * 100}ms`
     }
 
-    return html`
-      <div ${attrs}>
-        ${typeof render === 'function' ? render() : render}
-      </div>
-    `
+    if (opts.ordered) return html`<li ${attrs}>${children}</li>`
+    return html`<div ${attrs}>${children}</div>`
   }
+}
+
+// convenience function for creating grid cells with options
+// (obj, Element|arr) -> obj
+function cell (opts, children) {
+  if (!children) {
+    children = opts
+    opts = {}
+  }
+  return Object.assign({ render: children }, opts)
 }
 
 function sizes (opts) {
@@ -35,5 +54,6 @@ function sizes (opts) {
   if (opts.sm) size += `u-sm-size${opts.sm} `
   if (opts.md) size += `u-md-size${opts.md} `
   if (opts.lg) size += `u-lg-size${opts.lg} `
+  if (opts.xl) size += `u-xl-size${opts.xl} `
   return size
 }

@@ -22,6 +22,7 @@ app.use(require('./stores/geoip'))
 app.use(require('./stores/meta'))
 app.use(require('./stores/ui'))
 app.use(require('./stores/subscribe'))
+app.use(require('./stores/popular'))
 
 app.route('/', require('./views/home'))
 app.route('/nyheder', require('./views/news'))

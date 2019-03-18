@@ -20,6 +20,7 @@ var purge = require('./lib/purge')
 var scrape = require('./lib/scrape')
 var zip = require('./lib/zip-target')
 var resolve = require('./lib/resolve')
+var analytics = require('./lib/analytics')
 var subscribe = require('./lib/subscribe')
 var { asText } = require('./components/base')
 var submitEvent = require('./lib/submit-event')
@@ -27,6 +28,14 @@ var imageproxy = require('./lib/cloudinary-proxy')
 
 var app = jalla('index.js', { sw: 'sw.js' })
 
+// get most viewed news
+app.use(get('/api/popular', async function (ctx) {
+  ctx.type = 'application/json'
+  ctx.set('Cache-Control', `s-maxage=${60 * 60 * 12}, max-age=0`)
+  ctx.body = JSON.stringify(await analytics(), null, 2)
+}))
+
+// proxy subscribe endpoint
 app.use(post('/api/subscribe', compose([body(), async function (ctx, next) {
   ctx.set('Cache-Control', 'no-cache, private, max-age=0')
   var response = await subscribe(ctx.request.body)
@@ -98,7 +107,7 @@ app.use(post('/api/prismic-hook', compose([body(), function (ctx) {
   ctx.assert(secret === process.env.PRISMIC_SECRET, 403, 'Secret mismatch')
   return new Promise(function (resolve, reject) {
     queried().then(function (urls) {
-      purge(urls, function (err, response) {
+      purge(['/api/popular', ...urls], function (err, response) {
         if (err) return reject(err)
         ctx.type = 'application/json'
         ctx.body = {}
@@ -253,6 +262,13 @@ app.use(function (ctx, next) {
   return next()
 })
 
+// special cache headers for news listing
+app.use(get('/nyheder', function (ctx, next) {
+  if (!ctx.accepts('html')) return next()
+  ctx.set('Cache-Control', `s-maxage=${60 * 60 * 12}, max-age=0`)
+  return next()
+}))
+
 // set cache headers
 app.use(function (ctx, next) {
   if (!ctx.accepts('html')) return next()
@@ -264,8 +280,9 @@ app.use(function (ctx, next) {
     ctx.state.ref = null
   }
   var allowCache = app.env !== 'development'
-  if (!previewCookie && allowCache && ctx.path !== '/api/prismic-preview') {
-    ctx.set('Cache-Control', `s-maxage=${60 * 60 * 24 * 7}, max-age=0`)
+  var hasCache = Boolean(ctx.response.get('Cache-Control'))
+  if (!previewCookie && allowCache && !hasCache) {
+    ctx.set('Cache-Control', `s-maxage=${60 * 60 * 24 * 30}, max-age=0`)
   }
   return next()
 })
@@ -273,7 +290,7 @@ app.use(function (ctx, next) {
 app.listen(process.env.PORT || 8080, function () {
   if (process.env.NOW && app.env === 'production') {
     queried().then(function (urls) {
-      purge(['/sw.js', ...urls], function (err) {
+      purge(['/sw.js', '/api/popular', ...urls], function (err) {
         if (err) app.emit('error', err)
       })
     })

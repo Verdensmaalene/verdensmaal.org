@@ -263,6 +263,17 @@ function snippet (str, maxlen = Infinity) {
   return [snipped, ' ', html`<span class="u-textNowrap">${words[0]}…</span>`]
 }
 
+// create placeholder loading text of given length
+// (num, bool?) -> Element
+exports.loader = loader
+function loader (length, light = false) {
+  var content = '⏳'.repeat(length).split('').reduce(function (str, char) {
+    if (Math.random() > 0.7) char += ' '
+    return str + char
+  }, '')
+  return html`<span class="u-loading${light ? 'Light' : ''}">${content}</span>`
+}
+
 exports.colors = {
   goal1: '#e5243b',
   goal1Shaded: '#75001f',

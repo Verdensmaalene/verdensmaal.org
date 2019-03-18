@@ -72,14 +72,6 @@ module.exports.forward = wrap('forward', function download () {
   `
 })
 
-module.exports.forward = wrap('forward', function download () {
-  return html`
-    <svg class="Symbol-image" width="19" height="19" viewBox="0 0 19 19" aria-hidden="true">
-      <path fill="currentColor" d="M17 9.5L8.3.8l.9-.8 9.5 9.5L9.2 19l-.9-.8L17 9.5z"/>
-    </svg>
-  `
-})
-
 module.exports.backward = wrap('backward', function download () {
   return html`
     <svg class="Symbol-image" width="19" height="19" viewBox="0 0 19 19" aria-hidden="true">

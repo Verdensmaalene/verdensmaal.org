@@ -6,6 +6,7 @@ var grid = require('../components/grid')
 var card = require('../components/card')
 var intro = require('../components/intro')
 var button = require('../components/button')
+var popular = require('../components/popular')
 var { i18n, srcset, asText } = require('../components/base')
 
 var text = i18n()
@@ -14,6 +15,8 @@ var PAGE_SIZE = 9
 module.exports = view(news, meta)
 
 function news (state, emit) {
+  if (!state.popular) emit('fetch:popular')
+
   return state.docs.getSingle('news_listing', function render (err, doc) {
     if (err) throw err
 
@@ -29,10 +32,35 @@ function news (state, emit) {
 
     if (state.prefetch) return Promise.all(news)
 
-    var latest = news.slice(0, 2)
-    var first = news.slice(2, PAGE_SIZE + 2)
+    var latest = news.slice(0, 2).map(newsCard).map((el) => grid.cell({ size: { md: '1of2', lg: '1of3' } }, el))
+    var first = news.slice(2, PAGE_SIZE + 2).map(newsCard)
     var rest = news.slice(PAGE_SIZE + 2, num * PAGE_SIZE + 2).filter(Boolean)
     var hasMore = news.length >= num * PAGE_SIZE + 2
+
+    if (!state.popular) {
+      latest.unshift(grid.cell({ size: { lg: '1of3' } }, popular.loading()))
+    } else {
+      let items = state.popular.map(function (doc) {
+        var date = parse(doc.first_publication_date)
+        var image = doc.data.image.url ? {
+          alt: doc.data.image.alt || '',
+          sizes: '90px',
+          srcset: srcset(doc.data.image.url, [90, 180]),
+          src: `/media/fetch/w_90/${doc.data.image.url}`
+        } : null
+        return {
+          image: image,
+          href: state.docs.resolve(doc),
+          title: asText(doc.data.title),
+          date: {
+            datetime: date,
+            text: `${date.getDate()}. ${text(`MONTH_${date.getMonth()}`).substr(0, 3)} ${date.getFullYear()}`
+          }
+        }
+      })
+      if (!items.length) latest.unshift(grid.cell({ size: { lg: '1of3' } }, popular.loading()))
+      else latest.unshift(grid.cell({ size: { lg: '1of3' } }, popular(items)))
+    }
 
     if (first.length && state.ui.isLoading) {
       for (let i = 0; i < 3; i++) rest.push(null)
@@ -46,8 +74,8 @@ function news (state, emit) {
           </div>
           ${news.length ? html`
             <section>
-              ${grid({ size: { sm: '1of2' } }, latest.map((item) => newsCard(item, 2)))}
-              ${grid({ size: { sm: '1of2', lg: '1of3' } }, first.map(newsCard))}
+              ${grid({ size: { lg: '1of3' } }, latest)}
+              ${grid({ size: { sm: '1of2', lg: '1of3' } }, first)}
               ${grid({ size: { sm: '1of2', lg: '1of3' }, appear: true }, rest.map(newsCard))}
             </section>
           ` : html`
@@ -95,14 +123,12 @@ function news (state, emit) {
 
   // render document as card
   // obj -> Element
-  function newsCard (doc, cols = 3) {
+  function newsCard (doc) {
     if (!doc) return card.loading({ date: true })
 
     var date = parse(doc.first_publication_date)
-    var sizes = '(min-width: 400px) 50vw, 100vw'
-    if (cols === 3) sizes = '(min-width: 1000px) 30vw, ' + sizes
+    var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
     var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
-    if (cols === 2) opts.aspect = 9 / 16
 
     var image = doc.data.image.url ? {
       alt: doc.data.image.alt,
@@ -112,7 +138,7 @@ function news (state, emit) {
       caption: doc.data.image.copyright
     } : null
     var slot = image ? null : html`
-      <div class="u-aspect${cols === 2 ? '16-9' : '4-3'} u-bgGray u-bgCurrent"></div>
+      <div class="u-aspect4-3 u-bgGray u-bgCurrent"></div>
     `
 
     return card({
