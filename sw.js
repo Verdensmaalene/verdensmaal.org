@@ -92,7 +92,7 @@ function addLayout (req, url, layout) {
 // () -> Promise
 function clear () {
   return caches.keys().then(function (keys) {
-    var caches = keys.filter((key) => key !== CACHE_KEY)
+    keys = keys.filter((key) => key !== CACHE_KEY)
     return Promise.all(keys.map((key) => caches.delete(key)))
   })
 }
