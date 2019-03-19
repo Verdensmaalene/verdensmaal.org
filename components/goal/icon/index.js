@@ -123,14 +123,12 @@ function draw (number, text, opts = {}) {
           </tspan>
         </text>
         <text class="Goal-text" font-size="${multiplier * 24}" y="-7" fill="currentColor" text-anchor="start" alignment-baseline="hanging">
-          ${/* eslint-disable indent */
-            lines.map((line) => {
-              var styles = lineStyles(line, lang)
-              return html`
-                <tspan x="${textPos}" dy="24" word-spacing="${!isArabic ? styles.wordSpacing : ''}" letter-spacing="${!isArabic ? styles.letterSpacing : ''}" text-anchor="start">${line}</tspan>
-              `
-            })
-          /* eslint-enable indent */}
+          ${lines.map(function (line) {
+            var styles = lineStyles(line, lang)
+            return html`
+              <tspan x="${textPos}" dy="24" word-spacing="${!isArabic ? styles.wordSpacing : ''}" letter-spacing="${!isArabic ? styles.letterSpacing : ''}" text-anchor="start">${line}</tspan>
+            `
+          })}
         </text>
       </g>
     </svg>

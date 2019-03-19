@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 var html = require('choo/html')
 var parse = require('date-fns/parse')
 var { external } = require('../symbol')

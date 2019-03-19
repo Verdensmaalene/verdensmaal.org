@@ -90,32 +90,28 @@ function eventView (state, emit) {
                     </div>
                     <ul>
                       <li>
-                        ${/* eslint-disable indent */
-                          shareButton({
-                            text: text`Share with others`,
-                            icon: symbol('share', { circle: true, cover: true }),
-                            color: 'theme',
-                            onclick () {
-                              var img = document.querySelector('.js-banner img')
-                              share.render({
-                                href: state.origin + state.href,
-                                image: (img && img.currentSrc) || (state.origin + '/share.png'),
-                                title: title,
-                                description: description
-                              })
-                            }
-                          })
-                        /* eslint-enable indent */}
+                        ${shareButton({
+                          text: text`Share with others`,
+                          icon: symbol('share', { circle: true, cover: true }),
+                          color: 'theme',
+                          onclick () {
+                            var img = document.querySelector('.js-banner img')
+                            share.render({
+                              href: state.origin + state.href,
+                              image: (img && img.currentSrc) || (state.origin + '/share.png'),
+                              title: title,
+                              description: description
+                            })
+                          }
+                        })}
                       </li>
                       <li>
-                        ${/* eslint-disable indent */
-                          shareButton({
-                            text: text`E-mail to a friend`,
-                            icon: symbol('mail', { circle: true, cover: true }),
-                            color: 'gray',
-                            href: `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text`Check this out: ${state.origin + state.href}`)}`
-                          })
-                        /* eslint-enable indent */}
+                        ${shareButton({
+                          text: text`E-mail to a friend`,
+                          icon: symbol('mail', { circle: true, cover: true }),
+                          color: 'gray',
+                          href: `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text`Check this out: ${state.origin + state.href}`)}`
+                        })}
                       </li>
                     </ul>
                   </aside>
@@ -164,25 +160,23 @@ function eventView (state, emit) {
               <h3>${asText(slice.primary.heading)}</h3>
             </div>
             <ol>
-              ${/* eslint-disable indent */
-                slice.items.map(function (item) {
-                  var href = state.docs.resolve(item.link)
-                  var attrs = {}
-                  if (item.link.link_type !== 'Document') {
-                    attrs.rel = 'noopener noreferer'
-                    if (item.link.target) attrs.target = item.link.target
-                  }
-                  return html`
-                    <li class="Text u-spaceB2">
-                      <a class="u-block" href="${href || item.text}" ${attrs}>
-                        <span class="Text-large u-textBreakLongWords">${item.text}</span>
-                        <br>
-                        <small class="Text-muted u-textTruncate u-textRegular">${href || item.text}</small>
-                      </a>
-                    </li>
-                  `
-                })
-              /* eslint-enable indent */}
+              ${slice.items.map(function (item) {
+                var href = state.docs.resolve(item.link)
+                var attrs = {}
+                if (item.link.link_type !== 'Document') {
+                  attrs.rel = 'noopener noreferer'
+                  if (item.link.target) attrs.target = item.link.target
+                }
+                return html`
+                  <li class="Text u-spaceB2">
+                    <a class="u-block" href="${href || item.text}" ${attrs}>
+                      <span class="Text-large u-textBreakLongWords">${item.text}</span>
+                      <br>
+                      <small class="Text-muted u-textTruncate u-textRegular">${href || item.text}</small>
+                    </a>
+                  </li>
+                `
+              })}
             </ol>
           </aside>
         `
