@@ -12,6 +12,7 @@ if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
 }
 
 app.use(require('choo-service-worker')('/sw.js'))
+app.use(require('./stores/prefetch'))
 app.use(require('./stores/prismic')({
   repository: REPOSITORY,
   middleware: require('./lib/prismic-middleware'),
