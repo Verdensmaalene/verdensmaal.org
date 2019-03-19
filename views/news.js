@@ -37,8 +37,8 @@ function news (state, emit) {
     })
     var first = news.slice(2, PAGE_SIZE + 2).map(newsCard)
     var rest = news.slice(PAGE_SIZE + 2, num * PAGE_SIZE + 2)
-      .filter(Boolean)
       .map(newsCard)
+      .filter(Boolean)
     var hasMore = news.length >= num * PAGE_SIZE + 2
 
     if (!state.popular) {
@@ -70,7 +70,7 @@ function news (state, emit) {
     }
 
     if (first.length && state.ui.isLoading) {
-      for (let i = 0; i < 3; i++) rest.push(null)
+      for (let i = 0; i < 3; i++) rest.push(card.loading({ date: true }))
     }
 
     return html`
@@ -131,7 +131,7 @@ function news (state, emit) {
   // render document as card
   // obj -> Element
   function newsCard (doc) {
-    if (!doc) return card.loading({ date: true })
+    if (!doc) return null
 
     var date = parse(doc.first_publication_date)
     var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
