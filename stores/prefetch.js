@@ -5,7 +5,7 @@ function prefetch (state, emit) {
   state.prefetch = new Prefetch(state.prefetch)
 }
 
-function Prefetch (orig, ...args) {
+function Prefetch (arr) {
   var success, fail
   var queued = 0
   var error = null
@@ -14,15 +14,11 @@ function Prefetch (orig, ...args) {
     fail = reject
   })
 
-  this.promises = orig
-  orig.push(proxy)
-
-  this.map = orig.map.bind(orig)
-  this.forEach = orig.forEach.bind(orig)
-
   // queue promise and resolve proxy if last to resolve/reject in queue
   // Promise -> void
-  this.push = function push (promise) {
+  var _push = arr.push
+  arr.push = function push (promise) {
+    if (queued === 0) _push.call(arr, proxy)
     queued++
     promise.catch(function (err) {
       error = err
@@ -33,10 +29,6 @@ function Prefetch (orig, ...args) {
       }
     })
   }
-}
 
-Prefetch.prototype[Symbol.iterator] = function * () {
-  for (let i = 0, len = this.promises.length; i < len; i++) {
-    yield this.promises[i]
-  }
+  return arr
 }

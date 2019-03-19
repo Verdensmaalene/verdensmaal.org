@@ -35,8 +35,10 @@ function news (state, emit) {
     var latest = news.slice(0, 2).map(function (doc) {
       return grid.cell({ size: { md: '1of2', lg: '1of3' } }, newsCard(doc))
     })
-    var first = news.slice(2, PAGE_SIZE + 2).map(newsCard)
-    var rest = news.slice(PAGE_SIZE + 2, num * PAGE_SIZE + 2)
+    var first = news.slice(2, PAGE_SIZE + 2).map(function (item) {
+      if (!item) return card.loading({ date: true })
+      return newsCard(item)
+    })
       .map(newsCard)
       .filter(Boolean)
     var hasMore = news.length >= num * PAGE_SIZE + 2
