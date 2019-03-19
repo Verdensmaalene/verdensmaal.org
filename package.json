@@ -37,7 +37,10 @@
       "CREATESEND_KEY": "@createsend-verdensmaal-key",
       "CREATESEND_LIST": "@createsend-verdensmaal-list",
       "CLOUDINARY_SECRET": "@cloudinary-secret",
-      "CLOUDINARY_KEY": "@cloudinary-key"
+      "CLOUDINARY_KEY": "@cloudinary-key",
+      "ANALYTICS_VIEW_ID": "@analytics-verdensmaal-id",
+      "GOOGLE_PRIVATE_KEY": "@google-verdensmaal-key",
+      "GOOGLE_CLIENT_EMAIL": "@google-verdensmaal-email"
     }
   },
   "repository": {

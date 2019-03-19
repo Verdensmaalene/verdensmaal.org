@@ -32,9 +32,13 @@ function news (state, emit) {
 
     if (state.prefetch) return Promise.all(news)
 
-    var latest = news.slice(0, 2).map(newsCard).map((el) => grid.cell({ size: { md: '1of2', lg: '1of3' } }, el))
+    var latest = news.slice(0, 2).map(function (doc) {
+      return grid.cell({ size: { md: '1of2', lg: '1of3' } }, newsCard(doc))
+    })
     var first = news.slice(2, PAGE_SIZE + 2).map(newsCard)
-    var rest = news.slice(PAGE_SIZE + 2, num * PAGE_SIZE + 2).filter(Boolean)
+    var rest = news.slice(PAGE_SIZE + 2, num * PAGE_SIZE + 2)
+      .filter(Boolean)
+      .map(newsCard)
     var hasMore = news.length >= num * PAGE_SIZE + 2
 
     if (!state.popular) {
@@ -58,8 +62,11 @@ function news (state, emit) {
           }
         }
       })
-      if (!items.length) latest.unshift(grid.cell({ size: { lg: '1of3' } }, popular.loading()))
-      else latest.unshift(grid.cell({ size: { lg: '1of3' } }, popular(items)))
+      if (!items.length) {
+        latest.unshift(grid.cell({ size: { lg: '1of3' } }, popular.loading()))
+      } else {
+        latest.unshift(grid.cell({ size: { lg: '1of3' } }, popular(items)))
+      }
     }
 
     if (first.length && state.ui.isLoading) {
@@ -76,7 +83,7 @@ function news (state, emit) {
             <section>
               ${grid({ size: { lg: '1of3' } }, latest)}
               ${grid({ size: { sm: '1of2', lg: '1of3' } }, first)}
-              ${grid({ size: { sm: '1of2', lg: '1of3' }, appear: true }, rest.map(newsCard))}
+              ${grid({ size: { sm: '1of2', lg: '1of3' }, appear: true }, rest)}
             </section>
           ` : html`
             <div class="Text u-textCenter u-sizeFull">
