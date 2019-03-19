@@ -58,5 +58,7 @@
   "%s days": "%s dage",
   "Submit event": "Indsend",
   "Max 5mb": "Max 5mb",
-  "By %s": "Af %s"
+  "By %s": "Af %s",
+  "Yesterday": "I går",
+  "Today": "I dag"
 }
