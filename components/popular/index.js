@@ -1,6 +1,6 @@
 var html = require('choo/html')
 var symbol = require('../symbol')
-var { i18n, loader } = require('../base')
+var { i18n, placeholder } = require('../base')
 
 var text = i18n(require('./lang.json'))
 
@@ -39,8 +39,8 @@ function loading (count = 5) {
           <div class="u-aspect4-3"></div>
         </div>
         <div class="Popular-body">
-          <span class="Popular-date">${loader(6)}</span>
-          <span class="Popular-title">${loader(24)}</span>
+          <span class="Popular-date">${placeholder(6)}</span>
+          <span class="Popular-title">${placeholder(24)}</span>
         </div>
       </div>
     `)

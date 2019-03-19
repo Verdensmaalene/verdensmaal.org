@@ -7,9 +7,15 @@
 
 .Popular-heading {
   font-weight: 600;
-  font-size: 1.25rem;
+  font-size: 1rem;
   margin-bottom: 1rem;
   color: rgb(var(--color-gray));
+}
+
+@media (min-width: 1200px) {
+  .Popular-heading {
+    font-size: 1.25rem;
+  }
 }
 
 .Popular-item {
@@ -44,13 +50,19 @@
   position: absolute;
   left: 1rem;
   top: 0;
-  background-color: rgb(var(--color-gray-light))
+  background-color: rgb(var(--color-gray-light));
 }
 
 .Popular-image {
   flex: 0 0 90px;
   height: auto;
   margin-right: 1.5rem;
+}
+
+@media (min-width: 1000px) and (max-width: 1200px) {
+  .Popular-image {
+    display: none;
+  }
 }
 
 .Popular-body {

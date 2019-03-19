@@ -265,8 +265,8 @@ function snippet (str, maxlen = Infinity) {
 
 // create placeholder loading text of given length
 // (num, bool?) -> Element
-exports.loader = loader
-function loader (length, light = false) {
+exports.placeholder = placeholder
+function placeholder (length, light = false) {
   var content = '⏳'.repeat(length).split('').reduce(function (str, char) {
     if (Math.random() > 0.7) char += ' '
     return str + char
