@@ -39,6 +39,7 @@ function news (state, emit) {
       if (!item) return card.loading({ date: true })
       return newsCard(item)
     })
+    var rest = news.slice(PAGE_SIZE + 2, num * PAGE_SIZE + 2)
       .map(newsCard)
       .filter(Boolean)
     var hasMore = news.length >= num * PAGE_SIZE + 2
