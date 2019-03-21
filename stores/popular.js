@@ -6,7 +6,7 @@ var REPOSITORY = 'https://verdensmaalene.cdn.prismic.io/api/v2'
 module.exports = popular
 
 function popular (state, emitter) {
-  state.popular = state.prefetch ? null : state.popular
+  state.popular = state.prefetch ? {} : state.popular
 
   emitter.on('fetch:popular', function () {
     var res = analytics().then(function (data) {
@@ -18,7 +18,10 @@ function popular (state, emitter) {
         return Promise.all(docs)
       })
     }).then(function (docs) {
-      state.popular = docs.filter(Boolean)
+      state.popular.data = docs.filter(Boolean)
+      emitter.emit('render')
+    }).catch(function (err) {
+      state.popular.error = err
       emitter.emit('render')
     })
     if (state.prefetch) state.prefetch.push(res)
