@@ -8,6 +8,8 @@ function telegram (state, emitter) {
   state.telegram = state.prefetch ? {} : state.telegram
 
   emitter.on('fetch:telegram', function () {
+    if (state.telegram.loading) return
+    state.telegram.loading = true
     var req = fetch(ENDPOINT).then(function (res) {
       return res.text().then(function (data) {
         if (!res.ok) throw new Error(data)
@@ -25,10 +27,13 @@ function telegram (state, emitter) {
               href: item.acf.Kildehenvisning
             }
           }))
+        state.telegram.loading = false
         emitter.emit('render')
       })
     }).catch(function (err) {
       state.telegram.error = err
+      state.telegram.loading = false
+      emitter.emit('render')
     })
     if (state.prefetch) state.prefetch.push(req)
   })

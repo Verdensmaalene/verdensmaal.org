@@ -9,6 +9,8 @@ function popular (state, emitter) {
   state.popular = state.prefetch ? {} : state.popular
 
   emitter.on('fetch:popular', function () {
+    if (state.popular.loading) return
+    state.popular.loading = true
     var res = analytics().then(function (data) {
       return Prismic.getApi(REPOSITORY, { req: state.req }).then(function (api) {
         var docs = data.slice(0, 5).map(function ([href]) {
@@ -18,10 +20,12 @@ function popular (state, emitter) {
         return Promise.all(docs)
       })
     }).then(function (docs) {
+      state.popular.loading = false
       state.popular.data = docs.filter(Boolean)
       emitter.emit('render')
     }).catch(function (err) {
       state.popular.error = err
+      state.popular.loading = false
       emitter.emit('render')
     })
     if (state.prefetch) state.prefetch.push(res)
