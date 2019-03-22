@@ -98,7 +98,7 @@ class GoalPage extends View {
   }
 
   createElement (state, emit) {
-    var self = this
+    var { local } = this
     var [, num] = state.params.wildcard.match(/^(\d{1,2})-.+$/)
     var predicate = Predicates.at('my.goal.number', +num)
     return state.docs.get(predicate, onresponse)
@@ -492,8 +492,8 @@ class GoalPage extends View {
           return html`<div hidden aria-hidden="true" id="secondary-header-container"></div>`
         }
 
-        var secondaryMenuIsOpen = state.ui.hasOverlay && self.local.headerVisible > 0
-        var headerVisible = secondaryMenuIsOpen ? 1 : self.local.headerVisible
+        var secondaryMenuIsOpen = state.ui.hasOverlay && local.headerVisible > 0
+        var headerVisible = secondaryMenuIsOpen ? 1 : local.headerVisible
         var opts = { isHighContrast: isHighContrast, slot: getFlag, static: true }
         var header = state.cache(Header, 'secondary-header')
         var links = website.data.main_menu.map(menuLink)

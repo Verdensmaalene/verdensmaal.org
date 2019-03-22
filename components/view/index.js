@@ -50,7 +50,7 @@ function createClass (Class, id) {
 
 function createView (view, meta) {
   return function (state, emit) {
-    return state.docs.getSingle('website', function (err, doc) {
+    return state.docs.getSingle('website', (err, doc) => {
       if (err) throw err
       var hasError = false
       var children
