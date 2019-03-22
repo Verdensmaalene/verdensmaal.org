@@ -18,6 +18,7 @@
   position: absolute;
   left: 0;
   bottom: 0;
+  pointer-events: none;
   background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9) 75%, rgba(255, 255, 255, 1));
 }
 
@@ -60,29 +61,16 @@
 }
 
 .Telegram-label {
+  padding-top: 0.1em;
   will-change: opacity, transform;
+  transition:
+    transform 400ms cubic-bezier(0.165, 0.84, 0.44, 1),
+    opacity 325ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .Telegram-label.is-disappearing {
   opacity: 0;
-  transform: translateX(-2rem);
-  transition:
-    transform 500ms cubic-bezier(0.165, 0.84, 0.44, 1),
-    opacity 400ms cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-.Telegram-label.is-appearing {
-  position: absolute;
-  opacity: 0;
-  transform: translateX(2rem);
-  animation: Telegram-label--appearing 400ms 100ms forwards cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-@keyframes Telegram-label--appearing {
-  to {
-    opacity: 1;
-    transform: translateX(0rem);
-  }
+  transform: translateX(-1.5rem);
 }
 
 .Telegram-date {
@@ -109,12 +97,18 @@
   width: 1.75rem;
   height: 1.75rem;
   margin-right: 0.75rem;
+  border: 0.875rem solid currentColor;
   border-radius: 100%;
-  background-color: currentColor;
+  transition: border-width 200ms cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: border-radius;
 }
 
 .Telegram.is-loading .Telegram-date {
   color: rgba(0, 0, 0, 0.04);
+}
+
+.Telegram.is-paused .Telegram-date::before {
+  border: 0.1875rem solid currentColor;
 }
 
 .Telegram-title {

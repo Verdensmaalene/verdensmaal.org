@@ -23,17 +23,20 @@ module.exports = class Telegram extends Component {
       el.style.setProperty('--Telegram-height', this.local.height + 'px')
     })
     var paginate = nanoraf(() => {
+      if (this.local.paused) return
       var children = el.querySelectorAll('.js-item')
       var current = children[0]
       var second = children[1]
       var items = this.local.items
       var ontransitionend = () => {
         current.removeEventListener('transitionend', ontransitionend)
+        this.local.intransition = false
         var next = items.slice()
         next.push(next.shift())
-        this.render(next)
+        this.render(next, false)
       }
 
+      this.local.intransition = true
       current.addEventListener('transitionend', ontransitionend)
       el.style.setProperty('--Telegram-void', `${current.offsetHeight}px`)
       current.classList.add('is-disappearing')
@@ -41,20 +44,38 @@ module.exports = class Telegram extends Component {
 
       if (!isSameDay(items[0].date.datetime, items[1].date.datetime)) {
         let label = el.querySelector('.js-label')
+        label.addEventListener('transitionend', function ontransitionend () {
+          label.removeEventListener('transitionend', ontransitionend)
+          label.innerText = items[1].date.text
+          label.classList.remove('is-disappearing')
+        })
         label.classList.add('is-disappearing')
-        label.parentElement.appendChild(html`
-          <span class="Telegram-label is-appearing" style="left: ${label.offsetLeft}px; top: ${label.offsetTop}px;">
-            ${items[1].date.text}
-          </span>
-        `)
       }
 
-      interval = setTimeout(paginate, 5000)
+      interval = setTimeout(paginate, 10000)
     })
 
-    var interval = setTimeout(paginate, 5000)
+    var onmouseleave = () => {
+      if (this.local.intransition) return
+      this.render(this.local.items, false)
+      if (Date.now() - stop > 5000) paginate()
+      else interval = setTimeout(paginate, 5000)
+      stop = null
+    }
+
+    var onmouseenter = () => {
+      if (this.local.intransition) return
+      this.render(this.local.items, true)
+      clearInterval(interval)
+      stop = Date.now()
+    }
+
+    var stop = null
+    var interval = setTimeout(paginate, 10000)
 
     onresize()
+    el.addEventListener('mouseleave', onmouseleave)
+    el.addEventListener('mouseenter', onmouseenter)
     window.addEventListener('resize', onresize)
     this.unload = function () {
       clearInterval(interval)
@@ -62,7 +83,8 @@ module.exports = class Telegram extends Component {
     }
   }
 
-  update (items) {
+  update (items, paused = false) {
+    if (paused !== this.local.paused) return true
     for (let i = 0, len = items.length; i < len; i++) {
       if (!this.local.items[i]) return true
       if (items[i].id !== this.local.items[i].id) return true
@@ -70,14 +92,16 @@ module.exports = class Telegram extends Component {
     return false
   }
 
-  createElement (items) {
+  createElement (items, paused = false) {
+    this.local.paused = paused
     this.local.items = items
+
     var first = items[0]
     var style = ''
     if (this.local.height) style = `--Telegram-height: ${this.local.height}px;`
 
     return html`
-      <div class="Telegram" id="${this.local.id}" style="${style}">
+      <div class="Telegram ${paused ? 'is-paused' : ''}" id="${this.local.id}" style="${style}">
         <h2 class="Telegram-heading">${text`Short stories from Worlds Best News`}</h2>
         <div class="Telegram-list">
           <time class="Telegram-date" datetime="${JSON.stringify(first.date.datetime).replace(/^"|"$/g, '')}">
