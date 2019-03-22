@@ -38,13 +38,14 @@ function news (state, emit) {
     var latest = news.slice(0, 1).map(function (doc) {
       return grid.cell({ size: { md: '1of2', lg: '1of3' } }, newsCard(doc))
     })
-    var first = news.slice(1, PAGE_SIZE + 1).map(function (item) {
-      if (!item) return card.loading({ date: true })
-      return newsCard(item)
+    var still = num * PAGE_SIZE + 1
+    if (num > 1) still -= PAGE_SIZE
+    var prev = news.slice(1, still).map(function (doc) {
+      return grid.cell({ size: { sm: '1of2', lg: '1of3' } }, newsCard(doc))
     })
-    var rest = news.slice(PAGE_SIZE + 1, num * PAGE_SIZE + 1)
-      .map(newsCard)
-      .filter(Boolean)
+    var current = news.slice(still, num * PAGE_SIZE + 1).map(function (doc, index) {
+      return grid.cell({ size: { sm: '1of2', lg: '1of3' }, appear: index }, newsCard(doc))
+    })
     var hasMore = news.length >= num * PAGE_SIZE + 1
 
     if (state.popular.error) {
@@ -98,10 +99,6 @@ function news (state, emit) {
       })))
     }
 
-    if (first.length && state.ui.isLoading) {
-      for (let i = 0; i < 3; i++) rest.push(card.loading({ date: true }))
-    }
-
     return html`
       <main class="View-main">
         <div class="u-container">
@@ -111,8 +108,7 @@ function news (state, emit) {
           ${news.length ? html`
             <section>
               ${grid({ size: { lg: '1of3' } }, latest)}
-              ${grid({ size: { sm: '1of2', lg: '1of3' } }, first)}
-              ${grid({ size: { sm: '1of2', lg: '1of3' }, appear: true }, rest)}
+              ${grid(prev.concat(current))}
             </section>
           ` : html`
             <div class="Text u-textCenter u-sizeFull">
@@ -135,7 +131,7 @@ function news (state, emit) {
     let predicate = Predicates.at('document.type', 'news')
     let opts = {
       page: num,
-      pageSize: PAGE_SIZE + 2,
+      pageSize: PAGE_SIZE + 1,
       orderings: '[document.first_publication_date desc]'
     }
 
@@ -160,7 +156,7 @@ function news (state, emit) {
   // render document as card
   // obj -> Element
   function newsCard (doc) {
-    if (!doc) return null
+    if (!doc) return card.loading({ date: true })
 
     var date = parse(doc.first_publication_date)
     var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
