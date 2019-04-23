@@ -25,7 +25,10 @@ var { asText } = require('./components/base')
 var submitEvent = require('./lib/submit-event')
 var imageproxy = require('./lib/cloudinary-proxy')
 
-var app = jalla('index.js', { sw: 'sw.js' })
+var app = jalla('index.js', {
+  sw: 'sw.js',
+  serve: Boolean(process.env.NOW)
+})
 
 // get most viewed news
 app.use(get('/api/popular', async function (ctx) {
@@ -181,7 +184,7 @@ app.use(get('/delmaal-:num.:id.zip', async function (ctx, num, id, next) {
 }))
 
 // render statistics as image
-app.use(get(/\/(?:(\d{1,2}).*?\/)?(.+?)\.svg/, app.defer(async function (ctx, goal, id, next) {
+app.use(get(/\/(?:(\d{1,2}).*?\/)?(.+?)\.svg/, async function (ctx, goal, id, next) {
   try {
     let api = await Prismic.api(REPOSITORY, { req: ctx.req })
     let doc = await api.getByID(id)
@@ -203,7 +206,7 @@ app.use(get(/\/(?:(\d{1,2}).*?\/)?(.+?)\.svg/, app.defer(async function (ctx, go
     }
     throw err
   }
-})))
+}))
 
 // get event as iCalendar file
 app.use(get('/events/:uid.ics', async function (ctx, uid) {
