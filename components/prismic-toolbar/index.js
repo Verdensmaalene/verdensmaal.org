@@ -3,7 +3,7 @@ var Component = require('choo/component')
 var Prismic = require('prismic-javascript')
 var { i18n } = require('../base')
 
-var text = i18n()
+var text = i18n(require('./lang.json'))
 
 var COOKIE_REGEX = new RegExp(`${Prismic.previewCookie}=(.+?)(?:;|$)`)
 
