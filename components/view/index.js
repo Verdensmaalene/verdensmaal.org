@@ -2,6 +2,7 @@ var assert = require('assert')
 var raw = require('choo/html/raw')
 var html = require('choo/html')
 var Component = require('choo/component')
+var asElement = require('prismic-element')
 var { Predicates } = require('prismic-javascript')
 var flag = require('../flag')
 var error = require('./error')
@@ -9,8 +10,8 @@ var share = require('../share')
 var Header = require('../header')
 var Footer = require('../footer')
 var player = require('../embed/player')
+var PrismicToolbar = require('../prismic-toolbar')
 var { i18n, isSameDomain, asText } = require('../base')
-var asElement = require('prismic-element')
 
 var text = i18n()
 
@@ -83,6 +84,7 @@ function createView (view, meta) {
           ${doc ? getFooter() : null}
           ${player.render(null)}
           ${share.render(null)}
+          ${state.cache(PrismicToolbar, 'prismic-toolbar').placeholder(state.href)}
         </body>
       `
 

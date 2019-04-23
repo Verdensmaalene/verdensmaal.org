@@ -18,6 +18,10 @@ function prismicStore (opts) {
       req: state.req
     }, opts))
 
+    emitter.on('prismic:clear', function () {
+      cache.clear()
+    })
+
     if (typeof window === 'undefined' && state.prefetch) {
       cache.clear()
     }
