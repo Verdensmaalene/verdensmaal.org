@@ -13,6 +13,21 @@ function ui (state, emitter) {
   state.ui.gridLayout = state.ui.gridLayout || Math.ceil(Math.random() * 9)
   state.ui.clock = { ref: 1 }
 
+  emitter.on('nomination:submit', function (data) {
+    state.ui.isLoading = true
+    emitter.emit('render')
+  })
+
+  emitter.on('nomination:success', function (data) {
+    state.ui.isLoading = false
+    emitter.emit('render')
+  })
+
+  emitter.on('nomination:error', function (data) {
+    state.ui.isLoading = false
+    emitter.emit('render')
+  })
+
   // generic (optionally namespaced) vector clock for tracking changes
   emitter.on('tick', function (key) {
     state.ui.clock.ref++

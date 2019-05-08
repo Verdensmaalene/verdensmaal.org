@@ -11,10 +11,17 @@
 }
 
 .Form-label {
-  display: block;
+  display: flex;
+  align-items: center;
   margin-bottom: 0.8em;
   font-size: 0.9rem;
   font-weight: var(--high-contrast-bold, normal);
+}
+
+.Form-meta {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: rgb(var(--color-text-muted));
 }
 
 .Form-control {
@@ -32,8 +39,11 @@
   user-select: text;
 }
 
-textarea.Form-control {
+textarea.Form-control:not([rows]) {
   height: 8.95rem;
+}
+
+textarea.Form-control {
   resize: none;
 }
 
@@ -46,6 +56,10 @@ textarea.Form-control {
   outline: 0 !important;
   border-color: rgb(var(--color-gray));
 }
+
+/**
+ * File upload
+ */
 
 .Form-control--file {
   border: 0;
@@ -112,4 +126,58 @@ textarea.Form-control {
 .Form-control--file[disabled]::-ms-browse {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/**
+ * Choice w/ description
+ */
+
+.Form-choice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 2px;
+  position: relative;
+  z-index: 0;
+  cursor: pointer;
+}
+
+.Form-check {
+  display: inline-block;
+  border: 3px solid #fff;
+  margin-left: 1rem;
+  position: relative;
+  top: -2px;
+}
+
+.Form-choice .Form-label {
+  margin: 1rem;
+  font-family: var(--heading-font-family) !important;
+  line-height: var(--heading-line-height) !important;
+  word-spacing: var(--heading-word-spacing) !important;
+  text-transform: uppercase;
+  font-size: 2rem;
+  color: #fff;
+}
+
+.Form-choice .Form-label::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  background: rgb(var(--color-gray));
+}
+
+.Form-choice:not(.is-unselected) .Form-label::before,
+.Form-choice .Form-check:checked + .Form-label::before {
+  background: rgb(var(--color-theme));
+}
+
+.Form-description {
+  flex: 1 0 100%;
+  padding: 1rem;
+  background-color: #fff;
 }

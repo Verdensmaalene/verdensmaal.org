@@ -25,6 +25,7 @@ app.use(require('./stores/ui'))
 app.use(require('./stores/subscribe'))
 app.use(require('./stores/popular'))
 app.use(require('./stores/telegram'))
+app.use(require('./stores/nomination'))
 
 app.route('/', require('./views/home'))
 app.route('/nyheder', require('./views/news'))
@@ -33,6 +34,7 @@ app.route('/events/:uid', require('./views/event'))
 app.route('/nyheder/:uid', require('./views/article'))
 app.route('/materialer', require('./views/resources'))
 app.route('/mission', require('./views/mission'))
+app.route('/sdg-award', require('./views/nomination'))
 app.route('/*', require('./views/catchall'))
 
 try {
