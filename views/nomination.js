@@ -70,7 +70,7 @@ function page (state, emit) {
                 <h2 class="Text-h3">Vælg en kategori</h2>
                 <p>Hvilken pris har din kandidat gjort sig fortjent til?</p>
               </div>
-              ${grid({ size: { 'md': '1of3' } }, CATEGORIES.map((props, index) => form.choice(Object.assign({
+              ${grid({ size: { 'lg': '1of3' } }, CATEGORIES.map((props, index) => form.choice(Object.assign({
                 id: `category-${index}`,
                 value: props.label,
                 disabled: state.ui.isLoading,
@@ -80,7 +80,7 @@ function page (state, emit) {
               <div class="Text u-spaceT8 u-spaceB4">
                 <h2 class="Text-h3">Fortæl os om dig selv</h2>
               </div>
-              ${grid({ size: { 'md': '1of2' } }, [
+              ${grid({ size: { 'md': '1of2', 'lg': '1of3' } }, [
                 html`
                   <div>
                     ${form.input({
@@ -129,7 +129,7 @@ function page (state, emit) {
               <div class="Text u-spaceT8 u-spaceB4">
                 <h2 class="Text-h3">Hvem vil du gerne nominere?</h2>
               </div>
-              ${grid({ size: { 'md': '1of2' } }, [
+              ${grid({ size: { 'md': '1of2', 'lg': '1of3' } }, [
                 form.input({
                   label: 'Navn',
                   value: fields['entry.2012872212'] || '',
@@ -167,7 +167,7 @@ function page (state, emit) {
                 <h2 class="Text-h3">Relevante links</h2>
                 <p>Indsæt meget gerne links til kandidatens hjemmeside, sociale medier eller f.eks. presseomtale af projektet/kandidaten.</p>
               </div>
-              ${grid({ size: { 'md': '1of2' } }, [
+              ${grid({ size: { 'lg': '2of3' } }, [
                 html`
                   <div>
                     ${form.input({

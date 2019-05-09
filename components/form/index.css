@@ -158,13 +158,18 @@ textarea.Form-control {
 .Form-choice {
   --current-background: var(--color-theme);
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
   padding: 2px;
   position: relative;
   z-index: 0;
   cursor: pointer;
   background: rgb(var(--current-background));
+}
+
+.Form-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .Form-check {
@@ -201,7 +206,7 @@ textarea.Form-control {
 }
 
 .Form-description {
-  flex: 1 0 100%;
+  flex: 1 0 auto;
   padding: 1rem;
   background-color: #fff;
 }
