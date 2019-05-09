@@ -16,7 +16,7 @@ var text = i18n()
 var CATEGORIES = [{
   'class': 'u-bg10',
   label: 'Inkluderingsprisen',
-  description: 'Vi skal sikre, at de svageste kommer med. Prisen gives for den handling eller initiativ, der bedst har nået og inkluderet en eller flere af de grupper, der er i størst risiko for ikke at nå Verdensmålene – og konkret har forbedret deres situation.'
+  description: 'Leaving no one behind – vi skal sikre, at de svageste kommer med. Prisen gives for den handling eller initiativ, der bedst har nået og inkluderet en eller flere af de grupper, der er i størst risiko for ikke at nå Verdensmålene – og konkret har forbedret deres situation.'
 }, {
   'class': 'u-bg16',
   label: 'Forandringsprisen',
@@ -42,17 +42,7 @@ function page (state, emit) {
     return html`
       <main class="View-main">
         <div class="View-spaceLarge">
-          ${doc && doc.data.image.url ? banner(image(doc.data.image)) : html`
-            <div class="u-container">${intro({ title, body: description })}</div>
-          `}
-          ${doc.data.image.url ? html`
-            <div class="View-space">
-              <div class="Text">
-                <h1>${title}</h1>
-                <p>${description}</p>
-              </div>
-            </div>
-          ` : null}
+          <div class="u-container">${intro({ title, body: description })}</div>
           ${doc ? html`<div class="Text">${body}</div>` : intro.loading()}
           <div class="View-space u-container">
             <form action="/api/nomination" method="POST" class="Form" onsubmit=${onsubmit}>
@@ -115,7 +105,7 @@ function page (state, emit) {
                       disabled: state.ui.isLoading
                     })}
                     ${form.input({
-                      label: 'Telefonnummer (valgfri)',
+                      label: 'Telefonnummer',
                       value: fields['entry.872971700'] || '',
                       id: 'entry.872971700',
                       name: 'entry.872971700',
@@ -129,28 +119,55 @@ function page (state, emit) {
               <div class="Text u-spaceT8 u-spaceB4">
                 <h2 class="Text-h3">Hvem vil du gerne nominere?</h2>
               </div>
+
               ${grid({ size: { 'md': '1of2', 'lg': '1of3' } }, [
-                form.input({
-                  label: 'Navn',
-                  value: fields['entry.2012872212'] || '',
-                  id: 'entry.2012872212',
-                  name: 'entry.2012872212',
-                  required: true,
-                  onchange: onchange,
-                  disabled: state.ui.isLoading
-                }),
-                form.input({
-                  label: 'Organisation/virksomhed',
-                  value: fields['entry.682921765'] || '',
-                  id: 'entry.682921765',
-                  name: 'entry.682921765',
-                  required: true,
-                  onchange: onchange,
-                  disabled: state.ui.isLoading
-                })
+                html`
+                  <div>
+                    ${form.input({
+                      label: 'Navn',
+                      value: fields['entry.2012872212'] || '',
+                      id: 'entry.2012872212',
+                      name: 'entry.2012872212',
+                      required: true,
+                      onchange: onchange,
+                      disabled: state.ui.isLoading
+                    })}
+                    ${form.input({
+                      label: 'E-mail',
+                      value: fields['entry.1015718738'] || '',
+                      id: 'entry.1015718738',
+                      name: 'entry.1015718738',
+                      type: 'email',
+                      required: true,
+                      onchange: onchange,
+                      disabled: state.ui.isLoading
+                    })}
+                  </div>
+                `, html`
+                  <div>
+                    ${form.input({
+                      label: 'Organisation/virksomhed',
+                      value: fields['entry.993919630'] || '',
+                      id: 'entry.993919630',
+                      name: 'entry.993919630',
+                      required: true,
+                      onchange: onchange,
+                      disabled: state.ui.isLoading
+                    })}
+                    ${form.input({
+                      label: 'Telefonnummer',
+                      value: fields['entry.1899378004'] || '',
+                      id: 'entry.1899378004',
+                      name: 'entry.1899378004',
+                      type: 'tel',
+                      onchange: onchange,
+                      disabled: state.ui.isLoading
+                    })}
+                  </div>
+                `
               ])}
               ${form.textarea({
-                rows: 12,
+                rows: 10,
                 'class': 'u-spaceB1',
                 label: 'Hvorfor skal din kandidat nomineres til prisen?',
                 value: fields['entry.1264591994'] || '',
@@ -252,24 +269,6 @@ class Counter extends Component {
   createElement (value = '') {
     var length = value ? value.split(' ').length : '0'
     return html`<span class="Form-meta">${text`Using ${length}/300 words`}</span>`
-  }
-}
-
-// construct image properties
-// obj -> obj
-function image (props) {
-  return {
-    width: props.dimensions.width,
-    height: props.dimensions.height,
-    caption: props.copyright,
-    alt: props.alt || '',
-    src: props.url,
-    sizes: '100vw',
-    srcset: srcset(
-      props.url,
-      [400, 600, 900, 1800, [3000, 'q_60']],
-      { aspect: 9 / 16 }
-    )
   }
 }
 

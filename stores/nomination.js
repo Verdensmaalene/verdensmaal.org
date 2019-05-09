@@ -29,7 +29,7 @@ function nomination (state, emitter) {
       if (!res.ok) throw new Error(res.statusMessage || 'Could not submit')
       window.localStorage.removeItem(CACHE_KEY)
       emitter.emit('nomination:success')
-      emitter.emit('pushState', state.href.replace(/\/$/, '') + '/tak')
+      emitter.emit('pushState', '/tak')
     }).catch(function (err) {
       state.nomination.error = err
       emitter.emit('nomination:error', err)
