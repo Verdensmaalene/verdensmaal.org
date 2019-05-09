@@ -34,7 +34,7 @@ app.route('/events/:uid', require('./views/event'))
 app.route('/nyheder/:uid', require('./views/article'))
 app.route('/materialer', require('./views/resources'))
 app.route('/mission', require('./views/mission'))
-app.route('/nominer-en-verdensmalshelt', require('./views/nomination'))
+app.route('/nominer-en-helt', require('./views/nomination'))
 app.route('/*', require('./views/catchall'))
 
 try {

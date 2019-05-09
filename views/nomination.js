@@ -30,7 +30,7 @@ var CATEGORIES = [{
 module.exports = view(page, meta)
 
 function page (state, emit) {
-  return state.docs.getByUID('page', 'nominer-en-verdensmalshelt', function (err, doc) {
+  return state.docs.getByUID('page', 'nominer-en-helt', function (err, doc) {
     if (err) throw err
 
     var title = asText(doc.data.title)
@@ -274,7 +274,7 @@ function image (props) {
 }
 
 function meta (state) {
-  return state.docs.getByUID('page', 'nominer-en-verdensmalshelt', function (err, doc) {
+  return state.docs.getByUID('page', 'nominer-en-helt', function (err, doc) {
     if (err) throw err
     if (!doc) return { title: text`LOADING_TEXT_SHORT` }
     var attrs = {
