@@ -219,7 +219,7 @@ class Counter extends Component {
 
   createElement (value = '') {
     var length = value ? value.split(' ').length : '0'
-    return html`<span class="Form-meta">${text`Using ${length} words`}</span>`
+    return html`<span class="Form-meta">${text`Using ${length}/300 words`}</span>`
   }
 }
 
