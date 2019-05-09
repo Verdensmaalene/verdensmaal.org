@@ -21,6 +21,7 @@ var zip = require('./lib/zip-target')
 var resolve = require('./lib/resolve')
 var analytics = require('./lib/analytics')
 var subscribe = require('./lib/subscribe')
+var nomination = require('./lib/nomination')
 var { asText } = require('./components/base')
 var submitEvent = require('./lib/submit-event')
 var imageproxy = require('./lib/cloudinary-proxy')
@@ -46,6 +47,17 @@ app.use(post('/api/subscribe', compose([body(), async function (ctx, next) {
   } else {
     ctx.type = 'application/json'
     ctx.body = response
+  }
+}])))
+
+app.use(post('/api/nomination', compose([body(), async function (ctx, next) {
+  ctx.set('Cache-Control', 'no-cache, private, max-age=0')
+  await nomination(ctx.request.body)
+  if (ctx.accepts('html')) {
+    ctx.redirect('back')
+  } else {
+    ctx.type = 'application/json'
+    ctx.body = {}
   }
 }])))
 

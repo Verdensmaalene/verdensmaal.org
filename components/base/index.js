@@ -166,8 +166,22 @@ function metaKey (e) {
 exports.pluck = pluck
 function pluck (src, ...keys) {
   keys = Array.isArray(keys[0]) ? keys[0] : keys
-  return keys.reduce(function (obj, key) {
-    if (src[key]) obj[key] = src[key]
+  return filter(src, (key) => keys.includes(key))
+}
+
+// pick props from object
+// (obj, arr|...str) -> obj
+exports.exclude = exclude
+function exclude (src, ...keys) {
+  keys = Array.isArray(keys[0]) ? keys[0] : keys
+  return filter(src, (key) => !keys.includes(key))
+}
+
+// filter object by test
+// (obj, fn) -> obj
+function filter (src, test) {
+  return Object.keys(src).reduce(function (obj, key) {
+    if (test(src[key])) obj[key] = src[key]
     return obj
   }, {})
 }

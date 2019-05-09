@@ -61,7 +61,7 @@ module.exports = class EventForm extends Component {
         ${!this.local.sent ? html`
           <div>
             ${grid({ size: { md: '1of3', lg: '1of3' } }, fields)}
-            ${input({ label: 'Upload images', comment: text`Max 5mb`, type: 'file', name: 'images', multiple: 'multiple', disabled: this.local.loading })}
+            ${input({ label: 'Upload images', title: text`Max 5mb`, type: 'file', name: 'images', multiple: 'multiple', disabled: this.local.loading })}
             <div class="u-flex u-flexWrap u-alignCenter">
               <div class="u-spaceR3 u-spaceT3">
                 ${button({ text: text`Submit event`, primary: true, disabled: this.local.loading })}
