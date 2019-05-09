@@ -42,7 +42,17 @@ function page (state, emit) {
     return html`
       <main class="View-main">
         <div class="View-spaceLarge">
-          <div class="u-container">${intro({ title, body: description })}</div>
+          ${doc && doc.data.image.url ? banner(image(doc.data.image)) : html`
+            <div class="u-container">${intro({ title, body: description })}</div>
+          `}
+          ${doc.data.image.url ? html`
+            <div class="View-space">
+              <div class="Text">
+                <h1>${title}</h1>
+                <p>${description}</p>
+              </div>
+            </div>
+          ` : null}
           ${doc ? html`<div class="Text">${body}</div>` : intro.loading()}
           <div class="View-space u-container">
             <form action="/api/nomination" method="POST" class="Form" onsubmit=${onsubmit}>
@@ -134,9 +144,9 @@ function page (state, emit) {
                     })}
                     ${form.input({
                       label: 'E-mail',
-                      value: fields['entry.1015718738'] || '',
-                      id: 'entry.1015718738',
-                      name: 'entry.1015718738',
+                      value: fields['entry.208355292'] || '',
+                      id: 'entry.208355292',
+                      name: 'entry.208355292',
                       type: 'email',
                       required: true,
                       onchange: onchange,
@@ -147,18 +157,18 @@ function page (state, emit) {
                   <div>
                     ${form.input({
                       label: 'Organisation/virksomhed',
-                      value: fields['entry.993919630'] || '',
-                      id: 'entry.993919630',
-                      name: 'entry.993919630',
+                      value: fields['entry.682921765'] || '',
+                      id: 'entry.682921765',
+                      name: 'entry.682921765',
                       required: true,
                       onchange: onchange,
                       disabled: state.ui.isLoading
                     })}
                     ${form.input({
                       label: 'Telefonnummer',
-                      value: fields['entry.1899378004'] || '',
-                      id: 'entry.1899378004',
-                      name: 'entry.1899378004',
+                      value: fields['entry.1204891467'] || '',
+                      id: 'entry.1204891467',
+                      name: 'entry.1204891467',
                       type: 'tel',
                       onchange: onchange,
                       disabled: state.ui.isLoading
@@ -269,6 +279,24 @@ class Counter extends Component {
   createElement (value = '') {
     var length = value ? value.split(' ').length : '0'
     return html`<span class="Form-meta">${text`Using ${length}/300 words`}</span>`
+  }
+}
+
+// construct image properties
+// obj -> obj
+function image (props) {
+  return {
+    width: props.dimensions.width,
+    height: props.dimensions.height,
+    caption: props.copyright,
+    alt: props.alt || '',
+    src: props.url,
+    sizes: '100vw',
+    srcset: srcset(
+      props.url,
+      [400, 600, 900, 1800, [3000, 'q_60']],
+      { aspect: 9 / 16 }
+    )
   }
 }
 
