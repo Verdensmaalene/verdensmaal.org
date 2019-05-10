@@ -14,15 +14,15 @@ var { i18n, asText, srcset } = require('../components/base')
 var text = i18n()
 
 var CATEGORIES = [{
-  'class': 'u-bg10',
+  'class': 'u-bg4',
   label: 'Inkluderingsprisen',
-  description: 'Leaving no one behind – vi skal sikre, at de svageste kommer med. Prisen gives for den handling eller initiativ, der bedst har nået og inkluderet en eller flere af de grupper, der er i størst risiko for ikke at nå Verdensmålene – og konkret har forbedret deres situation.'
+  description: 'Et grundlæggende princip i verdensmålene hedder “Leaving No One Behind”. Det betyder, at vi skal sikre, at de svageste kommer med. Prisen gives for den handling eller initiativ, der bedst har nået og inkluderet en eller flere af de grupper, der er i størst risiko for ikke at nå Verdensmålene – og konkret har forbedret deres situation.'
 }, {
-  'class': 'u-bg16',
+  'class': 'u-bg11',
   label: 'Forandringsprisen',
   description: 'Verdensmålene handler om en grundlæggende forandring af vores verden. Prisen gives for den mest nytænkende og effektfulde idé eller opfindelse, der samtidig har det største systemforandrende potentiale.'
 }, {
-  'class': 'u-bg7',
+  'class': 'u-bg6',
   label: 'Ildsjæleprisen',
   description: 'Som enkeltpersoner kan vi ændre og inspirere vores medmennesker. Prisen gives til den, der i kraft af sit personlige engagement har markeret sig som en stærk ildsjæl for Verdensmålene og har inspireret andre til at være med.'
 }]

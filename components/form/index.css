@@ -164,6 +164,7 @@ textarea.Form-control {
   z-index: 0;
   cursor: pointer;
   background: rgb(var(--current-background));
+  color: #fff;
 }
 
 .Form-heading {
@@ -177,7 +178,7 @@ textarea.Form-control {
   border: 3px solid #fff;
   margin-left: 1rem;
   position: relative;
-  top: -2px;
+  top: -0.2em;
 }
 
 .Form-choice .Form-label {
@@ -187,7 +188,7 @@ textarea.Form-control {
   word-spacing: var(--heading-word-spacing) !important;
   text-transform: uppercase;
   font-size: 2rem;
-  color: #fff;
+  color: inherit;
 }
 
 .Form-choice .Form-label::before {
@@ -207,6 +208,9 @@ textarea.Form-control {
 
 .Form-description {
   flex: 1 0 auto;
-  padding: 1rem;
-  background-color: #fff;
+  padding: 1rem calc(1rem + 4px);
+  margin: 0 -2px;
+  color: inherit;
+  border-top: 2px solid #fff;
+  font-weight: 500;
 }
