@@ -95,11 +95,13 @@ module.exports = class Telegram extends Component {
   createElement (items, paused = false) {
     this.local.paused = paused
     this.local.items = items
+    if (this.local.items.length < 1) {
+      return null
+    }
 
     var first = items[0]
     var style = ''
     if (this.local.height) style = `--Telegram-height: ${this.local.height}px;`
-
     return html`
       <div class="Telegram ${paused ? 'is-paused' : ''}" id="${this.local.id}" style="${style}">
         <h2 class="Telegram-heading">${text`Short stories from Worlds Best News`}</h2>

@@ -79,7 +79,7 @@ function news (state, emit) {
     }
 
     if (state.telegram.error) {
-      latest.unshift(state.cache(Telegram, 'news-telegram').render([]))
+      latest.unshift(Telegram.loading())
     } else if (!state.telegram.data) {
       latest.unshift(Telegram.loading())
     } else {
