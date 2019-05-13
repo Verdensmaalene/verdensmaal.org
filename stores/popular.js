@@ -7,6 +7,7 @@ module.exports = popular
 
 function popular (state, emitter) {
   state.popular = state.prefetch ? {} : state.popular
+  if (typeof window !== 'undefined') state.popular.error = null
 
   emitter.on('fetch:popular', function () {
     if (state.popular.loading) return

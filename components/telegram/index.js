@@ -95,9 +95,6 @@ module.exports = class Telegram extends Component {
   createElement (items, paused = false) {
     this.local.paused = paused
     this.local.items = items
-    if (this.local.items.length < 1) {
-      return null
-    }
 
     var first = items[0]
     var style = ''

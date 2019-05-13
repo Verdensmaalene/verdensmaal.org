@@ -35,11 +35,19 @@ function news (state, emit) {
 
     if (state.prefetch) return Promise.all(news)
 
-    var latest = news.slice(0, 1).map(function (doc) {
-      return grid.cell({ size: { md: '1of2', lg: '1of3' } }, newsCard(doc))
-    })
-    var still = num * PAGE_SIZE + 1
+    // figure out how many news articles to fit in to the first row
+    var extra = 1
+    var topRow = { md: '1of2' }
+    if (state.popular.error && state.telegram.error) extra += 1
+    if (state.popular.error || state.telegram.error) topRow.lg = '1of2'
+    else topRow.lg = '1of3'
+
+    var still = num * PAGE_SIZE + extra
     if (num > 1) still -= PAGE_SIZE
+
+    var latest = news.slice(0, extra).map(function (doc) {
+      return grid.cell({ size: topRow }, newsCard(doc))
+    })
     var prev = news.slice(1, still).map(function (doc) {
       return grid.cell({ size: { sm: '1of2', lg: '1of3' } }, newsCard(doc))
     })
@@ -48,55 +56,55 @@ function news (state, emit) {
     })
     var hasMore = news.length >= num * PAGE_SIZE + 1
 
-    if (state.popular.error) {
-      latest.unshift(grid.cell({ size: { md: '1of2', lg: '1of3' } }, popular([])))
-    } else if (!state.popular.data) {
-      latest.unshift(grid.cell({ size: { md: '1of2', lg: '1of3' } }, popular.loading()))
-    } else {
-      let items = state.popular.data.map(function (doc) {
-        var date = parse(doc.first_publication_date)
-        var image = doc.data.image.url ? {
-          alt: doc.data.image.alt || '',
-          sizes: '90px',
-          srcset: srcset(doc.data.image.url, [90, 180]),
-          src: `/media/fetch/w_90/${doc.data.image.url}`
-        } : null
-        return {
-          image: image,
-          href: state.docs.resolve(doc),
-          title: asText(doc.data.title),
-          date: {
-            datetime: date,
-            text: `${date.getDate()}. ${text(`MONTH_${date.getMonth()}`).substr(0, 3)} ${date.getFullYear()}`
-          }
-        }
-      })
-      if (!items.length) {
-        latest.unshift(grid.cell({ size: { md: '1of2', lg: '1of3' } }, popular.loading()))
+    if (!state.popular.error) {
+      if (!state.popular.data) {
+        latest.unshift(grid.cell({ size: topRow }, popular.loading()))
       } else {
-        latest.unshift(grid.cell({ size: { md: '1of2', lg: '1of3' } }, popular(items)))
+        let items = state.popular.data.map(function (doc) {
+          var date = parse(doc.first_publication_date)
+          var image = doc.data.image.url ? {
+            alt: doc.data.image.alt || '',
+            sizes: '90px',
+            srcset: srcset(doc.data.image.url, [90, 180]),
+            src: `/media/fetch/w_90/${doc.data.image.url}`
+          } : null
+          return {
+            image: image,
+            href: state.docs.resolve(doc),
+            title: asText(doc.data.title),
+            date: {
+              datetime: date,
+              text: `${date.getDate()}. ${text(`MONTH_${date.getMonth()}`).substr(0, 3)} ${date.getFullYear()}`
+            }
+          }
+        })
+        if (!items.length) {
+          latest.unshift(grid.cell({ size: topRow }, popular.loading()))
+        } else {
+          latest.unshift(grid.cell({ size: topRow }, popular(items)))
+        }
       }
     }
 
-    if (state.telegram.error) {
-      latest.unshift(Telegram.loading())
-    } else if (!state.telegram.data) {
-      latest.unshift(Telegram.loading())
-    } else {
-      let telegram = state.cache(Telegram, 'news-telegram')
-      latest.unshift(telegram.render(state.telegram.data.slice(0, 9).map(function (item) {
-        var date = parse(item.date)
-        var diff = differenceInDays(Date.now(), date)
-        var prefix = ''
-        if (Math.abs(diff) === 0) prefix = `${text`Today`}, `
-        else if (diff === 1) prefix = `${text`Yesterday`}, `
-        return Object.assign({}, item, {
-          date: {
-            datetime: date,
-            text: `${prefix}${date.getDate()}. ${text(`MONTH_${date.getMonth()}`)}`
-          }
-        })
-      })))
+    if (!state.telegram.error) {
+      if (!state.telegram.data) {
+        latest.unshift(Telegram.loading())
+      } else {
+        let telegram = state.cache(Telegram, 'news-telegram')
+        latest.unshift(telegram.render(state.telegram.data.slice(0, 9).map(function (item) {
+          var date = parse(item.date)
+          var diff = differenceInDays(Date.now(), date)
+          var prefix = ''
+          if (Math.abs(diff) === 0) prefix = `${text`Today`}, `
+          else if (diff === 1) prefix = `${text`Yesterday`}, `
+          return Object.assign({}, item, {
+            date: {
+              datetime: date,
+              text: `${prefix}${date.getDate()}. ${text(`MONTH_${date.getMonth()}`)}`
+            }
+          })
+        })))
+      }
     }
 
     return html`

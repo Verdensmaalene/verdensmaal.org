@@ -6,6 +6,7 @@ module.exports = telegram
 
 function telegram (state, emitter) {
   state.telegram = state.prefetch ? {} : state.telegram
+  if (typeof window !== 'undefined') state.telegram.error = null
 
   emitter.on('fetch:telegram', function () {
     if (state.telegram.loading) return
