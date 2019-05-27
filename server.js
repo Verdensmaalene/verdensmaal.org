@@ -282,6 +282,13 @@ app.use(get('/nyheder', function (ctx, next) {
   return next()
 }))
 
+// special cache headers for nomination page
+app.use(get('/nominer-en-helt', function (ctx, next) {
+  if (!ctx.accepts('html')) return next()
+  ctx.set('Cache-Control', 'max-age=0')
+  return next()
+}))
+
 // set cache headers
 app.use(function (ctx, next) {
   if (!ctx.accepts('html')) return next()
