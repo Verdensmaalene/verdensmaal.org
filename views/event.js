@@ -54,7 +54,7 @@ function eventView (state, emit) {
       srcset: srcset(image.url, [400, 600, 900, 1800, [3000, 'q_60']]),
       src: image.url,
       alt: image.alt || '',
-      caption: image.copyright
+      caption: image.copyright || image.alt
     }, asTicket(doc)) : html`
       <div class="u-cols u-xl-container">
         <div class="u-col u-lg-size2of3">

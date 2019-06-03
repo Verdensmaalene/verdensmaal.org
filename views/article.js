@@ -157,7 +157,7 @@ function image (props) {
   return {
     width: props.dimensions.width,
     height: props.dimensions.height,
-    caption: props.copyright,
+    caption: props.copyright || props.alt,
     alt: props.alt || '',
     src: props.url,
     sizes: '90vw',
