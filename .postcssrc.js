@@ -9,7 +9,7 @@ function config (ctx) {
     plugins.push(
       require('postcss-custom-properties'),
       require('postcss-url')({
-        filter: /\.(?:woff|svg)$/,
+        filter: /\.svg$/,
         url: 'inline',
         maxSize: Infinity
       })

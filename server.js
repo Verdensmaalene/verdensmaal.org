@@ -275,6 +275,20 @@ app.use(function (ctx, next) {
   return next()
 })
 
+// push fonts with all html requests
+app.use(function (ctx, next) {
+  if (!ctx.accepts('html')) return next()
+  var reg = /\.woff$/
+  var keys = Object.keys(ctx.assets).filter((key) => reg.test(key))
+  if (keys.length) {
+    ctx.append('Link', keys.map(function (key) {
+      var url = ctx.assets[key].url
+      return `<${url}>; rel=preload; crossorigin=anonymous; as=font`
+    }))
+  }
+  return next()
+})
+
 // special cache headers for news listing
 app.use(get('/nyheder', function (ctx, next) {
   if (!ctx.accepts('html')) return next()
