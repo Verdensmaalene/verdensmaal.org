@@ -43,10 +43,12 @@ module.exports = class Header extends Component {
       self.toggle(false)
       emit('contrast:toggle', next)
     }
-  }
 
-  get height () {
-    return this.element.offsetHeight
+    if (typeof window !== 'undefined') {
+      this.onresize = nanoraf(function () {
+        emit('header:resize', self.element.offsetHeight)
+      })
+    }
   }
 
   update (links, href, opts) {
@@ -89,12 +91,15 @@ module.exports = class Header extends Component {
 
     onresize()
     onscroll()
+    this.onresize()
     window.addEventListener('resize', onresize)
+    window.addEventListener('resize', this.onresize)
     window.addEventListener('scroll', onscroll, { passive: true })
-    this.unload = function () {
+    this.unload = () => {
       this.local.isInitialized = false
       window.removeEventListener('resize', onresize)
       window.removeEventListener('scroll', onscroll)
+      window.removeEventListener('resize', this.onresize)
     }
   }
 

@@ -1,3 +1,4 @@
+var lazy = require('choo-lazy-view')
 var choo = require('choo')
 
 var REPOSITORY = 'https://verdensmaalene.cdn.prismic.io/api/v2'
@@ -11,6 +12,7 @@ if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
   app.use(require('choo-service-worker/clear')())
 }
 
+app.use(lazy)
 app.use(require('choo-service-worker')('/sw.js'))
 app.use(require('./stores/prefetch'))
 app.use(require('./stores/prismic')({
@@ -33,7 +35,8 @@ app.route('/events/:uid', require('./views/event'))
 app.route('/nyheder/:uid', require('./views/article'))
 app.route('/materialer', require('./views/resources'))
 app.route('/mission', require('./views/mission'))
-app.route('/nominer-en-helt', require('./views/nomination'))
+app.route('/nominer-en-helt', lazy(() => import('./views/nomination')))
+app.route('/nominer-en-helt/:uid', lazy(() => import('./views/category')))
 app.route('/*', require('./views/catchall'))
 
 try {

@@ -1,0 +1,320 @@
+var html = require('choo/html')
+var asElement = require('prismic-element')
+var { Elements } = require('prismic-richtext')
+var view = require('../components/view')
+var grid = require('../components/grid')
+var intro = require('../components/intro')
+var Anchor = require('../components/anchor')
+var banner = require('../components/banner')
+var button = require('../components/button')
+var serialize = require('../components/text/serialize')
+var { i18n, asText, srcset, resolve } = require('../components/base')
+
+var text = i18n()
+var reg = /^theme-(\d+)/
+
+module.exports = view(category, meta)
+
+function category (state, emit) {
+  return state.docs.getByUID('page', state.params.uid, function (err, doc) {
+    if (err) throw err
+    if (!doc) {
+      return html`
+        <main class="View-main">
+          <div class="View-spaceLarge">
+            <div class="u-container">${intro.loading()}</div>
+          </div>
+        </main>
+      `
+    }
+
+    var title = asText(doc.data.title)
+    var description = asElement(doc.data.description)
+    var body = asElement(doc.data.body, resolve, serialize)
+    var theme = doc.tags.find((tag) => reg.test(tag))
+
+    return html`
+      <main class="View-main">
+        <div class="View-spaceLarge">
+          ${doc.data.image.url ? banner(image(doc.data.image)) : html`
+            <div class="u-container">
+              ${intro({
+                title: theme ? html`
+                  <span class="u-textHighlight u-bg${theme.match(reg)[1]}">
+                    ${title}
+                  </span>
+                ` : title,
+                body: description
+              })}
+            </div>
+          `}
+          ${doc.data.image.url ? html`
+            <div class="View-space">
+              <div class="Text">
+                <h1>${title}</h1>
+                <p>${description}</p>
+              </div>
+            </div>
+          ` : null}
+          ${body ? html`
+            <div class="View-space u-container">
+              <div class="Text">
+                ${body}
+              </div>
+            </div>
+          ` : null}
+          ${renderForm()}
+        </div>
+      </main>
+    `
+
+    function renderForm () {
+      switch (state.params.uid) {
+        case 'tak': return null
+        case 'oversigt': {
+          let action = `/api/nomination?step=${doc.uid}`
+          return html`
+            <div class="u-container u-spaceT6">
+              <form action="${action}" method="POST" class="Form" onsubmit=${onsubmit}>
+                <div class="Text Text--large u-spaceB4">
+                  <ul>
+                    ${Object.keys(state.nomination.fields).map(function (key) {
+                      var value = state.nomination.fields[key]
+                      return html`
+                        <li>
+                          <input type="hidden" name="${key}" value="${value}">
+                          <strong>${value}</strong> – ${key}
+                        </li>
+                      `
+                    })}
+                  </ul>
+                </div>
+                ${button({ type: 'submit', text: 'Send', primary: true })}
+              </form>
+            </div>
+          `
+        }
+        default: {
+          if (Date.now() > new Date(2019, 5, 10)) return null
+          let nominees = doc.data.related[0].items.filter(function (item) {
+            return item.link.id && !item.link.isBroken
+          })
+          if (!nominees.length) return null
+          let action = `/api/nomination?step=${doc.uid}`
+
+          state.docs.getByUID('page', 'nominer-en-helt', Function.prototype)
+
+          return html`
+            <div class="View-space u-container">
+              ${nominees.map((item) => state.docs.getByUID('page', item.link.uid, nominee))}
+              <div class="View-space">
+                <form action="${action}" method="POST" class="Form" onsubmit=${onsubmit}>
+                  ${Object.keys(state.nomination.fields).map(function (key) {
+                    return html`<input type="hidden" name="${key}" value="${state.nomination.fields[key]}">`
+                  })}
+                  <div class="Text">
+                    <h2>Vælg en kandidat</h2>
+                    <p>Vælg den kandidat du vil nominere til ${title}.</p>
+                    ${state.nomination.error ? html`
+                      <div class="Form-error u-spaceB6">
+                        ${state.cache(Anchor, 'nomination-error', { auto: true }).render()}
+                        <div class="Text">
+                          <h2 class="Text-h3">${text`Oops`}</h2>
+                          <p>Noget gik galt. Prøv igen.</p>
+                          ${process.env.NODE_ENV === 'development' ? html`<pre>${err.stack}</pre>` : null}
+                        </div>
+                      </div>
+                    ` : null}
+                    <div class="Text-large u-spaceB4">
+                      ${nominees.map((item) => state.docs.getByUID('page', item.link.uid, function (err, doc) {
+                        if (err) throw err
+                        if (!doc) return null
+                        var value = asText(doc.data.description)
+                        return html`
+                          <label for="nominee-${doc.id}" class="u-flex u-alignCenter u-spaceB1">
+                            <input id="nominee-${doc.id}" type="radio" name="${title}" value="${value}" class="u-spaceR1" checked=${state.nomination.fields[title] === value} onchange=${onchange} required>${value}
+                          </label>
+                        `
+                      }))}
+                    </div>
+                    ${button({ type: 'submit', primary: true, text: 'Fortsæt', disabled: state.nomination.loading })}
+                  </div>
+                </form>
+              </div>
+            </div>
+          `
+        }
+      }
+    }
+
+    function onchange (event) {
+      emit('nomination:set', event.target.name, event.target.value)
+    }
+
+    function onsubmit (event) {
+      if (!event.target.checkValidity()) {
+        event.target.reportValidity()
+        event.preventDefault()
+        return
+      }
+      emit('nomination:submit')
+      event.preventDefault()
+    }
+
+    function nominee (err, doc) {
+      if (err) throw err
+      if (!doc) {
+        return html`
+          <article class="View-space">
+            ${grid([
+              grid.cell({ size: { md: '1of3' } }, html`
+                <div class="u-loading">
+                  <div>
+                    <div class="u-aspect16-9"></div>
+                  </div>
+                </div>
+              `),
+              grid.cell({ size: { md: '2of3' } }, html`
+                <div class="Text">
+                  <h2 class="u-spaceB0"><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h2>
+                  <div>
+                    <h3><span class="u-loading">${text`LOADING_TEXT_SHORT`}</span></h3>
+                    <p><span class="u-loading">${text`LOADING_TEXT_LONG`}</span></p>
+                  </div>
+                </div>
+              `)
+            ])}
+          </article>
+        `
+      }
+
+      var image = doc.data.image
+      if (image.url) {
+        var sources = srcset(image.url, [400, 800, [1200, 'q_70']], { transforms: 'g_face,c_thumb' })
+        var attrs = Object.assign({
+          class: 'u-cover',
+          srcset: sources,
+          sizes: '33.333vw',
+          alt: image.alt || ''
+        }, image.dimensions)
+      }
+
+      return html`
+        <article class="View-space">
+          ${grid([
+            grid.cell({ size: { md: '1of3' } }, html`
+              <div>
+                <div class="u-aspect16-9">
+                  ${attrs ? html`<img ${attrs} src="${sources.split(' ')[0]}">` : null}
+                </div>
+                ${doc.data.related.map(info)}
+              </div>
+            `),
+            grid.cell({ size: { md: '2of3' } }, html`
+              <div class="Text">
+                <h2 class="u-spaceB0">${asText(doc.data.title)}</h2>
+                <div>
+                  <h3 class="u-color${theme.match(reg)[1]}">${asText(doc.data.description)}</h3>
+                  ${asElement(doc.data.body, resolve, shrink)}
+                </div>
+              </div>
+            `)
+          ])}
+        </article>
+      `
+    }
+  })
+
+  // render slice as element
+  // (obj, num, arr) -> Element
+  function info (slice) {
+    switch (slice.slice_type) {
+      case 'links': {
+        let items = slice.items.filter(function (item) {
+          return (item.link.id || item.link.url) && !item.link.isBroken
+        })
+        if (!items.length) return null
+        return html`
+          <aside>
+            <div class="Text">
+              <span class="u-sibling"></span>
+              <h3>${asText(slice.primary.heading)}</h3>
+            </div>
+            <ol>
+              ${items.map(function (item) {
+                var href = resolve(item.link)
+                var attrs = {}
+                if (item.link.link_type !== 'Document') {
+                  attrs.rel = 'noopener noreferer'
+                  if (item.link.target) attrs.target = item.link.target
+                }
+                return html`
+                  <li class="Text u-spaceB2">
+                    <a class="u-block" href="${href}" ${attrs}>
+                      <span class="Text-large u-textBreakLongWords">${item.text}</span>
+                      <br>
+                      <small class="Text-muted u-textTruncate u-textRegular">${href || item.text}</small>
+                    </a>
+                  </li>
+                `
+              })}
+            </ol>
+          </aside>
+        `
+      }
+      default: return null
+    }
+  }
+}
+
+// reduce headings by one level
+// (str, obj, str, arr) -> arr
+function shrink (type, node, content, children) {
+  switch (type) {
+    case Elements.heading2: return html`<h3>${children}</h3>`
+    case Elements.heading3: return html`<h4>${children}</h4>`
+    case Elements.heading4: return html`<h5>${children}</h5>`
+    case Elements.heading5: return html`<h6>${children}</h6>`
+    default: return serialize(type, node, content, children)
+  }
+}
+
+// construct image properties
+// obj -> obj
+function image (props) {
+  return {
+    width: props.dimensions.width,
+    height: props.dimensions.height,
+    caption: props.copyright,
+    alt: props.alt || '',
+    src: props.url,
+    sizes: '100vw',
+    srcset: srcset(
+      props.url,
+      [400, 600, 900, 1800, [3000, 'q_60']],
+      { aspect: 9 / 16 }
+    )
+  }
+}
+
+function meta (state) {
+  return state.docs.getByUID('page', state.params.uid, function (err, doc) {
+    if (err) throw err
+    if (!doc) return { title: text`LOADING_TEXT_SHORT` }
+    var attrs = {
+      title: asText(doc.data.title),
+      description: asText(doc.data.description),
+      'og:image': doc.data.social_image.url || doc.data.image.url
+    }
+
+    if (!attrs['og:image']) {
+      return state.docs.getSingle('website', function (err, doc) {
+        if (err) throw err
+        if (doc) attrs['og:image'] = doc.data.default_social_image.url
+        return attrs
+      })
+    }
+
+    return attrs
+  })
+}

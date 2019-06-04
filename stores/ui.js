@@ -13,21 +13,6 @@ function ui (state, emitter) {
   state.ui.gridLayout = state.ui.gridLayout || Math.ceil(Math.random() * 9)
   state.ui.clock = { ref: 1 }
 
-  emitter.on('nomination:submit', function (data) {
-    state.ui.isLoading = true
-    emitter.emit('render')
-  })
-
-  emitter.on('nomination:success', function (data) {
-    state.ui.isLoading = false
-    emitter.emit('render')
-  })
-
-  emitter.on('nomination:error', function (data) {
-    state.ui.isLoading = false
-    emitter.emit('render')
-  })
-
   // generic (optionally namespaced) vector clock for tracking changes
   emitter.on('tick', function (key) {
     state.ui.clock.ref++
@@ -41,6 +26,10 @@ function ui (state, emitter) {
     state.ui.hasOverlay = isOpen
     document.documentElement.classList[isOpen ? 'add' : 'remove']('has-overlay')
     emitter.emit('render')
+  })
+
+  emitter.on('header:resize', function (height) {
+    state.ui.scrollOffset = height
   })
 
   emitter.on('contrast:toggle', function (isHighContrast) {
@@ -74,14 +63,6 @@ function ui (state, emitter) {
 
   emitter.on('navigate', function () {
     state.ui.transitions = []
-  })
-
-  emitter.on('DOMContentLoaded', function () {
-    var onresize = nanoraf(function () {
-      state.ui.scrollOffset = state.cache(Header, 'header').height
-    })
-    onresize()
-    window.addEventListener('resize', onresize)
   })
 
   var requests = 0

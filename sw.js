@@ -45,7 +45,9 @@ self.addEventListener('fetch', function onfetch (event) {
             else if (isSameOrigin && url.pathname === '/') return findCachedLayout()
             else return response
           }
-          cache.put(req, response.clone())
+          if (req.method.toUpperCase() === 'GET') {
+            cache.put(req, response.clone())
+          }
           return response
         }, function (err) {
           if (fallback) return fallback

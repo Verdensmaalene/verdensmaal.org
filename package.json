@@ -58,6 +58,7 @@
     "archiver": "^3.0.0",
     "cccpurge": "^2.0.0",
     "choo": "^6.13.1",
+    "choo-lazy-view": "^1.0.1",
     "choo-service-worker": "^2.4.0",
     "cloudinary": "^1.11.0",
     "country-region-data": "^1.4.5",
