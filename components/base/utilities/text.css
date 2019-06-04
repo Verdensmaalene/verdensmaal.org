@@ -58,7 +58,7 @@
 }
 
 .u-textHighlight {
-  display: inline-block !important;
+  display: inline !important;
   padding: 0.1em 0.2em 0.025em !important;
   background-color: rgb(var(--current-background)) !important;
   color: rgb(255, 255, 255) !important;
