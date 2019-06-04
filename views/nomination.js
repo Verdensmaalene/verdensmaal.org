@@ -28,9 +28,11 @@ function nomination (state, emit) {
     var description = asElement(doc.data.description)
     var body = asElement(doc.data.body, resolve, serialize)
 
-    var categories = doc.data.related[0].items.filter(function (item) {
-      return item.link.id && !item.link.isBroken
-    })
+    if (doc.data.related.length) {
+      var categories = doc.data.related[0].items.filter(function (item) {
+        return item.link.id && !item.link.isBroken
+      })
+    }
 
     return html`
       <main class="View-main">
@@ -50,7 +52,7 @@ function nomination (state, emit) {
             <div class="Text">
               ${body}
             </div>
-            ${Date.now() < new Date(2019, 5, 10) && categories.length ? button({
+            ${Date.now() < new Date(2019, 5, 10) && categories && categories.length ? button({
               text: 'Til afstemningen',
               href: resolve(categories[0].link),
               primary: true
