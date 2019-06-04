@@ -33,11 +33,11 @@ function prismicStore (opts) {
     })
 
     // parse SSR-provided initial state
-    if (state.prismic) {
-      assert(typeof state.prismic === 'object', 'choo-prismic: state.prismic should be type object')
-      var cachekeys = Object.keys(state.prismic)
+    if (state.docs) {
+      assert(typeof state.docs === 'object', 'choo-prismic: state.docs should be type object')
+      var cachekeys = Object.keys(state.docs)
       for (var i = 0, len = cachekeys.length, val; i < len; i++) {
-        val = state.prismic[cachekeys[i]]
+        val = state.docs[cachekeys[i]]
         cache.set(cachekeys[i], val)
       }
     }
