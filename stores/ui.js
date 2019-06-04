@@ -1,6 +1,3 @@
-var nanoraf = require('nanoraf')
-var Header = require('../components/header')
-
 module.exports = ui
 
 function ui (state, emitter) {
