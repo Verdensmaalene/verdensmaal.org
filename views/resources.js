@@ -7,7 +7,7 @@ var grid = require('../components/grid')
 var intro = require('../components/intro')
 var border = require('../components/border')
 var intersection = require('../components/intersection')
-var { i18n, reduce, asText, srcset } = require('../components/base')
+var { i18n, reduce, asText, srcset, resolve } = require('../components/base')
 
 var text = i18n()
 
@@ -63,7 +63,7 @@ function resources (state, emit) {
   // obj -> Element
   function interlink (slice) {
     if (slice.slice_type !== 'interlink_navigation') return null
-    return intersection({ title: asText(slice.primary.heading), body: asElement(slice.primary.text, state.docs.resolve) })
+    return intersection({ title: asText(slice.primary.heading), body: asElement(slice.primary.text, resolve) })
   }
 
   // render collection of resources

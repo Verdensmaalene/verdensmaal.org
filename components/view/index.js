@@ -11,7 +11,7 @@ var Header = require('../header')
 var Footer = require('../footer')
 var player = require('../embed/player')
 var PrismicToolbar = require('../prismic-toolbar')
-var { i18n, isSameDomain, asText } = require('../base')
+var { i18n, isSameDomain, asText, resolve } = require('../base')
 
 var text = i18n()
 
@@ -58,9 +58,6 @@ function createView (view, meta) {
       try {
         children = view.call(this, state, emit)
         let next = meta.call(this, state)
-
-        // forward nested promises for deep prefetching to work
-        if (state.prefetch) return Promise.all([children, next])
 
         if (next.title && next.title !== DEFAULT_TITLE) {
           next.title = `${next.title} | ${DEFAULT_TITLE}`
@@ -208,15 +205,6 @@ function createView (view, meta) {
         href: href,
         title: item.title,
         external: !isSameDomain(href)
-      }
-    }
-
-    function resolve (link) {
-      switch (link.link_type) {
-        case 'Document': return state.docs.resolve(link)
-        case 'Web':
-        case 'Media':
-        default: return link.url
       }
     }
   }

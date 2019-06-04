@@ -9,7 +9,7 @@ var intro = require('../components/intro')
 var button = require('../components/button')
 var popular = require('../components/popular')
 var Telegram = require('../components/telegram')
-var { i18n, srcset, asText } = require('../components/base')
+var { i18n, srcset, asText, resolve } = require('../components/base')
 
 var text = i18n()
 var PAGE_SIZE = 9
@@ -32,8 +32,6 @@ function news (state, emit) {
         news = news.concat(page(i + 1))
       }
     }
-
-    if (state.prefetch) return Promise.all(news)
 
     // figure out how many news articles to fit in to the first row
     var extra = 1
@@ -70,7 +68,7 @@ function news (state, emit) {
           } : null
           return {
             image: image,
-            href: state.docs.resolve(doc),
+            href: resolve(doc),
             title: asText(doc.data.title),
             date: {
               datetime: date,
@@ -190,7 +188,7 @@ function news (state, emit) {
         text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
       },
       link: {
-        href: state.docs.resolve(doc)
+        href: resolve(doc)
       }
     }, slot)
   }

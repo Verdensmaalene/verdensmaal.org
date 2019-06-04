@@ -19,7 +19,7 @@ var { external } = require('../components/symbol')
 var blockquote = require('../components/blockquote')
 var serialize = require('../components/text/serialize')
 var intersection = require('../components/intersection')
-var { i18n, srcset, asText, colors } = require('../components/base')
+var { i18n, srcset, asText, colors, resolve } = require('../components/base')
 
 var text = i18n()
 
@@ -55,9 +55,6 @@ function goal (state, emit) {
     } : null
     var shortcuts = data.slices.filter((slice) => slice.primary.shortcut_name)
     var slices = doc.data.slices.map(fromSlice)
-
-    // await all nested requests during prefetch
-    if (state.prefetch) return Promise.all(slices)
 
     return html`
       <main class="View-main">
@@ -101,7 +98,7 @@ function goal (state, emit) {
           } else {
             children = html`
               <div class="Text">
-                ${asElement(slice.primary.text, state.docs.resolve, serialize)}
+                ${asElement(slice.primary.text, resolve, serialize)}
               </div>
             `
           }
@@ -168,8 +165,6 @@ function goal (state, emit) {
             `
           })
 
-          // capture and expose all requests during prefetch
-          if (state.prefetch) return Promise.all(featured.concat(result))
           return result
         }
         case 'heading': return html`
@@ -185,20 +180,14 @@ function goal (state, emit) {
           let items = slice.items.map(function (item, order) {
             var body = null
             if (item.text.length) {
-              body = asElement(item.text, state.docs.resolve, serialize)
+              body = asElement(item.text, resolve, serialize)
             }
-
-            // expose possible nested promises
-            if (state.prefetch) return body
 
             var id = `${doc.id}-details-${index}-${order}`
             var title = asText(item.heading)
             var children = html`<div class="Text">${body}</div>`
             return state.cache(Details, id).render(title, children)
           })
-
-          // forward nested promises
-          if (state.prefetch) return Promise.all(items)
 
           return html`
             <div class="View-space View-space--${camelCase(slice.slice_type)} u-container">
@@ -212,7 +201,7 @@ function goal (state, emit) {
           return html`
             <div class="View-spaceSmall u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
-              ${blockquote({ body: asElement(slice.primary.quote, state.docs.resolve), caption: slice.primary.author })}
+              ${blockquote({ body: asElement(slice.primary.quote, resolve), caption: slice.primary.author })}
             </div>
           `
         }
@@ -280,7 +269,7 @@ function goal (state, emit) {
         case 'link_text': {
           let { heading, text } = slice.primary
           let title = asText(heading)
-          let body = text.length ? asElement(text, state.docs.resolve) : null
+          let body = text.length ? asElement(text, resolve) : null
           return html`
             <div class="View-spaceLarge u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
@@ -293,7 +282,7 @@ function goal (state, emit) {
             var { link, text, location } = item
             return Object.assign({
               heading: text,
-              href: link.id || link.url ? state.docs.resolve(link) : null
+              href: link.id || link.url ? resolve(link) : null
             }, location)
           })
           return html`
@@ -308,7 +297,7 @@ function goal (state, emit) {
             var { link } = item
             if ((!link.url && !link.id) || link.isBroken) return null
             var attrs = { }
-            var href = state.docs.resolve(link)
+            var href = resolve(link)
             if (link.link_type === 'Web') {
               attrs.rel = 'noopener noreferrer'
               if (link.target) attrs.target = link.target
@@ -328,7 +317,7 @@ function goal (state, emit) {
                   <br>
                   ${item.description.length ? html`
                   <div class="Text u-textRegular u-spaceV1">
-                    ${asElement(item.description, state.docs.resolve)}
+                    ${asElement(item.description, resolve)}
                   </div>
                 ` : null}
                   <small class="Text-muted u-textTruncate u-textRegular">${href.replace(/\/$/, '')}</small>
@@ -359,7 +348,6 @@ function goal (state, emit) {
         case 'charts': {
           var charts = slice.items.map(chart)
           if (!charts.length) return null
-          if (state.prefetch) return Promise.all(charts)
           return html`
             <section id="statistics" class="View-space View-space--${camelCase(slice.slice_type)} u-container">
               ${divide(charts)}
@@ -462,7 +450,7 @@ function goal (state, emit) {
         caption: props.image.copyright
       } : null,
       link: {
-        href: state.docs.resolve(props.link),
+        href: resolve(props.link),
         external: !!props.link.url
       }
     })
@@ -485,7 +473,7 @@ function goal (state, emit) {
         text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
       },
       link: {
-        href: state.docs.resolve(doc)
+        href: resolve(doc)
       }
     })
   }
@@ -498,7 +486,7 @@ function goal (state, emit) {
       title: asText(doc.data.title),
       body: asText(doc.data.description) || '',
       link: {
-        href: state.docs.resolve(doc)
+        href: resolve(doc)
       }
     })
 

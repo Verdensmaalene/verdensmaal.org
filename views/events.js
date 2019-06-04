@@ -13,7 +13,7 @@ var intro = require('../components/intro')
 var calendar = require('../components/calendar')
 var EventForm = require('../components/event-form')
 var serialize = require('../components/text/serialize')
-var { i18n, srcset, asText, timestamp } = require('../components/base')
+var { i18n, srcset, asText, timestamp, resolve } = require('../components/base')
 
 var text = i18n()
 
@@ -91,7 +91,7 @@ function events (state, emit) {
         <div class="View-spaceSmall">
           ${state.cache(Map, 'events-map').render(locations, bounds)}
         </div>
-        ${state.cache(Tabs, 'events-tabs', 'events-grid-panel').render(tabs, panel, onselect)}
+        ${doc ? state.cache(Tabs, 'events-tabs', 'events-grid-panel').render(tabs, panel, onselect) : null}
       </div>
     `
 
@@ -137,15 +137,15 @@ function events (state, emit) {
         case 'submit-event-panel': {
           let opts = {
             url: '/api/submit-event',
-            disclaimer: asElement(doc.data.form_disclaimer, state.docs.resolve, serialize)
+            disclaimer: asElement(doc.data.form_disclaimer, resolve, serialize)
           }
           let body = (sent) => {
             return html`
               <div class="Text">
-                ${sent ? asElement(doc.data.form_success, state.docs.resolve, serialize) : html`
+                ${sent ? asElement(doc.data.form_success, resolve, serialize) : html`
                   <div>
                     <h2>${asText(doc.data.form_title)}</h2>
-                    ${asElement(doc.data.form_description, state.docs.resolve, serialize)}
+                    ${asElement(doc.data.form_description, resolve, serialize)}
                   </div>
                 `}
               </div>
@@ -183,7 +183,7 @@ function events (state, emit) {
       longitude: location.longitude,
       heading: asText(title),
       subheading: [city, country].filter(Boolean).join(', '),
-      href: state.docs.resolve(doc)
+      href: resolve(doc)
     }
 
     if (start) {
@@ -201,7 +201,7 @@ function events (state, emit) {
   // format doc as calendar compatible object
   // obj -> obj
   function asCalendar (doc) {
-    var href = state.docs.resolve(doc)
+    var href = resolve(doc)
     return Object.assign({}, doc.data, {
       title: asText(doc.data.title),
       href: href,
@@ -220,7 +220,7 @@ function events (state, emit) {
       title: asText(doc.data.title),
       body: asText(doc.data.description),
       link: {
-        href: state.docs.resolve(doc)
+        href: resolve(doc)
       }
     }
 

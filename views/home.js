@@ -14,7 +14,7 @@ var intersection = require('../components/intersection')
 var cardSlot = require('../components/goal-grid/slots/card')
 var paddSlot = require('../components/goal-grid/slots/padded')
 var centerSlot = require('../components/goal-grid/slots/center')
-var { i18n, srcset, asText } = require('../components/base')
+var { i18n, srcset, asText, resolve } = require('../components/base')
 
 var text = i18n()
 
@@ -81,9 +81,6 @@ class Home extends View {
       var id = 'homepage-goalgrid' + (isHighContrast ? '-high-contrast' : '')
       var featured = getFeatured()
 
-      // exit early during prefetch exposing async elements
-      if (state.prefetch) return featured
-
       return html`
         <main class="View-main">
           <div class="u-container">
@@ -97,7 +94,7 @@ class Home extends View {
           <section>
             <div class="u-container">
               <div class="View-spaceLarge">
-                ${doc ? intro({ secondary: true, title: asText(doc.data.featured_heading), body: asElement(doc.data.featured_text, state.docs.resolve) }) : intro.loading({ secondary: true })}
+                ${doc ? intro({ secondary: true, title: asText(doc.data.featured_heading), body: asElement(doc.data.featured_text, resolve) }) : intro.loading({ secondary: true })}
               </div>
             </div>
             <div class="u-md-container">
@@ -107,7 +104,7 @@ class Home extends View {
           ${doc ? html`
             <div class="u-container">
               <div class="View-spaceLarge">
-                ${doc.data.interlink_heading.length ? intersection({ title: asText(doc.data.interlink_heading), body: asElement(doc.data.interlink_text, state.docs.resolve) }) : intersection.loading()}
+                ${doc.data.interlink_heading.length ? intersection({ title: asText(doc.data.interlink_heading), body: asElement(doc.data.interlink_text, resolve) }) : intersection.loading()}
               </div>
             </div>
           ` : null}
@@ -127,7 +124,7 @@ class Home extends View {
               title: asText(slice.primary.title),
               body: asText(slice.primary.body),
               link: {
-                href: state.docs.resolve(slice.primary.link)
+                href: resolve(slice.primary.link)
               }
             }
             return cardSlot(props, type)
@@ -140,7 +137,7 @@ class Home extends View {
                 return Object.assign({}, block, {
                   text: block.text.replace(/\n/g, ' ')
                 })
-              }), state.docs.resolve)
+              }), resolve)
             }), 'fill')
           }
           default: return null
@@ -249,9 +246,6 @@ class Home extends View {
             let news = getNews(fill, ids)
             let events = getEvents(1, ids)
 
-            // expose nested fetch during ssr
-            if (state.prefetch) return Promise.all([news, events])
-
             if (events.length) {
               fill--
               cards.push(events[0])
@@ -283,7 +277,7 @@ class Home extends View {
 
         switch (type) {
           case 'event': {
-            props.link = { href: state.docs.resolve(item) }
+            props.link = { href: resolve(item) }
             let date = parse(data.start)
             return event.outer(card(props, event.inner(Object.assign({}, data, {
               start: date,
@@ -292,7 +286,7 @@ class Home extends View {
             }))))
           }
           case 'news': {
-            props.link = { href: state.docs.resolve(item) }
+            props.link = { href: resolve(item) }
             props.image = image
             if (item.first_publication_date) {
               let date = parse(item.first_publication_date)
@@ -315,7 +309,7 @@ class Home extends View {
             props.image = image
             props.color = data.color
             props.link = {
-              href: state.docs.resolve(data.link),
+              href: resolve(data.link),
               external: !data.link.type === 'Document'
             }
             return card(props)

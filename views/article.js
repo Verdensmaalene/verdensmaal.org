@@ -8,7 +8,7 @@ var symbol = require('../components/symbol')
 var banner = require('../components/banner')
 var shareButton = require('../components/share-button')
 var serialize = require('../components/text/serialize')
-var { i18n, srcset, asText } = require('../components/base')
+var { i18n, srcset, asText, resolve } = require('../components/base')
 
 var text = i18n()
 
@@ -38,13 +38,13 @@ function article (state, emit) {
       `
     }
 
-    var body = asElement(doc.data.body, state.docs.resolve, serialize)
-    if (state.prefetch) return Promise.all(body)
+    var body = asElement(doc.data.body, resolve, serialize)
 
     var title = asText(doc.data.title)
     var description = asText(doc.data.description)
     var date = parse(doc.first_publication_date)
     var byline = doc.data.byline
+    var links = doc.data.related.map(related)
 
     return html`
       <main class="View-main">
@@ -68,12 +68,12 @@ function article (state, emit) {
                   ${body}
                 </div>
               </div>
-              <div class="View-sidebar u-col u-lg-size1of3">
+              <aside class="View-sidebar u-col u-lg-size1of3">
                 <div>
-                  ${doc.data.related && doc.data.related.map(related)}
+                  ${links}
                   <aside class="u-printHidden">
                     <div class="Text">
-                      <span class="first-child-helper"></span>
+                      <span class="u-sibling"></span>
                       <h3>${text`Spread the word`}</h3>
                     </div>
                     <ul>
@@ -104,7 +104,7 @@ function article (state, emit) {
                     </ul>
                   </aside>
                 </div>
-              </div>
+              </aside>
             </div>
           </div>
         </article>
@@ -118,15 +118,19 @@ function article (state, emit) {
   function related (slice) {
     switch (slice.slice_type) {
       case 'links': {
+        let items = slice.items.filter(function (item) {
+          return (item.link.id || item.link.url) && !item.link.isBroken
+        })
+        if (!items.length) return null
         return html`
           <aside>
             <div class="Text">
-              <span class="first-child-helper"></span>
+              <span class="u-sibling"></span>
               <h3>${asText(slice.primary.heading)}</h3>
             </div>
             <ol>
-              ${slice.items.map(function (item) {
-                var href = state.docs.resolve(item.link)
+              ${items.map(function (item) {
+                var href = resolve(item.link)
                 var attrs = {}
                 if (item.link.link_type !== 'Document') {
                   attrs.rel = 'noopener noreferer'

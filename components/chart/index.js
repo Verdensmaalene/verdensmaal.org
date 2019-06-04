@@ -39,7 +39,8 @@ function Chart (id, state, emit, type) {
     })
 
     // expose promise during prefetch
-    if (state.prefetch) return promise
+    if (state.prefetch) state.prefetch.push(promise)
+
     return Chart.loading(props)
   }
 }

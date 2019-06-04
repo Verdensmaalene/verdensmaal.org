@@ -10,7 +10,7 @@ var symbol = require('../components/symbol')
 var banner = require('../components/banner')
 var shareButton = require('../components/share-button')
 var serialize = require('../components/text/serialize')
-var { i18n, srcset, asText } = require('../components/base')
+var { i18n, srcset, asText, resolve } = require('../components/base')
 
 var text = i18n()
 
@@ -30,7 +30,7 @@ function eventView (state, emit) {
             ${banner.loading()}
             <div class="u-container">
               <div class="Text">
-                <span class="first-child-helper"></span>
+                <span class="u-sibling"></span>
                 <h1><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h1>
                 <p class="Text-large"><span class="u-loading">${text`LOADING_TEXT_LONG`}</span></p>
               </div>
@@ -40,8 +40,7 @@ function eventView (state, emit) {
       `
     }
 
-    var body = asElement(doc.data.body, state.docs.resolve, serialize)
-    if (state.prefetch) return Promise.all(body)
+    var body = asElement(doc.data.body, resolve, serialize)
 
     var title = asText(doc.data.title)
     var description = asText(doc.data.description)
@@ -143,7 +142,7 @@ function eventView (state, emit) {
         if (!list.length) return null
         return html`
           <aside class="Text">
-            ${index !== 0 ? html`<span class="first-child-helper"></span>` : null}
+            ${index !== 0 ? html`<span class="u-sibling"></span>` : null}
             <h3>${asText(slice.primary.heading)}</h3>
             <dl>
               ${list}
@@ -156,12 +155,12 @@ function eventView (state, emit) {
         return html`
           <aside>
             <div class="Text">
-              ${index !== 0 ? html`<span class="first-child-helper"></span>` : null}
+              ${index !== 0 ? html`<span class="u-sibling"></span>` : null}
               <h3>${asText(slice.primary.heading)}</h3>
             </div>
             <ol>
               ${slice.items.map(function (item) {
-                var href = state.docs.resolve(item.link)
+                var href = resolve(item.link)
                 var attrs = {}
                 if (item.link.link_type !== 'Document') {
                   attrs.rel = 'noopener noreferer'
@@ -191,10 +190,10 @@ function eventView (state, emit) {
     var links = [{
       icon: symbol('calendar'),
       text: text`Save event to calendar`,
-      href: state.docs.resolve(doc).replace(/\/?$/, '.ics')
+      href: resolve(doc).replace(/\/?$/, '.ics')
     }]
     if (doc.data.rsvp_link) {
-      let rsvp = state.docs.resolve(doc.data.rsvp_link)
+      let rsvp = resolve(doc.data.rsvp_link)
       if (rsvp) {
         let icon
         if (rsvp.indexOf('mailto:') === 0) icon = symbol('mail')

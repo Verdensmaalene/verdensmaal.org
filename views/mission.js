@@ -6,8 +6,8 @@ var Text = require('../components/text')
 var intro = require('../components/intro')
 var Mission = require('../components/mission')
 var { external } = require('../components/symbol')
-var { i18n, asText } = require('../components/base')
 var intersection = require('../components/intersection')
+var { i18n, asText, resolve } = require('../components/base')
 
 var text = i18n()
 
@@ -28,7 +28,7 @@ function missionView (state, emit) {
     var description = asText(doc.data.description)
     var partners = doc.data.partners.map(function (item) {
       return {
-        href: state.docs.resolve(item.link),
+        href: resolve(item.link),
         image: {
           src: item.image.url,
           width: item.image.dimensions.width,
@@ -62,13 +62,13 @@ function missionView (state, emit) {
         }
         case 'link_text': return html`
           <section class="View-space View-space--${camelCase(slice.slice_type)} u-container">
-            ${intersection({ title: asText(slice.primary.heading), body: asElement(slice.primary.text, state.docs.resolve) })}
+            ${intersection({ title: asText(slice.primary.heading), body: asElement(slice.primary.text, resolve) })}
           </section>
         `
         case 'link_list': {
           let items = slice.items.map(function (item) {
             var attrs = { }
-            var href = state.docs.resolve(item.link)
+            var href = resolve(item.link)
             if (item.link.link_type === 'Web') {
               attrs.rel = 'noopener noreferrer'
               if (item.link.target) attrs.target = item.link.target
@@ -87,7 +87,7 @@ function missionView (state, emit) {
                   <br>
                   ${item.description.length ? html`
                   <div class="Text u-textRegular u-spaceV1">
-                    ${asElement(item.description, state.docs.resolve)}
+                    ${asElement(item.description, resolve)}
                   </div>
                 ` : null}
                   <small class="Text-muted u-textTruncate u-textRegular">${href.replace(/\/$/, '')}</small>

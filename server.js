@@ -18,13 +18,12 @@ var chart = require('./lib/chart')
 var purge = require('./lib/purge')
 var scrape = require('./lib/scrape')
 var zip = require('./lib/zip-target')
-var resolve = require('./lib/resolve')
 var analytics = require('./lib/analytics')
 var subscribe = require('./lib/subscribe')
 var nomination = require('./lib/nomination')
-var { asText } = require('./components/base')
 var submitEvent = require('./lib/submit-event')
 var imageproxy = require('./lib/cloudinary-proxy')
+var { asText, resolve } = require('./components/base')
 
 var app = jalla('index.js', {
   sw: 'sw.js',

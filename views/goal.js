@@ -19,7 +19,7 @@ var goalAction = require('../components/goal/action')
 var TargetGrid = require('../components/target-grid')
 var intersection = require('../components/intersection')
 var goalPagination = require('../components/goal/pagination')
-var { i18n, isSameDomain, className, srcset, asText, colors } = require('../components/base')
+var { i18n, isSameDomain, className, srcset, asText, colors, resolve } = require('../components/base')
 
 var text = i18n()
 var SCROLL_MIN = 0
@@ -127,11 +127,6 @@ class GoalPage extends View {
       var featured = getFeatured()
       var charts = doc.data.charts.map((block) => chart(block.chart)).filter(Boolean)
 
-      if (state.prefetch) {
-        // exit early during prefetch exposing async elements
-        return Promise.all([featured, header, ...charts])
-      }
-
       props.number = doc.data.number
       props.label = asText(doc.data.label)
       props.description = asText(doc.data.description)
@@ -142,7 +137,7 @@ class GoalPage extends View {
           return Object.assign({}, target, {
             title: asText(target.title),
             description: asText(target.body),
-            body: asElement(target.body, state.docs.resolve),
+            body: asElement(target.body, resolve),
             href: state.origin + state.href,
             url: `/delmaal-${target.id}.zip`
           })
@@ -176,7 +171,7 @@ class GoalPage extends View {
           ${charts.length ? html`
             <section id="statistics" class="u-container">
               <div class="View-spaceLarge">
-                ${doc ? intro({ secondary: true, title: asText(doc.data.stats_title), body: asElement(doc.data.stats_description, state.docs.resolve) }) : intro.loading({ secondary: true })}
+                ${doc ? intro({ secondary: true, title: asText(doc.data.stats_title), body: asElement(doc.data.stats_description, resolve) }) : intro.loading({ secondary: true })}
               </div>
               ${divide(charts)}
             </section>
@@ -184,7 +179,7 @@ class GoalPage extends View {
           ${targets.length ? html`
             <section id="targets" class="u-container">
               <div class="View-spaceLarge ">
-                ${doc ? intro({ secondary: true, title: asText(doc.data.targets_title), body: asElement(doc.data.targets_description, state.docs.resolve) }) : intro.loading({ secondary: true })}
+                ${doc ? intro({ secondary: true, title: asText(doc.data.targets_title), body: asElement(doc.data.targets_description, resolve) }) : intro.loading({ secondary: true })}
               </div>
               ${state.cache(TargetGrid, `${doc.data.number}-targets`).render(doc.data.number, targets)}
             </section>
@@ -192,7 +187,7 @@ class GoalPage extends View {
           <section id="action">
             ${doc.data.featured_heading && doc.data.featured_heading.length ? html`
               <div class="View-spaceLarge u-container">
-                ${doc ? intro({ secondary: true, title: asText(doc.data.featured_heading), body: asElement(doc.data.featured_text, state.docs.resolve) }) : intro.loading()}
+                ${doc ? intro({ secondary: true, title: asText(doc.data.featured_heading), body: asElement(doc.data.featured_text, resolve) }) : intro.loading()}
               </div>
             ` : null}
             ${featured.length ? html`
@@ -203,7 +198,7 @@ class GoalPage extends View {
           </section>
           ${doc.data.interlink_heading && doc.data.interlink_heading.length ? html`
             <div class="View-spaceLarge u-container">
-              ${intersection({ title: asText(doc.data.interlink_heading), body: asElement(doc.data.interlink_text, state.docs.resolve) })}
+              ${intersection({ title: asText(doc.data.interlink_heading), body: asElement(doc.data.interlink_text, resolve) })}
             </div>
           ` : null}
         </main>
@@ -218,7 +213,7 @@ class GoalPage extends View {
           if (err || !response) return null
           return goalPagination({
             dir: dir,
-            href: state.docs.resolve(response.results[0]),
+            href: resolve(response.results[0]),
             text: html`
               <span>
                 ${text`Goal ${num}`}
@@ -404,9 +399,6 @@ class GoalPage extends View {
             let news = getNews(fill, ids)
             let events = getEvents(1, ids)
 
-            // expose nested fetch during ssr
-            if (state.prefetch) return Promise.all([news, events])
-
             if (events.length) {
               fill--
               cards.push(events[0])
@@ -442,7 +434,7 @@ class GoalPage extends View {
             return card(props)
           }
           case 'event': {
-            props.link = { href: state.docs.resolve(item) }
+            props.link = { href: resolve(item) }
             let date = parse(data.start)
             return event.outer(card(props, event.inner(Object.assign({}, data, {
               start: date,
@@ -451,7 +443,7 @@ class GoalPage extends View {
             }))))
           }
           case 'news': {
-            props.link = { href: state.docs.resolve(item) }
+            props.link = { href: resolve(item) }
             props.image = image
             if (item.first_publication_date) {
               let date = parse(item.first_publication_date)
@@ -474,7 +466,7 @@ class GoalPage extends View {
             props.image = image
             props.color = data.color
             props.link = {
-              href: state.docs.resolve(data.link),
+              href: resolve(data.link),
               external: !item.id
             }
             return card(props)
@@ -519,17 +511,6 @@ class GoalPage extends View {
           href: href,
           title: item.title,
           external: !isSameDomain(href)
-        }
-      }
-
-      // resolve menu link
-      // obj -> str
-      function resolve (link) {
-        switch (link.link_type) {
-          case 'Document': return state.docs.resolve(link)
-          case 'Web':
-          case 'Media':
-          default: return link.url
         }
       }
 

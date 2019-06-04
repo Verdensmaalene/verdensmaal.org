@@ -18,45 +18,62 @@ function prismicStore (opts) {
       req: state.req
     }, opts))
 
-    emitter.on('prismic:clear', function () {
-      cache.clear()
-    })
-
+    // clear cache on SSR prefetch
     if (typeof window === 'undefined' && state.prefetch) {
       cache.clear()
     }
 
-    if (state.docs) {
-      assert(typeof state.docs === 'object', 'choo-prismic: state.docs should be type object')
-      var cachekeys = Object.keys(state.docs)
+    // expose clear via event
+    emitter.on('prismic:clear', function () {
+      cache.clear()
+      // reinitialize api to account for new preview cookie
+      init = Prismic.getApi(opts.repository, Object.assign({
+        req: state.req
+      }, opts))
+    })
+
+    // parse SSR-provided initial state
+    if (state.prismic) {
+      assert(typeof state.prismic === 'object', 'choo-prismic: state.prismic should be type object')
+      var cachekeys = Object.keys(state.prismic)
       for (var i = 0, len = cachekeys.length, val; i < len; i++) {
-        val = state.docs[cachekeys[i]]
-        if (val.status) {
-          // a status property indicates an error response
-          val = Object.assign(new Error(), {
-            status: val.status,
-            message: val.message || val.status === 404
-              ? 'Document not found'
-              : 'An error occured'
-          })
-        }
+        val = state.prismic[cachekeys[i]]
         cache.set(cachekeys[i], val)
       }
     }
+
+    state.docs = Object.create({
+      get: get,
+      cache: cache,
+      getByID: getByID,
+      getByIDs: getByIDs,
+      getByUID: getByUID,
+      getSingle: getSingle,
+      toJSON () {
+        var json = {}
+        for (let i = 0, value; i < cache.keys.length; i++) {
+          value = cache.get(cache.keys[i])
+          // guard against unfinshed promises being stringified as empty object
+          if (!(value instanceof Promise)) json[cache.keys[i]] = value
+        }
+        return json
+      }
+    })
 
     // query prismic endpoint with given predicate(s)
     // (str|arr, obj?, fn) -> any
     function get (predicates, opts, callback) {
       assert(predicates, 'choo-prismic: predicates should be type array or string')
 
+      // parse arguments
       predicates = Array.isArray(predicates) ? predicates : [predicates]
       callback = typeof opts === 'function' ? opts : callback
       opts = typeof opts === 'function' ? {} : opts
       callback = callback || Function.prototype
 
+      // pass input through middleware
       var transform
       if (typeof middleware === 'function') {
-        // pass input through middleware
         transform = middleware(predicates, opts)
       }
 
@@ -65,6 +82,7 @@ function prismicStore (opts) {
       opts = Object.assign({}, opts)
       delete opts.prefetch
 
+      // compile cache key and lookup cached request
       var key = predicates.join(',')
       var optkeys = Object.keys(opts).sort()
       for (var i = 0, len = optkeys.length; i < len; i++) {
@@ -73,38 +91,46 @@ function prismicStore (opts) {
       var cached = cache.get(key)
 
       var result
-      if (!cached && !prefetch) result = callback(null)
+      if (!cached) result = callback(null)
       else if (cached instanceof Error) return callback(cached)
-      else if (cached instanceof Promise) {
-        if (prefetch) return chain(cached, callback)
-        return callback(null, null)
-      } else if (cached) return callback(null, cached)
+      else if (cached instanceof Promise) return callback(null, null)
+      else if (cached) return callback(null, cached)
 
+      // perform query
       var request = init.then(function (api) {
         return api.query(predicates, opts).then(function (response) {
           // optionally transform the response using registered middleware
-          if (typeof transform === 'function') return transform(response)
+          if (typeof transform === 'function') return transform(null, response)
           return response
-        }).then(function (result) {
-          cache.set(key, result)
-          emitter.emit('prismic:response', result)
+        }).then(function (response) {
+          cache.set(key, response)
+          emitter.emit('prismic:response', response)
           if (!prefetch) emitter.emit('render')
-          return result
+          return response
         })
       }).catch(function (err) {
         cache.set(key, err)
         emitter.emit('prismic:error', err)
         if (!prefetch) emitter.emit('render')
+        // forward error to transform or just throw it
+        if (typeof transform === 'function') {
+          try {
+            return transform(err)
+          } catch (err) {
+            if (state.prefetch) throw err
+          }
+        } else if (state.prefetch) {
+          throw err
+        }
       })
 
+      // cache pending request
       cache.set(key, request)
       emitter.emit('prismic:request', request)
-      if (prefetch) {
-        // defer to callback to allow for nested API calls
-        let queue = chain(request, callback)
-        if (Array.isArray(prefetch)) prefetch.push(queue)
-        return queue
-      }
+
+      // defer to callback to allow for nested queries
+      if (state.prefetch) state.prefetch.push(chain(request, callback))
+
       return result
     }
 
@@ -145,32 +171,6 @@ function prismicStore (opts) {
       opts = typeof opts === 'function' ? {} : opts
       return get(Prismic.Predicates.at('document.type', type), opts, first(callback))
     }
-
-    // proxy for `opts.resolve`
-    // obj -> str
-    function resolve (doc) {
-      assert(typeof opts.resolve === 'function', 'choo-prismic: opts.resolve should be type function')
-      return opts.resolve(doc)
-    }
-
-    state.docs = Object.create({
-      get: get,
-      cache: cache,
-      resolve: resolve,
-      getByID: getByID,
-      getByIDs: getByIDs,
-      getByUID: getByUID,
-      getSingle: getSingle,
-      toJSON () {
-        var json = {}
-        for (let i = 0, value; i < cache.keys.length; i++) {
-          value = cache.get(cache.keys[i])
-          // guard against unfinshed promises being stringified as empty object
-          if (!(value instanceof Promise)) json[cache.keys[i]] = value
-        }
-        return json
-      }
-    })
   }
 }
 
@@ -196,5 +196,7 @@ function first (callback) {
 // chain a callback function onto a promise
 // (Promise, fn) -> Promise
 function chain (promise, fn) {
-  return promise.then((value) => fn(null, value), fn)
+  return promise.then(function (value) {
+    return fn(null, value)
+  }, fn)
 }
