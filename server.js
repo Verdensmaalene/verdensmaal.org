@@ -86,6 +86,8 @@ app.use(post('/api/nomination', compose([body(), async function (ctx, next) {
       }
     }
   } else {
+    // await nomination(ctx.request.body)
+    console.log(ctx.request.body)
     ctx.type = 'application/json'
     ctx.body = {}
   }

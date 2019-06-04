@@ -42,7 +42,7 @@ function nomination (state, emitter) {
           body: JSON.stringify(state.nomination.fields),
           headers: {
             'Content-Type': 'application/json',
-            'Accepts': 'application/json'
+            'Accept': 'application/json'
           }
         }).then(function (res) {
           if (!res.ok) throw new Error(res.statusMessage || 'Could not submit')
