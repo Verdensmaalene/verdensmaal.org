@@ -85,7 +85,7 @@ class Home extends View {
       return html`
         <main class="View-main">
           <div class="u-container">
-            ${doc && doc.data.alert_heading.length ? html`
+            ${doc && doc.data.alert_heading && doc.data.alert_heading.length ? html`
               <aside role="banner" class="View-spaceSmall">
                 ${alert({
                   heading: asText(doc.data.alert_heading),
