@@ -9,6 +9,7 @@ var grid = require('../components/grid')
 var logo = require('../components/logo')
 var event = require('../components/event')
 var intro = require('../components/intro')
+var alert = require('../components/alert')
 var GoalGrid = require('../components/goal-grid')
 var intersection = require('../components/intersection')
 var cardSlot = require('../components/goal-grid/slots/card')
@@ -84,6 +85,18 @@ class Home extends View {
       return html`
         <main class="View-main">
           <div class="u-container">
+            ${doc && doc.data.alert_heading.length ? html`
+              <aside role="banner" class="View-spaceSmall">
+                ${alert({
+                  heading: asText(doc.data.alert_heading),
+                  body: asElement(doc.data.alert_message),
+                  link: {
+                    href: resolve(doc.data.alert_link),
+                    text: doc.data.alert_link_text
+                  }
+                })}
+              </aside>
+            ` : null}
             <div class="View-spaceLarge">
               ${doc ? intro({ title: asText(doc.data.title), body: asElement(doc.data.description) }) : intro.loading()}
             </div>

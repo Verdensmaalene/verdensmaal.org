@@ -2,6 +2,7 @@
 
 /* @define Button */
 .Button {
+  flex: 0 0 auto;
   display: inline-block;
   line-height: 3.25rem;
   padding: 0 1.2rem;

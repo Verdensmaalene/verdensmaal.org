@@ -1,0 +1,58 @@
+@import "../base";
+
+/* @define Alert */
+.Alert {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1.2rem;
+  background: rgba(var(--color-gray-light), 0.6);
+}
+
+@media (min-width: 900px) {
+  .Alert {
+    flex-wrap: nowrap;
+    padding: 2rem;
+  }
+}
+
+.Alert-heading {
+  flex: 0 1 100%;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
+  text-transform: uppercase;
+}
+
+@media (min-width: 900px) {
+  .Alert-heading {
+    flex: 0 1 auto;
+    margin: 0 2rem 0 0;
+  }
+}
+
+.Alert-content {
+  flex: 1 1 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .Alert-content {
+    flex-wrap: nowrap;
+  }
+}
+
+.Alert-body {
+  flex: 1 1 auto;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 900px) {
+  .Alert-body {
+    margin: 0 2rem 0 0;
+  }
+}

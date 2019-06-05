@@ -167,7 +167,7 @@ function category (state, emit) {
                             </div>
                             ${doc.data.related.map(info)}
                             <form action="${action}" method="POST" class="Form u-spaceT4" onsubmit=${onsubmit}>
-                              ${button({ text: 'Tilføj stemme', name: title, value: name, large: true, primary: true, onclick: onclick, class: 'u-sizeFull' })}
+                              ${button({ text: 'Tilføj stemme', name: title, value: name, large: true, primary: true, onclick: onclick, className: 'u-sizeFull' })}
                             </form>
                           </div>
                         `),

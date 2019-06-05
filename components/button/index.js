@@ -7,6 +7,7 @@ function button (props) {
   var attrs = Object.assign({}, props, {
     class: className('Button', {
       [props.class]: props.class,
+      [props.className]: props.className,
       'Button--small': props.small,
       'Button--large': props.large,
       'Button--primary': props.primary
