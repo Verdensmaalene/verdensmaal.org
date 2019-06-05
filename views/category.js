@@ -63,6 +63,18 @@ function category (state, emit) {
               </div>
             </div>
           ` : null}
+          ${state.nomination.error ? html`
+            <div class="u-container u-spaceB6">
+              <div class="Form-error">
+                ${state.cache(Anchor, 'nomination-error', { auto: true }).render()}
+                <div class="Text">
+                  <h2 class="Text-h3">${text`Oops`}</h2>
+                  <p>Noget gik galt. Prøv igen.</p>
+                  ${process.env.NODE_ENV === 'development' ? html`<pre>${err.stack}</pre>` : null}
+                </div>
+              </div>
+            </div>
+          ` : null}
           ${renderForm()}
         </div>
       </main>
@@ -89,7 +101,7 @@ function category (state, emit) {
                     })}
                   </ul>
                 </div>
-                ${button({ type: 'submit', text: 'Send', primary: true })}
+                ${button({ type: 'submit', text: 'Send', large: true, primary: true })}
               </form>
             </div>
           `
@@ -102,52 +114,84 @@ function category (state, emit) {
           if (!nominees.length) return null
           let action = `/api/nomination?step=${doc.uid}`
 
-          state.docs.getByUID('page', 'nominer-en-helt', Function.prototype)
-
           return html`
             <div class="View-space u-container">
-              ${nominees.map((item) => state.docs.getByUID('page', item.link.uid, nominee))}
-              <div class="View-space">
-                <form action="${action}" method="POST" class="Form" onsubmit=${onsubmit}>
-                  ${Object.keys(state.nomination.fields).map(function (key) {
-                    return html`<input type="hidden" name="${key}" value="${state.nomination.fields[key]}">`
-                  })}
-                  <div class="Text">
-                    <h2>Vælg en kandidat</h2>
-                    <p>Vælg den kandidat du vil nominere til ${title}.</p>
-                    ${state.nomination.error ? html`
-                      <div class="Form-error u-spaceB6">
-                        ${state.cache(Anchor, 'nomination-error', { auto: true }).render()}
-                        <div class="Text">
-                          <h2 class="Text-h3">${text`Oops`}</h2>
-                          <p>Noget gik galt. Prøv igen.</p>
-                          ${process.env.NODE_ENV === 'development' ? html`<pre>${err.stack}</pre>` : null}
-                        </div>
-                      </div>
-                    ` : null}
-                    <div class="Text-large u-spaceB4">
-                      ${nominees.map((item) => state.docs.getByUID('page', item.link.uid, function (err, doc) {
-                        if (err) throw err
-                        if (!doc) return null
-                        var value = asText(doc.data.description)
-                        return html`
-                          <label for="nominee-${doc.id}" class="u-flex u-alignCenter u-spaceB1">
-                            <input id="nominee-${doc.id}" type="radio" name="${title}" value="${value}" class="u-spaceR1" checked=${state.nomination.fields[title] === value} onchange=${onchange} required>${value}
-                          </label>
-                        `
-                      }))}
-                    </div>
-                    ${button({ type: 'submit', primary: true, text: 'Fortsæt', disabled: state.nomination.loading })}
-                  </div>
-                </form>
-              </div>
+              ${nominees.map(function (item, index) {
+                return state.docs.getByUID('page', item.link.uid, function (err, doc) {
+                  if (err) throw err
+
+                  if (!doc) {
+                    return html`
+                      <article class="View-spaceLarge">
+                        ${grid([
+                          grid.cell({ size: { md: '1of3' } }, html`
+                            <div class="u-loading">
+                              <div>
+                                <div class="u-aspect16-9"></div>
+                              </div>
+                            </div>
+                          `),
+                          grid.cell({ size: { md: '2of3' } }, html`
+                            <div class="Text">
+                              <h2 class="u-spaceB0"><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h2>
+                              <div>
+                                <h3><span class="u-loading">${text`LOADING_TEXT_SHORT`}</span></h3>
+                                <p><span class="u-loading">${text`LOADING_TEXT_LONG`}</span></p>
+                              </div>
+                            </div>
+                          `)
+                        ])}
+                      </article>
+                    `
+                  }
+
+                  var name = asText(doc.data.description)
+                  var image = doc.data.image
+                  if (image.url) {
+                    var sources = srcset(image.url, [400, 800, [1200, 'q_70']], { transforms: 'g_face,c_thumb' })
+                    var attrs = Object.assign({
+                      class: 'u-cover',
+                      srcset: sources,
+                      sizes: '33.333vw',
+                      alt: image.alt || ''
+                    }, image.dimensions)
+                  }
+
+                  return html`
+                    <article class="View-spaceLarge">
+                      ${grid([
+                        grid.cell({ size: { md: '1of2', lg: '1of3' } }, html`
+                          <div>
+                            <div class="u-aspect16-9 u-spaceB2">
+                              ${attrs ? html`<img ${attrs} src="${sources.split(' ')[0]}">` : null}
+                            </div>
+                            ${doc.data.related.map(info)}
+                            <form action="${action}" method="POST" class="Form u-spaceT4" onsubmit=${onsubmit}>
+                              ${button({ text: 'Tilføj stemme', name: title, value: name, large: true, primary: true, onclick: onclick, class: 'u-sizeFull' })}
+                            </form>
+                          </div>
+                        `),
+                        grid.cell({ size: { md: '1of2', lg: '2of3' } }, html`
+                          <div class="Text">
+                            <h2 class="u-spaceB0">${asText(doc.data.title)}</h2>
+                            <div>
+                              <h3 class="u-color${theme.match(reg)[1]}">${name}</h3>
+                              ${asElement(doc.data.body, resolve, shrink)}
+                            </div>
+                          </div>
+                        `)
+                      ])}
+                    </article>
+                  `
+                })
+              })}
             </div>
           `
         }
       }
     }
 
-    function onchange (event) {
+    function onclick (event) {
       emit('nomination:set', event.target.name, event.target.value)
     }
 
@@ -161,11 +205,14 @@ function category (state, emit) {
       event.preventDefault()
     }
 
-    function nominee (err, doc) {
+    function nominee (err, doc, index) {
       if (err) throw err
+
+      var space = index === 0 ? 'space' : 'spaceLarge'
+
       if (!doc) {
         return html`
-          <article class="View-space">
+          <article class="View-${space}">
             ${grid([
               grid.cell({ size: { md: '1of3' } }, html`
                 <div class="u-loading">
@@ -200,11 +247,11 @@ function category (state, emit) {
       }
 
       return html`
-        <article class="View-space">
+        <article class="View-${space}">
           ${grid([
             grid.cell({ size: { md: '1of3' } }, html`
               <div>
-                <div class="u-aspect16-9">
+                <div class="u-aspect16-9 u-spaceB2">
                   ${attrs ? html`<img ${attrs} src="${sources.split(' ')[0]}">` : null}
                 </div>
                 ${doc.data.related.map(info)}
@@ -236,10 +283,6 @@ function category (state, emit) {
         if (!items.length) return null
         return html`
           <aside>
-            <div class="Text">
-              <span class="u-sibling"></span>
-              <h3>${asText(slice.primary.heading)}</h3>
-            </div>
             <ol>
               ${items.map(function (item) {
                 var href = resolve(item.link)

@@ -1,8 +1,10 @@
+var Prismic = require('prismic-javascript')
 var { resolve } = require('../components/base')
 
 module.exports = nomination
 
 var CACHE_KEY = 'nomination'
+var REPOSITORY = 'https://verdensmaalene.cdn.prismic.io/api/v2'
 
 function nomination (state, emitter) {
   state.nomination = {
@@ -28,49 +30,44 @@ function nomination (state, emitter) {
     state.nomination.loading = true
     emitter.emit('render')
 
-    state.docs.getByUID('page', 'nominer-en-helt', function (err, doc) {
-      if (err) {
-        state.nomination.loading = false
-        state.nomination.error = err
-        emitter.emit('render')
-        return
-      }
-
-      if (state.params.uid === 'oversigt') {
-        window.fetch('/api/nomination', {
-          method: 'POST',
-          body: JSON.stringify(state.nomination.fields),
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          }
-        }).then(function (res) {
-          if (!res.ok) throw new Error(res.statusMessage || 'Could not submit')
-          window.localStorage.removeItem(CACHE_KEY)
-          state.nomination.loading = false
-          emitter.emit('pushState', resolve(doc) + '/tak')
-        }).catch(function (err) {
-          state.nomination.error = err
-          state.nomination.loading = false
-          emitter.emit('render')
-        })
-      } else {
-        let categories = doc.data.related[0].items.filter(function (item) {
-          return item.link.id && !item.link.isBroken
-        })
-        let index = categories.findIndex(function (item) {
-          return item.link.uid === state.params.uid
-        })
-
-        if (index === categories.length - 1) {
-          state.nomination.loading = false
-          emitter.emit('pushState', resolve(doc) + '/oversigt')
+    Prismic.api(REPOSITORY, { req: state.req }).then(function (api) {
+      return api.getByUID('page', 'nominer-en-helt').then(function (doc) {
+        if (state.params.uid === 'oversigt') {
+          return window.fetch('/api/nomination', {
+            method: 'POST',
+            body: JSON.stringify(state.nomination.fields),
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+          }).then(function (res) {
+            if (!res.ok) throw new Error(res.statusMessage || 'Could not submit')
+            window.localStorage.removeItem(CACHE_KEY)
+            state.nomination.loading = false
+            emitter.emit('pushState', resolve(doc) + '/tak')
+          })
         } else {
-          let next = categories[index + 1]
-          state.nomination.loading = false
-          emitter.emit('pushState', resolve(next.link))
+          let categories = doc.data.related[0].items.filter(function (item) {
+            return item.link.id && !item.link.isBroken
+          })
+          let index = categories.findIndex(function (item) {
+            return item.link.uid === state.params.uid
+          })
+
+          if (index === categories.length - 1) {
+            state.nomination.loading = false
+            emitter.emit('pushState', resolve(doc) + '/oversigt')
+          } else {
+            let next = categories[index + 1]
+            state.nomination.loading = false
+            emitter.emit('pushState', resolve(next.link))
+          }
         }
-      }
+      })
+    }).catch(function (err) {
+      state.nomination.loading = false
+      state.nomination.error = err
+      emitter.emit('render')
     })
   })
 }

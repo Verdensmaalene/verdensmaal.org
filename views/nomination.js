@@ -53,9 +53,10 @@ function nomination (state, emit) {
               ${body}
             </div>
             ${Date.now() < new Date(2019, 5, 10) && categories && categories.length ? button({
+              large: true,
+              primary: true,
               text: 'Til afstemningen',
-              href: resolve(categories[0].link),
-              primary: true
+              href: resolve(categories[0].link)
             }) : null}
           </div>
         </div>

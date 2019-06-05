@@ -91,7 +91,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  
+
 }
 
 .Embed-caption::before {
@@ -111,7 +111,7 @@
   transition-duration: 160ms;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 900px) {
   .Embed-caption {
     display: flex;
   }
@@ -141,11 +141,17 @@
   padding-top: 0.2rem;
   position: relative;
   z-index: 1;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-family: var(--heading-font-family);
   line-height: var(--heading-line-height);
   word-spacing: var(--heading-word-spacing);
   text-transform: uppercase;
+}
+
+@media (min-width: 1200px) {
+  .Embed-title {
+    font-size: 2rem;
+  }
 }
 
 /**
