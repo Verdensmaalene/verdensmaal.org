@@ -113,78 +113,77 @@ function category (state, emit) {
           })
           if (!nominees.length) return null
           let action = `/api/nomination?step=${doc.uid}`
+          let children = nominees.map(function (item, index) {
+            return state.docs.getByUID('page', item.link.uid, function (err, doc) {
+              if (err) throw err
+
+              if (!doc) {
+                return html`
+                  <article class="View-spaceLarge">
+                    ${grid([
+                      grid.cell({ size: { md: '1of3' } }, html`
+                        <div class="u-loading">
+                          <div><div class="u-aspect16-9"></div></div>
+                        </div>
+                      `),
+                      grid.cell({ size: { md: '2of3' } }, html`
+                        <div class="Text">
+                          <h2 class="u-spaceB0"><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h2>
+                          <div>
+                            <h3><span class="u-loading">${text`LOADING_TEXT_SHORT`}</span></h3>
+                            <p><span class="u-loading">${text`LOADING_TEXT_LONG`}</span></p>
+                          </div>
+                        </div>
+                      `)
+                    ])}
+                  </article>
+                `
+              }
+
+              var name = asText(doc.data.description)
+              var image = doc.data.image
+              if (image.url) {
+                var sources = srcset(image.url, [400, 800, [1200, 'q_70']], { transforms: 'g_face,c_thumb' })
+                var attrs = Object.assign({
+                  class: 'u-cover',
+                  srcset: sources,
+                  sizes: '33.333vw',
+                  alt: image.alt || ''
+                }, image.dimensions)
+              }
+
+              return html`
+                <article class="View-spaceLarge">
+                  ${grid([
+                    grid.cell({ size: { md: '1of2', lg: '1of3' } }, html`
+                      <div>
+                        <div class="u-aspect16-9 u-spaceB2">
+                          ${attrs ? html`<img ${attrs} src="${sources.split(' ')[0]}">` : null}
+                        </div>
+                        ${doc.data.related.map(info)}
+                        <form action="${action}" method="POST" class="Form u-spaceT4" onsubmit=${onsubmit}>
+                          ${button({ text: 'Tilføj stemme', name: title, value: name, large: true, primary: true, onclick: onclick, className: 'u-sizeFull' })}
+                        </form>
+                      </div>
+                    `),
+                    grid.cell({ size: { md: '1of2', lg: '2of3' } }, html`
+                      <div class="Text">
+                        <h2 class="u-spaceB0">${asText(doc.data.title)}</h2>
+                        <div>
+                          <h3 class="u-color${theme.match(reg)[1]}">${name}</h3>
+                          ${asElement(doc.data.body, resolve, shrink)}
+                        </div>
+                      </div>
+                    `)
+                  ])}
+                </article>
+              `
+            })
+          })
 
           return html`
             <div class="View-space u-container">
-              ${nominees.map(function (item, index) {
-                return state.docs.getByUID('page', item.link.uid, function (err, doc) {
-                  if (err) throw err
-
-                  if (!doc) {
-                    return html`
-                      <article class="View-spaceLarge">
-                        ${grid([
-                          grid.cell({ size: { md: '1of3' } }, html`
-                            <div class="u-loading">
-                              <div>
-                                <div class="u-aspect16-9"></div>
-                              </div>
-                            </div>
-                          `),
-                          grid.cell({ size: { md: '2of3' } }, html`
-                            <div class="Text">
-                              <h2 class="u-spaceB0"><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h2>
-                              <div>
-                                <h3><span class="u-loading">${text`LOADING_TEXT_SHORT`}</span></h3>
-                                <p><span class="u-loading">${text`LOADING_TEXT_LONG`}</span></p>
-                              </div>
-                            </div>
-                          `)
-                        ])}
-                      </article>
-                    `
-                  }
-
-                  var name = asText(doc.data.description)
-                  var image = doc.data.image
-                  if (image.url) {
-                    var sources = srcset(image.url, [400, 800, [1200, 'q_70']], { transforms: 'g_face,c_thumb' })
-                    var attrs = Object.assign({
-                      class: 'u-cover',
-                      srcset: sources,
-                      sizes: '33.333vw',
-                      alt: image.alt || ''
-                    }, image.dimensions)
-                  }
-
-                  return html`
-                    <article class="View-spaceLarge">
-                      ${grid([
-                        grid.cell({ size: { md: '1of2', lg: '1of3' } }, html`
-                          <div>
-                            <div class="u-aspect16-9 u-spaceB2">
-                              ${attrs ? html`<img ${attrs} src="${sources.split(' ')[0]}">` : null}
-                            </div>
-                            ${doc.data.related.map(info)}
-                            <form action="${action}" method="POST" class="Form u-spaceT4" onsubmit=${onsubmit}>
-                              ${button({ text: 'Tilføj stemme', name: title, value: name, large: true, primary: true, onclick: onclick, className: 'u-sizeFull' })}
-                            </form>
-                          </div>
-                        `),
-                        grid.cell({ size: { md: '1of2', lg: '2of3' } }, html`
-                          <div class="Text">
-                            <h2 class="u-spaceB0">${asText(doc.data.title)}</h2>
-                            <div>
-                              <h3 class="u-color${theme.match(reg)[1]}">${name}</h3>
-                              ${asElement(doc.data.body, resolve, shrink)}
-                            </div>
-                          </div>
-                        `)
-                      ])}
-                    </article>
-                  `
-                })
-              })}
+              ${children}
             </div>
           `
         }
@@ -203,72 +202,6 @@ function category (state, emit) {
       }
       emit('nomination:submit')
       event.preventDefault()
-    }
-
-    function nominee (err, doc, index) {
-      if (err) throw err
-
-      var space = index === 0 ? 'space' : 'spaceLarge'
-
-      if (!doc) {
-        return html`
-          <article class="View-${space}">
-            ${grid([
-              grid.cell({ size: { md: '1of3' } }, html`
-                <div class="u-loading">
-                  <div>
-                    <div class="u-aspect16-9"></div>
-                  </div>
-                </div>
-              `),
-              grid.cell({ size: { md: '2of3' } }, html`
-                <div class="Text">
-                  <h2 class="u-spaceB0"><span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span></h2>
-                  <div>
-                    <h3><span class="u-loading">${text`LOADING_TEXT_SHORT`}</span></h3>
-                    <p><span class="u-loading">${text`LOADING_TEXT_LONG`}</span></p>
-                  </div>
-                </div>
-              `)
-            ])}
-          </article>
-        `
-      }
-
-      var image = doc.data.image
-      if (image.url) {
-        var sources = srcset(image.url, [400, 800, [1200, 'q_70']], { transforms: 'g_face,c_thumb' })
-        var attrs = Object.assign({
-          class: 'u-cover',
-          srcset: sources,
-          sizes: '33.333vw',
-          alt: image.alt || ''
-        }, image.dimensions)
-      }
-
-      return html`
-        <article class="View-${space}">
-          ${grid([
-            grid.cell({ size: { md: '1of3' } }, html`
-              <div>
-                <div class="u-aspect16-9 u-spaceB2">
-                  ${attrs ? html`<img ${attrs} src="${sources.split(' ')[0]}">` : null}
-                </div>
-                ${doc.data.related.map(info)}
-              </div>
-            `),
-            grid.cell({ size: { md: '2of3' } }, html`
-              <div class="Text">
-                <h2 class="u-spaceB0">${asText(doc.data.title)}</h2>
-                <div>
-                  <h3 class="u-color${theme.match(reg)[1]}">${asText(doc.data.description)}</h3>
-                  ${asElement(doc.data.body, resolve, shrink)}
-                </div>
-              </div>
-            `)
-          ])}
-        </article>
-      `
     }
   })
 
