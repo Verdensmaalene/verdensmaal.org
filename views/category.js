@@ -7,6 +7,7 @@ var intro = require('../components/intro')
 var Anchor = require('../components/anchor')
 var banner = require('../components/banner')
 var button = require('../components/button')
+var highlight = require('../components/highlight')
 var serialize = require('../components/text/serialize')
 var { i18n, asText, srcset, resolve } = require('../components/base')
 
@@ -39,11 +40,7 @@ function category (state, emit) {
           ${doc.data.image.url ? banner(image(doc.data.image)) : html`
             <div class="u-container">
               ${intro({
-                title: theme ? html`
-                  <span class="u-textHighlight u-bg${theme.match(reg)[1]}">
-                    ${title}
-                  </span>
-                ` : title,
+                title: theme ? highlight(title, `u-bg${theme.match(reg)[1]}`) : title,
                 body: description
               })}
             </div>

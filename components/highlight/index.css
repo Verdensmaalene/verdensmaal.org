@@ -1,0 +1,23 @@
+@import "../base";
+
+/* @define Highlight */
+.Highlight {
+  --current-background: var(--color-theme);
+  display: inline-block;
+  margin: 0 0.2em;
+}
+
+.Highlight-text {
+  display: inline;
+  padding: 0.15em 0 0.1em;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
+  text-transform: uppercase;
+  background-color: rgb(var(--current-background));
+  color: rgb(255, 255, 255);
+  line-height: 1.1;
+  box-shadow:
+    -0.2em 0 0 rgb(var(--current-background)),
+    0.2em 0 0 rgb(var(--current-background));
+}
