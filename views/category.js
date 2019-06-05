@@ -7,6 +7,7 @@ var intro = require('../components/intro')
 var Anchor = require('../components/anchor')
 var banner = require('../components/banner')
 var button = require('../components/button')
+var { input } = require('../components/form')
 var highlight = require('../components/highlight')
 var serialize = require('../components/text/serialize')
 var { i18n, asText, srcset, resolve } = require('../components/base')
@@ -88,6 +89,7 @@ function category (state, emit) {
                 <div class="Text Text--large u-spaceB4">
                   <ul>
                     ${Object.keys(state.nomination.fields).map(function (key) {
+                      if (key === 'email') return null
                       var value = state.nomination.fields[key]
                       return html`
                         <li>
@@ -97,6 +99,9 @@ function category (state, emit) {
                       `
                     })}
                   </ul>
+                </div>
+                <div class="u-md-size1of3 u-spaceV6">
+                  ${input({ label: 'E-mail', plain: true, placeholder: 'E-mail', type: 'email', name: 'email', value: state.nomination.fields.email || '', autocomplete: 'email', required: true, oninput: onchange })}
                 </div>
                 ${button({ type: 'submit', text: 'Send', large: true, primary: true })}
               </form>
@@ -159,7 +164,7 @@ function category (state, emit) {
                         </div>
                         ${doc.data.related.map(info)}
                         <form action="${action}" method="POST" class="Form u-spaceT4" onsubmit=${onsubmit}>
-                          ${button({ text: 'Tilføj stemme', name: title, value: name, large: true, primary: true, onclick: onclick, className: 'u-sizeFull' })}
+                          ${button({ text: 'Tilføj din stemme', name: title, value: name, large: true, primary: true, onclick: onchange, className: 'u-sizeFull' })}
                         </form>
                       </div>
                     `),
@@ -187,7 +192,7 @@ function category (state, emit) {
       }
     }
 
-    function onclick (event) {
+    function onchange (event) {
       emit('nomination:set', event.target.name, event.target.value)
     }
 

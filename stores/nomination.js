@@ -23,7 +23,6 @@ function nomination (state, emitter) {
     else state.nomination.fields[name] = value
     var asJSON = JSON.stringify(state.nomination.fields)
     window.localStorage.setItem(CACHE_KEY, asJSON)
-    emitter.emit('render')
   })
 
   emitter.on('nomination:submit', function () {
