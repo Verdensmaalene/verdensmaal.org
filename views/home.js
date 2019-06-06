@@ -97,6 +97,8 @@ class Home extends View {
                 })}
               </aside>
             ` : null}
+          </div>
+          <div class="u-container">
             <div class="View-spaceLarge">
               ${doc ? intro({ title: asText(doc.data.title), body: asElement(doc.data.description) }) : intro.loading()}
             </div>
