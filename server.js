@@ -20,7 +20,7 @@ var scrape = require('./lib/scrape')
 var zip = require('./lib/zip-target')
 var analytics = require('./lib/analytics')
 var subscribe = require('./lib/subscribe')
-// var nomination = require('./lib/nomination')
+var nomination = require('./lib/nomination')
 var submitEvent = require('./lib/submit-event')
 var imageproxy = require('./lib/cloudinary-proxy')
 var { asText, resolve } = require('./components/base')
@@ -29,6 +29,9 @@ var app = jalla('index.js', {
   sw: 'sw.js',
   serve: Boolean(process.env.NOW)
 })
+
+// voting platform
+app.use(post('/api/nomination', nomination))
 
 // get most viewed news
 app.use(get('/api/popular', async function (ctx) {
@@ -46,50 +49,6 @@ app.use(post('/api/subscribe', compose([body(), async function (ctx, next) {
   } else {
     ctx.type = 'application/json'
     ctx.body = response
-  }
-}])))
-
-app.use(post('/api/nomination', compose([body(), async function (ctx, next) {
-  ctx.set('Cache-Control', 'no-cache, private, max-age=0')
-
-  if (ctx.accepts('html')) {
-    let api = await Prismic.api(REPOSITORY, { req: ctx.req })
-    let doc = await api.getByUID('page', 'nominer-en-helt')
-    let cookies = ctx.cookies.get('nomination')
-    let prev = JSON.parse(cookies ? decodeURIComponent(cookies) : null)
-    let fields = Object.assign({}, prev, ctx.request.body)
-
-    if (ctx.query.step === 'oversigt') {
-      try {
-        // await nomination(ctx.request.body)
-        console.log(fields)
-        ctx.cookies.set('nomination')
-        ctx.redirect(resolve(doc) + '/tak')
-      } catch (err) {
-        ctx.redirect(resolve(doc))
-      }
-    } else {
-      let categories = doc.data.related[0].items.filter(function (item) {
-        return item.link.id && !item.link.isBroken
-      })
-      let index = categories.findIndex(function (item) {
-        return item.link.uid === ctx.query.step
-      })
-
-      ctx.cookies.set('nomination', encodeURIComponent(JSON.stringify(fields)))
-
-      if (index === categories.length - 1) {
-        ctx.redirect(resolve(doc) + '/oversigt')
-      } else {
-        let next = categories[index + 1]
-        ctx.redirect(resolve(next.link))
-      }
-    }
-  } else {
-    // await nomination(ctx.request.body)
-    console.log(ctx.request.body)
-    ctx.type = 'application/json'
-    ctx.body = {}
   }
 }])))
 

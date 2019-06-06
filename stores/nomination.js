@@ -43,6 +43,7 @@ function nomination (state, emitter) {
             if (!res.ok) throw new Error(res.statusMessage || 'Could not submit')
             window.localStorage.removeItem(CACHE_KEY)
             state.nomination.loading = false
+            state.nomination.error = null
             emitter.emit('pushState', resolve(doc) + '/tak')
           })
         } else {
@@ -53,6 +54,7 @@ function nomination (state, emitter) {
             return item.link.uid === state.params.uid
           })
 
+          state.nomination.error = null
           if (index === categories.length - 1) {
             state.nomination.loading = false
             emitter.emit('pushState', resolve(doc) + '/oversigt')

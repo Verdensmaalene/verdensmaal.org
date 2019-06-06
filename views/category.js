@@ -68,7 +68,7 @@ function category (state, emit) {
                 <div class="Text">
                   <h2 class="Text-h3">${text`Oops`}</h2>
                   <p>Noget gik galt. Prøv igen.</p>
-                  ${process.env.NODE_ENV === 'development' ? html`<pre>${err.stack}</pre>` : null}
+                  ${process.env.NODE_ENV === 'development' ? html`<pre>${state.nomination.error.stack}</pre>` : null}
                 </div>
               </div>
             </div>
