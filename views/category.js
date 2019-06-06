@@ -82,10 +82,9 @@ function category (state, emit) {
       switch (state.params.uid) {
         case 'tak': return null
         case 'oversigt': {
-          let action = `/api/nomination?step=${doc.uid}`
           return html`
             <div class="u-container u-spaceT6">
-              <form action="${action}" method="POST" class="Form" onsubmit=${onsubmit}>
+              <form action="${state.href}" method="POST" class="Form" onsubmit=${onsubmit}>
                 <div class="Text Text--large u-spaceV6">
                   <h2 class="Text-h3">Dine valg:</h2>
                   <ul>
@@ -115,7 +114,7 @@ function category (state, emit) {
             return item.link.id && !item.link.isBroken
           })
           if (!nominees.length) return null
-          let action = `/api/nomination?step=${doc.uid}`
+
           let children = nominees.map(function (item, index) {
             return state.docs.getByUID('page', item.link.uid, function (err, doc) {
               if (err) throw err
@@ -164,7 +163,7 @@ function category (state, emit) {
                           ${attrs ? html`<img ${attrs} src="${sources.split(' ')[0]}">` : null}
                         </div>
                         ${doc.data.related.map(info)}
-                        <form action="${action}" method="POST" class="Form u-spaceT4" onsubmit=${onsubmit}>
+                        <form action="${state.href}" method="POST" class="Form u-spaceT4" onsubmit=${onsubmit}>
                           ${button({ text: 'Tilføj din stemme', name: title, value: name, large: true, primary: true, onclick: onchange, className: 'u-sizeFull' })}
                         </form>
                       </div>

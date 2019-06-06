@@ -31,7 +31,25 @@ var app = jalla('index.js', {
 })
 
 // voting platform
-app.use(post('/api/nomination', nomination))
+app.use(post('/nominer-en-helt/:uid', function (ctx, uid, next) {
+  // store uid in params for downstream middleware
+  ctx.state.params = { uid }
+  return nomination(ctx, next)
+}))
+
+// special cache headers for nomination page
+app.use(get('/nominer-en-helt/:uid?', function (ctx, uid, next) {
+  if (!ctx.accepts('html')) return next()
+  var cookies = ctx.cookies.get('nomination')
+  try {
+    var prev = JSON.parse(cookies ? decodeURIComponent(cookies) : null)
+  } catch (err) {
+    prev = null
+  }
+  ctx.state.nomination = { error: null, fields: Object.assign({}, prev) }
+  ctx.set('Cache-Control', 'max-age=0')
+  return next()
+}))
 
 // get most viewed news
 app.use(get('/api/popular', async function (ctx) {
@@ -284,13 +302,6 @@ app.use(function (ctx, next) {
 app.use(get('/nyheder', function (ctx, next) {
   if (!ctx.accepts('html')) return next()
   ctx.set('Cache-Control', `s-maxage=${60 * 60 * 12}, max-age=0`)
-  return next()
-}))
-
-// special cache headers for nomination page
-app.use(get('/nominer-en-helt', function (ctx, next) {
-  if (!ctx.accepts('html')) return next()
-  ctx.set('Cache-Control', 'max-age=0')
   return next()
 }))
 

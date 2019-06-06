@@ -8,9 +8,9 @@ var REPOSITORY = 'https://verdensmaalene.cdn.prismic.io/api/v2'
 
 function nomination (state, emitter) {
   state.nomination = {
-    fields: {},
-    error: null,
-    loading: false
+    loading: false,
+    fields: state.nomination ? state.nomination.fields : {},
+    error: state.nomination ? state.nomination.error : null
   }
 
   try {
@@ -35,7 +35,7 @@ function nomination (state, emitter) {
           if (!state.nomination.fields.email) {
             throw new Error('email missing')
           }
-          return window.fetch('/api/nomination', {
+          return window.fetch(state.href, {
             method: 'POST',
             body: JSON.stringify(state.nomination.fields),
             headers: {
