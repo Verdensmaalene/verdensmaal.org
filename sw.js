@@ -13,12 +13,12 @@ self.addEventListener('install', function oninstall (event) {
 })
 
 self.addEventListener('activate', function onactivate (event) {
-  event.waitUntil(clear().then(async function () {
-    if (self.registration.navigationPreload) {
-      // enable navigation preloads
-      await self.registration.navigationPreload.enable()
-    }
-    return self.clients.claim()
+  event.waitUntil(clear().then(function () {
+    if (!self.registration.navigationPreload) return self.clients.claim()
+    // enable navigation preloads
+    self.registration.navigationPreload.enable().then(function () {
+      return self.clients.claim()
+    })
   }))
 })
 
@@ -40,24 +40,32 @@ self.addEventListener('fetch', function onfetch (event) {
 
       // fetch request and update cache
       // (Cache, Request, Response?) -> Response|Promise
-      async function update (req, fallback) {
+      function update (req, fallback) {
         if (req.cache === 'only-if-cached' && req.mode !== 'same-origin') {
           return fallback
         }
 
-        try {
-          if (event.preloadResponse) {
-            var response = await event.preloadResponse
-          }
+        if (event.preloadResponse) {
+          return event.preloadResponse.then(function (response) {
+            return response || self.fetch(req)
+          }).then(onresponse).catch(onerror)
+        }
 
-          response = response || await self.fetch(req)
+        return self.fetch(req).then(onresponse).catch(onerror)
 
+        // handle network response
+        // Response -> Response
+        function onresponse (response) {
           if (!response.ok) throw response
           if (req.method.toUpperCase() === 'GET') {
-            await cache.put(req, response.clone())
+            return cache.put(req, response.clone()).then(() => response)
           }
           return response
-        } catch (err) {
+        }
+
+        // handle fetch error
+        // Response -> Response
+        function onerror (err) {
           if (fallback) return fallback
           if (isSameOrigin && url.pathname === '/') return findCachedLayout()
           return err
