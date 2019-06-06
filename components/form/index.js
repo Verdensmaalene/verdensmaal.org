@@ -16,6 +16,7 @@ exports.input = function (props) {
 
 exports.textarea = function (props) {
   var attrs = exclude(props, 'plain')
+  delete attrs.className
   delete attrs.class
   delete attrs.value
   delete attrs.label
@@ -55,6 +56,7 @@ function field (props, children) {
   var attrs = {
     class: className('Form-field', {
       [props.class]: props.class,
+      [props.className]: props.className,
       'Form-field--plain': props.plain
     })
   }

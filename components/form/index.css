@@ -41,6 +41,12 @@
   font-weight: var(--high-contrast-bold, normal);
 }
 
+@media (min-width: 1000px) {
+  .Form-field--large .Form-label {
+    font-size: 1.1875rem;
+  }
+}
+
 .Form-meta {
   font-size: 0.9rem;
   font-style: italic;
@@ -78,6 +84,13 @@ textarea.Form-control {
 .Form-control:focus-visible {
   outline: 0 !important;
   border-color: rgb(var(--color-gray));
+}
+
+@media (min-width: 1000px) {
+  .Form-field--large .Form-control {
+    padding: 0.8rem 1rem;
+    font-size: 1.1875rem;
+  }
 }
 
 /**

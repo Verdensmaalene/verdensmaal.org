@@ -67,7 +67,7 @@ function category (state, emit) {
                 ${state.cache(Anchor, 'nomination-error', { auto: true }).render()}
                 <div class="Text">
                   <h2 class="Text-h3">${text`Oops`}</h2>
-                  <p>Noget gik galt. Prøv igen.</p>
+                  <p>Noget gik galt. Se venligst, at alt er udfyldt korrekt og prøv igen.</p>
                   ${process.env.NODE_ENV === 'development' ? html`<pre>${state.nomination.error.stack}</pre>` : null}
                 </div>
               </div>
@@ -86,7 +86,8 @@ function category (state, emit) {
           return html`
             <div class="u-container u-spaceT6">
               <form action="${action}" method="POST" class="Form" onsubmit=${onsubmit}>
-                <div class="Text Text--large u-spaceB4">
+                <div class="Text Text--large u-spaceV6">
+                  <h2 class="Text-h3">Dine valg:</h2>
                   <ul>
                     ${Object.keys(state.nomination.fields).map(function (key) {
                       if (key === 'email') return null
@@ -101,7 +102,7 @@ function category (state, emit) {
                   </ul>
                 </div>
                 <div class="u-md-size1of3 u-spaceV6">
-                  ${input({ label: 'E-mail', plain: true, placeholder: 'E-mail', type: 'email', name: 'email', value: state.nomination.fields.email || '', autocomplete: 'email', required: true, oninput: onchange })}
+                  ${input({ label: 'Din email adresse', className: 'Form-field--large', type: 'email', name: 'email', value: state.nomination.fields.email || '', autocomplete: 'email', required: true, oninput: onchange })}
                 </div>
                 ${button({ type: 'submit', text: 'Send', large: true, primary: true })}
               </form>

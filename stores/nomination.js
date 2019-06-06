@@ -32,6 +32,9 @@ function nomination (state, emitter) {
     Prismic.api(REPOSITORY, { req: state.req }).then(function (api) {
       return api.getByUID('page', 'nominer-en-helt').then(function (doc) {
         if (state.params.uid === 'oversigt') {
+          if (!state.nomination.fields.email) {
+            throw new Error('email missing')
+          }
           return window.fetch('/api/nomination', {
             method: 'POST',
             body: JSON.stringify(state.nomination.fields),
