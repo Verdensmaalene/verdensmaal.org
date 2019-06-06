@@ -13,7 +13,13 @@ self.addEventListener('install', function oninstall (event) {
 })
 
 self.addEventListener('activate', function onactivate (event) {
-  event.waitUntil(clear().then(() => self.clients.claim()))
+  event.waitUntil(clear().then(async function () {
+    if (self.registration.navigationPreload) {
+      // enable navigation preloads
+      await self.registration.navigationPreload.enable()
+    }
+    return self.clients.claim()
+  }))
 })
 
 self.addEventListener('fetch', function onfetch (event) {
@@ -34,26 +40,28 @@ self.addEventListener('fetch', function onfetch (event) {
 
       // fetch request and update cache
       // (Cache, Request, Response?) -> Response|Promise
-      function update (req, fallback) {
+      async function update (req, fallback) {
         if (req.cache === 'only-if-cached' && req.mode !== 'same-origin') {
           return fallback
         }
 
-        return self.fetch(req).then(function (response) {
-          if (!response.ok) {
-            if (fallback) return fallback
-            else if (isSameOrigin && url.pathname === '/') return findCachedLayout()
-            else return response
+        try {
+          if (event.preloadResponse) {
+            var response = await event.preloadResponse
           }
+
+          response = response || await self.fetch(req)
+
+          if (!response.ok) throw response
           if (req.method.toUpperCase() === 'GET') {
             cache.put(req, response.clone())
           }
           return response
-        }, function (err) {
+        } catch (err) {
           if (fallback) return fallback
           if (isSameOrigin && url.pathname === '/') return findCachedLayout()
           return err
-        })
+        }
       }
 
       // lookup cached layout
