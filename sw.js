@@ -54,7 +54,7 @@ self.addEventListener('fetch', function onfetch (event) {
 
           if (!response.ok) throw response
           if (req.method.toUpperCase() === 'GET') {
-            cache.put(req, response.clone())
+            await cache.put(req, response.clone())
           }
           return response
         } catch (err) {
