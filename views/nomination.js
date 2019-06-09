@@ -52,7 +52,7 @@ function nomination (state, emit) {
             <div class="Text">
               ${body}
             </div>
-            ${Date.now() < new Date(2019, 5, 10) && categories && categories.length ? button({
+            ${categories && categories.length ? button({
               large: true,
               primary: true,
               text: 'Til afstemningen',
