@@ -109,7 +109,6 @@ function category (state, emit) {
           `
         }
         default: {
-          if (Date.now() > new Date(2019, 5, 10)) return null
           let nominees = doc.data.related[0].items.filter(function (item) {
             return item.link.id && !item.link.isBroken
           })
