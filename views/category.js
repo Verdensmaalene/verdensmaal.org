@@ -109,6 +109,7 @@ function category (state, emit) {
           `
         }
         default: {
+          if (!doc.data.related.length) return null
           let nominees = doc.data.related[0].items.filter(function (item) {
             return item.link.id && !item.link.isBroken
           })
@@ -163,7 +164,7 @@ function category (state, emit) {
                         </div>
                         ${doc.data.related.map(info)}
                         <form action="${state.href}" method="POST" class="Form u-spaceT4" onsubmit=${onsubmit}>
-                          ${button({ text: 'Tilføj din stemme', name: title, value: name, large: true, primary: true, onclick: onchange, className: 'u-sizeFull' })}
+                          ${button({ text: 'Stem her', name: title, value: name, large: true, primary: true, onclick: onchange, className: 'u-sizeFull' })}
                         </form>
                       </div>
                     `),
