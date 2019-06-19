@@ -323,15 +323,16 @@ app.use(function (ctx, next) {
   return next()
 })
 
-app.listen(process.env.PORT || 8080, function () {
-  if (process.env.NOW && app.env === 'production') {
-    queried().then(function (urls) {
-      purge(['/sw.js', '/api/popular', ...urls], function (err) {
-        if (err) app.emit('error', err)
-      })
+if (process.env.NOW && app.env === 'production') {
+  queried().then(function (urls) {
+    purge(['/sw.js', '/api/popular', ...urls], function (err) {
+      if (err) app.emit('error', err)
+      else app.listen(process.env.PORT || 8080)
     })
-  }
-})
+  })
+} else {
+  app.listen(process.env.PORT || 8080)
+}
 
 // get urls for all queried pages
 // () -> Promise
