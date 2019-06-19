@@ -16,7 +16,7 @@ self.addEventListener('activate', function onactivate (event) {
   event.waitUntil(clear().then(function () {
     if (!self.registration.navigationPreload) return self.clients.claim()
     // enable navigation preloads
-    self.registration.navigationPreload.enable().then(function () {
+    return self.registration.navigationPreload.enable().then(function () {
       return self.clients.claim()
     })
   }))
