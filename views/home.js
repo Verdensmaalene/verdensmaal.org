@@ -80,20 +80,22 @@ class Home extends View {
       var isHighContrast = state.ui.isHighContrast
       var Grid = isHighContrast ? HighContrastGoalGrid : GoalGrid
       var id = 'homepage-goalgrid' + (isHighContrast ? '-high-contrast' : '')
+      var alertHeading = doc && asText(doc.data.alert_heading)
+      var alertLink = doc && doc.data.alert_link
       var featured = getFeatured()
 
       return html`
         <main class="View-main">
           <div class="u-container">
-            ${doc && doc.data.alert_heading && doc.data.alert_heading.length ? html`
+            ${alertHeading ? html`
               <aside role="banner" class="View-spaceSmall">
                 ${alert({
                   heading: asText(doc.data.alert_heading),
                   body: asElement(doc.data.alert_message),
-                  link: {
+                  link: (alertLink.id || alertLink.url) && !alertLink.isBroken ? {
                     href: resolve(doc.data.alert_link),
                     text: doc.data.alert_link_text
-                  }
+                  } : null
                 })}
               </aside>
             ` : null}
