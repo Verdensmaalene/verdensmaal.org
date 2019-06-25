@@ -8,7 +8,7 @@ var text = i18n(require('./lang.json'))
 // match short and long youtube links
 // https://www.youtube.com/watch?foo=bar&v=WwE7TxtoyqM&bin=baz
 // https://youtu.be/gd6_ZECm58g
-var YOUTUBE_RE = /https?:\/\/(?:www.)?youtu\.?be(?:\.com\/watch\?(?:.*?)v=|\/)(.+?)(?:&|$)/
+var YOUTUBE_RE = /https?:\/\/(?:www.)?youtu\.?be(?:\.com\/watch\?(?:.*?)v=|\/)(.+?)(?:\?|&|$)/
 
 module.exports = embed
 module.exports.id = id

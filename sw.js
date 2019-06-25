@@ -68,7 +68,7 @@ self.addEventListener('fetch', function onfetch (event) {
         function onerror (err) {
           if (fallback) return fallback
           if (isSameOrigin && url.pathname === '/') return findCachedLayout()
-          throw err
+          return err
         }
       }
 

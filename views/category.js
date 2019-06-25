@@ -37,44 +37,44 @@ function category (state, emit) {
 
     return html`
       <main class="View-main">
-        <div class="View-spaceLarge">
-          ${doc.data.image.url ? banner(image(doc.data.image)) : html`
+        ${doc.data.image.url ? banner(image(doc.data.image)) : html`
+          <div class="View-spaceLarge u-container">
+            ${intro({
+              title: theme ? highlight(title, `u-bg${theme.match(reg)[1]}`) : title,
+              body: description
+            })}
+          </div>
+        `}
+        ${doc.data.image.url ? html`
+          <div class="View-space">
             <div class="u-container">
-              ${intro({
-                title: theme ? highlight(title, `u-bg${theme.match(reg)[1]}`) : title,
-                body: description
-              })}
-            </div>
-          `}
-          ${doc.data.image.url ? html`
-            <div class="View-space">
               <div class="Text">
                 <h1>${title}</h1>
                 <p>${description}</p>
               </div>
             </div>
-          ` : null}
-          ${body ? html`
-            <div class="View-space u-container">
+          </div>
+        ` : null}
+        ${body ? html`
+          <div class="View-space u-container">
+            <div class="Text">
+              ${body}
+            </div>
+          </div>
+        ` : null}
+        ${state.nomination.error ? html`
+          <div class="u-container u-spaceB6">
+            <div class="Form-error">
+              ${state.cache(Anchor, 'nomination-error', { auto: true }).render()}
               <div class="Text">
-                ${body}
+                <h2 class="Text-h3">${text`Oops`}</h2>
+                <p>Noget gik galt. Se venligst, at alt er udfyldt korrekt og prøv igen.</p>
+                ${process.env.NODE_ENV === 'development' ? html`<pre>${state.nomination.error.stack}</pre>` : null}
               </div>
             </div>
-          ` : null}
-          ${state.nomination.error ? html`
-            <div class="u-container u-spaceB6">
-              <div class="Form-error">
-                ${state.cache(Anchor, 'nomination-error', { auto: true }).render()}
-                <div class="Text">
-                  <h2 class="Text-h3">${text`Oops`}</h2>
-                  <p>Noget gik galt. Se venligst, at alt er udfyldt korrekt og prøv igen.</p>
-                  ${process.env.NODE_ENV === 'development' ? html`<pre>${state.nomination.error.stack}</pre>` : null}
-                </div>
-              </div>
-            </div>
-          ` : null}
-          ${renderForm()}
-        </div>
+          </div>
+        ` : null}
+        ${renderForm()}
       </main>
     `
 
