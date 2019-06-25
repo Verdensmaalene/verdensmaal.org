@@ -13,6 +13,7 @@
   text-transform: uppercase;
   font-weight: 600;
   white-space: nowrap;
+  text-align: center;
   user-select: none;
   font-family: var(--heading-font-family);
   word-spacing: var(--heading-word-spacing);
