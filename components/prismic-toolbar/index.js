@@ -13,11 +13,11 @@ module.exports = class PrismicToolbar extends Component {
     this.local = {
       id,
       href: state.href,
-      token: state.query.token,
+      token: state.query.token ? encodeURIComponent(state.query.token) : null,
       enabled: typeof window !== 'undefined'
     }
 
-    this.href = () => state.origin + '/api/prismic-preview'
+    this.href = () => state.origin + state.href
 
     if (state.query.token && typeof window !== 'undefined') {
       let expires = process.env.NODE_ENV === 'development'
@@ -37,7 +37,7 @@ module.exports = class PrismicToolbar extends Component {
         this.local.enabled = false
         return null
       }
-      this.local.token = cookie[1]
+      this.local.token = encodeURIComponent(cookie[1])
     }
     return this.render(href)
   }
