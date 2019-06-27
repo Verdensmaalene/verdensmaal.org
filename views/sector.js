@@ -13,6 +13,7 @@ var Text = require('../components/text')
 var Chart = require('../components/chart')
 var embed = require('../components/embed')
 var event = require('../components/event')
+var button = require('../components/button')
 var Details = require('../components/details')
 var divide = require('../components/grid/divide')
 var { external } = require('../components/symbol')
@@ -116,23 +117,20 @@ function goal (state, emit) {
           let ids = slice.items
             .filter((item) => item.link && item.link.id && !item.link.isBroken)
             .map((item) => item.link.id)
+
+          // fetch featured news
           let featured = ids.map(function (id) {
-            // fetch featured news
-            return state.docs.getByID(id, function (err, doc) {
-              if (err) throw err
-              if (!doc) return card.loading()
-              return render(doc)
-            })
+            return state.docs.getByID(id, (err, doc) => err ? null : doc)
           })
 
-          let pageSize = 3
           let type = slice.slice_type === 'events' ? 'event' : 'news'
           let predicates = [
             Predicates.at('document.type', type),
             Predicates.any('document.tags', doc.tags)
           ].concat(ids.map((id) => Predicates.not('document.id', id)))
-          let opts = { pageSize: pageSize - featured.length }
 
+          let pageSize = 3
+          let opts = { pageSize }
           if (slice.slice_type === 'news') {
             opts.orderings = '[document.first_publication_date desc]'
           } else {
@@ -147,25 +145,58 @@ function goal (state, emit) {
             opts.orderings = '[my.event.start]'
           }
 
-          // fetch the lates news with mathing tags
-          let result = state.docs.get(predicates, opts, function (err, response) {
-            if (err) throw err
-            var cells = featured
-            if (!response) {
-              for (let i = 0; i < opts.pageSize; i++) cells.push(card.loading())
-            } else {
-              cells = featured.concat(response.results.map(render))
-            }
+          let hasMore = true
+          let name = `${type}-${index}`
+          let page = +state.query[name]
+          if (isNaN(page)) page = 1
 
-            return html`
-              <div class="View-space View-space--${camelCase(slice.slice_type)} u-md-container">
-                <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
-                ${grid({ size: { md: '1of2', lg: '1of3' }, carousel: true }, cells)}
-              </div>
-            `
+          // fetch the lates news with mathing tags
+          let items = []
+          for (let i = 1; i <= page; i++) {
+            items.push(...state.docs.get(predicates, Object.assign({
+              page: i
+            }, opts), function (err, response) {
+              if (err) return []
+              if (!response) return new Array(pageSize).fill(null, 0, pageSize)
+              hasMore = hasMore && response.results_size === pageSize
+              return response.results
+            }))
+          }
+
+          let query = Object.assign({}, state.query, { [name]: page + 1 })
+          let queries = Object.entries(query).map((pair) => pair.join('='))
+          let count = hasMore ? pageSize * page - featured.length : items.length
+          let onclick = (event) => {
+            emit('pushState', event.target.href, true)
+            event.preventDefault()
+          }
+
+          let cells = featured.concat(items.slice(0, count)).map(function (item, index, list) {
+            var child = item ? render(item) : card.loading()
+            var opts = { size: { md: '1of2', lg: '1of3' } }
+            if (list.length > pageSize) {
+              let threshold = (list.length - (list.length % pageSize) - pageSize)
+              if (!item || index >= threshold) {
+                opts.appear = index - threshold
+              }
+            }
+            return grid.cell(opts, child)
           })
 
-          return result
+          if (hasMore) {
+            cells.push(grid.cell(html`
+              <div class="u-flex u-sizeFill u-alignCenter u-justifyCenter">
+                ${button({ href: `${state.href}?${queries.join('&')}`, text: text`Show more`, disabled: state.ui.isLoading, onclick: onclick })}
+              </div>
+            `))
+          }
+
+          return html`
+            <div class="View-space View-space--${camelCase(slice.slice_type)} u-md-container">
+              <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
+              ${grid({ carousel: true }, cells)}
+            </div>
+          `
         }
         case 'heading': return html`
           <div class="View-spaceLarge u-container">
