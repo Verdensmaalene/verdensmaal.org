@@ -175,9 +175,8 @@ function goal (state, emit) {
             var child = item ? render(item) : card.loading()
             var opts = { size: { md: '1of2', lg: '1of3' } }
             if (list.length > pageSize) {
-              let threshold = (list.length - (list.length % pageSize) - pageSize)
-              if (!item || index >= threshold) {
-                opts.appear = index - threshold
+              if (index >= page * pageSize - pageSize) {
+                opts.appear = pageSize - (page * pageSize - index)
               }
             }
             return grid.cell(opts, child)
