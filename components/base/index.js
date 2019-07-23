@@ -236,6 +236,12 @@ function reduce (list) {
 // (str, arr, obj?) -> str
 exports.srcset = srcset
 function srcset (uri, sizes, opts = {}) {
+  // detect prismic image object
+  if (typeof uri === 'object' && uri.url) {
+    var max = uri.dimensions.width
+    uri = uri.url
+  }
+
   var type = opts.type || 'fetch'
   var transforms = opts.transforms
   if (!transforms) transforms = 'c_fill,f_auto,q_auto'
@@ -248,6 +254,7 @@ function srcset (uri, sizes, opts = {}) {
   uri = parts[parts.length - 1]
 
   return sizes.map(function (size) {
+    // don't bother upscaling images
     var transform = transforms
     if (Array.isArray(size)) {
       transform = size[1]
@@ -256,6 +263,7 @@ function srcset (uri, sizes, opts = {}) {
       if (!/q_/.test(transform)) transform += ',q_auto'
       size = size[0]
     }
+    if (size > max) size = max
     if (opts.aspect) transform += `,h_${Math.floor(size * opts.aspect)}`
 
     return `/media/${type}/${transform},w_${size}/${uri} ${size}w`

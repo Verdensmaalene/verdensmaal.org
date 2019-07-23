@@ -283,8 +283,8 @@ class Home extends View {
         var image = data.image.url ? {
           alt: data.image.alt,
           sizes: sizes,
-          srcset: srcset(data.image.url, [400, 600, 900, 1800], opts),
-          src: srcset(data.image.url, [900], opts).split(' ')[0],
+          srcset: srcset(data.image, [400, 600, 900, 1800], opts),
+          src: srcset(data.image, [900], opts).split(' ')[0],
           caption: data.image.copyright
         } : null
         var props = {

@@ -98,8 +98,8 @@ function cell (item) {
     image: item.image.url ? {
       alt: item.image.alt,
       sizes: sizes,
-      srcset: srcset(item.image.url, [400, 600, 900, 1800], opts),
-      src: srcset(item.image.url, [900], opts).split(' ')[0],
+      srcset: srcset(item.image, [400, 600, 900, 1800], opts),
+      src: srcset(item.image, [900], opts).split(' ')[0],
       caption: item.image.copyright
     } : null,
     link: {

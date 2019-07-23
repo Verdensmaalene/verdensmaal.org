@@ -10,8 +10,8 @@ function slot (props, slot) {
   var image = props.image && Object.assign({
     sizes: '50vw',
     alt: props.title || '',
-    src: srcset(props.image.url, [900]).split(' ')[0],
-    srcset: srcset(props.image.url, [500, 1000, 1800, [3600, 'q_30']])
+    src: srcset(props.image, [900]).split(' ')[0],
+    srcset: srcset(props.image, [500, 1000, 1800, [3600, 'q_30']])
   }, pluck(props.image, 'width', 'height', 'alt'))
 
   return html`

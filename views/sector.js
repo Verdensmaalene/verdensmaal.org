@@ -24,9 +24,9 @@ var { i18n, srcset, asText, colors, resolve } = require('../components/base')
 
 var text = i18n()
 
-module.exports = view(goal, meta)
+module.exports = view(sector, meta)
 
-function goal (state, emit) {
+function sector (state, emit) {
   return state.docs.getByUID('sector', state.params.wildcard, onresponse)
 
   function onresponse (err, doc) {
@@ -43,13 +43,13 @@ function goal (state, emit) {
     var title = asText(data.title)
     var body = asText(data.description)
     var image = doc.data.image.url ? {
-      src: srcset(doc.data.image.url, [900], { aspect: 9 / 16 }).split(' ')[0],
+      src: srcset(doc.data.image, [900], { aspect: 9 / 16 }).split(' ')[0],
       height: doc.data.image.dimensions.height,
       width: doc.data.image.dimensions.width,
       alt: data.image.alt || '',
       sizes: '90vw',
       srcset: srcset(
-        doc.data.image.url,
+        doc.data.image,
         [600, 900, 1800, [2400, 'q_60'], [3000, 'q_40']],
         { aspect: 9 / 16 }
       )
@@ -248,12 +248,12 @@ function goal (state, emit) {
         }
         case 'image': {
           if (!slice.primary.image.url) return null
-          let { url, alt, copyright, dimensions } = slice.primary.image
+          let { alt, copyright, dimensions } = slice.primary.image
           return html`
             <figure class="View-space View-space--${camelCase(slice.slice_type)} u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
               <div class="Text u-sizeFull">
-                <img class="u-sizeFull" width="${dimensions.width}" height="${dimensions.height}" sizes="100vw" srcset="${srcset(url, [400, 900, 1600, [2800, 'q_50'], [3600, 'q_30']])}" src="${srcset(url, [900]).split(' ')[0]}" alt="${alt || ''}" />
+                <img class="u-sizeFull" width="${dimensions.width}" height="${dimensions.height}" sizes="100vw" srcset="${srcset(slice.primary.image, [400, 900, 1600, [2800, 'q_50'], [3600, 'q_30']])}" src="${srcset(slice.primary.image, [900]).split(' ')[0]}" alt="${alt || ''}" />
                 ${copyright ? html`<figcaption><small class="Text-muted">${copyright}</small></figcaption>` : null}
               </div>
             </figure>
@@ -268,7 +268,7 @@ function goal (state, emit) {
                 alt: item.image.alt || '',
                 sizes: '(min-width: 400px) 50vw, 100vw',
                 srcset: srcset(
-                  item.image.url,
+                  item.image,
                   [400, 600, 900, 1800],
                   { transforms: 'c_thumb', aspect: 3 / 4 }
                 )
@@ -276,7 +276,7 @@ function goal (state, emit) {
               return html`
                 <figure class="u-sizeFull">
                   <div class="u-aspect4-3">
-                    <img ${attrs} src="${srcset(item.image.url, [900]).split(' ')[0]}">
+                    <img ${attrs} src="${srcset(item.image, [900]).split(' ')[0]}">
                   </div>
                   ${item.image.copyright ? html`
                     <figcaption class="Text">
@@ -475,7 +475,7 @@ function goal (state, emit) {
       image: props.image.url ? {
         alt: props.image.alt,
         sizes: sizes,
-        srcset: srcset(props.image.url, [400, 600, 900, 1800], opts),
+        srcset: srcset(props.image, [400, 600, 900, 1800], opts),
         src: `/media/fetch/w_900/${props.image.url}`,
         caption: props.image.copyright
       } : null,

@@ -166,7 +166,7 @@ function image (props) {
     src: props.url,
     sizes: '90vw',
     srcset: srcset(
-      props.url,
+      props,
       [600, 900, 1800, [2400, 'q_60'], [3000, 'q_40']],
       { aspect: 9 / 16 }
     )

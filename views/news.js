@@ -63,7 +63,7 @@ function news (state, emit) {
           var image = doc.data.image.url ? {
             alt: doc.data.image.alt || '',
             sizes: '90px',
-            srcset: srcset(doc.data.image.url, [90, 180]),
+            srcset: srcset(doc.data.image, [90, 180]),
             src: `/media/fetch/w_90/${doc.data.image.url}`
           } : null
           return {
@@ -171,7 +171,7 @@ function news (state, emit) {
     var image = doc.data.image.url ? {
       alt: doc.data.image.alt,
       sizes: sizes,
-      srcset: srcset(doc.data.image.url, [400, 600, 900, 1800], opts),
+      srcset: srcset(doc.data.image, [400, 600, 900, 1800], opts),
       src: `/media/fetch/w_900/${doc.data.image.url}`,
       caption: doc.data.image.copyright
     } : null

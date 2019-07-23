@@ -145,7 +145,7 @@ function category (state, emit) {
               var name = asText(doc.data.description)
               var image = doc.data.image
               if (image.url) {
-                var sources = srcset(image.url, [400, 800, [1200, 'q_70']], { transforms: 'g_face,c_thumb' })
+                var sources = srcset(image, [400, 800, [1200, 'q_70']], { transforms: 'g_face,c_thumb' })
                 var attrs = Object.assign({
                   class: 'u-cover',
                   srcset: sources,
@@ -268,7 +268,7 @@ function image (props) {
     src: props.url,
     sizes: '100vw',
     srcset: srcset(
-      props.url,
+      props,
       [400, 600, 900, 1800, [3000, 'q_60']],
       { aspect: 9 / 16 }
     )

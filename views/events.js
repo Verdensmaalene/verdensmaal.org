@@ -231,7 +231,7 @@ function events (state, emit) {
       image: doc.data.image.url ? {
         alt: doc.data.image.alt,
         sizes: '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw',
-        srcset: srcset(doc.data.image.url, [400, 600, 900, 1800], opts),
+        srcset: srcset(doc.data.image, [400, 600, 900, 1800], opts),
         src: `/media/fetch/w_900/${doc.data.image.url}`,
         caption: doc.data.image.copyright
       } : null

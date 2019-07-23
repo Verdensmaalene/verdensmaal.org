@@ -50,7 +50,7 @@ function eventView (state, emit) {
       width: image.dimensions.width,
       height: image.dimensions.height,
       sizes: '66vw',
-      srcset: srcset(image.url, [400, 600, 900, 1800, [3000, 'q_60']]),
+      srcset: srcset(image, [400, 600, 900, 1800, [3000, 'q_60']]),
       src: image.url,
       alt: image.alt || '',
       caption: image.copyright || image.alt
