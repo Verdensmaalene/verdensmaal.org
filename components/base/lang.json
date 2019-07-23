@@ -39,7 +39,6 @@
   "List": "Aktuelle",
   "Calendar": "Kalender",
   "Save event to calendar": "Importer i din kalender",
-  "RSVP to this event": "Tilmeld til event",
   "Spread the word": "Spred budskabet",
   "Share with others": "Del med andre",
   "E-mail to a friend": "E-mail til en du kender",
@@ -64,6 +63,5 @@
   "Using %s/300 words": "Using %s/300 words",
   "Submit": "Submit",
   "LOADING_TEXT_SMALL": "LOADING_TEXT_SMALL",
-  "Add link": "Add link",
   "Indsend": "Indsend"
 }

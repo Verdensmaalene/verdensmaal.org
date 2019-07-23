@@ -65,7 +65,7 @@ function link (props) {
   }
   return html`
     <li class="Ticket-item">
-      <a ${attrs}>${props.text}${props.icon || null}</a>
+      <a ${attrs}>${props.text || text`Read more`}${props.icon || null}</a>
     </li>
   `
 }

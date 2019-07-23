@@ -201,7 +201,7 @@ function eventView (state, emit) {
         links.push({
           icon: icon,
           href: rsvp,
-          text: `RSVP to this event`
+          text: doc.data.rsvp_text
         })
       }
     }
