@@ -254,7 +254,6 @@ function srcset (uri, sizes, opts = {}) {
   uri = parts[parts.length - 1]
 
   return sizes.map(function (size) {
-    // don't bother upscaling images
     var transform = transforms
     if (Array.isArray(size)) {
       transform = size[1]
@@ -263,6 +262,7 @@ function srcset (uri, sizes, opts = {}) {
       if (!/q_/.test(transform)) transform += ',q_auto'
       size = size[0]
     }
+    // don't bother upscaling images
     if (size > max) size = max
     if (opts.aspect) transform += `,h_${Math.floor(size * opts.aspect)}`
 
