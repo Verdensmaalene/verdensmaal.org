@@ -45,7 +45,7 @@ self.addEventListener('fetch', function onfetch (event) {
           return fallback
         }
 
-        if (event.preloadResponse) {
+        if (event.preloadResponse && req.url === event.request.url) {
           return event.preloadResponse.then(function (response) {
             return response || self.fetch(req)
           }).then(onresponse).catch(onerror)
