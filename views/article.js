@@ -69,7 +69,7 @@ function article (state, emit) {
                 </div>
               </div>
               <aside class="View-sidebar u-col u-lg-size1of3">
-                <div>
+                <div class="u-sizeFull">
                   ${links}
                   <aside class="u-printHidden">
                     <div class="Text">
@@ -129,23 +129,24 @@ function article (state, emit) {
               <h3>${asText(slice.primary.heading)}</h3>
             </div>
             <ol>
-              ${items.map(function (item) {
-                var href = resolve(item.link)
+              ${items.map(function ({ link, text }) {
+                if ((!link.id && !link.url) || link.isBroken) return null
+                var href = resolve(link)
                 var attrs = {}
-                if (item.link.link_type !== 'Document') {
+                if (link.link_type !== 'Document') {
                   attrs.rel = 'noopener noreferer'
-                  if (item.link.target) attrs.target = item.link.target
+                  if (link.target) attrs.target = link.target
                 }
                 return html`
                   <li class="Text u-spaceB2">
                     <a class="u-block" href="${href}" ${attrs}>
-                      <span class="Text-large u-textBreakLongWords">${item.text}</span>
+                      <span class="Text-large u-textBreakLongWords">${text}</span>
                       <br>
-                      <small class="Text-muted u-textTruncate u-textRegular">${href || item.text}</small>
+                      <small class="Text-muted u-textTruncate u-textRegular">${href}</small>
                     </a>
                   </li>
                 `
-              })}
+              }).filter(Boolean)}
             </ol>
           </aside>
         `
