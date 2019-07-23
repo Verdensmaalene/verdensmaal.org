@@ -260,7 +260,7 @@ app.use(get('/api/geoip', function (ctx, next) {
 app.use(get('/', function (ctx, next) {
   if (!ctx.accepts('html')) return next()
   var layout = parseInt(ctx.query.layout, 10)
-  if (!layout) layout = Math.ceil(Math.random() * 9)
+  if (!layout || isNaN(layout)) layout = Math.ceil(Math.random() * 9)
   ctx.state.ui = ctx.state.ui || {}
   ctx.state.ui.gridLayout = layout
 
