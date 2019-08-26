@@ -9,8 +9,8 @@ module.exports = serialize
 function serialize (type, node, content, children) {
   switch (type) {
     case Elements.embed: {
-      let provider = node.oembed.provider_name ? node.oembed.provider_name.toLowerCase() : null
-      let id = embed.id(node.oembed)
+      const provider = node.oembed.provider_name ? node.oembed.provider_name.toLowerCase() : null
+      const id = embed.id(node.oembed)
       if (!id || !provider) {
         if (!node.oembed.meta) return null
         return bookmark(Object.assign({
@@ -29,11 +29,11 @@ function serialize (type, node, content, children) {
       })
     }
     case Elements.image: {
-      let sizes = [400, 600, 800, 1200].map(function (size, index) {
+      const sizes = [400, 600, 800, 1200].map(function (size, index) {
         return Math.min(size, node.dimensions.width * (index + 1))
       })
       let src = node.url
-      let attrs = { alt: node.alt || '' }
+      const attrs = { alt: node.alt || '' }
       if (!/\.svg$/.test(node.url)) {
         attrs.sizes = '39em'
         attrs.srcset = srcset(node, sizes)

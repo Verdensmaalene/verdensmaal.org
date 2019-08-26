@@ -230,9 +230,9 @@ class GoalPage extends View {
           if (err) throw err
           if (!doc) return Chart.loading({ size: 'md', shrink: true })
 
-          let { title, value, color, source } = doc.data
-          let goalColors = [colors[`goal${num}`], colors[`goal${num}Shaded`]]
-          let props = {
+          const { title, value, color, source } = doc.data
+          const goalColors = [colors[`goal${num}`], colors[`goal${num}Shaded`]]
+          const props = {
             title,
             size: 'md',
             shrink: true,
@@ -258,7 +258,7 @@ class GoalPage extends View {
 
           if (doc.data.series) {
             for (let i = 0, len = doc.data.series.length; i < len; i++) {
-              let serie = doc.data.series[i]
+              const serie = doc.data.series[i]
               if (serie.items && serie.primary) {
                 props.series.push(Object.assign({}, serie.primary, {
                   color: serie.primary.color || goalColors[i] || '#F1F1F1',
@@ -275,10 +275,10 @@ class GoalPage extends View {
           }
 
           var types = {
-            'bar_chart': 'bar',
-            'numeric_chart': 'number',
-            'line_chart': 'line',
-            'pie_chart': 'pie'
+            bar_chart: 'bar',
+            numeric_chart: 'number',
+            line_chart: 'line',
+            pie_chart: 'pie'
           }
 
           return state.cache(Chart, doc.id, types[doc.type]).render(props)
@@ -396,8 +396,8 @@ class GoalPage extends View {
 
           var fill = 3 - cards.length
           if (fill > 0) {
-            let news = getNews(fill, ids)
-            let events = getEvents(1, ids)
+            const news = getNews(fill, ids)
+            const events = getEvents(1, ids)
 
             if (events.length) {
               fill--
@@ -435,7 +435,7 @@ class GoalPage extends View {
           }
           case 'event': {
             props.link = { href: resolve(item) }
-            let date = parse(data.start)
+            const date = parse(data.start)
             return event.outer(card(props, event.inner(Object.assign({}, data, {
               start: date,
               end: parse(data.end),
@@ -446,7 +446,7 @@ class GoalPage extends View {
             props.link = { href: resolve(item) }
             props.image = image
             if (item.first_publication_date) {
-              let date = parse(item.first_publication_date)
+              const date = parse(item.first_publication_date)
               props.date = {
                 datetime: date,
                 text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`

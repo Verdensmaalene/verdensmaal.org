@@ -2,8 +2,8 @@ var html = require('choo/html')
 var Component = require('choo/component')
 
 var LEVELS = [
-  [ 'c', 'n', 't', 'x', 'y', 'd', 's' ],
-  [ 'o' ]
+  ['c', 'n', 't', 'x', 'y', 'd', 's'],
+  ['o']
 ]
 
 var ALIAS = {
@@ -39,9 +39,9 @@ module.exports = class Background4 extends Component {
     var legos = element.querySelectorAll('.js-lego')
 
     for (let i = 0; i < legos.length; i++) {
-      let lego = legos[i]
-      let layer = [0, 0, 0, 1, 1, 2][i]
-      let [min, max] = [[200, 900], [1000, 1400], [1600, 2000]][layer]
+      const lego = legos[i]
+      const layer = [0, 0, 0, 1, 1, 2][i]
+      const [min, max] = [[200, 900], [1000, 1400], [1600, 2000]][layer]
 
       lego.style.transform = `translateY(-${height}px) rotate(-${Math.random() * (8 - 3) + 5}deg)`
       window.setTimeout(function () {
@@ -56,7 +56,7 @@ module.exports = class Background4 extends Component {
     }
 
     for (let i = 0; i < letters.length; i++) {
-      let letter = letters[i]
+      const letter = letters[i]
 
       let min = 200
       let max = 900

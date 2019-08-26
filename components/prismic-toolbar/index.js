@@ -22,10 +22,10 @@ module.exports = class PrismicToolbar extends Component {
     if (typeof window !== 'undefined') {
       let token = state.query.token
       if (!token) {
-        let cookie = document.cookie.match(COOKIE_REGEX)
+        const cookie = document.cookie.match(COOKIE_REGEX)
         token = cookie && cookie[1]
       } else {
-        let expires = process.env.NODE_ENV === 'development'
+        const expires = process.env.NODE_ENV === 'development'
           ? new Date(Date.now() + (1000 * 60 * 60 * 12))
           : new Date(Date.now() + (1000 * 60 * 30))
         document.cookie = `${Prismic.previewCookie}=${token}; path=/; expires=${expires.toUTCString()};`

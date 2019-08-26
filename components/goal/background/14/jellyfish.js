@@ -8,8 +8,8 @@ module.exports = class Jellyfish extends Component {
     var arms = element.querySelectorAll('.js-arm')
 
     for (let i = 0; i < paths.length; i++) {
-      let from = squiggles(paths[i])
-      let to = squiggles(paths[i], 15, 4, 1)
+      const from = squiggles(paths[i])
+      const to = squiggles(paths[i], 15, 4, 1)
       arms[i].appendChild(html`
         <animate attributeName="d" begin="0s" dur="${i + 2.5}s" repeatCount="indefinite" values="${[from, to, from].join(';')}" />
       `)

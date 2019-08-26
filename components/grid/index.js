@@ -30,7 +30,7 @@ function grid (opts, children) {
 
     var appear = opts.appear || props.appear
     if (typeof appear === 'number' || Boolean(appear)) {
-      let delay = (typeof appear === 'number' ? appear : index) * 100
+      const delay = (typeof appear === 'number' ? appear : index) * 100
       attrs.class += ' Grid-cell--appear'
       attrs.style = `animation-delay: ${delay}ms`
     }

@@ -129,9 +129,9 @@ function eventView (state, emit) {
   function related (slice, index) {
     switch (slice.slice_type) {
       case 'schedule': {
-        let list = []
+        const list = []
         for (let i = 0, len = slice.items.length; i < len; i++) {
-          let item = slice.items[i]
+          const item = slice.items[i]
           if (item.time && item.text) {
             list.push(
               html`<dt class="Text-muted">${item.time}</dt>`,
@@ -193,7 +193,7 @@ function eventView (state, emit) {
       href: resolve(doc).replace(/\/?$/, '.ics')
     }]
     if (doc.data.rsvp_link) {
-      let rsvp = resolve(doc.data.rsvp_link)
+      const rsvp = resolve(doc.data.rsvp_link)
       if (rsvp) {
         let icon
         if (rsvp.indexOf('mailto:') === 0) icon = symbol('mail')

@@ -27,7 +27,7 @@ var AR_NUMBERS = '۰۱۲۳۴۵۶۷۸۹'
 var AR_LANGREG = /^ar(-\w|$)/
 var LANG_MULTIPLIERS = {
   'ja-jp': 0.75,
-  'ru': 0.78,
+  ru: 0.78,
   'zh-cn': 0.9,
   'ar-eg': 1
 }

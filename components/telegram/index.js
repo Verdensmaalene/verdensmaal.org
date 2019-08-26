@@ -43,7 +43,7 @@ module.exports = class Telegram extends Component {
       second.classList.add('is-appearing')
 
       if (!isSameDay(items[0].date.datetime, items[1].date.datetime)) {
-        let label = el.querySelector('.js-label')
+        const label = el.querySelector('.js-label')
         label.addEventListener('transitionend', function ontransitionend () {
           label.removeEventListener('transitionend', ontransitionend)
           label.innerText = items[1].date.text
@@ -121,7 +121,7 @@ module.exports = class Telegram extends Component {
   }
 
   static loading (count = 2) {
-    let items = []
+    const items = []
     for (let i = 0; i < count; i++) items.push(i)
     return html`
       <div class="Telegram is-loading">

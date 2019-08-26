@@ -58,7 +58,7 @@ function news (state, emit) {
       if (!state.popular.data) {
         latest.unshift(grid.cell({ size: topRow }, popular.loading()))
       } else {
-        let items = state.popular.data.map(function (doc) {
+        const items = state.popular.data.map(function (doc) {
           var date = parse(doc.first_publication_date)
           var image = doc.data.image.url ? {
             alt: doc.data.image.alt || '',
@@ -88,7 +88,7 @@ function news (state, emit) {
       if (!state.telegram.data) {
         latest.unshift(Telegram.loading())
       } else {
-        let telegram = state.cache(Telegram, 'news-telegram')
+        const telegram = state.cache(Telegram, 'news-telegram')
         latest.unshift(telegram.render(state.telegram.data.slice(0, 9).map(function (item) {
           var date = parse(item.date)
           var diff = differenceInDays(Date.now(), date)
@@ -134,8 +134,8 @@ function news (state, emit) {
   // fetch page by number
   // num -> arr
   function page (num) {
-    let predicate = Predicates.at('document.type', 'news')
-    let opts = {
+    const predicate = Predicates.at('document.type', 'news')
+    const opts = {
       page: num,
       pageSize: PAGE_SIZE + 1,
       orderings: '[document.first_publication_date desc]'

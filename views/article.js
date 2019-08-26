@@ -65,7 +65,7 @@ function article (state, emit) {
                     <p class="Text-large"><strong class="u-textSemiBold">${description}</strong></p>
                     <time class="Text-muted u-inlineBlock" datetime="${date}">
                       ${text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`}
-                      <span class="u-nowrap">${byline ? ' – ' + text(`By %s`, byline) : null}</span>
+                      <span class="u-nowrap">${byline ? ' – ' + text`By ${byline}` : null}</span>
                     </time>
                     ${body}
                   </div>
@@ -80,9 +80,9 @@ function article (state, emit) {
                         `
                       }
                       case 'image': {
-                        let { url, copyright, alt, dimensions } = slice.primary.image
+                        const { url, copyright, alt, dimensions } = slice.primary.image
                         if (!url) return null
-                        let attrs = Object.assign({
+                        const attrs = Object.assign({
                           alt: alt || '',
                           sizes: '(min-width: 1000px) 66vw, 100vw',
                           srcset: srcset(url, [300, 600, 900, 1200, [1800, 'q_60'], [2200, 'q_40']])
@@ -107,7 +107,7 @@ function article (state, emit) {
                         `
                       }
                       case 'featured_link': {
-                        let { link } = slice.primary
+                        const { link } = slice.primary
                         if (!link.id || link.isBroken) return null
                         if (link.uid) {
                           return state.docs.getByUID(link.type, link.uid, asBookmark)
@@ -170,7 +170,7 @@ function article (state, emit) {
   function related (slice) {
     switch (slice.slice_type) {
       case 'links': {
-        let items = slice.items.filter(function (item) {
+        const items = slice.items.filter(function (item) {
           return (item.link.id || item.link.url) && !item.link.isBroken
         })
         if (!items.length) return null

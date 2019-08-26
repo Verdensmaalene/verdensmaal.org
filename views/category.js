@@ -110,12 +110,12 @@ function category (state, emit) {
         }
         default: {
           if (!doc.data.related.length) return null
-          let nominees = doc.data.related[0].items.filter(function (item) {
+          const nominees = doc.data.related[0].items.filter(function (item) {
             return item.link.id && !item.link.isBroken
           })
           if (!nominees.length) return null
 
-          let children = nominees.map(function (item, index) {
+          const children = nominees.map(function (item, index) {
             return state.docs.getByUID('page', item.link.uid, function (err, doc) {
               if (err) throw err
 
@@ -212,7 +212,7 @@ function category (state, emit) {
   function info (slice) {
     switch (slice.slice_type) {
       case 'links': {
-        let items = slice.items.filter(function (item) {
+        const items = slice.items.filter(function (item) {
           return (item.link.id || item.link.url) && !item.link.isBroken
         })
         if (!items.length) return null

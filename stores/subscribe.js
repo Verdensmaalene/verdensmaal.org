@@ -3,7 +3,7 @@ module.exports = subscribe
 function subscribe (state, emitter) {
   emitter.on('subscribe', function (data, url) {
     if (data instanceof window.FormData) {
-      let form = data
+      const form = data
       data = {}
       form.forEach(function (value, key) {
         data[key] = value

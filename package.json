@@ -101,6 +101,6 @@
     "babel-eslint": "^10.0.3",
     "choo-devtools": "^2.5.1",
     "dependency-check": "^3.4.1",
-    "standard": "^10.0.3"
+    "standard": "^14.0.2"
   }
 }

@@ -139,14 +139,14 @@ class Share extends Component {
 
       // play nice with ios
       if (navigator.userAgent.match(/ipad|ipod|iphone/i)) {
-        let range = document.createRange()
+        const range = document.createRange()
 
         input.contentEditable = true
         input.readOnly = false
         range.selectNodeContents(input)
 
         // create selection
-        let selection = window.getSelection()
+        const selection = window.getSelection()
         selection.removeAllRanges()
         selection.addRange(range)
         input.setSelectionRange(0, input.value.length)

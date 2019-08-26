@@ -2,8 +2,8 @@ var html = require('choo/html')
 var Component = require('choo/component')
 
 var LEVELS = [
-  [ 'c', 'j', 'k', 'n', 't', 'x', 'y', 'd', 's' ],
-  [ 'l', 'o' ]
+  ['c', 'j', 'k', 'n', 't', 'x', 'y', 'd', 's'],
+  ['l', 'o']
 ]
 
 var ALIAS = {
@@ -38,7 +38,7 @@ module.exports = class Background4 extends Component {
     var letters = element.querySelectorAll('.js-letter')
 
     for (let i = 0; i < letters.length; i++) {
-      let letter = letters[i]
+      const letter = letters[i]
 
       let min = 200
       let max = 900

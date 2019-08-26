@@ -24,7 +24,7 @@ function line (props, style = null) {
   var max = props.max
   props.series.forEach(function (serie) {
     for (let i = 0, len = serie.data.length; i < len; i++) {
-      let value = serie.data[i].value
+      const value = serie.data[i].value
       max = typeof max === 'undefined' || value > max ? value : max
       min = typeof min === 'undefined' || value < min ? value : min
     }

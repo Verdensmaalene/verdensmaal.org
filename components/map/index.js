@@ -10,7 +10,7 @@ var ACCESS_TOKEN = 'pk.eyJ1IjoidmVyZGVuc21hYWxlbmUiLCJhIjoiY2psNm1pYW5wMno3NTNwc
 var DEBUG = process.env.NODE_ENV === 'development'
 if (typeof window !== 'undefined') {
   try {
-    let flag = window.localStorage.DEBUG
+    const flag = window.localStorage.DEBUG
     DEBUG = DEBUG || (flag && JSON.parse(flag))
   } catch (err) {}
 }
@@ -30,7 +30,7 @@ module.exports = class Map extends Component {
       this.local.locations = locations
 
       if (this.map) {
-        let source = this.map.getSource('locations')
+        const source = this.map.getSource('locations')
         if (source) {
           // update map data source
           this.map.getSource('locations').setData({
@@ -90,14 +90,14 @@ module.exports = class Map extends Component {
         closeButton: false,
         closeOnClick: false,
         offset: {
-          'top': [0, 14],
+          top: [0, 14],
           'top-left': [0, 14],
           'top-right': [0, 14],
-          'bottom': [0, -42],
+          bottom: [0, -42],
           'bottom-left': [0, -42],
           'bottom-right': [0, -42],
-          'left': [16, -22],
-          'right': [-16, -22]
+          left: [16, -22],
+          right: [-16, -22]
         }
       })
 
@@ -211,8 +211,8 @@ module.exports = class Map extends Component {
             }
 
             // reveal all markers in cluster
-            let clusterId = features[0].properties.cluster_id
-            let source = map.getSource('locations')
+            const clusterId = features[0].properties.cluster_id
+            const source = map.getSource('locations')
             source.getClusterExpansionZoom(clusterId, function (err, zoom) {
               if (err) return
               map.easeTo({
@@ -223,10 +223,10 @@ module.exports = class Map extends Component {
           } else {
             // show myPopup for location
             select(features[0])
-            let location = self.local.locations.find(function (props) {
+            const location = self.local.locations.find(function (props) {
               return props.id === features[0].properties.id
             })
-            let content = popup(location)
+            const content = popup(location)
             if (content) {
               myPopup
                 .setLngLat(features[0].geometry.coordinates)

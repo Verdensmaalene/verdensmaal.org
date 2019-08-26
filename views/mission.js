@@ -66,7 +66,7 @@ function missionView (state, emit) {
           </section>
         `
         case 'link_list': {
-          let items = slice.items.map(function (item) {
+          const items = slice.items.map(function (item) {
             var attrs = { }
             var href = resolve(item.link)
             if (item.link.link_type === 'Web') {

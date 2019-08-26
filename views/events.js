@@ -66,7 +66,7 @@ function events (state, emit) {
   // render page content
   // obj -> Element
   function content (doc, upcoming, past) {
-    var bounds = state.bounds[state.country] || state.bounds['DK']
+    var bounds = state.bounds[state.country] || state.bounds.DK
     var locations = []
     if (upcoming && upcoming.results_size) {
       locations = upcoming.results.map(asLocation)
@@ -135,11 +135,11 @@ function events (state, emit) {
           `
         }
         case 'submit-event-panel': {
-          let opts = {
+          const opts = {
             url: '/api/submit-event',
             disclaimer: asElement(doc.data.form_disclaimer, resolve, serialize)
           }
-          let body = (sent) => {
+          const body = (sent) => {
             return html`
               <div class="Text">
                 ${sent ? asElement(doc.data.form_success, resolve, serialize) : html`
@@ -187,7 +187,7 @@ function events (state, emit) {
     }
 
     if (start) {
-      let date = parse(start)
+      const date = parse(start)
       props.label = html`
         <time datetime="${JSON.stringify(date).replace(/"/g, '')}">
           ${date.getDate()} ${text(`MONTH_${date.getMonth()}`)}, ${timestamp(date)}

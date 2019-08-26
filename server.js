@@ -190,13 +190,13 @@ app.use(get('/:num(\\d{1,2})-:uid', function (ctx, num, uid, next) {
 app.use(get('/delmaal-:num.:id.zip', async function (ctx, num, id, next) {
   var identifier = num + '.' + id
   try {
-    let api = await Prismic.api(REPOSITORY, { req: ctx.req })
-    let response = await api.query([
+    const api = await Prismic.api(REPOSITORY, { req: ctx.req })
+    const response = await api.query([
       Prismic.Predicates.at('document.type', 'goal'),
       Prismic.Predicates.at('my.goal.number', +num)
     ])
-    let doc = response.results[0]
-    let target = doc.data.targets.find((target) => target.id === identifier)
+    const doc = response.results[0]
+    const target = doc.data.targets.find((target) => target.id === identifier)
     ctx.set('Cache-Control', `max-age=${60 * 60 * 24 * 365}`)
     ctx.body = await zip(target.icon.url, `delmål-${identifier}`)
   } catch (err) {
@@ -207,13 +207,13 @@ app.use(get('/delmaal-:num.:id.zip', async function (ctx, num, id, next) {
 // render statistics as image
 app.use(get(/\/(?:(\d{1,2}).*?\/)?(.+?)\.svg/, async function (ctx, goal, id, next) {
   try {
-    let api = await Prismic.api(REPOSITORY, { req: ctx.req })
-    let doc = await api.getByID(id)
+    const api = await Prismic.api(REPOSITORY, { req: ctx.req })
+    const doc = await api.getByID(id)
     ctx.assert(doc, 404, 'Image not found')
 
     if (!goal) {
       // try and match goal by tag
-      let tag = doc.tags.find((tag) => tag.indexOf('goal-') === 0)
+      const tag = doc.tags.find((tag) => tag.indexOf('goal-') === 0)
       // fallback to random goal colors
       goal = tag ? tag.substr(5) : Math.ceil(Math.random() * 17)
     }

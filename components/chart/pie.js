@@ -29,7 +29,7 @@ function pie (props, style = null) {
   var paths = []
   var cols = [[], []]
   for (let i = 0, len = angles.length; i < len; i++) {
-    let data = Object.assign({
+    const data = Object.assign({
       id: slugify(props.series[i].label)
     }, props.series[i])
     start = end

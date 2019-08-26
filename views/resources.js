@@ -17,7 +17,7 @@ function resources (state, emit) {
   return state.docs.getSingle('resources', function (err, doc) {
     if (err) throw err
     if (!doc) {
-      let cells = []
+      const cells = []
       for (let i = 0; i < 3; i++) cells.push(card.loading())
       return html`
         <main class="View-main">

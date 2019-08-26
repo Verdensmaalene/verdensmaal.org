@@ -91,10 +91,10 @@ function sector (state, emit) {
       switch (slice.slice_type) {
         case 'text': {
           if (!slice.primary.text.length) return null
-          let id = doc.id + '-text-' + index
+          const id = doc.id + '-text-' + index
           let children
           if (index === 0) {
-            let opts = { size: 'large' }
+            const opts = { size: 'large' }
             children = state.cache(Text, id, opts).render(slice.primary.text)
           } else {
             children = html`
@@ -113,29 +113,29 @@ function sector (state, emit) {
         }
         case 'news':
         case 'events': {
-          let render = slice.slice_type === 'events' ? eventCard : newsCard
-          let ids = slice.items
+          const render = slice.slice_type === 'events' ? eventCard : newsCard
+          const ids = slice.items
             .filter((item) => item.link && item.link.id && !item.link.isBroken)
             .map((item) => item.link.id)
 
           // fetch featured news
-          let featured = ids.map(function (id) {
+          const featured = ids.map(function (id) {
             return state.docs.getByID(id, (err, doc) => err ? null : doc)
           })
 
-          let type = slice.slice_type === 'events' ? 'event' : 'news'
-          let predicates = [
+          const type = slice.slice_type === 'events' ? 'event' : 'news'
+          const predicates = [
             Predicates.at('document.type', type),
             Predicates.any('document.tags', doc.tags)
           ].concat(ids.map((id) => Predicates.not('document.id', id)))
 
-          let pageSize = 3
-          let opts = { pageSize }
+          const pageSize = 3
+          const opts = { pageSize }
           if (slice.slice_type === 'news') {
             opts.orderings = '[document.first_publication_date desc]'
           } else {
-            let yesterday = subDays(new Date(), 1)
-            let date = [
+            const yesterday = subDays(new Date(), 1)
+            const date = [
               yesterday.getFullYear(),
               ('0' + (yesterday.getMonth() + 1)).substr(-2),
               ('0' + yesterday.getDate()).substr(-2)
@@ -146,12 +146,12 @@ function sector (state, emit) {
           }
 
           let hasMore = true
-          let name = `${type}-${index}`
+          const name = `${type}-${index}`
           let page = +state.query[name]
           if (isNaN(page)) page = 1
 
           // fetch the lates news with mathing tags
-          let items = []
+          const items = []
           for (let i = 1; i <= page; i++) {
             items.push(...state.docs.get(predicates, Object.assign({
               page: i
@@ -163,15 +163,15 @@ function sector (state, emit) {
             }))
           }
 
-          let query = Object.assign({}, state.query, { [name]: page + 1 })
-          let queries = Object.entries(query).map((pair) => pair.join('='))
-          let count = hasMore ? pageSize * page - featured.length : items.length
-          let onclick = (event) => {
+          const query = Object.assign({}, state.query, { [name]: page + 1 })
+          const queries = Object.entries(query).map((pair) => pair.join('='))
+          const count = hasMore ? pageSize * page - featured.length : items.length
+          const onclick = (event) => {
             emit('pushState', event.target.href, true)
             event.preventDefault()
           }
 
-          let cells = featured.concat(items.slice(0, count)).map(function (item, index, list) {
+          const cells = featured.concat(items.slice(0, count)).map(function (item, index, list) {
             var child = item ? render(item) : card.loading()
             var opts = { size: { md: '1of2', lg: '1of3' } }
             if (list.length > pageSize) {
@@ -207,7 +207,7 @@ function sector (state, emit) {
           </div>
         `
         case 'drill_down': {
-          let items = slice.items.map(function (item, order) {
+          const items = slice.items.map(function (item, order) {
             var body = null
             if (item.text.length) {
               body = asElement(item.text, resolve, serialize)
@@ -237,7 +237,7 @@ function sector (state, emit) {
         }
         case 'video': {
           if (slice.primary.video.type !== 'video') return null
-          let children = video(slice.primary.video)
+          const children = video(slice.primary.video)
           if (!children) return null
           return html`
             <div class="View-space View-space--${camelCase(slice.slice_type)} u-container">
@@ -248,7 +248,7 @@ function sector (state, emit) {
         }
         case 'image': {
           if (!slice.primary.image.url) return null
-          let { alt, copyright, dimensions } = slice.primary.image
+          const { alt, copyright, dimensions } = slice.primary.image
           return html`
             <figure class="View-space View-space--${camelCase(slice.slice_type)} u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
@@ -260,7 +260,7 @@ function sector (state, emit) {
           `
         }
         case 'gallery': {
-          let items = slice.items.map(function (item) {
+          const items = slice.items.map(function (item) {
             if (item.video.embed_url) return video(slice.primary.video)
             if (item.image.url) {
               var attrs = {
@@ -297,9 +297,9 @@ function sector (state, emit) {
           `
         }
         case 'link_text': {
-          let { heading, text } = slice.primary
-          let title = asText(heading)
-          let body = text.length ? asElement(text, resolve) : null
+          const { heading, text } = slice.primary
+          const title = asText(heading)
+          const body = text.length ? asElement(text, resolve) : null
           return html`
             <div class="View-spaceLarge u-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
@@ -308,7 +308,7 @@ function sector (state, emit) {
           `
         }
         case 'map': {
-          let locations = slice.items.map(function (item) {
+          const locations = slice.items.map(function (item) {
             var { link, text, location } = item
             return Object.assign({
               heading: text,
@@ -323,7 +323,7 @@ function sector (state, emit) {
           `
         }
         case 'link_list': {
-          let items = slice.items.map(function (item) {
+          const items = slice.items.map(function (item) {
             var { link } = item
             if ((!link.url && !link.id) || link.isBroken) return null
             var attrs = { }
@@ -366,8 +366,8 @@ function sector (state, emit) {
         }
         case 'link_grid': {
           if (!slice.items.length) return null
-          let cols = slice.items.length % 3 === 0 ? 3 : 2
-          let cells = slice.items.map((item) => linkCard(item, cols))
+          const cols = slice.items.length % 3 === 0 ? 3 : 2
+          const cells = slice.items.map((item) => linkCard(item, cols))
           return html`
             <div class="View-space View-space--${camelCase(slice.slice_type)} u-md-container">
               <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
@@ -399,14 +399,14 @@ function sector (state, emit) {
 
       if (!theme) {
         // try and match goal by tag
-        let tag = doc.tags.find((tag) => tag.indexOf('goal-') === 0)
+        const tag = doc.tags.find((tag) => tag.indexOf('goal-') === 0)
         // fallback to random goal colors
         theme = tag ? tag.substr(5) : Math.ceil(Math.random() * 17)
       }
 
-      let { title, value, color, source } = doc.data
-      let goalColors = [colors[`goal${theme}`], colors[`goal${theme}Shaded`]]
-      let props = {
+      const { title, value, color, source } = doc.data
+      const goalColors = [colors[`goal${theme}`], colors[`goal${theme}Shaded`]]
+      const props = {
         title,
         size: 'md',
         shrink: true,
@@ -432,7 +432,7 @@ function sector (state, emit) {
 
       if (doc.data.series) {
         for (let i = 0, len = doc.data.series.length; i < len; i++) {
-          let serie = doc.data.series[i]
+          const serie = doc.data.series[i]
           if (serie.items && serie.primary) {
             props.series.push(Object.assign({}, serie.primary, {
               color: serie.primary.color || goalColors[i] || '#F1F1F1',
@@ -449,10 +449,10 @@ function sector (state, emit) {
       }
 
       var types = {
-        'bar_chart': 'bar',
-        'numeric_chart': 'number',
-        'line_chart': 'line',
-        'pie_chart': 'pie'
+        bar_chart: 'bar',
+        numeric_chart: 'number',
+        line_chart: 'line',
+        pie_chart: 'pie'
       }
 
       return state.cache(Chart, doc.id, types[doc.type]).render(props)

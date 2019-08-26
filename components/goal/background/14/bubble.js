@@ -1,8 +1,8 @@
 var html = require('choo/html')
 var Component = require('choo/component')
 
-var SIZES = [ 'small', 'large' ]
-var SPEEDS = [ 15000, 9000 ]
+var SIZES = ['small', 'large']
+var SPEEDS = [15000, 9000]
 
 module.exports = class Bubble extends Component {
   load (element) {

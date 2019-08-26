@@ -135,8 +135,8 @@ class Home extends View {
           case 'square': return centerSlot(logo({ vertical: true }), type)
           case 'large': {
             if (!doc || !doc.data.grid_slots.length) return null
-            let slice = doc.data.grid_slots[0]
-            let props = {
+            const slice = doc.data.grid_slots[0]
+            const props = {
               image: slice.primary.image.url ? slice.primary.image : null,
               title: asText(slice.primary.title),
               body: asText(slice.primary.body),
@@ -260,8 +260,8 @@ class Home extends View {
 
           var fill = 6 - cards.length
           if (fill > 0) {
-            let news = getNews(fill, ids)
-            let events = getEvents(1, ids)
+            const news = getNews(fill, ids)
+            const events = getEvents(1, ids)
 
             if (events.length) {
               fill--
@@ -295,7 +295,7 @@ class Home extends View {
         switch (type) {
           case 'event': {
             props.link = { href: resolve(item) }
-            let date = parse(data.start)
+            const date = parse(data.start)
             return event.outer(card(props, event.inner(Object.assign({}, data, {
               start: date,
               end: parse(data.end),
@@ -306,7 +306,7 @@ class Home extends View {
             props.link = { href: resolve(item) }
             props.image = image
             if (item.first_publication_date) {
-              let date = parse(item.first_publication_date)
+              const date = parse(item.first_publication_date)
               props.date = {
                 datetime: date,
                 text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`

@@ -5,7 +5,7 @@ var common = require('./lang.json')
 
 if (typeof window !== 'undefined') {
   require('smoothscroll-polyfill').polyfill()
-  let scrollIntoView = window.Element.prototype.scrollIntoView
+  const scrollIntoView = window.Element.prototype.scrollIntoView
   window.Element.prototype.scrollIntoView = function (opts) {
     if (typeof opts === 'boolean') {
       if (opts) opts = { block: 'start', inline: 'nearest' }
@@ -81,7 +81,7 @@ function resolve (doc) {
     default: {
       if (doc.type === 'page' && doc.uid === 'nominer-en-helt') return `/${doc.uid}`
       // handle links to web and media
-      let type = doc.link_type
+      const type = doc.link_type
       if (type === 'Web' || type === 'Media' || type === 'Any') return doc.url
       throw new Error('Document not recognized')
     }

@@ -12,14 +12,14 @@ module.exports = class Background2 extends Component {
     var crops = element.querySelectorAll('.js-crop')
 
     if (vw() < 900) {
-      let [ x, y, width, height ] = field.getAttribute('viewBox').split(' ')
-      field.setAttribute('viewBox', [ x, y, width * 0.7, height ].join(' '))
+      const [x, y, width, height] = field.getAttribute('viewBox').split(' ')
+      field.setAttribute('viewBox', [x, y, width * 0.7, height].join(' '))
       field.setAttribute('width', width * 0.7)
 
       for (let i = 0; i < crops.length; i++) {
-        let crop = crops[i]
-        let current = +crop.getAttribute('x')
-        let next = (current * 0.7)
+        const crop = crops[i]
+        const current = +crop.getAttribute('x')
+        const next = (current * 0.7)
 
         crop.setAttribute('x', next)
       }

@@ -63,7 +63,7 @@ module.exports = class Footer extends Component {
             </div>
             <div class="Footer-controls">
               <div class="u-spaceR2">
-                ${button({ 'class': 'Button--primary Button--small js-submit', text: text`Sign up`, type: 'submit' })}
+                ${button({ class: 'Button--primary Button--small js-submit', text: text`Sign up`, type: 'submit' })}
               </div>
               <div class="Text"><div class="Text-muted Text-small">${props.newsletter.note}</div></div>
             </div>

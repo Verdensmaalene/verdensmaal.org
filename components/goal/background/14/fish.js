@@ -1,8 +1,8 @@
 var html = require('choo/html')
 var Component = require('choo/component')
 
-var SIZES = [ 'small', 'medium' ]
-var SPEEDS = [ 45000, 35000, 25000 ]
+var SIZES = ['small', 'medium']
+var SPEEDS = [45000, 35000, 25000]
 
 module.exports = class Fish extends Component {
   load (element) {

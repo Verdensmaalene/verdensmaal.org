@@ -99,8 +99,8 @@ function calendar (entries, opts = {}) {
 function loading (num) {
   var items = []
   for (let i = 0; i < num; i++) {
-    let showMonth = i === 0 || Math.random() > 0.6
-    let showDay = i === 0 || showMonth || Math.random() > 0.6
+    const showMonth = i === 0 || Math.random() > 0.6
+    const showDay = i === 0 || showMonth || Math.random() > 0.6
     items.push(html`
       <li class="Calendar-item ${showDay ? 'Calendar-item--firstOfDay' : ''} is-loading">
         ${showMonth ? html`

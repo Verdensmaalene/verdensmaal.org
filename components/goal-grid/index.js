@@ -22,10 +22,10 @@ module.exports = class GoalGrid extends Component {
     }
 
     if (typeof window !== 'undefined') {
-      let element = html`<div class="GoalGrid" style="display: none;"></div>`
+      const element = html`<div class="GoalGrid" style="display: none;"></div>`
       document.body.appendChild(element)
-      let styles = window.getComputedStyle(element)
-      let layoutBinary = styles.getPropertyValue('--supports-layout')
+      const styles = window.getComputedStyle(element)
+      const layoutBinary = styles.getPropertyValue('--supports-layout')
       this.local.supportsLayout = (+layoutBinary === 1)
       document.body.removeChild(element)
     }
@@ -59,13 +59,13 @@ module.exports = class GoalGrid extends Component {
     if (!this.local.layout) return
 
     var onresize = nanoraf(() => {
-      let styles = window.getComputedStyle(element)
-      let layoutBinary = styles.getPropertyValue('--supports-layout')
+      const styles = window.getComputedStyle(element)
+      const layoutBinary = styles.getPropertyValue('--supports-layout')
       var prev = this.local.supportsLayout
       var next = (+layoutBinary === 1)
       this.local.supportsLayout = next
       if (next && prev !== next) {
-        let [landscape, portrait] = LAYOUTS[this.local.layout - 1]
+        const [landscape, portrait] = LAYOUTS[this.local.layout - 1]
         this.cache(this.GoalCell, this.GoalCell.id(landscape, 'landscape')).rerender()
         this.cache(this.GoalCell, this.GoalCell.id(portrait, 'portrait')).rerender()
       }
@@ -84,11 +84,11 @@ module.exports = class GoalGrid extends Component {
 
     var cells = []
     for (let i = 0; i < TOTAL_GOALS; i++) {
-      let num = i + 1
-      let pair = LAYOUTS[layout - 1]
-      let goal = goals.find((goal) => goal.number === num)
-      let format = pair.includes(num) ? ['landscape', 'portrait'][pair.indexOf(num)] : 'square'
-      let props = Object.assign({ format: format, blank: !goal }, goal)
+      const num = i + 1
+      const pair = LAYOUTS[layout - 1]
+      const goal = goals.find((goal) => goal.number === num)
+      const format = pair.includes(num) ? ['landscape', 'portrait'][pair.indexOf(num)] : 'square'
+      const props = Object.assign({ format: format, blank: !goal }, goal)
       cells.push(cell(props, i + 1))
       if (format !== 'square') {
         // augument a square goal for each landscape/portrait

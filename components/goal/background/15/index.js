@@ -18,8 +18,8 @@ module.exports = class Background15 extends Component {
   load (element) {
     var wings = element.querySelectorAll('.js-beeWing')
     for (let i = 0; i < wings.length; i++) {
-      let from = wings[i].getAttribute('d')
-      let to = BEE_WING_FLAPS[i]
+      const from = wings[i].getAttribute('d')
+      const to = BEE_WING_FLAPS[i]
       wings[i].appendChild(html`
         <animate attributeName="d" begin="0s" dur="140ms" repeatCount="indefinite" values="${[from, to, from].join(';')}" />
       `)

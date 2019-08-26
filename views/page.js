@@ -83,7 +83,7 @@ function page (state, emit) {
   function related (slice) {
     switch (slice.slice_type) {
       case 'links': {
-        let items = slice.items.filter(function (item) {
+        const items = slice.items.filter(function (item) {
           return (item.link.id || item.link.url) && !item.link.isBroken
         })
         if (!items.length) return null

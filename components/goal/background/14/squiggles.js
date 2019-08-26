@@ -18,7 +18,7 @@ module.exports = function createPath (follow, step = 15, amplitude = 4, side = -
   var newPath = 'M' + [pos.x, pos.y].join(',')
 
   for (let i = 1; i <= numSteps; i++) {
-    let last = pos
+    const last = pos
     pos = follow.getPointAtLength(i * pathLen / numSteps)
 
     // Find a point halfway between last and pos. Then find the point that is
@@ -28,24 +28,24 @@ module.exports = function createPath (follow, step = 15, amplitude = 4, side = -
     // squiggle step.
 
     // the vector from the last point to this one
-    let vector = {
+    const vector = {
       x: (pos.x - last.x),
       y: (pos.y - last.y)
     }
     // the length of this vector
-    let vectorLen = Math.sqrt(vector.x * vector.x + vector.y * vector.y)
+    const vectorLen = Math.sqrt(vector.x * vector.x + vector.y * vector.y)
     // the point halfwasy between last point and tis one
-    let half = {
+    const half = {
       x: (last.x + vector.x / 2),
       y: (last.y + vector.y / 2)
     }
     // the vector that is perpendicular to 'vector'
-    let perpVector = {
+    const perpVector = {
       x: -(amplitude * vector.y / vectorLen),
       y: (amplitude * vector.x / vectorLen)
     }
     // now calculate the control point position
-    let controlPoint = {
+    const controlPoint = {
       x: (half.x + perpVector.x * side),
       y: (half.y + perpVector.y * side)
     }

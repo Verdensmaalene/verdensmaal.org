@@ -13,7 +13,7 @@ function popup (props) {
   if (props.heading) children.push(html`<strong class="Map-heading">${props.heading}</strong>`)
   if (props.subheading) children.push(html`<span class="Map-subheading">${props.subheading}</span>`)
   if (props.href) {
-    let attrs = { href: props.href, class: 'Map-link' }
+    const attrs = { href: props.href, class: 'Map-link' }
     if (!isSameDomain(props.href)) {
       attrs.rel = 'noopener noreferrer'
       attrs.target = '_blank'

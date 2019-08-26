@@ -166,7 +166,7 @@ module.exports = class Goal extends Component {
       self.emit('goal:press', self.local.id)
 
       if (e.touches) {
-        let touch = e.touches.item(0)
+        const touch = e.touches.item(0)
         start = { clientX: touch.clientX, clientY: touch.clientY }
       }
 

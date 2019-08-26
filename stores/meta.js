@@ -29,7 +29,7 @@ function meta (state, emitter, app) {
     })
 
     if (typeof window !== 'undefined') {
-      var link = document.head.querySelector(`link[rel="shortcut icon"]`)
+      var link = document.head.querySelector('link[rel="shortcut icon"]')
       var attrs = favicon(next.goal || null)
       theme(document.documentElement, next.goal || null)
       link.setAttribute('type', attrs.type)

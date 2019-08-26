@@ -1,7 +1,7 @@
 var html = require('choo/html')
 var Component = require('choo/component')
 
-var SIZES = [ 'sm', 'md', 'lg' ]
+var SIZES = ['sm', 'md', 'lg']
 
 module.exports = class Background6 extends Component {
   update () {

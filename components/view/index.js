@@ -57,7 +57,7 @@ function createView (view, meta) {
       var children
       try {
         children = view.call(this, state, emit)
-        let next = meta.call(this, state)
+        const next = meta.call(this, state)
 
         if (next.title && next.title !== DEFAULT_TITLE) {
           next.title = `${next.title} | ${DEFAULT_TITLE}`
@@ -90,10 +90,10 @@ function createView (view, meta) {
 
         var isGoal
         if (!hasError) {
-          let wildcard = state.params.wildcard
+          const wildcard = state.params.wildcard
           if (wildcard && wildcard.indexOf('/') === -1) {
-            let [, num] = (wildcard.match(GOAL_SLUG) || [])
-            let predicate = Predicates.at('my.goal.number', +num)
+            const [, num] = (wildcard.match(GOAL_SLUG) || [])
+            const predicate = Predicates.at('my.goal.number', +num)
             isGoal = num && state.docs.get(predicate, (err) => !err)
             if (isGoal) {
               opts.theme = +num === 7 ? 'black' : 'white'
@@ -124,7 +124,7 @@ function createView (view, meta) {
         var scores = [] // href match score [<score>, <index>]
         var segments = state.href.split('/')
         for (let i = 0, len = menu.length; i < len; i++) {
-          let href = menu[i].href.replace(/\/$/, '')
+          const href = menu[i].href.replace(/\/$/, '')
           scores.push([href.split('/').reduce(function (score, segment, index) {
             return segments[index] === segment ? score + 1 : score
           }, 0), i])

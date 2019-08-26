@@ -75,8 +75,8 @@ module.exports = class Engager extends Component {
         self.select(props.id === self.local.selected ? null : props.id)
 
         if (self.local.selected && nextIndex > index && isSmall) {
-          let target = event.currentTarget
-          let { top } = target.getBoundingClientRect()
+          const target = event.currentTarget
+          const { top } = target.getBoundingClientRect()
           // await repaint
           window.requestAnimationFrame(function () {
             // align target with where it was when clicked

@@ -10,8 +10,8 @@ function navigation (state, emitter) {
   emitter.prependListener('navigate', function () {
     state.referrer = state.href
     gtag('config', 'UA-131830829-1', {
-      'page_title': state.title,
-      'page_path': state.href
+      page_title: state.title,
+      page_path: state.href
     })
   })
 

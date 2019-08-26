@@ -40,7 +40,7 @@ function nomination (state, emitter) {
             body: JSON.stringify(state.nomination.fields),
             headers: {
               'Content-Type': 'application/json',
-              'Accept': 'application/json'
+              Accept: 'application/json'
             }
           }).then(function (res) {
             if (!res.ok) throw new Error(res.statusMessage || 'Could not submit')
@@ -50,10 +50,10 @@ function nomination (state, emitter) {
             emitter.emit('pushState', resolve(doc) + '/tak')
           })
         } else {
-          let categories = doc.data.related[0].items.filter(function (item) {
+          const categories = doc.data.related[0].items.filter(function (item) {
             return item.link.id && !item.link.isBroken
           })
-          let index = categories.findIndex(function (item) {
+          const index = categories.findIndex(function (item) {
             return item.link.uid === state.params.uid
           })
 
@@ -62,7 +62,7 @@ function nomination (state, emitter) {
             state.nomination.loading = false
             emitter.emit('pushState', resolve(doc) + '/oversigt')
           } else {
-            let next = categories[index + 1]
+            const next = categories[index + 1]
             state.nomination.loading = false
             emitter.emit('pushState', resolve(next.link))
           }
