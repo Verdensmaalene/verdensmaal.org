@@ -11,7 +11,12 @@ module.exports = bookmark
 module.exports.loading = loading
 
 function bookmark (props) {
-  var url = new URL(props.url)
+  try {
+    // try and parse external url
+    var url = new URL(props.url)
+  } catch (err) {
+    // it would appear to be an internal link
+  }
   var date = props.date && parse(props.date)
 
   return html`
@@ -19,21 +24,23 @@ function bookmark (props) {
       ${props.image ? html`
         <div class="Bookmark-thumbnail">
           <img onerror=${onerror} class="Bookmark-image" alt="${props.title}" sizes="200px" srcset="${srcset(props.image, [200, 400])}" src="${srcset(props.image, [200]).split(' ')[0]}">
-          ${props.publisher ? html`<small class="Bookmark-publisher">${props.publisher}</small>` : null}
+          ${props.label ? html`<small class="Bookmark-label">${props.label}</small>` : null}
         </div>
       ` : null}
       <a href="${props.url}" rel="noreferrer noopener" target="_blank" class="Bookmark-icon">
-        <span class="u-hiddenVisually">${text`Visit ${url.hostname}`}</span>
-        ${external({ cover: true })}
+        ${url ? html`<span class="u-hiddenVisually">${text`Visit ${url.hostname}`}</span>` : null}
+        ${url ? external({ cover: true }) : null}
       </a>
       <figcaption class="Bookmark-body">
-        <small class="Bookmark-meta">
-          <span class="Bookmark-date">
-            ${text`Published`} ${date ? html`
-              <time datetime="${JSON.stringify(date).replace(/"/g, '')}">${text`on the ${date.getDate()}. ${text(`MONTH_${date.getMonth()}`).substr(0, 3)} ${date.getFullYear()}`}</time>
-            ` : null} ${text`on`}
-          </span> <span class="Bookmark-href">${url.hostname}</span>
-        </small>
+        ${url || date ? html`
+          <small class="Bookmark-meta">
+            <span class="Bookmark-date">
+              ${text`Published`} ${date ? html`
+                <time datetime="${JSON.stringify(date).replace(/"/g, '')}">${text`on the ${date.getDate()}. ${text(`MONTH_${date.getMonth()}`).substr(0, 3)} ${date.getFullYear()}`}</time>
+              ` : null} ${url ? text`on` : null}
+            </span> ${url ? html`<span class="Bookmark-href">${url.hostname}</span>` : null}
+          </small>
+        ` : null}
         <h3 class="Bookmark-title">${props.title}</h3>
         ${props.description ? html`<p class="Bookmark-description">${snippet(props.description, 90)}</p>` : null}
       </figcaption>

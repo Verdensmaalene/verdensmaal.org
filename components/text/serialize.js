@@ -13,7 +13,9 @@ function serialize (type, node, content, children) {
       let id = embed.id(node.oembed)
       if (!id || !provider) {
         if (!node.oembed.meta) return null
-        return bookmark(node.oembed.meta)
+        return bookmark(Object.assign({
+          label: node.oembed.meta.publisher
+        }, node.oembed.meta))
       }
 
       return embed({

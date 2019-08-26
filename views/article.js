@@ -6,6 +6,7 @@ var view = require('../components/view')
 var share = require('../components/share')
 var symbol = require('../components/symbol')
 var banner = require('../components/banner')
+var bookmark = require('../components/bookmark')
 var shareButton = require('../components/share-button')
 var serialize = require('../components/text/serialize')
 var { i18n, srcset, asText, resolve } = require('../components/base')
@@ -58,14 +59,65 @@ function article (state, emit) {
 
             <div class="u-cols">
               <div class="u-col u-lg-size2of3">
-                <div class="Text">
-                  <h1 class="u-spaceT4">${title}</h1>
-                  <p class="Text-large"><strong class="u-textSemiBold">${description}</strong></p>
-                  <time class="Text-muted u-inlineBlock" datetime="${date}">
-                    ${text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`}
-                    <span class="u-nowrap">${byline ? ' – ' + text(`By %s`, byline) : null}</span>
-                  </time>
-                  ${body}
+                <div>
+                  <div class="Text">
+                    <h1 class="u-spaceT4">${title}</h1>
+                    <p class="Text-large"><strong class="u-textSemiBold">${description}</strong></p>
+                    <time class="Text-muted u-inlineBlock" datetime="${date}">
+                      ${text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`}
+                      <span class="u-nowrap">${byline ? ' – ' + text(`By %s`, byline) : null}</span>
+                    </time>
+                    ${body}
+                  </div>
+                  ${doc.data.content ? doc.data.content.map(function (slice) {
+                    switch (slice.slice_type) {
+                      case 'text': {
+                        if (!slice.primary.text.length) return null
+                        return html`
+                          <div class="Text View-spaceSmall">
+                            ${asElement(slice.primary.text, resolve, serialize)}
+                          </div>
+                        `
+                      }
+                      case 'image': {
+                        let { url, copyright, alt, dimensions } = slice.primary.image
+                        if (!url) return null
+                        let attrs = Object.assign({
+                          alt: alt || '',
+                          sizes: '(min-width: 1000px) 66vw, 100vw',
+                          srcset: srcset(url, [300, 600, 900, 1200, [1800, 'q_60'], [2200, 'q_40']])
+                        }, dimensions)
+                        return html`
+                          <figure class="Text View-spaceSmall u-sizeFull">
+                            <img ${attrs} src="${srcset(url, [900]).split(' ')[0]}">
+                            ${copyright || alt ? html`
+                              <figcaption class="Text">
+                                <small class="Text-muted">${copyright || alt}</small>
+                              </figcaption>
+                            ` : null}
+                          </figure>
+                        `
+                      }
+                      case 'facts_box': {
+                        if (!slice.primary.text.length) return null
+                        return html`
+                          <aside class="Text Text--box View-spaceSmall">
+                            ${asElement(slice.primary.text, resolve, serialize)}
+                          </aside>
+                        `
+                      }
+                      case 'featured_link': {
+                        let { link } = slice.primary
+                        if (!link.id || link.isBroken) return null
+                        if (link.uid) {
+                          return state.docs.getByUID(link.type, link.uid, asBookmark)
+                        } else {
+                          return state.docs.getByID(link.id, asBookmark)
+                        }
+                      }
+                      default: return null
+                    }
+                  }) : null}
                 </div>
               </div>
               <aside class="View-sidebar u-col u-lg-size1of3">
@@ -154,6 +206,25 @@ function article (state, emit) {
       default: return null
     }
   }
+}
+
+// render document as bookmark
+// (Error?, obj) -> Element
+function asBookmark (err, doc) {
+  if (err) return null
+  if (!doc) return html`<div class="Text View-spaceSmall">${bookmark.loading()}</div>`
+  return html`
+    <div class="Text View-spaceSmall">
+      ${bookmark({
+        image: doc.data.image.url,
+        url: resolve(doc),
+        date: doc.type === 'news' ? doc.first_publication_date : null,
+        title: asText(doc.data.title),
+        description: asText(doc.data.description),
+        label: text`Read also`
+      })}
+    </div>
+  `
 }
 
 // construct image properties

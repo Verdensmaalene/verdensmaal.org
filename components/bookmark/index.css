@@ -33,7 +33,7 @@
   }
 }
 
-.Bookmark .Bookmark-publisher {
+.Bookmark .Bookmark-label {
   display: inline-block;
   max-width: 15em;
   padding: 0.4em 0.75em 0.5em;
@@ -44,10 +44,6 @@
   color: rgb(var(--current-background));
   background-color: rgb(var(--color-theme));
   border-radius: 1px;
-}
-
-.Bookmark.is-loading .Bookmark-provider {
-  color: rgb(var(--color-theme));
 }
 
 .Bookmark .Bookmark-thumbnail {

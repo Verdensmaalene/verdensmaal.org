@@ -115,8 +115,18 @@
 
 @media (min-width: 1000px) {
   .View-sidebar {
-    padding-left: 2rem;
-    border-left: 1px solid rgb(var(--color-gray-light));
+    padding-left: 4rem;
+    position: relative;
+  }
+
+  .View-sidebar::before {
+    content: "";
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    left: 2rem;
+    top: 0;
+    background-color: rgb(var(--color-gray-light));
   }
 
   .View-sidebar > * {
@@ -126,7 +136,11 @@
 
 @media (min-width: 1200px) {
   .View-sidebar {
-    padding-left: 3rem;
+    padding-left: 6rem;
+  }
+
+  .View-sidebar::before {
+    left: 3rem;
   }
 }
 
