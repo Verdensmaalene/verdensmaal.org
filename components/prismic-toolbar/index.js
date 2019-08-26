@@ -12,33 +12,37 @@ module.exports = class PrismicToolbar extends Component {
     super(id)
     this.local = {
       id,
+      token: null,
       href: state.href,
-      token: state.query.token ? encodeURIComponent(state.query.token) : null,
       enabled: typeof window !== 'undefined'
     }
 
     this.href = () => state.origin + state.href
 
-    if (state.query.token && typeof window !== 'undefined') {
-      let expires = process.env.NODE_ENV === 'development'
-        ? new Date(Date.now() + (1000 * 60 * 60 * 12))
-        : new Date(Date.now() + (1000 * 60 * 30))
-      document.cookie = `${Prismic.previewCookie}=${state.query.token}; path=/; expires=${expires.toUTCString()};`
-      emit('prismic:clear')
-      emit('replaceState', state.href)
+    if (typeof window !== 'undefined') {
+      let token = state.query.token
+      if (!token) {
+        let cookie = document.cookie.match(COOKIE_REGEX)
+        token = cookie && cookie[1]
+      } else {
+        let expires = process.env.NODE_ENV === 'development'
+          ? new Date(Date.now() + (1000 * 60 * 60 * 12))
+          : new Date(Date.now() + (1000 * 60 * 30))
+        document.cookie = `${Prismic.previewCookie}=${token}; path=/; expires=${expires.toUTCString()};`
+      }
+
+      if (token) {
+        this.local.token = encodeURIComponent(token)
+        emit('prismic:clear')
+        emit('replaceState', state.href)
+      } else {
+        this.local.enabled = false
+      }
     }
   }
 
   placeholder (href) {
     if (!this.local.enabled) return null
-    if (!this.local.token) {
-      let cookie = document.cookie.match(COOKIE_REGEX)
-      if (!cookie) {
-        this.local.enabled = false
-        return null
-      }
-      this.local.token = encodeURIComponent(cookie[1])
-    }
     return this.render(href)
   }
 
