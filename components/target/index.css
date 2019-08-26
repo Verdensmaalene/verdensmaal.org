@@ -71,6 +71,7 @@
 }
 
 .Target-actions {
+  flex: 0 0 auto;
   display: flex;
   position: absolute;
   z-index: 3;
@@ -119,6 +120,7 @@
  */
 
 .Target-title {
+  flex: 1 1 auto;
   margin-right: auto;
   position: relative;
   z-index: 1; /* 1 */
@@ -162,6 +164,10 @@
     padding: 0;
     margin: 0 1.5rem 0 0;
     background: transparent;
+  }
+
+  .Target-content {
+    flex: 1 1 auto;
   }
 
   .Target-caption,
