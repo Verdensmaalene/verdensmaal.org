@@ -41,6 +41,10 @@
   margin-bottom: var(--Grid-gutter);
 }
 
+.Grid--collapse .Grid-cell {
+  margin-bottom: 0;
+}
+
 .Grid-cell > * {
   flex-basis: 100%;
   min-width: 0; /* 1 */

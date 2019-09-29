@@ -164,8 +164,8 @@ function createView (view, meta) {
           }].concat(shortcuts).slice(0, 4),
           newsletter: {
             heading: asText(doc.data.newsletter_label),
-            body: asElement(doc.data.newsletter_body),
-            note: asElement(doc.data.newsletter_note)
+            body: asElement(doc.data.newsletter_body, resolve),
+            note: asElement(doc.data.newsletter_note, resolve)
           }
         }
 

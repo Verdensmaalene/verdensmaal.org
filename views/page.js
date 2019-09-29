@@ -1,8 +1,12 @@
 var html = require('choo/html')
 var asElement = require('prismic-element')
 var view = require('../components/view')
+var grid = require('../components/grid')
 var intro = require('../components/intro')
+var button = require('../components/button')
 var banner = require('../components/banner')
+var { input } = require('../components/form')
+var bookmark = require('../components/bookmark')
 var serialize = require('../components/text/serialize')
 var { i18n, asText, srcset, resolve } = require('../components/base')
 
@@ -62,6 +66,90 @@ function page (state, emit) {
                   <div class="Text">
                     ${body}
                   </div>
+                  ${doc.data.content ? doc.data.content.map(function (slice) {
+                    switch (slice.slice_type) {
+                      case 'text': {
+                        if (!slice.primary.text.length) return null
+                        return html`
+                          <div class="Text View-spaceSmall">
+                            ${asElement(slice.primary.text, resolve, serialize)}
+                          </div>
+                        `
+                      }
+                      case 'image': {
+                        const { url, copyright, alt, dimensions } = slice.primary.image
+                        if (!url) return null
+                        const attrs = Object.assign({
+                          alt: alt || '',
+                          sizes: '(min-width: 1000px) 66vw, 100vw',
+                          srcset: srcset(url, [300, 600, 900, 1200, [1800, 'q_60'], [2200, 'q_40']])
+                        }, dimensions)
+                        return html`
+                          <figure class="Text View-spaceSmall u-sizeFull">
+                            <img ${attrs} src="${srcset(url, [900]).split(' ')[0]}">
+                            ${copyright || alt ? html`
+                              <figcaption class="Text">
+                                <small class="Text-muted">${copyright || alt}</small>
+                              </figcaption>
+                            ` : null}
+                          </figure>
+                        `
+                      }
+                      case 'facts_box': {
+                        if (!slice.primary.text.length) return null
+                        return html`
+                          <aside class="Text Text--box View-spaceSmall">
+                            ${asElement(slice.primary.text, resolve, serialize)}
+                          </aside>
+                        `
+                      }
+                      case 'featured_link': {
+                        const { link } = slice.primary
+                        if (!link.id || link.isBroken) return null
+                        if (link.uid) {
+                          return state.docs.getByUID(link.type, link.uid, asBookmark)
+                        } else {
+                          return state.docs.getByID(link.id, asBookmark)
+                        }
+                      }
+                      case 'newsletter': {
+                        return state.docs.getSingle('website', function (err, website) {
+                          if (err || !website) return null
+                          return html`
+                            <form class="View-space" method="post" action="/api/subscribe" onsubmit=${onsubmit}>
+                              ${slice.primary.heading.length || slice.primary.description.length ? html`
+                                <div class="Text u-spaceB4">
+                                  ${slice.primary.heading.length ? html`<h2>${asText(slice.primary.heading)}</h2>` : null}
+                                  ${asElement(slice.primary.description, resolve)}
+                                </div>
+                              ` : null}
+                              <input type="hidden" name="page" value="${state.origin}">
+                              <input type="hidden" name="country" value="${state.country}">
+                              ${grid({ size: { md: '1of2' }, collapse: true }, [
+                                input({ type: 'text', name: 'name', label: text`Your name`, required: true }),
+                                input({ type: 'email', name: 'email', label: text`Your email`, required: true })
+                              ])}
+                              ${grid({ size: { md: '2of3' } }, [html`
+                                <div class="u-flex u-alignCenter">
+                                  <div class="u-spaceR2">
+                                    ${button({ class: 'Button--primary js-submit', text: text`Sign up`, type: 'submit' })}
+                                  </div>
+                                  ${website.data.newsletter_note ? html`
+                                    <div class="Text">
+                                      <small class="Text-muted Text-small">
+                                        ${asElement(website.data.newsletter_note, resolve)}
+                                      </small>
+                                    </div>
+                                  ` : null}
+                                </div>
+                              `])}
+                            </form>
+                          `
+                        })
+                      }
+                      default: return null
+                    }
+                  }) : null}
                 </div>
               </div>
               ${links.length ? html`
@@ -77,6 +165,19 @@ function page (state, emit) {
       </main>
     `
   })
+
+  function onsubmit (event) {
+    if (!event.target.checkValidity()) {
+      event.target.reportValidity()
+    } else {
+      var form = event.currentTarget
+      var data = new window.FormData(form)
+      var button = form.querySelector('.js-submit')
+      button.disabled = true
+      emit('subscribe', data)
+    }
+    event.preventDefault()
+  }
 
   // render slice as element
   // (obj, num, arr) -> Element
@@ -118,6 +219,25 @@ function page (state, emit) {
       default: return null
     }
   }
+}
+
+// render document as bookmark
+// (Error?, obj) -> Element
+function asBookmark (err, doc) {
+  if (err) return null
+  if (!doc) return html`<div class="Text View-spaceSmall">${bookmark.loading()}</div>`
+  return html`
+    <div class="Text View-spaceSmall">
+      ${bookmark({
+        image: doc.data.image.url,
+        url: resolve(doc),
+        date: doc.type === 'news' ? doc.first_publication_date : null,
+        title: asText(doc.data.title),
+        description: asText(doc.data.description),
+        label: text`Read also`
+      })}
+    </div>
+  `
 }
 
 // construct image properties

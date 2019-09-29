@@ -21,15 +21,6 @@ module.exports = class Footer extends Component {
   createElement (props = {}) {
     var self = this
 
-    function onsubmit (event) {
-      var form = event.currentTarget
-      var data = new window.FormData(form)
-      var button = form.querySelector('.js-submit')
-      button.disabled = true
-      self.emit('subscribe', data, event.target.action)
-      event.preventDefault()
-    }
-
     return html`
       <footer class=" u-container">
         <div class="Footer">
@@ -73,6 +64,19 @@ module.exports = class Footer extends Component {
         </div>
       </footer>
     `
+
+    function onsubmit (event) {
+      if (!event.target.checkValidity()) {
+        event.target.reportValidity()
+      } else {
+        var form = event.currentTarget
+        var data = new window.FormData(form)
+        var button = form.querySelector('.js-submit')
+        button.disabled = true
+        self.emit('subscribe', data)
+      }
+      event.preventDefault()
+    }
   }
 }
 

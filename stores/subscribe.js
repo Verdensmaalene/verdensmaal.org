@@ -14,13 +14,15 @@ function subscribe (state, emitter) {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
+        Accept: 'application/json',
         'Content-Type': 'application/json'
       }
     }).then((res) => {
       if (!res.ok) return res.text().then((text) => Promise.reject(text))
       emitter.emit('render')
     }).catch(() => {
-      window.location = url
+      if (url) window.location = url
+      emitter.emit('render')
     })
   })
 }
