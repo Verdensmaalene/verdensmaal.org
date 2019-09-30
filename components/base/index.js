@@ -215,7 +215,7 @@ function exclude (src, ...keys) {
 // (obj, fn) -> obj
 function filter (src, test) {
   return Object.keys(src).reduce(function (obj, key) {
-    if (test(src[key])) obj[key] = src[key]
+    if (test(key)) obj[key] = src[key]
     return obj
   }, {})
 }

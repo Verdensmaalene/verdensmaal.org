@@ -464,7 +464,7 @@ function sector (state, emit) {
   function linkCard (props, cols = 3) {
     var sizes = '(min-width: 400px) 50vw, 100vw'
     if (cols === 3) sizes = '(min-width: 1000px) 30vw, ' + sizes
-    var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
+    var opts = { transforms: 'f_jpg,c_thumb', aspect: 3 / 4 }
     if (cols === 2) opts.aspect = 9 / 16
 
     return card({
@@ -490,12 +490,16 @@ function sector (state, emit) {
   // obj -> Element
   function newsCard (doc) {
     var date = parse(doc.first_publication_date)
+    var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
+    var opts = { transforms: 'f_jpg,c_thumb', aspect: 3 / 4 }
     return card({
       title: asText(doc.data.title),
       body: asText(doc.data.description) || '',
       image: doc.data.image.url ? {
         alt: doc.data.image.alt,
-        src: doc.data.image.url,
+        sizes: sizes,
+        srcset: srcset(doc.data.image, [400, 600, 900, 1800], opts),
+        src: `/media/fetch/w_900/${doc.data.image.url}`,
         caption: doc.data.image.copyright
       } : null,
       date: {
@@ -520,12 +524,17 @@ function sector (state, emit) {
       }
     })
 
+    var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
+    var opts = { transforms: 'f_jpg,c_thumb', aspect: 3 / 4 }
+
     return event.outer(card(props, event.inner(Object.assign({}, props, {
       start: parse(doc.data.start),
       end: parse(doc.data.end),
       image: doc.data.image.url ? {
         alt: doc.data.image.alt,
-        src: doc.data.image.url,
+        sizes: sizes,
+        srcset: srcset(doc.data.image, [400, 600, 900, 1800], opts),
+        src: `/media/fetch/w_900/${doc.data.image.url}`,
         caption: doc.data.image.copyright
       } : null
     }))))

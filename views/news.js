@@ -63,7 +63,9 @@ function news (state, emit) {
           var image = doc.data.image.url ? {
             alt: doc.data.image.alt || '',
             sizes: '90px',
-            srcset: srcset(doc.data.image, [90, 180]),
+            srcset: srcset(doc.data.image, [90, 180], {
+              transforms: 'f_jpg,c_thumb'
+            }),
             src: `/media/fetch/w_90/${doc.data.image.url}`
           } : null
           return {
@@ -166,7 +168,7 @@ function news (state, emit) {
 
     var date = parse(doc.first_publication_date)
     var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
-    var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
+    var opts = { transforms: 'f_jpg,c_thumb', aspect: 3 / 4 }
 
     var image = doc.data.image.url ? {
       alt: doc.data.image.alt,

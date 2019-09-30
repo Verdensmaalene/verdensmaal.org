@@ -279,7 +279,7 @@ class Home extends View {
       function asFeatured (item) {
         var { data, type } = item
         var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
-        var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
+        var opts = { transforms: 'f_jpg,c_thumb', aspect: 3 / 4 }
         var image = data.image.url ? {
           alt: data.image.alt,
           sizes: sizes,

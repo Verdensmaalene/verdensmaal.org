@@ -215,7 +215,7 @@ function events (state, emit) {
   // obj -> Element
   function asCard (doc) {
     var date = parse(doc.data.start)
-    var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
+    var opts = { transforms: 'f_jpg,c_thumb', aspect: 3 / 4 }
     var props = {
       title: asText(doc.data.title),
       body: asText(doc.data.description),
