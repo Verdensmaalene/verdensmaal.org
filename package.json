@@ -8,7 +8,7 @@
     "test": "standard && dependency-check package.json",
     "deploy": "npx now -T codeandconspire && npx now alias -T codeandconspire",
     "start": "node server.js",
-    "build": "jalla build index.js --sw sw.js"
+    "build": "node build.js"
   },
   "documentify": {
     "transform": [
@@ -58,9 +58,9 @@
   "dependencies": {
     "archiver": "^3.1.1",
     "cccpurge": "^2.0.0",
-    "choo": "^6.13.3",
+    "choo": "^7.0.0",
     "choo-lazy-view": "^1.0.2",
-    "choo-service-worker": "^2.4.0",
+    "choo-service-worker": "^3.0.0",
     "cloudinary": "^1.14.0",
     "country-region-data": "^1.4.6",
     "date-fns": "^1.30.1",
@@ -72,7 +72,7 @@
     "hstream": "^1.2.0",
     "ics": "^2.16.0",
     "intune": "^1.0.0",
-    "jalla": "0.12.0-7",
+    "jalla": "^1.0.0-20",
     "koa-body": "^4.1.1",
     "koa-compose": "^4.1.0",
     "koa-route": "^3.2.0",
@@ -91,7 +91,7 @@
     "postcss-custom-properties": "^8.0.11",
     "postcss-focus-visible": "^3.0.0",
     "postcss-url": "^8.0.0",
-    "prismic-element": "^1.0.0",
+    "prismic-element": "^2.0.3",
     "prismic-javascript": "^2.1.1",
     "prismic-richtext": "^0.4.2",
     "slugify": "^1.3.4",
@@ -99,7 +99,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
-    "choo-devtools": "^2.5.1",
+    "choo-devtools": "^3.0.3",
     "dependency-check": "^3.4.1",
     "standard": "^14.0.2"
   }

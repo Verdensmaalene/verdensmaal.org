@@ -27,7 +27,7 @@ var { asText, resolve } = require('./components/base')
 
 var app = jalla('index.js', {
   sw: 'sw.js',
-  serve: Boolean(process.env.NOW)
+  serve: true // Boolean(process.env.NOW)
 })
 
 // voting platform

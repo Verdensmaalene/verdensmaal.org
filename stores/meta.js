@@ -4,6 +4,7 @@ var favicon = require('../components/favicon')
 module.exports = meta
 
 function meta (state, emitter, app) {
+  state.language = 'da'
   state.meta = state.meta ? state.meta : { 'og:url': state.origin }
 
   emitter.on('meta', function (next) {
