@@ -230,6 +230,19 @@ function asBookmark (err, doc) {
 // construct image properties
 // obj -> obj
 function image (props) {
+  var sizes = [600, 900, 1800, [2400, 'q_60'], [3000, 'q_40']]
+
+  if (props.url.match(/\.gif(?:\?|$)/)) {
+    let cropped = false
+    sizes = sizes.filter(function (size) {
+      size = Array.isArray(size) ? size[0] : size
+      var smaller = size <= props.dimensions.width
+      cropped = cropped || smaller
+      return smaller
+    })
+    if (cropped) sizes.push(props.dimensions.width)
+  }
+
   return {
     width: props.dimensions.width,
     height: props.dimensions.height,
@@ -237,11 +250,7 @@ function image (props) {
     alt: props.alt || '',
     src: props.url,
     sizes: '90vw',
-    srcset: srcset(
-      props,
-      [600, 900, 1800, [2400, 'q_60'], [3000, 'q_40']],
-      { aspect: 9 / 16 }
-    )
+    srcset: srcset(props, sizes, { aspect: 9 / 16 })
   }
 }
 
