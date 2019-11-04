@@ -251,7 +251,7 @@ function srcset (uri, sizes, opts = {}) {
 
   // trim prismic domain from uri
   var parts = uri.split('verdensmaalene.cdn.prismic.io/verdensmaalene/')
-  uri = parts[parts.length - 1]
+  uri = encodeURIComponent(parts[parts.length - 1])
 
   return sizes.map(function (size) {
     var transform = transforms
