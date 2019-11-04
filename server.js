@@ -27,7 +27,7 @@ var { asText, resolve } = require('./components/base')
 
 var app = jalla('index.js', {
   sw: 'sw.js',
-  serve: true // Boolean(process.env.NOW)
+  serve: Boolean(process.env.NOW)
 })
 
 // voting platform
@@ -130,7 +130,7 @@ app.use(post('/api/prismic-hook', compose([body(), function (ctx) {
   ctx.assert(secret === process.env.PRISMIC_SECRET, 403, 'Secret mismatch')
   return new Promise(function (resolve, reject) {
     queried().then(function (urls) {
-      purge(['/api/popular', ...urls], function (err, response) {
+      purge(app.entry, ['/api/popular', ...urls], function (err, response) {
         if (err) return reject(err)
         ctx.type = 'application/json'
         ctx.body = {}
@@ -322,7 +322,7 @@ app.use(function (ctx, next) {
 
 if (process.env.NOW && app.env === 'production') {
   queried().then(function (urls) {
-    purge(['/sw.js', '/api/popular', ...urls], function (err) {
+    purge(app.entry, ['/sw.js', '/api/popular', ...urls], function (err) {
       if (err) app.emit('error', err)
       else app.listen(process.env.PORT || 8080)
     })
