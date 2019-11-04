@@ -4,7 +4,7 @@
   "description": "The Official Website for The United Nation's Global Goals in Denmark",
   "main": "index.js",
   "scripts": {
-    "purge": "node -r dotenv/config -e \"require('./lib/purge')(['/sw.js'], console.log)\"",
+    "purge": "node -r dotenv/config -e \"require('./lib/purge')('./index', ['/sw.js'], console.log)\"",
     "test": "standard && dependency-check package.json",
     "deploy": "npx now -T codeandconspire && npx now alias -T codeandconspire",
     "start": "node server.js",
