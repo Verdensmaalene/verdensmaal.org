@@ -42,6 +42,9 @@ function prismicStore (opts) {
       }
     }
 
+    var queue
+    if (state.prefetch) queue = createQueue()
+
     state.docs = Object.create({
       get: get,
       cache: cache,
@@ -91,10 +94,17 @@ function prismicStore (opts) {
       var cached = cache.get(key)
 
       var result
-      if (!cached) result = callback(null)
-      else if (cached instanceof Error) return callback(cached)
-      else if (cached instanceof Promise) return callback(null, null)
-      else if (cached) return callback(null, cached)
+      if (!cached) {
+        result = callback(null)
+      } else if (cached instanceof Error) {
+        return callback(cached)
+      } else if (cached instanceof Promise) {
+        // issue render if a non-prefetch request caught up to a prefetch
+        if (cached._prefetch && !prefetch) cached.then(render, render)
+        return callback(null, null)
+      } else if (cached) {
+        return callback(null, cached)
+      }
 
       // perform query
       var request = init.then(function (api) {
@@ -105,13 +115,13 @@ function prismicStore (opts) {
         }).then(function (response) {
           cache.set(key, response)
           emitter.emit('prismic:response', response)
-          if (!prefetch) emitter.emit('render')
+          if (!prefetch) render()
           return response
         })
       }).catch(function (err) {
         cache.set(key, err)
         emitter.emit('prismic:error', err)
-        if (!prefetch) emitter.emit('render')
+        if (!prefetch) render()
         // forward error to transform or just throw it
         if (typeof transform === 'function') {
           try {
@@ -129,9 +139,18 @@ function prismicStore (opts) {
       emitter.emit('prismic:request', request)
 
       // defer to callback to allow for nested queries
-      if (state.prefetch) state.prefetch.push(chain(request, callback))
+      if (state.prefetch) queue(chain(request, callback))
+
+      // tag request as beeing a prefetch
+      request._prefetch = Boolean(prefetch)
 
       return result
+    }
+
+    // emit render event
+    // () ->
+    function render () {
+      emitter.emit('render')
     }
 
     // get single document by uid
@@ -170,6 +189,34 @@ function prismicStore (opts) {
       callback = typeof opts === 'function' ? opts : callback
       opts = typeof opts === 'function' ? {} : opts
       return get(Prismic.Predicates.at('document.type', type), opts, first(callback))
+    }
+
+    // add a promise to state.prefetch which allows for lazy queing
+    // () -> Promise -> void
+    function createQueue () {
+      var success, fail
+      var queued = 0
+      var error = null
+      var proxy = new Promise(function (resolve, reject) {
+        success = resolve
+        fail = reject
+      })
+
+      state.prefetch.push(proxy)
+
+      // queue promise and resolve proxy if last to resolve/reject in queue
+      // Promise -> void
+      return function queue (promise) {
+        queued++
+        promise.catch(function (err) {
+          error = err
+        }).then(function () {
+          if (--queued === 0) {
+            if (error) fail(error)
+            else success()
+          }
+        })
+      }
     }
   }
 }
