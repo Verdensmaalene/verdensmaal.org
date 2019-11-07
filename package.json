@@ -10,6 +10,9 @@
     "start": "node server.js",
     "build": "node build.js"
   },
+  "engines": {
+    "node": ">=10"
+  },
   "documentify": {
     "transform": [
       [
@@ -26,24 +29,6 @@
   },
   "standard": {
     "parser": "babel-eslint"
-  },
-  "now": {
-    "alias": "www.verdensmaal.org",
-    "env": {
-      "NODE_ENV": "production",
-      "POLYFILL_FEATURES": "default-3.3,Array.prototype.find,Array.prototype.findIndex,Array.prototype.includes",
-      "PRISMIC_SECRET": "@prismic-verdensmaal-secret",
-      "CLOUDFLARE_ZONE": "@cloudflare-verdensmaal-zone",
-      "CLOUDFLARE_EMAIL": "@cloudflare-codeandconspire-email",
-      "CLOUDFLARE_KEY": "@cloudflare-codeandconspire-key",
-      "CREATESEND_KEY": "@createsend-verdensmaal-key",
-      "CREATESEND_LIST": "@createsend-verdensmaal-list",
-      "CLOUDINARY_SECRET": "@cloudinary-secret",
-      "CLOUDINARY_KEY": "@cloudinary-key",
-      "ANALYTICS_VIEW_ID": "@analytics-verdensmaal-id",
-      "GOOGLE_PRIVATE_KEY": "@google-verdensmaal-key",
-      "GOOGLE_CLIENT_EMAIL": "@google-verdensmaal-email"
-    }
   },
   "repository": {
     "type": "git",
@@ -73,7 +58,7 @@
     "hstream": "^1.2.0",
     "ics": "^2.16.0",
     "intune": "^1.0.0",
-    "jalla": "^1.0.0-21",
+    "jalla": "^1.0.0-22",
     "koa-body": "^4.1.1",
     "koa-compose": "^4.1.0",
     "koa-route": "^3.2.0",

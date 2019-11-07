@@ -7,11 +7,11 @@ var { format } = require('./utils')
 var text = i18n(require('./lang.json'))
 
 var SIZE = 560
-var types = {
-  bar: () => import('./bar'),
-  pie: () => import('./pie'),
-  number: () => import('./number'),
-  line: () => import('./line')
+var TYPES = {
+  bar: () => Promise.resolve(require('./bar')),
+  pie: () => Promise.resolve(require('./pie')),
+  number: () => Promise.resolve(require('./number')),
+  line: () => Promise.resolve(require('./line'))
 }
 
 module.exports = Chart
@@ -28,7 +28,7 @@ function Chart (id, state, emit, type) {
     var createElement = Chart[type]
     if (createElement) return wrapper.call(this, props, createElement(props))
 
-    var load = types[type]
+    var load = TYPES[type]
     var promise = load().then((createElement) => {
       Chart[type] = createElement
       this.load = this.init
