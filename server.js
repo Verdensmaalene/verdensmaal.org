@@ -240,7 +240,7 @@ app.use(get('/events/:uid.ics', async function (ctx, uid) {
   ctx.body = await ical(Object.assign({}, doc.data, {
     title: asText(doc.data.title),
     description: asText(doc.data.description),
-    url: `https://${process.env.npm_package_now_alias + resolve(doc)}`,
+    url: `https://www.verdensmaal.org${resolve(doc)}`,
     start: parse(doc.data.start),
     end: parse(doc.data.end)
   }))
