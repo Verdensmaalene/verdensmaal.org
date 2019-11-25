@@ -10,9 +10,9 @@ function catchall (state, emit) {
   if (wildcard.length > 1) {
     view = require('./404')
     return view(state, emit)
-  } else {
-    wildcard = wildcard[0]
   }
+
+  wildcard = wildcard[0]
 
   var goalParams = wildcard.match(/^(\d{1,2})-.+$/)
 

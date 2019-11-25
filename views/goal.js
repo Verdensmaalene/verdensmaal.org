@@ -44,7 +44,7 @@ class GoalPage extends View {
     var [, num] = state.params.wildcard.match(/^(\d{1,2})-.+$/)
     var predicate = Predicates.at('my.goal.number', +num)
     return state.docs.get(predicate, function (err, response) {
-      if (err) throw err
+      if (err) return null
       if (!response) return { title: text`LOADING_TEXT_SHORT` }
       var doc = response.results[0]
       return {
@@ -106,7 +106,7 @@ class GoalPage extends View {
     // handle goal document response
     // (Error, obj) -> Element
     function onresponse (err, response) {
-      if (err) throw err
+      if (err) return null
 
       var doc = response && response.results[0]
       var isHighContrast = state.ui.isHighContrast

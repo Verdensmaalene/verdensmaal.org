@@ -30,7 +30,7 @@ function sector (state, emit) {
   return state.docs.getByUID('sector', state.params.wildcard, onresponse)
 
   function onresponse (err, doc) {
-    if (err) throw err
+    if (err) return null
     if (!doc) {
       return html`
         <main class="View-main">
@@ -578,7 +578,7 @@ function camelCase (snake) {
 
 function meta (state) {
   return state.docs.getByUID('sector', state.params.wildcard, function (err, doc) {
-    if (err) throw err
+    if (err) return null
     if (!doc) return { title: text`LOADING_TEXT_SHORT` }
     return {
       title: asText(doc.data.title),
