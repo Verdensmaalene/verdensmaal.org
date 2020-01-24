@@ -24,24 +24,24 @@ function calendar (entries, opts = {}) {
       if (isSameDay(entry.start, prev.start)) {
         if (Array.isArray(prev.items)) prev.items.push(entry)
         else curr[curr.length - 1] = { start: prev.start, items: [prev, entry] }
-      } else curr.push(entry)
+      } else {
+        curr.push(entry)
+      }
     } else {
       list.push([entry])
     }
     return list
   }, []).reduce(function (list, entries) {
-    for (let i = 0, len = entries.length, entry; i < len; i++) {
-      entry = entries[i]
-      if (!entry.items) {
-        index++
-        list.push(item(entry, index, i === 0, true))
-      } else {
+    for (let i = 0, len = entries.length; i < len; i++) {
+      const entry = entries[i]
+      if (entry.items) {
         list.push.apply(list, entry.items.map(function (entry, ofDay) {
-          index++
           var showDay = ofDay === 0
           var showMonth = showDay && i === 0
           return item(entry, index, showMonth, showDay)
         }))
+      } else {
+        list.push(item(entry, index, i === 0, true))
       }
     }
     return list
