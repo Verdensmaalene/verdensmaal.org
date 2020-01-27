@@ -11,7 +11,7 @@ module.exports = calendar
 module.exports.loading = loading
 
 function calendar (entries, opts = {}) {
-  var index = -1
+  var index = 0
   var rows = entries.sort(function (a, b) {
     // ensure chronological order
     return a.start > b.start ? 1 : -1
@@ -38,10 +38,10 @@ function calendar (entries, opts = {}) {
         list.push.apply(list, entry.items.map(function (entry, ofDay) {
           var showDay = ofDay === 0
           var showMonth = showDay && i === 0
-          return item(entry, index, showMonth, showDay)
+          return item(entry, index++, showMonth, showDay)
         }))
       } else {
-        list.push(item(entry, index, i === 0, true))
+        list.push(item(entry, index++, i === 0, true))
       }
     }
     return list
