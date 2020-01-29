@@ -1,13 +1,14 @@
 /* eslint-env serviceworker */
 
 var CACHE_KEY = getCacheKey()
-var FILES = ['/'].concat(process.env.ASSET_LIST).filter(Boolean)
+var IS_DEV = process.env.NODE_ENV === 'development'
+var ASSETS = ['/'].concat(process.env.ASSET_LIST).filter(Boolean)
 
 self.addEventListener('install', function oninstall (event) {
   event.waitUntil(
     caches
       .open(CACHE_KEY)
-      .then((cache) => cache.addAll(FILES))
+      .then((cache) => cache.addAll(ASSETS))
       .then(() => self.skipWaiting())
   )
 })
@@ -40,9 +41,13 @@ self.addEventListener('fetch', function onfetch (event) {
 
       // fetch request and update cache
       // (Cache, Request, Response?) -> Response|Promise
-      function update (req, fallback) {
+      function update (req, cached) {
         if (req.cache === 'only-if-cached' && req.mode !== 'same-origin') {
-          return fallback
+          return cached
+        }
+
+        if (!IS_DEV && cached && ASSETS.includes(url.pathname)) {
+          return cached
         }
 
         if (event.preloadResponse && req.url === event.request.url) {
@@ -71,7 +76,7 @@ self.addEventListener('fetch', function onfetch (event) {
         // handle fetch error
         // Response -> Response
         function onerror (err) {
-          if (fallback) return fallback
+          if (cached) return cached
           if (isSameOrigin && url.pathname === '/') return findCachedLayout()
           return err
         }
