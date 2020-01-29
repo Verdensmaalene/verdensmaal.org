@@ -234,8 +234,9 @@
   display: flex;
   align-items: center;
   padding: 0.6rem 0.75rem 0.5rem 0.9rem;
-  position: absolute;
-  right: 0.35rem;
+  margin-left: auto;
+  position: relative;
+  right: -0.75rem;
   z-index: 1;
   text-align: right;
 }
@@ -250,12 +251,6 @@
 
 :root:not([scripting-enabled]) .Header:target .Header-button--noscript {
   display: flex;
-}
-
-@media (min-width: 600px) {
-  .Header-button--toggle {
-    right: 0.75rem;
-  }
 }
 
 .Header-burger {
