@@ -197,34 +197,32 @@
   padding: 1.7rem 0 1.8rem;
   border-top: 1px solid rgb(var(--color-gray-light));
   margin: 0 0.5rem;
-  align-items: flex-end;
+  align-items: flex-start;
   flex-wrap: wrap;
   order: 2;
 }
 
 .Footer-byline {
   max-width: 10rem;
-  margin-right: 15rem;
+  padding-right: 1rem;
   margin-bottom: 1rem;
-  flex: 0 0 auto;
-  font-size: 0.9rem;
+  font-size: 0.8em;
   color: rgb(var(--color-text-muted));
 }
 
 .Footer-credits .Footer-credit {
-  flex: 0 1 6rem;
+  flex: 0 0 6rem;
   opacity: var(--high-contrast-on, 0.5);
   transition: opacity 140ms var(--ease-out);
 }
 
 .Footer-credit {
   display: block;
+  margin: 0.05rem 0 0;
 }
 
-.Footer-credit + .Footer-credit {
-  margin-left: 0.8rem;
-  position: relative;
-  top: -0.3rem;
+.Footer-credit:last-child {
+  margin: 0.15rem 0 0 0.1rem;
 }
 
 .Footer-credit:hover {
@@ -235,6 +233,12 @@
   display: block;
   width: 100%;
   height: 2.294rem;
+}
+
+@media (min-width: 400px) {
+  .Footer-credit {
+    margin-right: 6.5rem; 
+  }
 }
 
 @media (min-width: 500px) {
@@ -252,23 +256,36 @@
     flex-wrap: nowrap;
   }
 
-  .Footer-credits {
-    padding: 0 0 2.1rem;
-    border: 0;
-  }
-
   .Footer-logo,
   .Footer-author {
     flex: 0 0 auto;
     flex-basis: calc(100% / 3 + 0.25rem);
   }
 
-  .Footer-byline {
-    margin: 0 1rem 0 0;
-  }
-
   .Footer-fields {
     margin: 1.5rem 0;
+  }
+}
+
+@media (min-width: 550px) {
+  .Footer-credits {
+    flex-wrap: nowrap;
+    padding: 0 0 2.1rem;
+    border: 0;
+  }
+
+  .Footer-credit {
+    margin-right: 0;
+  }
+
+  .Footer-byline {
+    flex: 0 0 0;
+    min-width: 10rem;
+  }
+
+  .Footer-byline:not(:first-child) {
+    margin-left: 2rem;
+    min-width: 6.5rem;
   }
 }
 
@@ -316,7 +333,7 @@
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1050px) {
   .Footer-credits {
     width: 26rem;
     padding: 1rem 0;
@@ -328,10 +345,19 @@
   }
 
   .Footer-byline {
-    margin: 0 2.1rem 0 0;
+    margin-bottom: 0;
     position: relative;
     top: -0.2rem;
     font-size: 0.8rem;
+  }
+
+  .Footer-credit {
+    margin-top: -0.15rem;
+  }
+
+  .Footer-credit:last-child {
+    margin-top: 0.1rem;
+    margin-right: -1.3rem;
   }
 }
 
