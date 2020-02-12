@@ -281,7 +281,7 @@ app.use(get('/', function (ctx, next) {
 app.use(function (ctx, next) {
   ctx.state.origin = app.env === 'development'
     ? `http://localhost:${process.env.PORT || 8080}`
-    : `https://${process.env.npm_package_now_alias}`
+    : 'https://www.verdensmaal.org'
   return next()
 })
 
