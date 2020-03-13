@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "alias": "www.verdensmaal.org",
   "env": {
     "NODE_ENV": "production",
@@ -17,7 +18,14 @@
   },
   "build": {
     "env": {
-      "NODE_ENV": "production"
+      "NODE_ENV": "production",
+      "NODEJS_HELPERS": "0"
     }
-  }
+  },
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "/api/index.js"
+    }
+  ]
 }

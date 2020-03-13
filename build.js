@@ -4,7 +4,7 @@ var app = jalla('index.js', {
   skip: [require.resolve('mapbox-gl')]
 })
 
-app.build('dist').then(function () {
+app.build('public').then(function () {
   process.exit(0)
 }, function (err) {
   console.error(err)

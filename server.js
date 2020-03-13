@@ -28,8 +28,10 @@ var { asText, resolve } = require('./components/base')
 var app = jalla('index.js', {
   sw: 'sw.js',
   skip: [require.resolve('mapbox-gl')],
-  serve: Boolean(process.env.NOW)
+  serve: 'public' // process.env.NOW ? 'public' : false
 })
+
+module.exports = app
 
 // voting platform
 app.use(post('/nominer-en-helt/:uid', function (ctx, uid, next) {
@@ -320,17 +322,6 @@ app.use(function (ctx, next) {
 
   return next()
 })
-
-if (process.env.NOW && app.env === 'production') {
-  queried().then(function (urls) {
-    purge(app.entry, ['/sw.js', '/api/popular', ...urls], function (err) {
-      if (err) app.emit('error', err)
-      else app.listen(process.env.PORT || 8080)
-    })
-  })
-} else {
-  app.listen(process.env.PORT || 8080)
-}
 
 // get urls for all queried pages
 // () -> Promise
