@@ -32,7 +32,8 @@ var app = jalla('index.js', {
 })
 
 // voting platform
-app.use(post('/nominer-en-helt/:uid', function (ctx, uid, next) {
+app.use(post('/nominer-en-helt/:uid?', function (ctx, uid, next) {
+  ctx.set('Cache-Control', 'no-cache, private, max-age=0')
   // store uid in params for downstream middleware
   ctx.state.params = { uid }
   return nomination(ctx, next)
