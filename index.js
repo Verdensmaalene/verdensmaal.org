@@ -1,3 +1,4 @@
+var splitRequire = require('split-require')
 var lazy = require('choo-lazy-view')
 var choo = require('choo')
 
@@ -33,8 +34,8 @@ app.route('/events/:uid', require('./views/event'))
 app.route('/nyheder/:uid', require('./views/article'))
 app.route('/materialer', require('./views/resources'))
 app.route('/mission', require('./views/mission'))
-app.route('/nominer-en-helt', lazy(() => import('./views/nomination')))
-app.route('/nominer-en-helt/:uid', lazy(() => import('./views/category')))
+app.route('/nominer-en-helt', lazy(() => splitRequire('./views/nomination')))
+app.route('/nominer-en-helt/:uid', lazy(() => splitRequire('./views/category')))
 app.route('/*', require('./views/catchall'))
 
 try {

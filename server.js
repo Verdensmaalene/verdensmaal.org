@@ -1,4 +1,4 @@
-if (!process.env.NOW) require('dotenv/config')
+if (!process.env.HEROKU) require('dotenv/config')
 
 var REPOSITORY = 'https://verdensmaalene.cdn.prismic.io/api/v2'
 var LAYOUTS = [
@@ -28,7 +28,7 @@ var { asText, resolve } = require('./components/base')
 var app = jalla('index.js', {
   sw: 'sw.js',
   skip: [require.resolve('mapbox-gl')],
-  serve: Boolean(process.env.NOW)
+  serve: Boolean(process.env.HEROKU)
 })
 
 // voting platform
@@ -322,7 +322,7 @@ app.use(function (ctx, next) {
   return next()
 })
 
-if (process.env.NOW && app.env === 'production') {
+if (process.env.HEROKU && app.env === 'production') {
   queried().then(function (urls) {
     purge(app.entry, ['/sw.js', '/api/popular', ...urls], function (err) {
       if (err) app.emit('error', err)
