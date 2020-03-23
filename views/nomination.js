@@ -165,20 +165,11 @@ function nomination (state, emit) {
                       onchange: onchange,
                       disabled: state.nomination.loading
                     })}
-                    ${form.input({
-                      label: 'Telefonnummer',
-                      value: fields['entry.872971700'] || '',
-                      id: 'entry.872971700',
-                      name: 'entry.872971700',
-                      type: 'tel',
-                      onchange: onchange,
-                      disabled: state.nomination.loading
-                    })}
                   </div>
                 `
               ])}
               <div class="Text u-spaceT8 u-spaceB4">
-                <h2 class="Text-h3">Hvem vil du gerne nominere?</h2>
+                <h2 class="Text-h3">Fortæl os om den du vil nominere</h2>
               </div>
               ${grid({ size: { md: '1of2', lg: '1of3' } }, [
                 html`
@@ -237,7 +228,7 @@ function nomination (state, emit) {
                 oninput: oninput,
                 onchange: onchange,
                 disabled: state.nomination.loading,
-                comment: 'Beskriv hvad personen har gjort, hvem målgruppen er og hvad effekten har været. Beskriv også meget gerne, hvordan Verdensmålene har været med i arbejdet. (Max 300 ord).'
+                comment: 'Beskriv hvad personen har gjort, hvem målgruppen er og hvad effekten har været samthvordan Verdensmålene har været med i arbejdet. (Max 300 ord)'
               })}
               ${counter.render(fields['entry.1264591994'])}
               <div class="Text u-spaceT8 u-spaceB2">
