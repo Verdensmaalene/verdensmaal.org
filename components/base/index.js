@@ -64,7 +64,7 @@ function resolve (doc) {
     case 'resources': return '/materialer'
     case 'goal': return `/${doc.data.number}-${doc.uid}`
     case 'page': {
-      if (doc.tags.includes('nomination')) return `/nominer-en-helt/${doc.uid}`
+      if (doc.tags.includes('nomination')) return `/verdensmaalsprisen/${doc.uid}`
       return `/${doc.uid}`
     }
     case 'sector': return `/${doc.uid}`
@@ -79,7 +79,7 @@ function resolve (doc) {
     case 'Web':
     case 'Media': return doc.url
     default: {
-      if (doc.type === 'page' && doc.uid === 'nominer-en-helt') return `/${doc.uid}`
+      if (doc.type === 'page' && doc.uid === 'verdensmaalsprisen') return `/${doc.uid}`
       // handle links to web and media
       const type = doc.link_type
       if (type === 'Web' || type === 'Media' || type === 'Any') return doc.url

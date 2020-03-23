@@ -53,7 +53,7 @@ function nomination (state, emitter) {
       })
     } else if (state.nomination.phase === 'vote') {
       Prismic.api(REPOSITORY, { req: state.req }).then(function (api) {
-        return api.getByUID('page', 'nominer-en-helt').then(function (doc) {
+        return api.getByUID('page', 'verdensmaalsprisen').then(function (doc) {
           if (state.params.uid === 'oversigt') {
             if (!state.nomination.fields.email) {
               throw new Error('email missing')

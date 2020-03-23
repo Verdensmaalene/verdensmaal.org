@@ -24,7 +24,7 @@ function nomination (state, emit) {
   var opts = {
     fetchLinks: ['page.title', 'page.description']
   }
-  return state.docs.getByUID('page', 'nominer-en-helt', opts, function (err, doc) {
+  return state.docs.getByUID('page', 'verdensmaalsprisen', opts, function (err, doc) {
     if (err) throw err
     if (!doc) {
       return html`
@@ -325,7 +325,7 @@ function image (props) {
 }
 
 function meta (state) {
-  return state.docs.getByUID('page', 'nominer-en-helt', function (err, doc) {
+  return state.docs.getByUID('page', 'verdensmaalsprisen', function (err, doc) {
     if (err) throw err
     if (!doc) return { title: text`LOADING_TEXT_SHORT` }
     var attrs = {

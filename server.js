@@ -32,7 +32,7 @@ var app = jalla('index.js', {
 })
 
 // voting platform
-app.use(post('/nominer-en-helt/:uid?', function (ctx, uid, next) {
+app.use(post('/verdensmaalsprisen/:uid?', function (ctx, uid, next) {
   ctx.set('Cache-Control', 'no-cache, private, max-age=0')
   // store uid in params for downstream middleware
   ctx.state.params = { uid }
@@ -40,7 +40,7 @@ app.use(post('/nominer-en-helt/:uid?', function (ctx, uid, next) {
 }))
 
 // special cache headers for nomination page
-app.use(get('/nominer-en-helt/:uid?', function (ctx, uid, next) {
+app.use(get('/verdensmaalsprisen/:uid?', function (ctx, uid, next) {
   if (!ctx.accepts('html')) return next()
   var cookies = ctx.cookies.get('nomination')
   try {
