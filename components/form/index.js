@@ -31,7 +31,7 @@ exports.choice = function (props, onchange) {
   return html`
     <label for="${props.id}" class="${className('Form-choice', { 'is-unselected': hasSelected && !checked, [props.class]: props.class })}">
       <div class="Form-heading">
-        <input class="Form-check" id="${props.id}" type="radio" name="${props.name}" value="${props.value}" checked=${checked} onchange=${onchange}>
+        <input class="Form-check" id="${props.id}" type="radio" name="${props.name}" value="${props.value}" checked=${checked} onchange=${onchange} required=${props.required}>
         <span class="Form-label">${props.label}</span>
       </div>
       <div class="Form-description">
