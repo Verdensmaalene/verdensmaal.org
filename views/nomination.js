@@ -125,7 +125,7 @@ function nomination (state, emit) {
                   name: 'entry.57699070',
                   class: `u-bg${CATEGORY_COLORS[link.uid] || 4}`,
                   label: value,
-                  requried: true,
+                  required: true,
                   description: asText(link.data.description)
                 }, onchange)
               }))}
