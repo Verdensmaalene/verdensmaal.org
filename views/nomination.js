@@ -100,7 +100,7 @@ function nomination (state, emit) {
         })
         case 'nomination': {
           return html`
-            <form action="/api/nomination" method="POST" class="Form" onsubmit=${onsubmit}>
+            <form action="${state.href}" method="POST" class="Form" onsubmit=${onsubmit} novalidate>
               ${error ? html`
                 <div class="Form-error u-spaceB6">
                   ${state.cache(Anchor, 'nomination-error', { auto: true }).render()}
@@ -229,7 +229,7 @@ function nomination (state, emit) {
                 oninput: oninput,
                 onchange: onchange,
                 disabled: state.nomination.loading,
-                comment: 'Beskriv hvad personen har gjort, hvem målgruppen er og hvad effekten har været samthvordan Verdensmålene har været med i arbejdet. (Max 300 ord)'
+                comment: 'Beskriv hvad personen har gjort, hvem målgruppen er og hvad effekten har været samt hvordan Verdensmålene har været med i arbejdet. (Max 300 ord)'
               })}
               ${counter.render(fields['entry.1264591994'])}
               <div class="Text u-spaceT8 u-spaceB2">
