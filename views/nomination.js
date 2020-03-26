@@ -113,7 +113,7 @@ function nomination (state, emit) {
               ` : null}
               <div class="Text u-spaceB4">
                 <h2 class="Text-h3">Vælg en kategori</h2>
-                <p>Hvilken pris har din kandidat gjort sig fortjent til?</p>
+                <p>Hvilken pris har din kandidat gjort sig fortjent til? *</p>
               </div>
               ${grid({ size: { lg: '1of3' } }, categories.map(function ({ link }, index) {
                 var value = asText(link.data.title)
