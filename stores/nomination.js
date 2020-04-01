@@ -10,7 +10,9 @@ function nomination (state, emitter) {
   state.nomination = {
     loading: false,
     phase: 'nomination',
-    fields: state.nomination ? state.nomination.fields : {},
+    fields: state.nomination
+      ? (state.nomination.fields || {})
+      : {},
     error: state.nomination ? state.nomination.error : null
   }
 
