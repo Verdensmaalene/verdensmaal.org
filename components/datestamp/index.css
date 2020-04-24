@@ -1,0 +1,49 @@
+@import "../base";
+
+/** @define Datestamp */
+.Datestamp {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.75rem;
+  background-color: rgb(var(--current-background));
+  color: rgb(var(--color-theme));
+}
+
+.Datestamp-date {
+  display: block;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-family: var(--heading-font-family);
+  word-spacing: var(--heading-word-spacing);
+  line-height: var(--heading-line-height);
+}
+
+@media (min-width: 800px) {
+  .Datestamp-date {
+    font-size: 2rem;
+  }
+}
+
+.Datestamp-time {
+  display: block;
+  margin-top: auto;
+  font-size: 1.25rem;
+  font-family: var(--heading-font-family);
+  word-spacing: var(--heading-word-spacing);
+  line-height: var(--heading-line-height);
+}
+
+@media (min-width: 1000px) {
+  .Datestamp-time {
+    font-size: 1.5rem;
+  }
+}
+
+.Datestamp-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: bold;
+}

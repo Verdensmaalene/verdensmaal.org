@@ -5,6 +5,10 @@
   position: relative;
 }
 
+.Popular--slim {
+  margin: -1.5rem 0;
+}
+
 .Popular-heading {
   font-weight: 600;
   font-size: 1rem;
@@ -26,6 +30,11 @@
   margin: 0 -1rem;
 }
 
+.Popular--slim .Popular-item {
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
 .Popular-item::before {
   content: "";
   width: 100%;
@@ -43,7 +52,7 @@
   opacity: 1;
 }
 
-.Popular-item::after {
+.Popular:not(.Popular--slim) .Popular-item::after {
   content: "";
   width: calc(100% - 2rem);
   height: 1px;
@@ -81,6 +90,11 @@
 .Popular-title {
   font-weight: bold;
   line-height: 1.5;
+  color: rgb(var(--current-color));
+}
+
+.Popular--slim .Popular-title {
+  font-size: 0.9375rem;
 }
 
 .Popular-link {

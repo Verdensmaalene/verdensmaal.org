@@ -3,7 +3,7 @@ var { className } = require('../base')
 
 module.exports = any
 
-module.exports.external = wrap('external', function external () {
+module.exports.external = wrap('external', function () {
   return html`
     <svg class="Symbol-image" width="19" height="19" viewBox="0 0 19 19" aria-hidden="true">
       <g fill="currentColor" fill-rule="evenodd">
@@ -14,7 +14,7 @@ module.exports.external = wrap('external', function external () {
   `
 })
 
-module.exports.calendar = wrap('calendar', function calendar () {
+module.exports.calendar = wrap('calendar', function () {
   return html`
     <svg class="Symbol-image" width="19" height="19" viewBox="0 0 19 19" aria-hidden="true">
       <g fill="none" fill-rule="evenodd" transform="translate(-2 -1)">
@@ -24,7 +24,7 @@ module.exports.calendar = wrap('calendar', function calendar () {
   `
 })
 
-module.exports.mail = wrap('mail', function mail () {
+module.exports.mail = wrap('mail', function () {
   return html`
     <svg class="Symbol-image" width="19" height="19" viewBox="0 0 19 19" aria-hidden="true">
       <g fill="none" fill-rule="evenodd" stroke="currentColor">
@@ -38,7 +38,7 @@ module.exports.mail = wrap('mail', function mail () {
   `
 })
 
-module.exports.share = wrap('share', function share () {
+module.exports.share = wrap('share', function () {
   return html`
     <svg class="Symbol-image" width="19" height="19" viewBox="0 0 19 19" aria-hidden="true">
       <g fill="none" fill-rule="evenodd" stroke="currentColor">
@@ -53,7 +53,7 @@ module.exports.share = wrap('share', function share () {
   `
 })
 
-module.exports.download = wrap('download', function download () {
+module.exports.download = wrap('download', function () {
   return html`
     <svg class="Symbol-image" width="19" height="19" viewBox="0 0 19 19" aria-hidden="true">
       <g fill="currentColor" fill-rule="evenodd">
@@ -64,7 +64,7 @@ module.exports.download = wrap('download', function download () {
   `
 })
 
-module.exports.forward = wrap('forward', function download () {
+module.exports.forward = wrap('forward', function () {
   return html`
     <svg class="Symbol-image" width="19" height="19" viewBox="0 0 19 19" aria-hidden="true">
       <path fill="currentColor" d="M17 9.5L8.3.8l.9-.8 9.5 9.5L9.2 19l-.9-.8L17 9.5z"/>
@@ -72,10 +72,22 @@ module.exports.forward = wrap('forward', function download () {
   `
 })
 
-module.exports.backward = wrap('backward', function download () {
+module.exports.backward = wrap('backward', function () {
   return html`
     <svg class="Symbol-image" width="19" height="19" viewBox="0 0 19 19" aria-hidden="true">
       <path fill="currentColor" d="M1.7 9.5l8.5 8.7-.8.8L0 9.5 9.4 0l.8.8-8.5 8.7z"/>
+    </svg>
+  `
+})
+
+module.exports.verdenstime = wrap('verdenstime', function () {
+  return html`
+    <svg class="Symbol-image" width="19" height="19" viewBox="0 0 19 19" aria-hidden="true">
+      <g fill="none" fill-rule="evenodd">
+        <path stroke="currentColor" stroke-linejoin="round" stroke-width=".9" d="M5 16V3.8L12.1 1v3.1l2.3-.9v11.5l-2.4.8-1.3 2.2-.7-1.4-2.3.9z"/>
+        <path stroke="currentColor" stroke-linejoin="round" stroke-width=".9" d="M7.7 17.2V5.4"/>
+        <path fill="currentColor" d="M7.6 6.1L6.3 4.8a.3.3 0 010-.4l5.2-2h.4l1 1.5a.3.3 0 01-.2.4L7.8 6.2h-.2z"/>
+      </g>
     </svg>
   `
 })

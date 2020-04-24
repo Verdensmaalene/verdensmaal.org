@@ -28,5 +28,5 @@ function caption (content) {
 }
 
 function loading (props = {}) {
-  return html`<div class="Card-figure is-loading"></div>`
+  return html`<div class="${className('Card-figure is-loading', { 'Card-figure--background': props.background })}"></div>`
 }

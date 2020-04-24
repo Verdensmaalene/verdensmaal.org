@@ -82,6 +82,10 @@
   background-image: var(--figure-gradient);
 }
 
+.Card.is-loading .Card-content {
+  background-image: none;
+}
+
 /**
  * 1. Get a z-index to put ontop of hover shading
  */
@@ -120,6 +124,17 @@
   word-spacing: var(--heading-word-spacing);
 }
 
+.Card--bold .Card-title {
+  margin-bottom: auto;
+  font-size: 2.5rem;
+}
+
+@media (min-width: 1000px) {
+  .Card--bold .Card-title {
+    font-size: 3.5rem;
+  }
+}
+
 .Card:not(.Card--fill) .Card-title:first-child {
   margin-top: 1.5rem;
 }
@@ -127,6 +142,11 @@
 .Card-text {
   font-size: 1rem;
   margin-top: 0.3em;
+}
+
+.Card--bold .Card-text {
+  margin-top: 6rem;
+  font-size: 0.875rem;
 }
 
 @media (min-width: 900px) {
@@ -162,7 +182,7 @@
   --current-color: 255, 255, 255;
 }
 
-.Card--fill:not(.Card-dark) {
+.Card--fill:not(.Card--dark) {
   --current-color: var(--high-contrast-light, 255, 255, 255);
 }
 
@@ -171,7 +191,7 @@
   border-top-color: rgba(255, 255, 255, 0.2);
 }
 
-.Card--fill {
+.Card--fill:not(.is-loading) {
   background-color: rgb(var(--high-contrast-dark, var(--Card-background-color, var(--current-background))));
 }
 

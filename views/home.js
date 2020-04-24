@@ -1,16 +1,19 @@
 var html = require('choo/html')
 var parse = require('date-fns/parse')
-var subDays = require('date-fns/sub_days')
 var asElement = require('prismic-element')
-var { Predicates } = require('prismic-javascript')
 var View = require('../components/view')
 var card = require('../components/card')
 var grid = require('../components/grid')
 var logo = require('../components/logo')
-var event = require('../components/event')
+var panel = require('../components/panel')
 var intro = require('../components/intro')
 var alert = require('../components/alert')
+var button = require('../components/button')
+var popular = require('../components/popular')
+var headline = require('../components/headline')
 var GoalGrid = require('../components/goal-grid')
+var datestamp = require('../components/datestamp')
+var { verdenstime } = require('../components/symbol')
 var intersection = require('../components/intersection')
 var cardSlot = require('../components/goal-grid/slots/card')
 var paddSlot = require('../components/goal-grid/slots/padded')
@@ -44,8 +47,21 @@ class Home extends View {
   }
 
   createElement (state, emit) {
+    if (!state.popular.data && !state.popular.error && typeof window !=='undefined') {
+      emit('fetch:popular')
+    }
+
     var opts = {
-      fetchLinks: ['goal.title', 'goal.label', 'goal.number', 'goal.description']
+      fetchLinks: [
+        'goal.title',
+        'goal.label',
+        'goal.number',
+        'goal.description',
+        'event.city',
+        'page.title',
+        'page.image',
+        'page.description'
+      ]
     }
     return state.docs.getSingle('homepage', opts, function render (err, doc) {
       if (err) throw err
@@ -82,7 +98,259 @@ class Home extends View {
       var id = 'homepage-goalgrid' + (isHighContrast ? '-high-contrast' : '')
       var alertHeading = doc && asText(doc.data.alert_heading)
       var alertLink = doc && doc.data.alert_link
-      var featured = getFeatured()
+
+      var featured = []
+      if (doc) {
+        const headlineLink = doc.data.headline_link
+        const news = doc.data.featured_news_listing.filter(function (item) {
+          return item.link.type === 'news' && !item.link.isBroken
+        })
+        const events = doc.data.featured_events_listing.filter(function (item) {
+          return item.link.type === 'event' && !item.link.isBroken
+        })
+        let featuredLink = doc.data.featured_link
+        if (featuredLink.isBroken || !(featuredLink.id || featuredLink.url)) {
+          featuredLink = null
+        }
+
+        // append featured headline news, filling up the space if there are no
+        // valid list items to be shown
+        if (!headlineLink.isBroken && (headlineLink.url || headlineLink.id)) {
+          let subheading
+          if (doc.data.headline_subheading) {
+            subheading = doc.data.headline_subheading
+          } else if (headlineLink.id) {
+            const { uid, type } = headlineLink
+            subheading = state.docs.getByUID(type, uid, function (err, doc) {
+              if (err || !doc) return null
+              var date = parse(doc.first_publication_date)
+              return html`
+                <time datetime="${date.toJSON()}">
+                  ${text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`}
+                </time>
+              `
+            })
+          }
+
+          let heading = asText(doc.data.headline_heading)
+          if (!heading && headlineLink.id) {
+            heading = asText(doc.data.headline_link.data.title)
+          }
+
+          let image = doc.data.headline_image
+          if (!image.url && headlineLink.id) {
+            image = doc.data.headline_link.data.image
+          }
+
+          featured.push(grid.cell({
+            size: { lg: news.length ? '2of3' : '1of1' }
+          }, headline({
+            highlight: doc.data.headline_highlighted,
+            image: {
+              src: srcset(image.url, [900]).split(' ')[0],
+              alt: image.alt || heading,
+              sizes: news.length ? '(min-width: 1000px) 66vw, 100vw' : '100vw',
+              srcset: srcset(image.url, [400, 600, 900, [1200, 'q_50'], [1800, 'q_50']], {
+                transforms: 'f_jpg,c_thumb',
+                aspect: news.length ? 0.6 : 0.3
+              })
+            },
+            heading: heading,
+            subheading: subheading,
+            link: {
+              href: resolve(doc.data.headline_link),
+              text: text`Read article`
+            }
+          })))
+        }
+
+        // append featured news listing adapting the grid cell widths to wether
+        // there's a featured headline news item
+        if (news.length) {
+          featured.push(grid.cell({
+            size: {
+              lg: featured.length ? '1of3' : '1of1',
+              md: events.length || featuredLink ? '1of2' : '1of1'
+            }
+          }, panel(grid({
+            size: {
+              lg: featured.length ? '1of1' : `1of${news.length}`,
+              md: events.length || featuredLink ? '1of1' : `1of${news.length}`
+            }
+          }, news.map(function (item) {
+            var title = asText(item.heading)
+            if (!title) title = asText(item.link.data.title)
+            var image = item.image
+            if (!image.url) image = item.link.data.image
+            var opts = {
+              transforms: 'f_jpg,c_thumb',
+              aspect: 3 / 4
+            }
+
+            return panel.item({
+              title: title,
+              media: image.url ? html`
+                <img class="u-block u-sizeFull" sizes="134px" srcset="${srcset(image.url, [134, 268], opts)}" alt="${image.alt || title}" src="${srcset(image.url, [134], opts).split(' ')[0]}">
+              ` : null,
+              link: {
+                text: text`Read article`,
+                href: resolve(item.link)
+              }
+            })
+          })), {
+            heading: asText(doc.data.featured_news_listing_heading),
+            utils: 'u-bgGrayLight',
+            footer: button({
+              text: text`See all news`,
+              href: '/nyheder',
+              class: 'u-spaceT3',
+              primary: true
+            })
+          })))
+        }
+
+        // append featured events accounting for wether there's an adjacent
+        // featured link or not
+        if (events.length) {
+          featured.push(grid.cell({
+            size: {
+              lg: featuredLink ? '1of3' : '1of2',
+              md: news.length || featuredLink ? '1of2' : '1of1'
+            }
+          }, panel(grid({
+            size: {
+              lg: '1of1',
+              md: news.length || featuredLink ? '1of1' : '1of2'
+            }
+          }, events.map(function (item) {
+            var title = asText(item.heading)
+            if (!title) title = asText(item.link.data.title)
+
+            return panel.item({
+              title,
+              media: html`
+                <div class="u-bgWhite u-colorTheme">
+                  ${datestamp(parse(item.link.data.start), item.link.data.city)}
+                </div>
+              `,
+              link: {
+                text: text`Go to event`,
+                href: resolve(item.link)
+              }
+            })
+          })), {
+            heading: asText(doc.data.featured_events_listing_heading),
+            utils: 'u-bgTheme u-colorWhite'
+          })))
+        }
+
+        // append featured link and adapt its size depending on wether there
+        // are any featured events
+        if (featuredLink) {
+          let heading = asText(doc.data.featured_link_heading)
+          if (!heading && featuredLink.id && featuredLink.data) {
+            heading = asText(featuredLink.data.title)
+          }
+
+          let image = doc.data.featured_link_image
+          if (!image.url && featuredLink.id && featuredLink.data) {
+            image = featuredLink.data.image
+          }
+
+          if (heading && image && image.url) {
+            let body = asText(doc.data.featured_link_description)
+            if (!body && featuredLink.id && featuredLink.data) {
+              body = asText(featuredLink.data.description)
+            }
+
+
+            let title = heading
+            let linkText = doc.data.featured_link_text || text`Read more`
+            if (doc.data.featured_link_theme) {
+              const theme = doc.data.featured_link_theme.toLowerCase()
+              if (theme === 'verdenstimen') {
+                title = html`<span class="u-color11 u-colorCurrent">${heading}</span>`
+                linkText = html`${verdenstime()} <span class="u-spaceL1">${linkText}</span>`
+              }
+            }
+
+            featured.push(grid.cell({
+              size: {
+                lg: events.length ? '1of3' : '1of2',
+                md: news.length || events.length ? '1of2' : '1of1'
+              }
+            }, card({
+              body: body,
+              title: title,
+              bold: true,
+              background: true,
+              image: {
+                src: srcset(image.url, [900]).split(' ')[0],
+                alt: image.alt || heading,
+                sizes: news.length ? '(min-width: 1000px) 33vw, 100vw' : '100vw',
+                srcset: srcset(image.url, [400, 600, 900, [1200, 'q_50'], [1800, 'q_50']], {
+                  transforms: 'f_jpg,c_thumb',
+                  aspect: news.length ? 0.6 : 0.3
+                })
+              },
+              link: {
+                text: linkText,
+                href: resolve(featuredLink),
+                external: featuredLink.target === '_blank'
+              }
+            })))
+          }
+        }
+
+        if (state.popular.error || !state.popular.data) {
+          featured.push(grid.cell({ size: { lg: '1of3' } }, panel(html`<div class="u-aspect1-1"></div>`, { utils: 'u-loading' })))
+        } else {
+          const count = events.length ? events.length + 1 : 3;
+          const items = state.popular.data.slice(0, count).map(function (doc) {
+            var date = parse(doc.first_publication_date)
+            var image = doc.data.image.url ? {
+              alt: doc.data.image.alt || '',
+              sizes: '90px',
+              srcset: srcset(doc.data.image, [90, 180], {
+                transforms: 'f_jpg,c_thumb'
+              }),
+              src: `/media/fetch/w_90/${doc.data.image.url}`
+            } : null
+            return {
+              image: image,
+              href: resolve(doc),
+              title: asText(doc.data.title),
+              date: {
+                datetime: date,
+                text: `${date.getDate()}. ${text(`MONTH_${date.getMonth()}`).substr(0, 3)} ${date.getFullYear()}`
+              }
+            }
+          })
+
+          let cols = 1
+          if (featuredLink) cols +=1
+          if (events.length) cols += 1
+          featured.push(grid.cell({
+            size: {
+              lg: `1of${cols}`,
+              md: cols > 1 ? '1of2' : '1of1'
+            }
+          }, panel(popular(items, {
+            slim: true
+          }), {
+            utils: 'u-bgGrayDark u-colorWhite',
+            heading: text`Most read`
+          })))
+        }
+      } else {
+        featured.push(
+          grid.cell({ size: { lg: '2of3' } }, headline.loading()),
+          grid.cell({ size: { lg: '1of3', md: '1of2' } }, panel(html`<div class="u-aspect1-1"></div>`, { utils: 'u-loading' })),
+          grid.cell({ size: { lg: '1of3', md: '1of2' } }, panel(html`<div class="u-aspect1-1"></div>`, { utils: 'u-loading' })),
+          grid.cell({ size: { lg: '1of3', md: '1of2' } }, panel(html`<div class="u-aspect1-1"></div>`, { utils: 'u-loading' })),
+          grid.cell({ size: { lg: '1of3', md: '1of2' } }, panel(html`<div class="u-aspect1-1"></div>`, { utils: 'u-loading' }))
+        )
+      }
 
       return html`
         <main class="View-main">
@@ -101,6 +369,11 @@ class Home extends View {
             ` : null}
           </div>
           <div class="u-container">
+            ${featured.length ? html`
+              <div class="View-spaceSmall">
+                ${grid({ slim: true }, featured)}
+              </div>
+            ` : null}
             <div class="View-spaceLarge">
               ${doc ? intro({ title: asText(doc.data.title), body: asElement(doc.data.description) }) : intro.loading()}
             </div>
@@ -108,16 +381,6 @@ class Home extends View {
               ${state.cache(Grid, id).render(goals, state.ui.gridLayout, slot)}
             </section>
           </div>
-          <section>
-            <div class="u-container">
-              <div class="View-spaceLarge">
-                ${doc ? intro({ secondary: true, title: asText(doc.data.featured_heading), body: asElement(doc.data.featured_text, resolve) }) : intro.loading({ secondary: true })}
-              </div>
-            </div>
-            <div class="u-md-container">
-              ${grid({ size: { md: '1of2', lg: '1of3' }, carousel: true }, featured)}
-            </div>
-          </section>
           ${doc ? html`
             <div class="u-container">
               <div class="View-spaceLarge">
@@ -156,180 +419,6 @@ class Home extends View {
                 })
               }), resolve)
             }), 'fill')
-          }
-          default: return null
-        }
-      }
-
-      // get latest news with similar tags
-      // (num?) -> arr
-      function getNews (num = 3, exclude = []) {
-        var predicate = [
-          Predicates.at('document.type', 'news')
-        ].concat(exclude.map((id) => Predicates.not('document.id', id)))
-        var opts = {
-          pageSize: num,
-          orderings: '[document.first_publication_date desc]'
-        }
-
-        return state.docs.get(predicate, opts, featureFiller(num, true))
-      }
-
-      // get upcoming events with similar tags
-      // (num?) -> arr
-      function getEvents (num = 3, exclude = []) {
-        var opts = {
-          pageSize: num,
-          orderings: '[my.event.start]'
-        }
-        var yesterday = subDays(new Date(), 1)
-        var date = [
-          yesterday.getFullYear(),
-          ('0' + (yesterday.getMonth() + 1)).substr(-2),
-          ('0' + yesterday.getDate()).substr(-2)
-        ].join('-')
-        var predicates = [
-          Predicates.at('document.type', 'event'),
-          Predicates.dateAfter('my.event.end', date)
-        ].concat(exclude.map((id) => Predicates.not('document.id', id)))
-
-        return state.docs.get(predicates, opts, featureFiller(num))
-      }
-
-      // handle related content response rendering loading cards in place
-      // num -> arr
-      function featureFiller (num, date = false) {
-        return function (err, response) {
-          if (err) throw err
-          var cells = []
-          if (!response) {
-            for (let i = 0; i < num; i++) cells.push(card.loading({ date }))
-          } else if (response.results.length) {
-            cells = response.results.map(asFeatured)
-          }
-          return cells
-        }
-      }
-
-      // get featured link cards populated with news and events
-      // () -> arr
-      function getFeatured () {
-        var cards = []
-        if (!doc) {
-          for (let i = 0; i < 6; i++) cards.push(card.loading({ date: true }))
-          return cards
-        }
-
-        // pluck out linked news and event page ids
-        var ids = doc.data.featured_links
-          .filter((slice) => /news|events/.test(slice.slice_type))
-          .map((slice) => slice.primary.link.isBroken || slice.primary.link.id)
-          .filter(Boolean)
-
-        // fetch linked pages
-        return state.docs.getByIDs(ids, function (err, response) {
-          if (err) throw err
-
-          // render cards in slice order
-          cards = doc.data.featured_links.map(function (slice) {
-            switch (slice.slice_type) {
-              case 'news':
-              case 'event': {
-                // fallback to bare link while fetching actual document
-                if (!response) {
-                  if (slice.primary.link.isBroken) return null
-                  if (!slice.primary.link.id) return null
-                  return asFeatured(slice.primary.link)
-                }
-                var item = response.results.find(function (item) {
-                  return item.id === slice.primary.link.id
-                })
-                if (!item) return null
-                return asFeatured(item)
-              }
-              case 'custom_link': {
-                // augument document for custom link slices
-                return asFeatured(Object.assign({}, slice.primary.link, {
-                  data: slice.primary,
-                  type: slice.slice_type
-                }))
-              }
-              default: return null
-            }
-          }).filter(Boolean)
-
-          var fill = 6 - cards.length
-          if (fill > 0) {
-            const news = getNews(fill, ids)
-            const events = getEvents(1, ids)
-
-            if (events.length) {
-              fill--
-              cards.push(events[0])
-            }
-            cards.push.apply(cards, news.slice(0, fill))
-          }
-
-          return cards
-        })
-      }
-
-      // render slice as card
-      // obj -> Element
-      function asFeatured (item) {
-        var { data, type } = item
-        var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
-        var opts = { transforms: 'f_jpg,c_thumb', aspect: 3 / 4 }
-        var image = data.image.url ? {
-          alt: data.image.alt,
-          sizes: sizes,
-          srcset: srcset(data.image, [400, 600, 900, 1800], opts),
-          src: srcset(data.image, [900], opts).split(' ')[0],
-          caption: data.image.copyright
-        } : null
-        var props = {
-          title: asText(data.title),
-          body: asText(data.description)
-        }
-
-        switch (type) {
-          case 'event': {
-            props.link = { href: resolve(item) }
-            const date = parse(data.start)
-            return event.outer(card(props, event.inner(Object.assign({}, data, {
-              start: date,
-              end: parse(data.end),
-              image: image
-            }))))
-          }
-          case 'news': {
-            props.link = { href: resolve(item) }
-            props.image = image
-            if (item.first_publication_date) {
-              const date = parse(item.first_publication_date)
-              props.date = {
-                datetime: date,
-                text: text`Published on ${('0' + date.getDate()).substr(-2)} ${text(`MONTH_${date.getMonth()}`)}, ${date.getFullYear()}`
-              }
-            } else {
-              props.date = {
-                datetime: new Date(),
-                text: html`<span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`
-              }
-            }
-            var slot = props.image ? null : html`
-              <div class="u-aspect4-3 u-bgGray u-bgCurrent"></div>
-            `
-            return card(props, slot)
-          }
-          case 'custom_link': {
-            props.image = image
-            props.color = data.color
-            props.link = {
-              href: resolve(data.link),
-              external: !data.link.type === 'Document'
-            }
-            return card(props)
           }
           default: return null
         }

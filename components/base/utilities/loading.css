@@ -4,7 +4,8 @@
 
 .u-loading,
 .u-loadingAdaptive {
-  background: rgba(0, 0, 0, 0.04) !important;
+  --current-background: 0, 0, 0, 0.04 !important;
+  background: rgba(var(--current-background)) !important;
   display: inline !important;
   color: transparent !important;
   user-select: none !important;

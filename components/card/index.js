@@ -36,10 +36,14 @@ function card (props = {}, slot) {
       'Card--interactive': props.link && (fill || props.background),
       'Card--dark': props.background || (fill && luma(fill) < 185),
       'Card--fill': fill || props.background,
-      'Card--background': props.background
+      'Card--background': props.background,
+      'Card--bold': props.bold
     })
   }
-  if (fill) attrs.style = `--Card-background-color: ${hexToRgb(fill).join(', ')}`
+
+  if (fill) {
+    attrs.style = `--Card-background-color: ${hexToRgb(fill).join(', ')}`
+  }
 
   var cover = null
   if (slot) {
@@ -54,7 +58,7 @@ function card (props = {}, slot) {
       <div class="Card-content ${fill ? 'u-hoverTriggerTarget' : ''}">
         <div class="Card-body">
           ${props.date && props.date.text ? html`
-            <time class="Card-meta" datetime="${JSON.stringify(props.date.datetime).replace(/"/g, '')}">
+            <time class="Card-meta" datetime="${props.date.datetime.toJSON()}">
               ${props.date.text}
             </time>
           ` : null}
@@ -73,8 +77,12 @@ function card (props = {}, slot) {
 
 function loading (props = {}) {
   return html`
-    <article class="Card">
-      ${figure.loading()}
+    <article class="${className('Card is-loading', {
+        'Card--fill': props.background,
+        'Card--background': props.background,
+        'Card--bold': props.bold
+      })}">
+      ${figure.loading({ background: props.background })}
       <div class="Card-content">
         <div class="Card-body">
           ${props.date ? html`

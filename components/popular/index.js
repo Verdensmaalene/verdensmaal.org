@@ -2,15 +2,15 @@ var html = require('choo/html')
 var symbol = require('../symbol')
 var { i18n, placeholder } = require('../base')
 
-var text = i18n(require('./lang.json'))
+var text = i18n()
 
 module.exports = popular
 module.exports.loading = loading
 
-function popular (items) {
+function popular (items, opts = {}) {
   return html`
-    <div class="Popular">
-      <h2 class="Popular-heading">${text`Most read this month`}</h2>
+    <div class="Popular ${opts.slim ? 'Popular--slim' : ''}">
+      ${opts.heading ? html`<h2 class="Popular-heading">${opts.heading}</h2>` : null}
       ${items.map((item) => html`
         <div class="Popular-item">
           ${item.image ? html`<img class="Popular-image" ${item.image} />` : null}
@@ -30,7 +30,7 @@ function popular (items) {
   `
 }
 
-function loading (count = 5) {
+function loading (count = 5, opts = {}) {
   var items = []
   for (let i = 0; i < count; i++) {
     items.push(html`
@@ -47,8 +47,8 @@ function loading (count = 5) {
   }
 
   return html`
-    <div class="Popular">
-      <h2 class="Popular-heading">${text`Most read this month`}</h2>
+    <div class="Popular ${opts.slim ? 'Popular--slim' : ''}">
+      ${opts.heading ? html`<h2 class="Popular-heading">${opts.heading}</h2>` : null}
       ${items}
     </div>
   `

@@ -25,6 +25,10 @@
   margin-bottom: calc(var(--Grid-gutter) * -1);
 }
 
+.Grid--slim {
+  --Grid-gutter: 0.625rem;
+}
+
 .Grid + .Grid {
   margin-top: var(--Grid-gutter);
 }
