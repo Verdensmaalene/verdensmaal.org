@@ -96,7 +96,6 @@ class Home extends View {
       var isHighContrast = state.ui.isHighContrast
       var Grid = isHighContrast ? HighContrastGoalGrid : GoalGrid
       var id = 'homepage-goalgrid' + (isHighContrast ? '-high-contrast' : '')
-      var alertHeading = doc && asText(doc.data.alert_heading)
       var alertLink = doc && doc.data.alert_link
 
       var featured = []
@@ -111,6 +110,22 @@ class Home extends View {
         let featuredLink = doc.data.featured_link
         if (featuredLink.isBroken || !(featuredLink.id || featuredLink.url)) {
           featuredLink = null
+        }
+
+        const alertHeading = doc && asText(doc.data.alert_heading)
+        if (alertHeading) {
+          featured.push(grid.cell(html`
+            <aside role="banner">
+              ${alert({
+                heading: asText(doc.data.alert_heading),
+                body: asElement(doc.data.alert_message),
+                link: (alertLink.id || alertLink.url) && !alertLink.isBroken ? {
+                  href: resolve(doc.data.alert_link),
+                  text: doc.data.alert_link_text
+                } : null
+              })}
+            </aside>
+          `))
         }
 
         // append featured headline news, filling up the space if there are no
@@ -173,6 +188,7 @@ class Home extends View {
               md: events.length || featuredLink ? '1of2' : '1of1'
             }
           }, panel(grid({
+            gutter: 'sm',
             size: {
               lg: featured.length ? '1of1' : `1of${news.length}`,
               md: events.length || featuredLink ? '1of1' : `1of${news.length}`
@@ -190,7 +206,7 @@ class Home extends View {
             return panel.item({
               title: title,
               media: image.url ? html`
-                <img class="u-block u-sizeFull" sizes="134px" srcset="${srcset(image.url, [134, 268], opts)}" alt="${image.alt || title}" src="${srcset(image.url, [134], opts).split(' ')[0]}">
+                <img class="u-block u-sizeFull" sizes="(min-width: 1000px) 200px, (min-width: 800px) 150px, 96px" srcset="${srcset(image.url, [96, 192, 288, [384, 'q_50']], opts)}" alt="${image.alt || title}" src="${srcset(image.url, [134], opts).split(' ')[0]}">
               ` : null,
               link: {
                 text: text`Read article`,
@@ -218,6 +234,7 @@ class Home extends View {
               md: news.length || featuredLink ? '1of2' : '1of1'
             }
           }, panel(grid({
+            gutter: 'sm',
             size: {
               lg: '1of1',
               md: news.length || featuredLink ? '1of1' : '1of2'
@@ -274,6 +291,11 @@ class Home extends View {
               }
             }
 
+            const opts = {
+              transforms: 'f_jpg,c_thumb',
+              aspect: news.length ? 0.6 : 0.3
+            }
+
             featured.push(grid.cell({
               size: {
                 lg: events.length ? '1of3' : '1of2',
@@ -285,13 +307,10 @@ class Home extends View {
               bold: true,
               background: true,
               image: {
-                src: srcset(image.url, [900]).split(' ')[0],
+                src: srcset(image.url, [900], opts).split(' ')[0],
                 alt: image.alt || heading,
                 sizes: news.length ? '(min-width: 1000px) 33vw, 100vw' : '100vw',
-                srcset: srcset(image.url, [400, 600, 900, [1200, 'q_50'], [1800, 'q_50']], {
-                  transforms: 'f_jpg,c_thumb',
-                  aspect: news.length ? 0.6 : 0.3
-                })
+                srcset: srcset(image.url, [400, 600, 900, [1200, 'q_50'], [1800, 'q_50']], opts)
               },
               link: {
                 text: linkText,
@@ -302,45 +321,48 @@ class Home extends View {
           }
         }
 
-        if (state.popular.error || !state.popular.data) {
-          featured.push(grid.cell({ size: { lg: '1of3' } }, panel(html`<div class="u-aspect1-1"></div>`, { utils: 'u-loading' })))
-        } else {
-          const count = events.length ? events.length + 1 : 3;
-          const items = state.popular.data.slice(0, count).map(function (doc) {
-            var date = parse(doc.first_publication_date)
-            var image = doc.data.image.url ? {
-              alt: doc.data.image.alt || '',
-              sizes: '90px',
-              srcset: srcset(doc.data.image, [90, 180], {
-                transforms: 'f_jpg,c_thumb'
-              }),
-              src: `/media/fetch/w_90/${doc.data.image.url}`
-            } : null
-            return {
-              image: image,
-              href: resolve(doc),
-              title: asText(doc.data.title),
-              date: {
-                datetime: date,
-                text: `${date.getDate()}. ${text(`MONTH_${date.getMonth()}`).substr(0, 3)} ${date.getFullYear()}`
+        // append popular news listing only if accompanied by events or link
+        if (events.length || featuredLink) {
+          if (state.popular.error || !state.popular.data) {
+            featured.push(grid.cell({ size: { lg: '1of3' } }, panel(html`<div class="u-aspect1-1"></div>`, { utils: 'u-loading' })))
+          } else {
+            const count = Math.max(events.length + 2, 4)
+            const items = state.popular.data.slice(0, count).map(function (doc) {
+              var date = parse(doc.first_publication_date)
+              var image = doc.data.image.url ? {
+                alt: doc.data.image.alt || '',
+                sizes: '90px',
+                srcset: srcset(doc.data.image, [90, 180], {
+                  transforms: 'f_jpg,c_thumb'
+                }),
+                src: `/media/fetch/w_90/${doc.data.image.url}`
+              } : null
+              return {
+                image: image,
+                href: resolve(doc),
+                title: asText(doc.data.title),
+                date: {
+                  datetime: date,
+                  text: `${date.getDate()}. ${text(`MONTH_${date.getMonth()}`).substr(0, 3)} ${date.getFullYear()}`
+                }
               }
-            }
-          })
+            })
 
-          let cols = 1
-          if (featuredLink) cols +=1
-          if (events.length) cols += 1
-          featured.push(grid.cell({
-            size: {
-              lg: `1of${cols}`,
-              md: cols > 1 ? '1of2' : '1of1'
-            }
-          }, panel(popular(items, {
-            slim: true
-          }), {
-            utils: 'u-bgGrayDark u-colorWhite',
-            heading: text`Most read`
-          })))
+            let cols = 1
+            if (featuredLink) cols +=1
+            if (events.length) cols += 1
+            featured.push(grid.cell({
+              size: {
+                lg: `1of${cols}`,
+                md: cols > 1 ? '1of2' : '1of1'
+              }
+            }, panel(popular(items, {
+              slim: true
+            }), {
+              utils: 'u-bgGrayDark u-colorWhite',
+              heading: text`Most read`
+            })))
+          }
         }
       } else {
         featured.push(
@@ -355,23 +377,9 @@ class Home extends View {
       return html`
         <main class="View-main">
           <div class="u-container">
-            ${alertHeading ? html`
-              <aside role="banner" class="View-spaceSmall">
-                ${alert({
-                  heading: asText(doc.data.alert_heading),
-                  body: asElement(doc.data.alert_message),
-                  link: (alertLink.id || alertLink.url) && !alertLink.isBroken ? {
-                    href: resolve(doc.data.alert_link),
-                    text: doc.data.alert_link_text
-                  } : null
-                })}
-              </aside>
-            ` : null}
-          </div>
-          <div class="u-container">
             ${featured.length ? html`
               <div class="View-spaceSmall">
-                ${grid({ slim: true }, featured)}
+                ${grid({ gutter: 'xs' }, featured)}
               </div>
             ` : null}
             <div class="View-spaceLarge">

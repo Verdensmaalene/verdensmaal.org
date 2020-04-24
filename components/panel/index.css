@@ -60,7 +60,7 @@
 
 .Panel-link {
   display: block;
-  margin-top: 0.625rem;
+  margin-top: 0.2rem;
   font-size: 0.875rem;
   font-weight: bold;
   color: rgb(var(--color-link));

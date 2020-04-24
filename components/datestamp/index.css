@@ -27,6 +27,18 @@
   }
 }
 
+@media (min-width: 1200px) {
+  .Datestamp-date {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .Datestamp-date {
+    font-size: 3rem;
+  }
+}
+
 .Datestamp-time {
   display: block;
   margin-top: auto;

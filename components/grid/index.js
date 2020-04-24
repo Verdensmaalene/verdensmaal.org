@@ -15,7 +15,7 @@ function grid (opts, children) {
   var classes = className('Grid', {
     'Grid--carousel': opts.carousel,
     'Grid--collapse': opts.collapse,
-    'Grid--slim': opts.slim
+    [`Grid--${opts.gutter}`]: opts.gutter
   })
   if (opts.ordered) return html`<ol class="${classes}">${children.map(child)}</ol>`
   return html`<div class="${classes}">${children.map(child)}</div>`
