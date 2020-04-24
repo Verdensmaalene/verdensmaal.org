@@ -321,7 +321,7 @@ app.use(function (ctx, next) {
   var previewCookie = ctx.cookies.get(Prismic.previewCookie)
   if (previewCookie) {
     ctx.set('Cache-Control', 'no-cache, private, max-age=0')
-  } else if (app.env !== 'development') {
+  } else if (app.env === 'production') {
     ctx.set('Cache-Control', `s-maxage=${60 * 60 * 24 * 30}, max-age=0`)
   }
 
