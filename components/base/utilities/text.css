@@ -22,6 +22,19 @@
   text-align: center !important;
 }
 
+.u-textRight {
+  text-align: right !important;
+}
+
+.u-textInherit {
+  font-size: inherit !important;
+  font-family: inherit !important;
+  font-weight: inherit !important;
+  text-transform: inherit !important;
+  text-align: inherit !important;
+  font-style: inherit !important;
+}
+
 .u-textNowrap {
   white-space: nowrap !important;
 }

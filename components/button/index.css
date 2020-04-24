@@ -6,7 +6,6 @@
   display: inline-block;
   line-height: 3.25rem;
   padding: 0 1.2rem;
-  min-width: 10rem;
   font-size: 1.5rem;
   color: rgb(var(--default-color));
   background-color: rgba(var(--color-gray), 0.12);

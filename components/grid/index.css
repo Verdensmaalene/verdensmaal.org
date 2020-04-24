@@ -70,6 +70,22 @@
   min-width: 0; /* 1 */
 }
 
+.Grid-cell--alignLeft {
+  margin-right: auto;
+}
+
+.Grid-cell--alignRight {
+  margin-left: auto;
+}
+
+.Grid-cell--alignTop {
+  margin-bottom: auto;
+}
+
+.Grid-cell--alignBottom {
+  margin-top: auto;
+}
+
 @media (max-width: 599px) {
   .Grid--carousel {
     width: 100%;

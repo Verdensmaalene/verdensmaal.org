@@ -9,6 +9,7 @@ var panel = require('../components/panel')
 var intro = require('../components/intro')
 var alert = require('../components/alert')
 var button = require('../components/button')
+var { input } = require('../components/form')
 var popular = require('../components/popular')
 var headline = require('../components/headline')
 var GoalGrid = require('../components/goal-grid')
@@ -19,6 +20,7 @@ var cardSlot = require('../components/goal-grid/slots/card')
 var paddSlot = require('../components/goal-grid/slots/padded')
 var centerSlot = require('../components/goal-grid/slots/center')
 var { i18n, srcset, asText, resolve } = require('../components/base')
+var highlight = require('../components/highlight')
 
 var text = i18n()
 
@@ -118,7 +120,7 @@ class Home extends View {
             <aside role="banner">
               ${alert({
                 heading: asText(doc.data.alert_heading),
-                body: asElement(doc.data.alert_message),
+                body: asElement(doc.data.alert_message, resolve),
                 link: (alertLink.id || alertLink.url) && !alertLink.isBroken ? {
                   href: resolve(doc.data.alert_link),
                   text: doc.data.alert_link_text
@@ -364,6 +366,51 @@ class Home extends View {
             })))
           }
         }
+
+        if (featured.length) {
+          const heading = asText(doc.data.newsletter_heading)
+          let terms = doc.data.newsletter_terms_and_conditions.length ? html`
+            <div class="Text u-textRight">
+              <small class="Text-muted Text-small">
+                ${asElement(doc.data.newsletter_terms_and_conditions, resolve)}
+              </small>
+            </div>
+          ` : null
+          const submit = button({
+            class: 'u-sizeFill js-submit',
+            primary: true,
+            text: text`Sign up`,
+            type: 'submit'
+          })
+
+
+          featured.push(grid.cell(panel(html`
+            <form method="post" action="/api/subscribe" onsubmit=${onsubmit}>
+              <div class="Text u-spaceB2">
+                ${heading ? html`
+                  <h2 class="u-textInherit">
+                    <span class="u-textBold">${heading}</span>
+                  </h2>
+                ` : null}
+                ${asElement(doc.data.newsletter_description, resolve)}
+              </div>
+              <input type="hidden" name="page" value="${state.origin}">
+              <input type="hidden" name="country" value="${state.country}">
+              ${grid({ gutter: 'xs' }, [
+                grid.cell({ size: { lg: '2of3' } }, grid({ size: { md: '1of2' }, gutter: 'xs' }, [
+                  input({ type: 'text', name: 'name', label: text`Your name`, placeholder: text`Your name`, required: true, plain: true }),
+                  input({ type: 'email', name: 'email', label: text`Your email`, placeholder: text`Your email`, required: true, plain: true })
+                ])),
+                grid.cell({ align: 'right', size: { lg: '1of3', md: '2of3' } }, terms ? grid({
+                  gutter: 'xs'
+                }, [
+                  grid.cell({ size: { md: '1of2', lg: '2of3' } }, terms),
+                  grid.cell({ size: { md: '1of2', lg: '1of3' } }, submit)
+                ]) : submit)
+              ])}
+            </form>
+          `, { utils: 'u-bgGrayLight' })))
+        }
       } else {
         featured.push(
           grid.cell({ size: { lg: '2of3' } }, headline.loading()),
@@ -398,6 +445,19 @@ class Home extends View {
           ` : null}
         </main>
       `
+
+      function onsubmit (event) {
+        if (!event.target.checkValidity()) {
+          event.target.reportValidity()
+        } else {
+          var form = event.currentTarget
+          var data = new window.FormData(form)
+          var button = form.querySelector('.js-submit')
+          button.disabled = true
+          emit('subscribe', data)
+        }
+        event.preventDefault()
+      }
 
       // render slot by type
       // str -> Element

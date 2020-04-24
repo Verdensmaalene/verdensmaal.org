@@ -30,7 +30,11 @@ function grid (opts, children) {
     if (typeof children === 'function') children = children()
 
     var size = props.size || opts.size
-    if (size) attrs.class += ' ' + sizes(size)
+    if (size) attrs.class += ` ${sizes(size)}`
+    if (props.align) {
+      const align = props.align[0].toUpperCase() + props.align.substring(1)
+      attrs.class += ` Grid-cell--align${align}`
+    }
 
     var appear = opts.appear || props.appear
     if (typeof appear === 'number' || Boolean(appear)) {

@@ -103,6 +103,7 @@
 .Card--background .Card-body {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   justify-content: flex-end;
 }
 
@@ -122,6 +123,11 @@
   font-family: var(--heading-font-family);
   line-height: var(--heading-line-height);
   word-spacing: var(--heading-word-spacing);
+}
+
+.Card--background .Card-title {
+  background-color: rgb(var(--high-contrast-light));
+  color: rgb(var(--high-contrast-dark, var(--current-color)));
 }
 
 .Card--bold .Card-title {
