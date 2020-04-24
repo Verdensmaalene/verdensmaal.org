@@ -367,7 +367,7 @@ class Home extends View {
           }
         }
 
-        if (featured.length) {
+        if ((alertHeading && featured.length > 1) || (!alertHeading && featured.length)) {
           const heading = asText(doc.data.newsletter_heading)
           let terms = doc.data.newsletter_terms_and_conditions.length ? html`
             <div class="Text u-textRight">
