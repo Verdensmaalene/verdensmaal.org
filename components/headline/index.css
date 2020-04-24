@@ -39,7 +39,7 @@
   }
 }
 
-.Headline:not(.Headline--highlight) .Headline-content {
+.Headline:not(.Headline--highlight):not(.is-loading) .Headline-content {
   background-image: var(--figure-gradient);
 }
 
@@ -48,7 +48,14 @@
  */
 
 .Headline-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   max-width: 38rem;
+}
+
+.Headline-text {
+  display: block;
 }
 
 .Headline:not(.Headline--highlight) .Headline-text {

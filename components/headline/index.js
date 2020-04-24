@@ -42,7 +42,7 @@ function headline (props) {
 
 function loading () {
   return html`
-    <article class="Headline is-loading">
+    <article class="Headline Headline--highlight is-loading">
       <div class="Headline-content">
         <div class="Headline-body">
           <div class="Headline-highlight">
