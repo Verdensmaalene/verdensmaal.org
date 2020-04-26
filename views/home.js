@@ -103,6 +103,7 @@ class Home extends View {
       var featured = []
       if (doc) {
         const headlineLink = doc.data.headline_link
+        const hasHeadline = !headlineLink.isBroken && (headlineLink.url || headlineLink.id)
         const news = doc.data.featured_news_listing.filter(function (item) {
           return item.link.type === 'news' && !item.link.isBroken
         })
@@ -132,7 +133,7 @@ class Home extends View {
 
         // append featured headline news, filling up the space if there are no
         // valid list items to be shown
-        if (!headlineLink.isBroken && (headlineLink.url || headlineLink.id)) {
+        if (hasHeadline) {
           let subheading
           if (doc.data.headline_subheading) {
             subheading = doc.data.headline_subheading
@@ -167,7 +168,7 @@ class Home extends View {
               src: srcset(image.url, [900]).split(' ')[0],
               alt: image.alt || heading,
               sizes: news.length ? '(min-width: 1000px) 66vw, 100vw' : '100vw',
-              srcset: srcset(image.url, [400, 600, 900, [1200, 'q_50'], [1800, 'q_50']], {
+              srcset: srcset(image.url, [400, 600, 900, [1200, 'q_75'], [1800, 'q_75']], {
                 transforms: 'f_jpg,c_thumb',
                 aspect: news.length ? 0.6 : 0.3
               })
@@ -186,13 +187,13 @@ class Home extends View {
         if (news.length) {
           featured.push(grid.cell({
             size: {
-              lg: featured.length ? '1of3' : '1of1',
+              lg: hasHeadline ? '1of3' : '1of1',
               md: events.length || featuredLink ? '1of2' : '1of1'
             }
           }, panel(grid({
             gutter: 'sm',
             size: {
-              lg: featured.length ? '1of1' : `1of${news.length}`,
+              lg: hasHeadline ? '1of1' : `1of${news.length}`,
               md: events.length || featuredLink ? '1of1' : `1of${news.length}`
             }
           }, news.map(function (item) {
