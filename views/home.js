@@ -164,7 +164,7 @@ class Home extends View {
             size: { lg: news.length ? '2of3' : '1of1' }
           }, headline({
             highlight: doc.data.headline_highlighted,
-            image: {
+            image: image && image.url ? {
               src: srcset(image.url, [900]).split(' ')[0],
               alt: image.alt || heading,
               sizes: news.length ? '(min-width: 1000px) 66vw, 100vw' : '100vw',
@@ -172,7 +172,7 @@ class Home extends View {
                 transforms: 'f_jpg,c_thumb',
                 aspect: news.length ? 0.6 : 0.3
               })
-            },
+            } : null,
             heading: heading,
             subheading: subheading,
             link: {

@@ -14,9 +14,11 @@ function headline (props) {
 
   return html`
     <article class="Headline ${hasHighlight ? 'Headline--highlight' : ''}">
-      <figure class="Headline-background">
-        <img class="Headline-image" ${image} src="${props.image.src}">
-      </figure>
+      ${props.image ? html`
+        <figure class="Headline-background">
+          <img class="Headline-image" ${image} src="${props.image.src}">
+        </figure>
+      ` : null}
       <div class="Headline-content">
         <div class="Headline-body">
           ${props.subheading ? render(props.subheading, 'subheading') : null}
