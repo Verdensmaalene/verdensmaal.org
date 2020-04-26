@@ -1,0 +1,156 @@
+@import "../base";
+
+/** @define Headline */
+.Headline {
+  display: flex;
+  position: relative;
+  background-color: rgba(var(--color-gray-light), 0.6);
+}
+
+.Headline::before {
+  content: "";
+  display: block;
+  padding-top: 120%;
+}
+
+@media (min-width: 600px) {
+  .Headline::before {
+    padding-top: 56.25%;
+  }
+}
+
+/**
+ * Content
+ */
+
+.Headline-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex: 1 1 100%;
+  padding: 1.25rem;
+  position: relative;
+}
+
+@media (min-width: 900px) {
+  .Headline-content {
+    padding: 2rem;
+  }
+}
+
+.Headline:not(.Headline--highlight):not(.is-loading) .Headline-content {
+  background-image: var(--figure-gradient);
+}
+
+/**
+ * Text
+ */
+
+.Headline-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 38rem;
+}
+
+.Headline-text {
+  display: block;
+}
+
+.Headline:not(.Headline--highlight) .Headline-text {
+  color: rgb(255, 255, 255);
+}
+
+.Headline-highlight {
+  display: inline-block;
+  padding: 0 0.7rem;
+  margin: 0.25rem 0;
+}
+
+/**
+ * 1. Safari requires the rgb to be defined before being used in box-shadow
+ */
+
+.Headline-highlight .Headline-text {
+  --background-color: rgb(var(--current-background, 255, 255, 255)); /* 1 */
+  display: inline;
+  padding: 0.22em 0 0.1em;
+  box-decoration-break: clone;
+  background-color: rgb(var(--current-background));
+  box-shadow:
+    -0.7rem 0 0 var(--background-color),
+    0.7rem 0 0 var(--background-color);
+}
+
+.Headline-text--subheading {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.Headline-highlight .Headline-text--subheading {
+  padding-bottom: 0.3em;
+}
+
+.Headline-text--heading {
+  text-transform: uppercase;
+  font-family: var(--heading-font-family);
+  word-spacing: var(--heading-word-spacing);
+  line-height: var(--heading-line-height);
+  font-size: 2.375rem;
+}
+
+@media (min-width: 1000px) {
+  .Headline-text--heading {
+    font-size: 4rem;
+  }
+}
+
+
+/**
+ * Image
+ */
+
+.Headline-background {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.Headline-image {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  width: auto;
+  transform: translate(-50%, -50%);
+}
+
+@supports (object-fit: cover) {
+  .Headline-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    transform: none;
+  }
+}
+
+/**
+ * Footer
+ */
+
+.Headline-footer {
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 1000px) {
+  .Headline-footer {
+    margin-top: 4rem;
+  }
+}

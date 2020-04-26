@@ -280,9 +280,15 @@ app.use(get('/', function (ctx, next) {
 
 // expose origin on state
 app.use(function (ctx, next) {
-  ctx.state.origin = app.env === 'development'
-    ? `http://localhost:${process.env.PORT || 8080}`
-    : 'https://www.verdensmaal.org'
+  if (process.env.VERDENSMAAL_ORIGIN) {
+    ctx.state.origin = process.env.VERDENSMAAL_ORIGIN
+  } else if (app.env === 'development') {
+    ctx.state.origin = `http://localhost:${process.env.PORT || 8080}`
+  } else if (app.env === 'production') {
+    ctx.state.origin = 'https://www.verdensmaal.org'
+  } else {
+    ctx.state.origin = `https://${process.env.NODE_ENV}.verdensmaal.org`
+  }
   return next()
 })
 
@@ -315,7 +321,7 @@ app.use(function (ctx, next) {
   var previewCookie = ctx.cookies.get(Prismic.previewCookie)
   if (previewCookie) {
     ctx.set('Cache-Control', 'no-cache, private, max-age=0')
-  } else if (app.env !== 'development') {
+  } else if (app.env === 'production') {
     ctx.set('Cache-Control', `s-maxage=${60 * 60 * 24 * 30}, max-age=0`)
   }
 

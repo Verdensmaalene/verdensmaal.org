@@ -25,6 +25,26 @@
   margin-bottom: calc(var(--Grid-gutter) * -1);
 }
 
+.Grid--xs {
+  --Grid-gutter: 0.625rem;
+}
+
+.Grid--sm {
+  --Grid-gutter: 1rem;
+}
+
+@media (min-width: 1000px), print {
+  .Grid--sm {
+    --Grid-gutter: 1.5rem;
+  }
+}
+
+@media (min-width: 1200px), print {
+  .Grid--sm {
+    --Grid-gutter: 2rem;
+  }
+}
+
 .Grid + .Grid {
   margin-top: var(--Grid-gutter);
 }
@@ -48,6 +68,22 @@
 .Grid-cell > * {
   flex-basis: 100%;
   min-width: 0; /* 1 */
+}
+
+.Grid-cell--alignLeft {
+  margin-right: auto;
+}
+
+.Grid-cell--alignRight {
+  margin-left: auto;
+}
+
+.Grid-cell--alignTop {
+  margin-bottom: auto;
+}
+
+.Grid-cell--alignBottom {
+  margin-top: auto;
 }
 
 @media (max-width: 599px) {

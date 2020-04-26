@@ -1,0 +1,80 @@
+@import "../base";
+
+/** @define Panel */
+.Panel {
+  display: flex;
+  flex-direction: column;
+  color: rgb(var(--current-color));
+  background-color: rgb(var(--current-background));
+}
+
+.Panel--background {
+  padding: 1.2rem 1.5rem 1.5rem;
+}
+
+.Panel-heading {
+  margin-bottom: 1.25rem;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.Panel-footer {
+  margin-top: auto;
+}
+
+/**
+ * Item
+ */
+
+.Panel-item {
+  display: flex;
+  position: relative;
+}
+
+.Panel-media {
+  flex: 0 0 33%;
+  min-width: 6.5rem;
+  margin-right: 1.25rem;
+}
+
+.Panel-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.Panel-title {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-family: var(--heading-font-family);
+  word-spacing: var(--heading-word-spacing);
+  line-height: 1.1;
+}
+
+@media (min-width: 1000px) {
+  .Panel-title {
+    font-size: 1.75rem;
+  }
+}
+
+.Panel-link {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: rgb(var(--color-link));
+}
+
+.Panel-link:hover {
+  text-decoration: underline;
+}
+
+.Panel-link::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}

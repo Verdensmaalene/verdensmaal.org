@@ -8,11 +8,13 @@ function button (props) {
     class: className('Button', {
       [props.class]: props.class,
       [props.className]: props.className,
+      'Button--cover': props.cover,
       'Button--small': props.small,
       'Button--large': props.large,
       'Button--primary': props.primary
     })
   })
+  delete attrs.cover
   delete attrs.small
   delete attrs.large
   delete attrs.primary

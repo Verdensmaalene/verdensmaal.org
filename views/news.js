@@ -6,6 +6,7 @@ var view = require('../components/view')
 var grid = require('../components/grid')
 var card = require('../components/card')
 var intro = require('../components/intro')
+var panel = require('../components/panel')
 var button = require('../components/button')
 var popular = require('../components/popular')
 var Telegram = require('../components/telegram')
@@ -58,6 +59,11 @@ function news (state, emit) {
       if (!state.popular.data) {
         latest.unshift(grid.cell({ size: topRow }, popular.loading()))
       } else {
+        const opts = {
+          heading: html`
+            <span class="u-colorGray u-colorCurrent">${text`Most read this month`}</span>
+          `
+        }
         const items = state.popular.data.map(function (doc) {
           var date = parse(doc.first_publication_date)
           var image = doc.data.image.url ? {
@@ -79,9 +85,9 @@ function news (state, emit) {
           }
         })
         if (!items.length) {
-          latest.unshift(grid.cell({ size: topRow }, popular.loading()))
+          latest.unshift(grid.cell({ size: topRow }, panel(popular.loading(5, opts))))
         } else {
-          latest.unshift(grid.cell({ size: topRow }, popular(items)))
+          latest.unshift(grid.cell({ size: topRow }, popular(items, opts)))
         }
       }
     }

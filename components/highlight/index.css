@@ -19,6 +19,7 @@
   line-height: var(--heading-line-height);
   word-spacing: var(--heading-word-spacing);
   text-transform: uppercase;
+  box-decoration-break: clone;
   background-color: rgb(var(--current-background));
   color: rgb(255, 255, 255);
   line-height: 1.1;

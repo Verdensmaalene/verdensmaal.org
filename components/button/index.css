@@ -6,7 +6,6 @@
   display: inline-block;
   line-height: 3.25rem;
   padding: 0 1.2rem;
-  min-width: 10rem;
   font-size: 1.5rem;
   color: rgb(var(--default-color));
   background-color: rgba(var(--color-gray), 0.12);
@@ -54,4 +53,17 @@
 .Button--primary:not([disabled]):hover {
   background: rgb(var(--color-link-shaded));
   color: #fff;
+}
+
+/**
+ * Button covering offset parent
+ */
+
+.Button--cover::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
 }

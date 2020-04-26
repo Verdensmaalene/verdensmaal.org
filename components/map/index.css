@@ -99,6 +99,10 @@
   font-size: 0.9rem;
 }
 
+.mapboxgl-popup {
+  max-width: none;
+}
+
 .mapboxgl-popup-content {
    padding: 0 !important;
    border-radius: 0 !important;

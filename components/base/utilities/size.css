@@ -4,6 +4,11 @@
  * Proportional widths
  */
 
+.u-size1of1 {
+  flex-basis: auto !important;
+  width: 100% !important;
+}
+
 .u-size1of4 {
   flex-basis: auto !important;
   width: 25% !important;
@@ -35,6 +40,11 @@
  */
 
 @media (min-width: 400px) {
+  .u-sm-size1of1 {
+    flex-basis: auto !important;
+    width: 100% !important;
+  }
+
   .u-sm-size1of4 {
     flex-basis: auto !important;
     width: 25% !important;
@@ -67,6 +77,11 @@
  */
 
 @media (min-width: 600px) {
+  .u-md-size1of1 {
+    flex-basis: auto !important;
+    width: 100% !important;
+  }
+
   .u-md-size1of4 {
     flex-basis: auto !important;
     width: 25% !important;
@@ -99,6 +114,11 @@
  */
 
 @media (min-width: 1000px) {
+  .u-lg-size1of1 {
+    flex-basis: auto !important;
+    width: 100% !important;
+  }
+
   .u-lg-size1of4 {
     flex-basis: auto !important;
     width: 25% !important;
