@@ -80,7 +80,7 @@ function resources (state, emit) {
           ${border(heading)}
         </div>
         <div class="${carousel ? 'u-md-container' : 'u-container'}">
-          ${grid({ size: { md: '1of3' }, carousel: carousel }, slice.items.map(cell))}
+          ${grid({ size: { md: '1of3' }, carousel: carousel }, slice.items.map(cell).filter(Boolean))}
         </div>
       </section>
     `
@@ -90,8 +90,10 @@ function resources (state, emit) {
 // render individual resource grid cell
 // obj -> Element
 function cell (item) {
+  if (!item.file.url && item.file.isBroken) return null
   var sizes = '(min-width: 1000px) 30vw, (min-width: 400px) 50vw, 100vw'
   var opts = { transforms: 'c_thumb', aspect: 3 / 4 }
+  var href = item.file.url || resolve(item.file)
   return card({
     title: asText(item.title),
     body: asElement(item.description),
@@ -103,7 +105,7 @@ function cell (item) {
       caption: item.image.copyright
     } : null,
     link: {
-      href: item.file.url
+      href: href
     }
   })
 }
