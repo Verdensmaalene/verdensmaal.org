@@ -20,7 +20,6 @@ var cardSlot = require('../components/goal-grid/slots/card')
 var paddSlot = require('../components/goal-grid/slots/padded')
 var centerSlot = require('../components/goal-grid/slots/center')
 var { i18n, srcset, asText, resolve } = require('../components/base')
-var highlight = require('../components/highlight')
 
 var text = i18n()
 
@@ -49,7 +48,7 @@ class Home extends View {
   }
 
   createElement (state, emit) {
-    if (!state.popular.data && !state.popular.error && typeof window !=='undefined') {
+    if (!state.popular.data && !state.popular.error && typeof window !== 'undefined') {
       emit('fetch:popular')
     }
 
@@ -283,7 +282,6 @@ class Home extends View {
               body = asText(featuredLink.data.description)
             }
 
-
             let title = heading
             let linkText = doc.data.featured_link_text || text`Read more`
             if (doc.data.featured_link_theme) {
@@ -352,7 +350,7 @@ class Home extends View {
             })
 
             let cols = 1
-            if (featuredLink) cols +=1
+            if (featuredLink) cols += 1
             if (events.length) cols += 1
             featured.push(grid.cell({
               size: {
@@ -370,7 +368,7 @@ class Home extends View {
 
         if ((alertHeading && featured.length > 1) || (!alertHeading && featured.length)) {
           const heading = asText(doc.data.newsletter_heading)
-          let terms = doc.data.newsletter_terms_and_conditions.length ? html`
+          const terms = doc.data.newsletter_terms_and_conditions.length ? html`
             <div class="Text u-textRight">
               <small class="Text-muted Text-small">
                 ${asElement(doc.data.newsletter_terms_and_conditions, resolve)}
@@ -383,7 +381,6 @@ class Home extends View {
             text: text`Sign up`,
             type: 'submit'
           })
-
 
           featured.push(grid.cell(panel(html`
             <form method="post" action="/api/subscribe" onsubmit=${onsubmit}>
