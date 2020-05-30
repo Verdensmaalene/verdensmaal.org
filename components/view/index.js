@@ -102,6 +102,9 @@ function createView (view, meta) {
               if (state.referrer === '') {
                 opts.back = { href: '/', text: text`Back to Goals` }
               }
+              if (state.referrer === '/maalene') {
+                opts.back = { href: '/maalene', text: text`Back to Goals` }
+              }
             }
           }
           if (state.route === 'mission') {
