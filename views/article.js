@@ -193,8 +193,6 @@ function article (state, emit) {
                   <li class="Text u-spaceB2">
                     <a class="u-block" href="${href}" ${attrs}>
                       <span class="Text-large u-textBreakLongWords">${text}</span>
-                      <br>
-                      <small class="Text-muted u-textTruncate u-textRegular">${href}</small>
                     </a>
                   </li>
                 `
