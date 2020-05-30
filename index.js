@@ -28,6 +28,7 @@ app.use(require('./stores/telegram'))
 app.use(require('./stores/nomination'))
 
 app.route('/', require('./views/home'))
+app.route('/maalene', require('./views/goals'))
 app.route('/nyheder', require('./views/news'))
 app.route('/events', require('./views/events'))
 app.route('/events/:uid', require('./views/event'))

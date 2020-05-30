@@ -60,6 +60,7 @@ exports.resolve = resolve
 function resolve (doc) {
   switch (doc.type) {
     case 'homepage': return '/'
+    case 'goals': return '/maalene'
     case 'mission': return '/mission'
     case 'resources': return '/materialer'
     case 'goal': return `/${doc.data.number}-${doc.uid}`

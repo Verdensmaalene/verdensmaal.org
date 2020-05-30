@@ -134,7 +134,9 @@ function createView (view, meta) {
         scores.sort(([a], [b]) => b - a)
         var topscore = scores[0]
         var links = menu.slice()
-        links[topscore[1]].selected = true
+        if (state.route !== '/') {
+          links[topscore[1]].selected = true
+        }
 
         return html`
           <div class="View-header ${opts.static ? 'View-header--stuck View-header--appear' : ''}">
