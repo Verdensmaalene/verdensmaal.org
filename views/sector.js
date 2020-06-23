@@ -16,6 +16,7 @@ var event = require('../components/event')
 var button = require('../components/button')
 var Details = require('../components/details')
 var divide = require('../components/grid/divide')
+var thumbnail = require('../components/thumbnail')
 var { external } = require('../components/symbol')
 var blockquote = require('../components/blockquote')
 var serialize = require('../components/text/serialize')
@@ -60,19 +61,21 @@ function sector (state, emit) {
     return html`
       <main class="View-main">
         ${hero({ title, body, image, caption: data.image.copyright })}
-        <div class="u-container">
-          <div class="View-spaceSmall">
-            <div class="Text Text--large u-printHidden">
-              ${text`Shortcuts`}: ${shortcuts.map((slice, index, list) => html`
-                <span>
-                  <a href="#${anchor(slice.primary.shortcut_name).id}" onclick=${scrollIntoView}>
-                    ${slice.primary.shortcut_name}
-                  </a>${index < (list.length - 1) ? ', ' : null}
-                </span>
-              `)}
+        ${shortcuts.length ? html`
+          <div class="u-container">
+            <div class="View-spaceSmall">
+              <div class="Text Text--large u-printHidden">
+                ${text`Shortcuts`}: ${shortcuts.map((slice, index, list) => html`
+                  <span>
+                    <a href="#${anchor(slice.primary.shortcut_name).id}" onclick=${scrollIntoView}>
+                      ${slice.primary.shortcut_name}
+                    </a>${index < (list.length - 1) ? ', ' : null}
+                  </span>
+                `)}
+              </div>
             </div>
           </div>
-        </div>
+        ` : null}
         ${slices}
       </main>
     `
@@ -382,6 +385,30 @@ function sector (state, emit) {
             <section id="statistics" class="View-space View-space--${camelCase(slice.slice_type)} u-container">
               ${divide(charts)}
             </section>
+          `
+        }
+        case 'thumbgrid': {
+          return html`
+            <div class="u-container">
+              ${grid({ size: { sm: '1of3', lg: '1of6' } }, slice.items.map(function (item) {
+                var link
+                if (!item.link.isBroken && (item.link.id || item.link.url)) {
+                  link = { href: resolve(item.link) }
+                  if (link.target === '_blank') {
+                    link.target = '_blank'
+                    link.rel = 'noopener noreferrer'
+                  }
+                }
+
+                return thumbnail({
+                  link,
+                  image: Object.assign({
+                    alt: item.image.alt,
+                    src: `/media/fetch/w_150/${item.image.url}`
+                  }, item.image.dimensions)
+                })
+              }))}
+            </div
           `
         }
         default: return null
