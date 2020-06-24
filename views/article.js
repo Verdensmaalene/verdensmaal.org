@@ -123,7 +123,7 @@ function article (state, emit) {
               <aside class="View-sidebar u-col u-lg-size1of3">
                 <div class="u-sizeFull">
                   ${links}
-                  <aside class="u-printHidden">
+                  <div class="u-printHidden">
                     <div class="Text">
                       <span class="u-sibling"></span>
                       <h3>${text`Spread the word`}</h3>
@@ -154,7 +154,7 @@ function article (state, emit) {
                         })}
                       </li>
                     </ul>
-                  </aside>
+                  </div>
                 </div>
               </aside>
             </div>
@@ -167,7 +167,7 @@ function article (state, emit) {
 
   // render slice as element
   // (obj, num, arr) -> Element
-  function related (slice) {
+  function related (slice, index) {
     switch (slice.slice_type) {
       case 'links': {
         const items = slice.items.filter(function (item) {
@@ -175,7 +175,7 @@ function article (state, emit) {
         })
         if (!items.length) return null
         return html`
-          <aside>
+          <div>
             <div class="Text">
               <span class="u-sibling"></span>
               <h3>${asText(slice.primary.heading)}</h3>
@@ -198,7 +198,7 @@ function article (state, emit) {
                 `
               }).filter(Boolean)}
             </ol>
-          </aside>
+          </div>
         `
       }
       default: return null

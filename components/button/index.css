@@ -3,7 +3,8 @@
 /* @define Button */
 .Button {
   flex: 0 0 auto;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   line-height: 3.25rem;
   padding: 0 1.2rem;
   font-size: 1.5rem;

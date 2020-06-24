@@ -95,12 +95,15 @@ function createView (view, meta, _config = {}) {
         var opts = { isHighContrast: state.ui.isHighContrast, ...config.header }
 
         opts.slot = function () {
-          return getFlag({
-            adapt: !hasError,
+          var opts = {
             reverse: state.ui.hasOverlay,
             id: `header${!hasError ? '-adaptive' : ''}`,
             ...(config.header ? config.header.flag : null)
-          })
+          }
+
+          opts.adapt = opts.adapt && !hasError
+
+          return getFlag(opts)
         }
 
         // determine selected menu item by caluclating href match

@@ -4,18 +4,15 @@ module.exports = banner
 module.exports.loading = loading
 
 function banner (image, slot) {
-  var attrs = {}
-  if (image.width) attrs.width = image.width
-  if (image.height) attrs.height = image.height
-  if (image.sizes) attrs.sizes = image.sizes
-  if (image.srcset) attrs.srcset = image.srcset
+  var attrs = { ...image }
+  delete attrs.src
 
   return html`
     <div class="u-xl-container">
       <figure class="Banner">
         <div class="${slot ? 'u-cols' : ''}">
           <div class="Banner-figure ${slot ? 'u-col u-lg-size2of3' : ''}">
-            <img class="Banner-image" ${attrs} alt="${image.alt || ''}" src="${image.src}">
+            ${image ? html`<img ${attrs} class="Banner-image" src="${image.src}">` : null}
           </div>
           ${slot ? html`
             <div class="Banner-slot u-col u-lg-size1of3">

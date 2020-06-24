@@ -1,19 +1,13 @@
 var html = require('choo/html')
 var asElement = require('prismic-element')
-var { Predicates } = require('prismic-javascript')
 var view = require('../components/view')
-var grid = require('../components/grid')
-var intro = require('../components/intro')
-var button = require('../components/button')
-var banner = require('../components/banner')
-var { input } = require('../components/form')
-var bookmark = require('../components/bookmark')
-var serialize = require('../components/text/serialize')
-var { i18n, asText, srcset, resolve } = require('../components/base')
+var { i18n, asText } = require('../components/base')
 
 var text = i18n()
 
-module.exports = view(subject, meta)
+module.exports = view(subject, meta, {
+  theme: 'verdenstimen'
+})
 
 function subject (state, emit) {
   console.log(state.params)
@@ -24,20 +18,25 @@ function subject (state, emit) {
     if (err) throw err
     return html`
       <main class="View-main">
-        <h1>${doc ? asText(doc.data.title) : text`LOADING_TEXT_SHORT`}</h1>
-        ${doc ? html`
-          <ul>
-            ${doc.data.materials.map(function (item) {
-              var doc = item.link
-              if (doc.isBroken || !doc.id) return null
-              return html`
-                <li>
-                  <a href="${state.href}/${doc.uid}">${asText(doc.data.title)}</a>
-                </li>
-              `
-            })}
-          </ul>
-        ` : null}
+        <div class="View-space u-container">
+          <div class="Text">
+            <h1>${doc ? asText(doc.data.title) : html`<span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`}</h1>
+            <p>${doc ? asElement(doc.data.description) : html`<span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span>`}</p>
+            ${doc ? html`
+              <ul>
+                ${doc.data.materials.map(function (item) {
+                  var doc = item.link
+                  if (doc.isBroken || !doc.id) return null
+                  return html`
+                    <li>
+                      <a href="${state.href}/${doc.uid}">${asText(doc.data.title)}</a>
+                    </li>
+                  `
+                })}
+              </ul>
+            ` : null}
+          </div>
+        </div>
       </main>
     `
   })
