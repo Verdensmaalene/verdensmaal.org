@@ -13,10 +13,73 @@
   --color-link: var(--current-color) !important;
 }
 
-.u-highContrast,
-.u-highContrast *,
-.u-highContrast *::before,
-.u-highContrast *::after  {
-  --color-theme: 189, 26, 45;
-  --color-theme-shaded: 164, 20, 37;
+.theme-verdenstimen,
+.theme-verdenstimen *,
+.theme-verdenstimen *::before,
+.theme-verdenstimen *::after  {
+  --color-theme: var(--high-contrast-dark, 244, 151, 9) !important;
+  --color-theme-shaded: var(--high-contrast-dark, 197, 122, 7) !important;
+}
+
+.theme-highContrast,
+.theme-highContrast *,
+.theme-highContrast *::before,
+.theme-highContrast *::after {
+  --high-contrast-light: var(--default-background-color) !important;
+  --high-contrast-dark: var(--default-color) !important;
+  --high-contrast-on: 1 !important;
+  --high-contrast-underline: underline !important;
+  --high-contrast-bold: 600 !important;
+
+  --color-theme: 189, 26, 45 !important;
+  --color-theme-shaded: 164, 20, 37 !important;
+
+  --color-text-muted: var(--default-color) !important;
+
+  --color-gray: var(--default-color) !important;
+  --color-gray-dark: var(--default-color) !important;
+  --color-gray-light: var(--default-background-color) !important;
+
+  --color-twitter: var(--default-color) !important;
+  --color-facebook: var(--default-color) !important;
+  --color-youtube: var(--default-color) !important;
+  --color-instagram: var(--default-color) !important;
+  --color-weibo: var(--default-color) !important;
+  --color-vk: var(--default-color) !important;
+
+  --color-goal-1: var(--default-color) !important;
+  --color-goal-2: var(--default-color) !important;
+  --color-goal-3: var(--default-color) !important;
+  --color-goal-4: var(--default-color) !important;
+  --color-goal-5: var(--default-color) !important;
+  --color-goal-6: var(--default-color) !important;
+  --color-goal-7: var(--default-color) !important;
+  --color-goal-8: var(--default-color) !important;
+  --color-goal-9: var(--default-color) !important;
+  --color-goal-10: var(--default-color) !important;
+  --color-goal-11: var(--default-color) !important;
+  --color-goal-12: var(--default-color) !important;
+  --color-goal-13: var(--default-color) !important;
+  --color-goal-14: var(--default-color) !important;
+  --color-goal-15: var(--default-color) !important;
+  --color-goal-16: var(--default-color) !important;
+  --color-goal-17: var(--default-color) !important;
+
+  --color-goal-1-shaded: var(--default-color) !important;
+  --color-goal-2-shaded: var(--default-color) !important;
+  --color-goal-3-shaded: var(--default-color) !important;
+  --color-goal-4-shaded: var(--default-color) !important;
+  --color-goal-5-shaded: var(--default-color) !important;
+  --color-goal-6-shaded: var(--default-color) !important;
+  --color-goal-7-shaded: var(--default-color) !important;
+  --color-goal-8-shaded: var(--default-color) !important;
+  --color-goal-9-shaded: var(--default-color) !important;
+  --color-goal-10-shaded: var(--default-color) !important;
+  --color-goal-11-shaded: var(--default-color) !important;
+  --color-goal-12-shaded: var(--default-color) !important;
+  --color-goal-13-shaded: var(--default-color) !important;
+  --color-goal-14-shaded: var(--default-color) !important;
+  --color-goal-15-shaded: var(--default-color) !important;
+  --color-goal-16-shaded: var(--default-color) !important;
+  --color-goal-17-shaded: var(--default-color) !important;
 }

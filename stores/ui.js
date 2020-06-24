@@ -6,6 +6,7 @@ function ui (state, emitter) {
   state.ui.isLoading = false
   state.ui.hasOverlay = false
   state.ui.isHighContrast = false
+  state.ui.theme = null
   state.ui.scrollOffset = 0
   state.ui.gridLayout = state.ui.gridLayout || Math.ceil(Math.random() * 9)
   state.ui.clock = { ref: 1 }
@@ -30,9 +31,23 @@ function ui (state, emitter) {
   })
 
   emitter.on('contrast:toggle', function (isHighContrast) {
+    if (typeof window === 'undefined') return
     state.ui.isHighContrast = isHighContrast
     var root = document.documentElement
-    root.classList[isHighContrast ? 'add' : 'remove']('u-highContrast')
+    root.classList[isHighContrast ? 'add' : 'remove']('theme-highContrast')
+    if (state.ui.theme) {
+      root.classList[isHighContrast ? 'remove' : 'add'](`theme-${state.ui.theme}`)
+    }
+    emitter.emit('render')
+  })
+
+  emitter.on('theme', function (theme) {
+    if (typeof window === 'undefined') return
+    if (theme && state.ui.isHighContrast) return
+    var root = document.documentElement
+    if (theme) root.classList.add(`theme-${theme}`)
+    else root.classList.remove(`theme-${state.ui.theme}`)
+    state.ui.theme = theme || null
     emitter.emit('render')
   })
 

@@ -11,7 +11,14 @@ var { i18n, asText, resolve } = require('../components/base')
 
 var text = i18n()
 
-module.exports = view(missionView, meta)
+module.exports = view(missionView, meta, {
+  header: {
+    theme: 'white',
+    static: true,
+    scale: false,
+    flag: { adapt: true }
+  }
+})
 
 function missionView (state, emit) {
   return state.docs.getSingle('mission', function (err, doc) {

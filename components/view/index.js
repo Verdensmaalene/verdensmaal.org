@@ -3,7 +3,6 @@ var raw = require('choo/html/raw')
 var html = require('choo/html')
 var Component = require('choo/component')
 var asElement = require('prismic-element')
-var { Predicates } = require('prismic-javascript')
 var flag = require('../flag')
 var error = require('./error')
 var share = require('../share')
@@ -20,19 +19,18 @@ if (typeof window !== 'undefined') {
 }
 
 var DEFAULT_TITLE = text`SITE_TITLE`
-var GOAL_SLUG = /^(\d{1,2})-(.+)$/
 
 module.exports = View
 
 // view constructor doubles as view factory
 // if not called with the `new` keyword it will just return a wrapper function
 // (str|fn, fn?) -> View|fn
-function View (view, meta) {
-  if (!(this instanceof View)) return createView(view, meta)
+function View (view, meta, config) {
+  if (!(this instanceof View)) return createView(view, meta, config)
   var id = view
   assert(typeof id === 'string', 'View: id should be type string')
   Component.call(this, id)
-  this.createElement = createView(this.createElement, this.meta)
+  this.createElement = createView(this.createElement, this.meta, this.config)
 }
 
 View.prototype = Object.create(Component.prototype)
@@ -49,15 +47,17 @@ function createClass (Class, id) {
   }
 }
 
-function createView (view, meta) {
+function createView (view, meta, _config = {}) {
   return function (state, emit) {
+    var config = typeof _config === 'function' ? _config(state) : _config
+
     return state.docs.getSingle('website', (err, doc) => {
       if (err) throw err
       var hasError = false
       var children
       try {
         children = view.call(this, state, emit)
-        const next = meta.call(this, state)
+        const next = meta.call(this, state) || { title: DEFAULT_TITLE }
 
         if (next.title && next.title !== DEFAULT_TITLE) {
           next.title = `${next.title} | ${DEFAULT_TITLE}`
@@ -73,6 +73,12 @@ function createView (view, meta) {
 
       var menu = doc && doc.data.main_menu.map(link)
 
+      if (config.theme) {
+        emit('theme', config.theme)
+      } else if (state.ui.theme) {
+        emit('theme', null)
+      }
+
       return html`
         <body class="View" id="view">
           <script type="application/ld+json">${raw(JSON.stringify(linkedData(state)))}</script>
@@ -86,40 +92,14 @@ function createView (view, meta) {
       `
 
       function getHeader () {
-        var opts = { isHighContrast: state.ui.isHighContrast }
-
-        var isGoal
-        if (!hasError) {
-          const wildcard = state.params.wildcard
-          if (wildcard && wildcard.indexOf('/') === -1) {
-            const [, num] = (wildcard.match(GOAL_SLUG) || [])
-            const predicate = Predicates.at('my.goal.number', +num)
-            isGoal = num && state.docs.get(predicate, (err) => !err)
-            if (isGoal) {
-              opts.theme = +num === 7 ? 'black' : 'white'
-              opts.static = true
-              opts.scale = false
-              if (state.referrer === '') {
-                opts.back = { href: '/', text: text`Back to Goals` }
-              }
-              if (state.referrer === '/maalene') {
-                opts.back = { href: '/maalene', text: text`Back to Goals` }
-              }
-            }
-          }
-          if (state.route === 'mission') {
-            opts.theme = 'white'
-            opts.static = true
-            opts.scale = false
-          }
-        }
+        var opts = { isHighContrast: state.ui.isHighContrast, ...config.header }
 
         opts.slot = function () {
-          var isAdaptive = !hasError && (isGoal || state.route === 'mission')
           return getFlag({
-            adapt: isAdaptive,
+            adapt: !hasError,
             reverse: state.ui.hasOverlay,
-            id: `header${isAdaptive ? '-adaptive' : ''}`
+            id: `header${!hasError ? '-adaptive' : ''}`,
+            ...(config.header ? config.header.flag : null)
           })
         }
 

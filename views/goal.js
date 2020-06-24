@@ -24,6 +24,7 @@ var { i18n, isSameDomain, className, srcset, asText, colors, resolve } = require
 var text = i18n()
 var SCROLL_MIN = 0
 var SCROLL_MAX = 50
+var GOAL_NUM_REGEX = /^(\d{1,2})-.+$/
 
 // override goal background method in high contrast mode
 class HighContrastGoal extends Goal {
@@ -41,7 +42,7 @@ class GoalPage extends View {
   }
 
   meta (state) {
-    var [, num] = state.params.wildcard.match(/^(\d{1,2})-.+$/)
+    var [, num] = state.params.wildcard.match(GOAL_NUM_REGEX)
     var predicate = Predicates.at('my.goal.number', +num)
     return state.docs.get(predicate, function (err, response) {
       if (err) return null
@@ -54,6 +55,24 @@ class GoalPage extends View {
         goal: doc.data.number
       }
     })
+  }
+
+  config (state) {
+    var [, num] = state.params.wildcard.match(GOAL_NUM_REGEX)
+    var header = {
+      theme: +num === 7 ? 'black' : 'white',
+      static: true,
+      scale: false,
+      flag: { adapt: true }
+    }
+
+    if (state.referrer === '') {
+      header.back = { href: '/', text: text`Back to Goals` }
+    } else if (state.referrer === '/maalene') {
+      header.back = { href: '/maalene', text: text`Back to Goals` }
+    }
+
+    return { header }
   }
 
   update (state, emit) {
@@ -99,7 +118,7 @@ class GoalPage extends View {
 
   createElement (state, emit) {
     var { local } = this
-    var [, num] = state.params.wildcard.match(/^(\d{1,2})-.+$/)
+    var [, num] = state.params.wildcard.match(GOAL_NUM_REGEX)
     var predicate = Predicates.at('my.goal.number', +num)
     return state.docs.get(predicate, onresponse)
 
