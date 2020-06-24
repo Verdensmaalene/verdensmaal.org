@@ -287,6 +287,8 @@ app.use(function (ctx, next) {
     ctx.state.origin = `http://localhost:${process.env.PORT || 8080}`
   } else if (app.env === 'production') {
     ctx.state.origin = 'https://www.verdensmaal.org'
+  } else if (process.env.HEROKU_APP_NAME) {
+    ctx.state.origin = `https://${process.env.HEROKU_APP_NAME}.herokuapp.com`
   } else {
     ctx.state.origin = `https://${process.env.NODE_ENV}.verdensmaal.org`
   }
