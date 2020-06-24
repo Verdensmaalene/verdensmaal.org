@@ -1,0 +1,78 @@
+@import "../base";
+
+/** @define Menu */
+
+.Menu {
+  padding: 0.875rem 1.25rem;
+  background-color: rgb(var(--current-background));
+}
+
+@media (min-width: 1000px) {
+  .Menu {
+    padding: 1.375rem 2rem;
+  }
+}
+
+.Menu-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.Menu-description {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.Menu-list {
+  column-count: 2;
+  column-gap: 1.25rem;
+  position: relative;
+}
+
+.Menu--small .Menu-list {
+  column-count: 1;
+}
+
+.Menu-list:not(:first-child) {
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 1000px) {
+  .Menu-list {
+    column-count: 2;
+    column-gap: 2rem;
+  }
+}
+
+.Menu-list::after {
+  content: "";
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(var(--current-background));
+}
+
+.Menu-item {
+  break-inside: avoid-column;
+  border-bottom: 1px solid rgb(var(--color-gray-light));
+}
+
+.Menu-link {
+  display: block;
+  padding: 0.75em 0;
+  font-weight: bold;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  font-family: var(--heading-font-family);
+  word-spacing: var(--heading-word-spacing);
+  line-height: var(--heading-line-height);
+}
+
+@media (min-width: 1000px) {
+  .Menu-link {
+    font-size: 2rem;
+  }
+}

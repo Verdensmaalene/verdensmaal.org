@@ -59,6 +59,7 @@ function i18n (source) {
 exports.resolve = resolve
 function resolve (doc) {
   switch (doc.type) {
+    case 'website':
     case 'homepage': return '/'
     case 'goals': return '/maalene'
     case 'mission': return '/mission'
@@ -77,6 +78,8 @@ function resolve (doc) {
     case 'event': return `/events/${doc.uid}`
     case 'news_listing': return '/nyheder'
     case 'events_listing': return '/events'
+    case 'subject': return `/verdenstimen/${doc.uid}`
+    case 'material': return `/verdenstimen/materiale/${doc.uid}`
     case 'Web':
     case 'Media': return doc.url
     default: {

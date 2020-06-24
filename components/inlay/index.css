@@ -1,0 +1,15 @@
+@import "../base";
+
+/** @define Inlay */
+
+.Inlay {
+  margin-bottom: -18rem;
+  padding-bottom: 18rem;
+  background-color: rgb(var(--color-gray-light));
+}
+
+.Inlay-content {
+  position: relative;
+  top: -4.375rem;
+  margin-bottom: -4.375rem;
+}

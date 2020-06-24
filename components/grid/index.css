@@ -65,7 +65,7 @@
   margin-bottom: 0;
 }
 
-.Grid-cell > * {
+.Grid-cell > *:not(.Grid) {
   flex-basis: 100%;
   min-width: 0; /* 1 */
 }

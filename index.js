@@ -37,6 +37,9 @@ app.route('/materialer', require('./views/resources'))
 app.route('/mission', require('./views/mission'))
 app.route('/verdensmaalsprisen', lazy(() => splitRequire('./views/nomination')))
 app.route('/verdensmaalsprisen/:uid', lazy(() => splitRequire('./views/category')))
+app.route('/verdenstimen', lazy(() => splitRequire('./views/verdenstimen')))
+app.route('/verdenstimen/:subject', lazy(() => splitRequire('./views/subject')))
+app.route('/verdenstimen/:subject/:uid', lazy(() => splitRequire('./views/material')))
 app.route('/*', require('./views/catchall'))
 
 try {
