@@ -34,7 +34,7 @@ module.exports = class PrismicToolbar extends Component {
       if (token) {
         this.local.token = encodeURIComponent(token)
         emit('prismic:clear')
-        emit('replaceState', state.href)
+        emit('replaceState', `${state.href}${window.location.search}`)
       } else {
         this.local.enabled = false
       }

@@ -23,6 +23,8 @@ function grid (opts, children) {
   // render grid cell
   // (Element|obj -> num) -> Element
   function child (props, index) {
+    if (props == null) return null
+
     var attrs = { class: 'Grid-cell' }
 
     var children = props

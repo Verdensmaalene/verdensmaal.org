@@ -21,7 +21,14 @@ var { external } = require('../components/symbol')
 var blockquote = require('../components/blockquote')
 var serialize = require('../components/text/serialize')
 var intersection = require('../components/intersection')
-var { i18n, srcset, asText, colors, resolve } = require('../components/base')
+var {
+  i18n,
+  srcset,
+  asText,
+  colors,
+  resolve,
+  isSameDomain
+} = require('../components/base')
 
 var text = i18n()
 
@@ -394,22 +401,25 @@ function sector (state, emit) {
         case 'thumbgrid': {
           return html`
             <div class="u-container">
-              ${grid({ size: { sm: '1of3', lg: '1of6' } }, slice.items.map(function (item) {
+              ${grid({ size: { sm: '1of3', md: '1of4', lg: '1of6' } }, slice.items.map(function (item) {
                 var link
                 if (!item.link.isBroken && (item.link.id || item.link.url)) {
                   link = { href: resolve(item.link) }
-                  if (link.target === '_blank') {
+                  if (link.target === '_blank' || !isSameDomain(link.href)) {
                     link.target = '_blank'
                     link.rel = 'noopener noreferrer'
                   }
                 }
 
+                var image = item.image
+                if (!image.url) image = item.link.data.image
+
                 return thumbnail({
                   link,
-                  image: Object.assign({
-                    alt: item.image.alt,
-                    src: `/media/fetch/w_150/${item.image.url}`
-                  }, item.image.dimensions)
+                  image: image && image.url ? Object.assign({
+                    alt: image.alt,
+                    src: `/media/fetch/w_150/${image.url}`
+                  }, image.dimensions) : null
                 })
               }))}
             </div>

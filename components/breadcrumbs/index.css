@@ -1,0 +1,51 @@
+@import "../base";
+
+/** @define Breadcrumbs */
+.Breadcrumbs {
+
+}
+
+.Breadcrumbs-title {
+  display: block;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.Breadcrumbs-items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Breadcrumbs-item {
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  position: relative;
+  z-index: 0;
+}
+
+.Breadcrumbs-symbol {
+  display: block;
+  margin: 0.25rem 0 0 0.25rem;
+  font-size: 0.7rem;
+  color: rgb(var(--current-color));
+}
+
+.Breadcrumbs-link {
+  display: flex;
+  align-self: center;
+  color: rgb(var(--color-link));
+}
+
+.Breadcrumbs-link:hover {
+  color: rgb(var(--color-link-shaded));
+}
+
+.Breadcrumbs-link::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}

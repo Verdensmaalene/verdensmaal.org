@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var { forward } = require('../symbol')
 var { i18n, exclude, className } = require('../base')
 
 var text = i18n(require('./lang.json'))
@@ -14,13 +15,31 @@ exports.input = function (props) {
   return field(props, html`<input ${attrs}>`)
 }
 
+exports.select = function (props, options = []) {
+  var attrs = exclude(props, 'plain')
+  delete attrs.label
+  attrs.class = 'Form-control Form-control--select'
+  if (!attrs.type) attrs.type = 'text'
+  if ('disabled' in attrs && !attrs.disabled) delete attrs.disabled
+  return field(props, html`
+    <select ${attrs}>
+      ${options.map((option) => html`
+        <option value="${typeof option.value === 'undefined' ? option.label : option.value}" selected=${option.selected != null && option.selected} disabled=${option.disabled || false}>
+          ${option.label}
+        </option>
+      `)}
+    </select>
+    <span class="Form-chevron">${forward()}</span>
+  `)
+}
+
 exports.textarea = function (props) {
   var attrs = exclude(props, 'plain')
   delete attrs.className
   delete attrs.class
   delete attrs.value
   delete attrs.label
-  attrs.class = 'Form-control'
+  attrs.class = 'Form-control Form-control--textarea'
   if ('disabled' in attrs && !attrs.disabled) delete attrs.disabled
   return field(props, html`<textarea ${attrs}>${props.value || ''}</textarea>`)
 }

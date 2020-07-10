@@ -1,0 +1,220 @@
+@import "../base";
+
+/** @define Material */
+.Material {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  position: relative;
+  background: rgb(var(--color-gray-light));
+}
+
+@media (min-width: 800px) {
+  .Material {
+    flex-wrap: nowrap;
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Material {
+    padding: 3rem;
+  }
+}
+
+/**
+ * Image
+ */
+
+.Material-figure {
+  flex: 0 0 auto;
+  width: 100%;
+  position: relative;
+}
+
+.Material-figure::before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+@media (min-width: 800px) {
+  .Material-figure {
+    width: calc(100% * 1 / 3);
+    margin-right: 2rem;
+  }
+
+  .Material-figure::before {
+    padding-top: 80%;
+  }
+}
+
+@media (min-width: 800px) {
+  .Material-figure {
+    margin-right: 3rem;
+  }
+}
+
+.Material-image {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  width: auto;
+  transform: translate(-50%, -50%);
+}
+
+@supports (object-fit: cover) {
+  .Material-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    transform: none;
+  }
+}
+
+/**
+ * Body
+ */
+
+.Material-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+}
+
+@media (min-width: 800px) {
+  .Material-body {
+    display: block;
+    padding: 0;
+  }
+}
+
+.Material-title {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
+  text-transform: uppercase;
+}
+
+@media (min-width: 1200px) {
+  .Material-title {
+    font-size: 3rem;
+  }
+}
+
+/**
+ * Link
+ */
+
+.Material-action {
+  order: 99;
+}
+
+@media (min-width: 800px) {
+  .Material-action {
+    float: right;
+    margin: 0 0 1.5rem 1.5rem;
+  }
+}
+
+/**
+ * Footer
+ */
+
+.Material-footer {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1.25rem -0.625rem 0.625rem -0.625rem;
+  font-size: 0.75rem;
+}
+
+@media (min-width: 800px) {
+  .Material-footer {
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(var(--color-gray), 0.25);
+    margin-bottom: -0.625rem;
+    font-size: 0.875rem;
+  }
+}
+
+.Material-section {
+  width: 50%;
+  border: 0px solid transparent;
+  border-width: 0 0.625rem;
+  margin-bottom: 0.625rem;
+}
+
+@media (min-width: 1200px) {
+  .Material-section {
+    width: 25%;
+  }
+}
+
+.Material-heading {
+  display: block;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 1200px) {
+  .Material-heading {
+    margin-bottom: 0.625rem;
+    font-size: 1.1875rem;
+  }
+}
+
+.Material-listItem {
+  display: inline-block;
+  margin: 0 0.25em 0 0;
+}
+
+.Material-listItem:not(:last-child)::after {
+  content: ",";
+}
+
+.Material-link:hover {
+  text-decoration: underline;
+}
+
+/**
+ * Goal
+ */
+
+.Material-goal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0 0.25rem 0.25rem 0;
+  font-size: 1.40625rem;
+  color: #fff;
+  font-family: var(--heading-font-family);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.Material-goal--1:link { background-color: rgb(var(--color-goal-1)); }
+.Material-goal--2:link { background-color: rgb(var(--color-goal-2)); }
+.Material-goal--3:link { background-color: rgb(var(--color-goal-3)); }
+.Material-goal--4:link { background-color: rgb(var(--color-goal-4)); }
+.Material-goal--5:link { background-color: rgb(var(--color-goal-5)); }
+.Material-goal--6:link { background-color: rgb(var(--color-goal-6)); }
+.Material-goal--7:link { background-color: rgb(var(--color-goal-7)); }
+.Material-goal--8:link { background-color: rgb(var(--color-goal-8)); }
+.Material-goal--9:link { background-color: rgb(var(--color-goal-9)); }
+.Material-goal--10:link { background-color: rgb(var(--color-goal-10)); }
+.Material-goal--11:link { background-color: rgb(var(--color-goal-11)); }
+.Material-goal--12:link { background-color: rgb(var(--color-goal-12)); }
+.Material-goal--13:link { background-color: rgb(var(--color-goal-13)); }
+.Material-goal--14:link { background-color: rgb(var(--color-goal-14)); }
+.Material-goal--15:link { background-color: rgb(var(--color-goal-15)); }
+.Material-goal--16:link { background-color: rgb(var(--color-goal-16)); }

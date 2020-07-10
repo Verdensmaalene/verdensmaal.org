@@ -2,28 +2,73 @@ var html = require('choo/html')
 var asElement = require('prismic-element')
 var { Predicates } = require('prismic-javascript')
 var view = require('../components/view')
+var grid = require('../components/grid')
+var menu = require('../components/menu')
 var share = require('../components/share')
 var button = require('../components/button')
-var banner = require('../components/banner')
+var symbol = require('../components/symbol')
+var material = require('../components/material')
+var thumbnail = require('../components/thumbnail')
 var serialize = require('../components/text/serialize')
+var breadcrumbs = require('../components/breadcrumbs')
 var shareButton = require('../components/share-button')
-var { i18n, asText, resolve } = require('../components/base')
-const symbol = require('../components/symbol')
+var {
+  i18n,
+  asText,
+  resolve,
+  srcset,
+  isSameDomain
+} = require('../components/base')
+
+var EDUCATIONAL_LEVELS = [
+  'Indskoling',
+  'Mellemtrin',
+  'Udskoling',
+  'Ungdomsuddannelse'
+]
 
 var text = i18n()
 
-module.exports = view(material, meta, {
+module.exports = view(materialView, meta, {
   theme: 'verdenstimen'
 })
 
-function material (state, emit) {
+function materialView (state, emit) {
   return state.docs.getByUID('material', state.params.uid, function (err, doc) {
     if (err) throw err
+
+    var predicates = Predicates.at('document.type', 'subject')
+    var subjects = state.docs.get(predicates, function (err, response) {
+      if (err || !response || !response.results_size) return null
+      return response.results.map(function (subject) {
+        if (subject.data.image.url) {
+          const { width, height } = subject.data.image.dimensions
+          var image = {
+            alt: subject.data.image.alt || asText(subject.data.title),
+            sizes: '48px',
+            width: 48,
+            height: 48 * (height / width),
+            srcset: srcset(subject.data.image, [48, 100]),
+            src: srcset(subject.data.image, [48]).split(' ')[0]
+          }
+        }
+
+        return {
+          image,
+          hasMaterial: doc && subject.data.materials.some(function (item) {
+            return item.link.id === doc.id
+          }),
+          label: asText(subject.data.title),
+          link: { href: resolve(subject) }
+        }
+      }).sort((a, b) => a.label < b.label ? -1 : 1)
+    })
+
     if (!doc) {
       return html`
         <main class="View-main">
           <article>
-            ${banner.loading()}
+            ${material.loading({ banner: true })}
             <div class="u-container">
               <div class="Text">
                 <span class="u-loading">${text`LOADING_TEXT_MEDIUM`}</span>
@@ -41,56 +86,57 @@ function material (state, emit) {
 
     return html`
       <main class="View-main">
-        ${banner(doc.data.image.url ? {
-          src: doc.data.image.url,
-          ...doc.data.image.dimensions
-        } : null, html`
-          <div class="Text u-spaceA1">
-            <dl>
-              <dt>Verdensmål</dt>
-              <dd>
-                ${doc.data.goals.map(({ link }) => html`
-                  <a href="${resolve(link)}">${link.data.number}</a>
-                `)}
-              </dd>
-              ${state.docs.get([
-                Predicates.at('document.type', 'subject'),
-                Predicates.at('my.subject.materials.link', doc.id)
-              ], function (err, response) {
-                if (err || (response && !response.results_size)) return null
-                return html`
-                  <dt>Fag</dt>
-                  <dd>
-                    ${response ? response.results.reduce(function (children, doc, index, list) {
-                      children.push(html`<a href="${resolve(doc)}">${asText(doc.data.title)}</a>`)
-                      if (index < list.length - 1) children.push(', ')
-                      return children
-                    }, []) : html`<span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`}
-                  </dd>
-                `
-              })}
-              <dt>Tidsforbrug</dt>
-              <dd>${doc.data.duration}</dd>
-              <dt>Målgruppe</dt>
-              <dd>${doc.data.audiences.map(({ label }) => label).join(', ')}</dd>
-            </dl>
-          </div>
-        `)}
+        <strong>TODO:</strong> There's a "banner" modifier on this thing which should be used for alternate styling
+        ${material({
+          banner: true,
+          image: doc.data.image.url ? {
+            alt: doc.data.image.alt || asText(doc.data.title),
+            size: '(min-width: 1000px) 400px, 10vw',
+            srcset: srcset(doc.data.image, [400, 600, [800, 'q_50']], {
+              transforms: 'f_jpg,c_thumb'
+            }),
+            src: srcset(doc.data.image, [400]).split(' ')[0]
+          } : null,
+          goals: doc.data.goals.map(function ({ link }) {
+            return {
+              number: link.data.number,
+              link: { href: resolve(link) }
+            }
+          }),
+          subjects: subjects ? subjects.filter(function (item) {
+            return item.hasMaterial
+          }) : [{
+            label: html`<spam class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`
+          }, {
+            label: html`<spam class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`
+          }, {
+            label: html`<spam class="u-loading">${text`LOADING_TEXT_SHORT`}</span>`
+          }],
+          duration: doc.data.duration,
+          audiences: doc.data.audiences.map(function ({ label }) {
+            return {
+              label: label,
+              link: { href: `/verdenstimen/${label.toLowerCase()}` }
+            }
+          })
+        })}
         <div class="u-container">
           <div class="View-space u-cols">
             <div class="u-col u-lg-size2of3">
               <div>
-                <nav class="u-spaceB4">
-                  <ol>
-                    <li><a href="/verdenstimen">${text`Verdenstimen`}</a></li>
-                    ${state.params.subject !== 'materiale' ? state.docs.getByUID('subject', state.params.subject, function (err, doc) {
-                      if (err) return null
-                      if (!doc) return html`<li>${text`LOADING_TEXT_SHORT`}</li>`
-                      return html`<li><a href="${resolve(doc)}">${asText(doc.data.title)}</a></li>`
-                      }) : null}
-                    <li>${text`Material`}</li>
-                  </ol>
-                </nav>
+                ${breadcrumbs([{
+                  label: 'Verdenstimen',
+                  link: { href: '/verdenstimen' }
+                }, state.params.subject !== 'materiale' ? state.docs.getByUID('subject', state.params.subject, function (err, doc) {
+                    if (err) return null
+                    if (!doc) return { label: html`<span class="u-loading">${text`LOADING_TEXT_SHORT`}</span>` }
+                    return {
+                      label: asText(doc.data.title),
+                      link: { href: resolve(doc) }
+                    }
+                }) : null, {
+                  label: text`Material`
+                }].filter(Boolean))}
                 <div class="Text u-spaceB4">
                   <h1 class="u-spaceT4">${title}</h1>
                   <p class="Text-large">
@@ -148,6 +194,65 @@ function material (state, emit) {
               </div>
             </aside>
           </div>
+          <div class="View-spaceLarge">
+            <div class="Text Text--fill u-spaceB4">
+              <h2 class="Text-h2 u-spaceB1 u-textHyphens">${text`More educational material`}</h2>
+            </div>
+            ${grid([
+              grid.cell({ size: { md: '2of3' } }, subjects ? menu(subjects, {
+                fill: true,
+                title: text`Choose school subject`
+              }) : menu.loading()),
+              grid.cell({ size: { md: '1of3' } }, html`
+                <div>
+                  ${menu(EDUCATIONAL_LEVELS.map(function (name) {
+                    return {
+                      image: {
+                        alt: name,
+                        src: `/${name.toLowerCase()}.svg`
+                      },
+                      label: name,
+                      link: {
+                        href: `/verdenstimen/${name.toLowerCase()}`
+                      }
+                    }
+                  }), {
+                    fill: true,
+                    small: true,
+                    title: text`Choose educational level`
+                  })}
+                </div>
+              `)
+            ])}
+          </div>
+          <div class="View-spaceLarge">
+            ${doc.data.partners_heading.length || doc.data.partners_description.length ? html`
+              <div class="Text">
+                ${doc.data.partners_heading.length ? html`
+                  <h2 class="Text-h1 u-spaceB1 u-textHyphens">${asText(doc.data.partners_heading)}</h2>
+                ` : null}
+                ${doc.data.partners_description.length ? asElement(doc.data.partners_description) : null}
+              </div>
+            ` : null}
+          </div>
+          ${grid({ size: { sm: '1of3', md: '1of4', lg: '1of6' } }, doc.data.partners.map(function (item) {
+            if (item.link.isBroken || (!item.link.id && !item.link.url)) return null
+
+            var link = { href: resolve(item.link) }
+            if (link.target === '_blank' || !isSameDomain(link.href)) {
+              link.target = '_blank'
+              link.rel = 'noopener noreferrer'
+            }
+
+            var image = item.link.data.image
+            return thumbnail({
+              link,
+              image: image.url ? Object.assign({
+                alt: image.alt,
+                src: `/media/fetch/w_150/${image.url}`
+              }, image.dimensions) : null
+            })
+          }))}
         </div>
       </main>
     `

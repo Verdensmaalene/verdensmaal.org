@@ -41,6 +41,10 @@
   font-weight: var(--high-contrast-bold, normal);
 }
 
+.Form-field--plain .Form-label {
+  margin: 0;
+}
+
 @media (min-width: 1000px) {
   .Form-field--large .Form-label {
     font-size: 1.1875rem;
@@ -68,11 +72,11 @@
   user-select: text;
 }
 
-textarea.Form-control:not([rows]) {
+.Form-control--textarea:not([rows]) {
   height: 8.95rem;
 }
 
-textarea.Form-control {
+.Form-control--textarea {
   resize: none;
 }
 
@@ -91,6 +95,23 @@ textarea.Form-control {
     padding: 0.8rem 1rem;
     font-size: 1.1875rem;
   }
+}
+
+/**
+ * Select
+ */
+
+.Form-control--select {
+  padding-right: 2rem;
+}
+
+.Form-chevron {
+  font-size: 0.8rem;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  pointer-events: none;
 }
 
 /**

@@ -74,5 +74,21 @@
   "Most read": "Mest læste",
   "Verdenstimen": "Verdenstimen",
   "Material": "Material",
-  "Go to material": "Go to material"
+  "Materials": "Materialer",
+  "Go to material": "Gå til materiale",
+  "Choose educational level": "Vælg mellem uddannelsestrin",
+  "All educational levels": "Alle uddannelsestrin",
+  "Find your teaching material": "Find dit undervisningsmateriale",
+  "Choose school subject": "Vælg mellem skolefag",
+  "Navigation": "Navigation",
+  "All goals": "Alle Verdensmål",
+  "Choose goal": "Vælg mål",
+  "Subjects": "Fag",
+  "Duration": "Tidsforbrug",
+  "Audience": "Målgruppe",
+  "The goals": "Verdensmål",
+  "More educational material": "Flere undervisningsmaterialer",
+  "Materialer": "Materialer",
+  "All school subjects": "Alle fag",
+  "On this page you can find all materials suitable for %s. Use the filters bellow to narrow the search to specific goals or subjects.": "På denne side kan du finde alle materialer der passer til %s. Brug filterbælgen til at indsnævre søgningen til specifikke mål eller fag."
 }
