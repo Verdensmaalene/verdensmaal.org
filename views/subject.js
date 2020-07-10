@@ -131,7 +131,9 @@ function subjectView (state, emit) {
               }) : []))
             ])
           ])}
-          ${grid({ size: '1of1' }, materials.map(asMaterial))}
+          ${grid({ size: '1of1' }, materials.length ? materials.map(asMaterial) : [
+            html`<p class="u-textCenter u-spaceT8">${text`No materials found`}</p>`
+          ])}
         </div>
       </main>
     `
@@ -145,7 +147,7 @@ function subjectView (state, emit) {
         return !item.link.isBroken && item.link.id
       }).map((item) => item.link.id)
       const predicates = Predicates.any('document.id', ids)
-      var materials = ids.length ? getMaterials(predicates) : null
+      var materials = ids.length ? getMaterials(predicates) : []
       if (materials) {
         materials = materials.filter(function (doc) {
           if (state.query.goal) {
@@ -205,7 +207,7 @@ function subjectView (state, emit) {
               select({
                 name: 'goal',
                 plain: true,
-                label: text`Show goal`,
+                label: text`Choose goal`,
                 onchange () {
                   var query = Object.keys(state.query).reduce(function (query, key) {
                     if (key !== 'goal') query.push(`${key}=${state.query[key]}`)
@@ -241,7 +243,9 @@ function subjectView (state, emit) {
               })))
             ])
           ])}
-          ${grid({ size: '1of1' }, materials.map(asMaterial))}
+          ${grid({ size: '1of1' }, materials.length ? materials.map(asMaterial) : [
+            html`<p class="u-textCenter u-spaceT8">${text`No materials found`}</p>`
+          ])}
         </div>
       </main>
     `
