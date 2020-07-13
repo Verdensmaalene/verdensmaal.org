@@ -151,7 +151,7 @@ function subjectView (state, emit) {
       if (materials) {
         materials = materials.filter(function (doc) {
           if (state.query.goal) {
-            const goals = doc.data.goals.map((item) => item.link.data.number)
+            const goals = doc.data.goals.map((item) => item.link && item.link.data && item.link.data.number)
             if (!goals.includes(+state.query.goal)) return false
           }
           if (state.query.level) {
@@ -272,7 +272,7 @@ function subjectView (state, emit) {
         }
       })
 
-      if (!goals[0]) { goals = [] }
+      if (!goals[0]) { goals = null }
     }
 
     return material({
@@ -280,12 +280,13 @@ function subjectView (state, emit) {
       title: asText(doc.data.title),
       description: asElement(doc.data.description),
       link: { href: `${state.href}/${doc.uid}` },
-      goals: goals.map(function ({ link }) {
+      goals: goals ? goals.map(function (item) {
+        if (!item) return false
         return {
-          number: link.data.number,
-          link: { href: resolve(link) }
+          number: item.link.data.number,
+          link: { href: resolve(item.link) }
         }
-      }),
+      }) : null,
       subjects: subjects ? subjects.filter(function (subject) {
         return subject.data.materials.some((item) => item.link.id === doc.id)
       }).map(function (subject) {

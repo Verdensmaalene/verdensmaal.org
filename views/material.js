@@ -84,9 +84,20 @@ function materialView (state, emit) {
     var title = asText(doc.data.title)
     var description = asText(doc.data.description)
 
+    var goals = []
+    if (doc.data.goals && doc.data.goals.length) {
+      goals = doc.data.goals.map(function (goal) {
+        if (goal && goal.link && goal.link.type === 'goal') {
+          return goal
+        }
+      })
+
+      if (!goals[0]) { goals = null }
+    }
+
     return html`
       <main class="View-main">
-        <strong>TODO:</strong> There's a "banner" modifier on this thing which should be used for alternate styling
+        <strong>TODO:</strong> This gray box will soon look cooler on this page
         ${material({
           banner: true,
           image: doc.data.image.url ? {
@@ -97,12 +108,13 @@ function materialView (state, emit) {
             }),
             src: srcset(doc.data.image, [400]).split(' ')[0]
           } : null,
-          goals: doc.data.goals.map(function ({ link }) {
+          goals: goals ? goals.map(function (item) {
+            if (!item) return false
             return {
-              number: link.data.number,
-              link: { href: resolve(link) }
+              number: item.link.data.number,
+              link: { href: resolve(item.link) }
             }
-          }),
+          }) : null,
           subjects: subjects ? subjects.filter(function (item) {
             return item.hasMaterial
           }) : [{

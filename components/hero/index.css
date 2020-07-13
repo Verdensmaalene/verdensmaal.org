@@ -57,7 +57,7 @@
   width: 100%;
   min-height: 100%;
   height: auto;
-  background-color: rgba(var(--color-gray-light), 0.6);
+  background-color: rgba(var(--color-gray));
 }
 
 @supports (object-fit: cover) {
