@@ -367,13 +367,16 @@
     flex-basis: calc((100% / 7) - 1rem);
   }
 
-  .Footer-item,
-  .Footer-section--3 .Footer-item {
+  .Footer-item {
     margin-top: 1.28rem;
   }
 
   .Footer-section--3 .Footer-list {
-    padding-top: 0.5rem;
+    padding-top: 1rem;
+  }
+
+  .Footer-section--3 .Footer-item {
+    margin-top: 0.75rem;
   }
 
   .Footer-author {
