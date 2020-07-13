@@ -264,12 +264,23 @@ function subjectView (state, emit) {
       }
     }
 
+    var goals = []
+    if (doc.data.goals && doc.data.goals.length) {
+      goals = doc.data.goals.map(function (goal) {
+        if (goal && goal.link && goal.link.type === 'goal') {
+          return goal
+        }
+      })
+
+      if (!goals[0]) { goals = [] }
+    }
+
     return material({
       image,
       title: asText(doc.data.title),
       description: asElement(doc.data.description),
       link: { href: `${state.href}/${doc.uid}` },
-      goals: doc.data.goals.map(function ({ link }) {
+      goals: goals.map(function ({ link }) {
         return {
           number: link.data.number,
           link: { href: resolve(link) }
