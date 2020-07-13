@@ -120,7 +120,7 @@
   list-style: none;
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1300px) {
   .Header-list {
     transform-origin: center right;
     transform: scale(calc(1.2 - (0.2 * (1 - var(--Header-size)))));
@@ -167,7 +167,7 @@
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1100px) {
   :root {
     --Header-height: 8rem;
   }
@@ -318,7 +318,7 @@
  */
 
 .Header-slot {
-  margin-left: 1.6rem;
+  margin-left: 1.3rem;
 }
 
 /**
@@ -343,14 +343,14 @@
   height: 1.5625rem;
 }
 
-@media (min-height: 500px) and (max-width: 1199px) {
+@media (min-height: 500px) and (max-width: 1099px) {
   .Header-toggle {
     width: 2.75rem;
     height: 2.75rem;
   }
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1099px) {
   .Header {
     --focus-ring-color: 255, 255, 255;
   }
@@ -389,7 +389,7 @@
  * Narrow viewports with vertical navigation. Note the max-width query.
  */
 
-@media (max-width: 1199px) {
+@media (max-width: 1099px) {
   .Header-list,
   .Header-button--back {
     transform: none !important;
@@ -483,7 +483,7 @@
  * Give the items in the vertical navigation a bit more space when possible.
  */
 
-@media (max-width: 1199px) and (min-height: 500px) {
+@media (max-width: 1099px) and (min-height: 500px) {
   .Header-text {
     font-size: 3rem;
   }
@@ -501,7 +501,7 @@
  * Horizontal navigation
  */
 
-@media (min-width: 1200px) {
+@media (min-width: 1100px) {
   .Header-button--toggle,
   .Header-burger {
     display: none;
@@ -518,7 +518,7 @@
   }
 
   .Header-item {
-    margin-left: 0.75rem;
+    margin-left: 0.3rem;
   }
 
   .Header-button--contrast {
@@ -556,7 +556,7 @@
   color: rgb(var(--high-contrast-light, 0, 0, 0));
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1100px) {
   .Header--black .Header-button--link.is-current,
   .Header--black .Header-button--link.is-current:hover {
     color: rgb(var(--high-contrast-light, 0, 0, 0));
@@ -583,7 +583,7 @@
   margin: 0;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1100px) {
   .Header-tooltip {
     padding: 0.3rem 0.4rem 0.3rem;
     margin-top: 0;
