@@ -19,7 +19,7 @@
   align-items: center;
   width: 100%;
   height: 60vh;
-  min-height: 500px;
+  min-height: 730px;
   position: relative;
   overflow: hidden;
 }
@@ -129,7 +129,7 @@
   }
 
   .Hero-body {
-    max-width: 34rem;
+    max-width: 38rem;
     font-size: 1.1875rem;
   }
 }
@@ -166,5 +166,25 @@
 @media (min-width: 1200px) {
   .Hero-caption {
     margin: 0.5rem 0 0;
+  }
+}
+
+.Hero-icon {
+  height: 8rem;
+  width: auto;
+  display: inline-block;
+  margin: 4rem 0 2rem;
+}
+
+@media (min-width: 800px) {
+  .Hero-icon {
+    margin: 8rem 0 2rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .Hero-icon {
+    margin: 8rem 0 2rem;
+    height: 10.6rem;
   }
 }
