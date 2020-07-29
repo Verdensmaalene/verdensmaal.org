@@ -296,7 +296,7 @@ class Counter extends Component {
 }
 
 function meta (state) {
-  return state.docs.getByUID('page', 'verdensmaalsprisen', function (err, doc) {
+  return state.docs.getSingle('award', function (err, doc) {
     if (err) throw err
     if (!doc) return { title: text`LOADING_TEXT_SHORT` }
     var attrs = {
