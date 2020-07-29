@@ -6,10 +6,9 @@ var grid = require('../components/grid')
 var form = require('../components/form')
 var intro = require('../components/intro')
 var Anchor = require('../components/anchor')
-var banner = require('../components/banner')
 var button = require('../components/button')
 var serialize = require('../components/text/serialize')
-var { i18n, asText, srcset, resolve } = require('../components/base')
+var { i18n, asText, resolve } = require('../components/base')
 
 var text = i18n()
 var CATEGORY_COLORS = {
@@ -18,13 +17,13 @@ var CATEGORY_COLORS = {
   inkluderingsprisen: 4
 }
 
-module.exports = view(nomination, meta)
+module.exports = view(award, meta)
 
-function nomination (state, emit) {
+function award (state, emit) {
   var opts = {
     fetchLinks: ['page.title', 'page.description']
   }
-  return state.docs.getByUID('page', 'verdensmaalsprisen', opts, function (err, doc) {
+  return state.docs.getSingle('award', opts, function (err, doc) {
     if (err) throw err
     if (!doc) {
       return html`
@@ -40,40 +39,29 @@ function nomination (state, emit) {
     var description = asElement(doc.data.description)
     var body = asElement(doc.data.body, resolve, serialize)
     var counter = state.cache(Counter, 'motivation-counter')
-    var { fields, error } = state.nomination
-
-    if (doc.data.related.length) {
-      var categories = doc.data.related[0].items.filter(function (item) {
-        return item.link.id && !item.link.isBroken
-      })
-    }
+    var { fields, error } = state.award
+    var categories = doc.data.categories.filter(function (item) {
+      return item.link.id && !item.link.isBroken
+    })
 
     return html`
       <main class="View-main">
         <div class="View-spaceLarge">
-          ${doc.data.image.url ? banner(image(doc.data.image)) : html`
-            <div class="u-container">${intro({ title, body: description })}</div>
-          `}
-          ${doc.data.image.url ? html`
-            <div class="View-space">
-              <div class="Text">
-                <h1>${title}</h1>
-                <p>${description}</p>
-              </div>
-            </div>
-          ` : null}
+          <div class="u-container">${intro({ title, body: description })}</div>
           <div class="View-space u-container">
-            <div class="Text">
-              ${body}
-            </div>
-            ${categories && categories.length ? content() : null}
+            ${body ? html`
+              <div class="Text u-spaceB8">
+                ${body}
+              </div>
+            ` : null}
+            ${content(doc.data.phase)}
           </div>
         </div>
       </main>
     `
 
     function onchange (event) {
-      emit('nomination:set', event.target.name, event.target.value)
+      emit('award:set', event.target.name, event.target.value)
     }
 
     function oninput (event) {
@@ -86,13 +74,13 @@ function nomination (state, emit) {
         event.preventDefault()
         return
       }
-      emit('nomination:submit')
+      emit('award:nominate')
       event.preventDefault()
     }
 
-    function content () {
-      switch (state.nomination.phase) {
-        case 'vote': return button({
+    function content (phase) {
+      switch (phase ? phase.toLowerCase() : null) {
+        case 'voting': return button({
           large: true,
           primary: true,
           text: 'Til afstemningen',
@@ -103,7 +91,7 @@ function nomination (state, emit) {
             <form action="${state.href}" method="POST" class="Form" onsubmit=${onsubmit} novalidate>
               ${error ? html`
                 <div class="Form-error u-spaceB6">
-                  ${state.cache(Anchor, 'nomination-error', { auto: true }).render()}
+                  ${state.cache(Anchor, 'award-error', { auto: true }).render()}
                   <div class="Text">
                     <h2 class="Text-h3">${text`Oops`}</h2>
                     <p>${text`Something seems to be missing. Please make sure that you have filled in all requried fields (marked with a *).`}</p>
@@ -120,7 +108,7 @@ function nomination (state, emit) {
                 return form.choice({
                   id: `category-${link.id}`,
                   value: value,
-                  disabled: state.nomination.loading,
+                  disabled: state.award.loading,
                   selected: fields['entry.57699070'],
                   name: 'entry.57699070',
                   class: `u-bg${CATEGORY_COLORS[link.uid] || 4}`,
@@ -142,7 +130,7 @@ function nomination (state, emit) {
                       name: 'entry.1816023571',
                       required: true,
                       onchange: onchange,
-                      disabled: state.nomination.loading
+                      disabled: state.award.loading
                     })}
                     ${form.input({
                       label: 'E-mail',
@@ -152,7 +140,7 @@ function nomination (state, emit) {
                       type: 'email',
                       required: true,
                       onchange: onchange,
-                      disabled: state.nomination.loading
+                      disabled: state.award.loading
                     })}
                   </div>
                 `, html`
@@ -164,7 +152,7 @@ function nomination (state, emit) {
                       name: 'entry.1490561457',
                       required: true,
                       onchange: onchange,
-                      disabled: state.nomination.loading
+                      disabled: state.award.loading
                     })}
                   </div>
                 `
@@ -182,7 +170,7 @@ function nomination (state, emit) {
                       name: 'entry.2012872212',
                       required: true,
                       onchange: onchange,
-                      disabled: state.nomination.loading
+                      disabled: state.award.loading
                     })}
                     ${form.input({
                       label: 'E-mail',
@@ -192,7 +180,7 @@ function nomination (state, emit) {
                       type: 'email',
                       required: true,
                       onchange: onchange,
-                      disabled: state.nomination.loading
+                      disabled: state.award.loading
                     })}
                   </div>
                 `, html`
@@ -204,7 +192,7 @@ function nomination (state, emit) {
                       name: 'entry.682921765',
                       required: true,
                       onchange: onchange,
-                      disabled: state.nomination.loading
+                      disabled: state.award.loading
                     })}
                     ${form.input({
                       label: 'Telefonnummer',
@@ -213,7 +201,7 @@ function nomination (state, emit) {
                       name: 'entry.1204891467',
                       type: 'tel',
                       onchange: onchange,
-                      disabled: state.nomination.loading
+                      disabled: state.award.loading
                     })}
                   </div>
                 `
@@ -228,7 +216,7 @@ function nomination (state, emit) {
                 required: true,
                 oninput: oninput,
                 onchange: onchange,
-                disabled: state.nomination.loading,
+                disabled: state.award.loading,
                 comment: 'Beskriv hvad personen har gjort, hvem målgruppen er og hvad effekten har været samt hvordan Verdensmålene har været med i arbejdet. (Max 300 ord)'
               })}
               ${counter.render(fields['entry.1264591994'])}
@@ -248,7 +236,7 @@ function nomination (state, emit) {
                       id: 'entry.1030183847',
                       name: 'entry.1030183847',
                       onchange: onchange,
-                      disabled: state.nomination.loading
+                      disabled: state.award.loading
                     })}
                     ${form.input({
                       label: 'Link',
@@ -259,7 +247,7 @@ function nomination (state, emit) {
                       id: 'entry.1272236586',
                       name: 'entry.1272236586',
                       onchange: onchange,
-                      disabled: state.nomination.loading
+                      disabled: state.award.loading
                     })}
                     ${form.input({
                       label: 'Link',
@@ -270,14 +258,14 @@ function nomination (state, emit) {
                       id: 'entry.2039565048',
                       name: 'entry.2039565048',
                       onchange: onchange,
-                      disabled: state.nomination.loading
+                      disabled: state.award.loading
                     })}
                   </div>
                 `
               ])}
               <div class="u-flex u-flexWrap u-alignCenter">
                 <div class="u-spaceR3 u-spaceT6">
-                  ${button({ type: 'submit', text: text`Indsend`, primary: true, disabled: state.nomination.loading })}
+                  ${button({ type: 'submit', text: text`Indsend`, primary: true, disabled: state.award.loading })}
                 </div>
                 <div class="Text Text-small u-spaceT6">
                   <div class="Text-muted">
@@ -307,24 +295,6 @@ class Counter extends Component {
   }
 }
 
-// construct image properties
-// obj -> obj
-function image (props) {
-  return {
-    width: props.dimensions.width,
-    height: props.dimensions.height,
-    caption: props.copyright,
-    alt: props.alt || '',
-    src: props.url,
-    sizes: '100vw',
-    srcset: srcset(
-      props,
-      [400, 600, 900, 1800, [3000, 'q_60']],
-      { aspect: 9 / 16 }
-    )
-  }
-}
-
 function meta (state) {
   return state.docs.getByUID('page', 'verdensmaalsprisen', function (err, doc) {
     if (err) throw err
@@ -332,7 +302,7 @@ function meta (state) {
     var attrs = {
       title: asText(doc.data.title),
       description: asText(doc.data.description),
-      'og:image': doc.data.social_image.url || doc.data.image.url
+      'og:image': doc.data.social_image.url
     }
 
     if (!attrs['og:image']) {

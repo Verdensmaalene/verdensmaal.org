@@ -18,6 +18,36 @@ var reg = /^theme-(\d+)/
 module.exports = view(category, meta)
 
 function category (state, emit) {
+  if (state.params.uid === 'tak') {
+    return state.docs.getSingle('award', function (err, doc) {
+      if (err) throw err
+      if (!doc) {
+        return html`
+          <main class="View-main">
+            <div class="View-spaceLarge">
+              <div class="u-container">${intro.loading()}</div>
+            </div>
+          </main>
+        `
+      }
+
+      return html`
+        <main class="View-main">
+          <div class="View-spaceLarge">
+            <div class="u-container">
+              ${intro({ title: asText(doc.data.thanks_title) })}
+            </div>
+            <div class="View-space u-container">
+              <div class="Text">
+                ${asElement(doc.data.thanks_body, resolve, serialize)}
+              </div>
+            </div>
+          </div>
+        </main>
+      `
+    })
+  }
+
   return state.docs.getByUID('page', state.params.uid, function (err, doc) {
     if (err) throw err
     if (!doc) {
@@ -62,14 +92,14 @@ function category (state, emit) {
             </div>
           </div>
         ` : null}
-        ${state.nomination.error ? html`
+        ${state.award.error ? html`
           <div class="u-container u-spaceB6">
             <div class="Form-error">
-              ${state.cache(Anchor, 'nomination-error', { auto: true }).render()}
+              ${state.cache(Anchor, 'award-error', { auto: true }).render()}
               <div class="Text">
                 <h2 class="Text-h3">${text`Oops`}</h2>
                 <p>Noget gik galt. Se venligst, at alt er udfyldt korrekt og prøv igen.</p>
-                ${process.env.NODE_ENV === 'development' ? html`<pre>${state.nomination.error.stack}</pre>` : null}
+                ${process.env.NODE_ENV === 'development' ? html`<pre>${state.award.error.stack}</pre>` : null}
               </div>
             </div>
           </div>
@@ -80,7 +110,6 @@ function category (state, emit) {
 
     function renderForm () {
       switch (state.params.uid) {
-        case 'tak': return null
         case 'oversigt': {
           return html`
             <div class="u-container u-spaceT6">
@@ -88,9 +117,9 @@ function category (state, emit) {
                 <div class="Text Text--large u-spaceV6">
                   <h2 class="Text-h3">Dine valg:</h2>
                   <ul>
-                    ${Object.keys(state.nomination.fields).map(function (key) {
+                    ${Object.keys(state.award.fields).map(function (key) {
                       if (key === 'email') return null
-                      var value = state.nomination.fields[key]
+                      var value = state.award.fields[key]
                       return html`
                         <li>
                           <input type="hidden" name="${key}" value="${value}">
@@ -101,7 +130,7 @@ function category (state, emit) {
                   </ul>
                 </div>
                 <div class="u-md-size1of3 u-spaceV6">
-                  ${input({ label: 'Din email adresse', className: 'Form-field--large', type: 'email', name: 'email', value: state.nomination.fields.email || '', autocomplete: 'email', required: true, oninput: onchange })}
+                  ${input({ label: 'Din email adresse', className: 'Form-field--large', type: 'email', name: 'email', value: state.award.fields.email || '', autocomplete: 'email', required: true, oninput: onchange })}
                 </div>
                 ${button({ type: 'submit', text: 'Send', large: true, primary: true })}
               </form>
@@ -193,7 +222,7 @@ function category (state, emit) {
     }
 
     function onchange (event) {
-      emit('nomination:set', event.target.name, event.target.value)
+      emit('award:set', event.target.name, event.target.value)
     }
 
     function onsubmit (event) {
@@ -202,7 +231,7 @@ function category (state, emit) {
         event.preventDefault()
         return
       }
-      emit('nomination:submit')
+      emit('award:vote')
       event.preventDefault()
     }
   })

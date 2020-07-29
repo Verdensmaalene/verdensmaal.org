@@ -64,8 +64,11 @@ function resolve (doc) {
     case 'mission': return '/mission'
     case 'resources': return '/materialer'
     case 'goal': return `/${doc.data.number}-${doc.uid}`
+    case 'award': return '/verdensmaalsprisen'
     case 'page': {
-      if (doc.tags.includes('nomination')) return `/verdensmaalsprisen/${doc.uid}`
+      if (doc.tags.includes('verdensmålsprisen')) {
+        return `/verdensmaalsprisen/${doc.uid}`
+      }
       return `/${doc.uid}`
     }
     case 'sector': return `/${doc.uid}`
