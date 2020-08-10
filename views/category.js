@@ -305,13 +305,23 @@ function image (props) {
 }
 
 function meta (state) {
-  return state.docs.getByUID('page', state.params.uid, function (err, doc) {
+  if (state.params.uid === 'tak') {
+    return state.docs.getSingle('award', onresponse)
+  } else {
+    return state.docs.getByUID('page', state.params.uid, onresponse)
+  }
+
+  function onresponse (err, doc) {
     if (err) throw err
     if (!doc) return { title: text`LOADING_TEXT_SHORT` }
     var attrs = {
       title: asText(doc.data.title),
       description: asText(doc.data.description),
-      'og:image': doc.data.social_image.url || doc.data.image.url
+      'og:image': doc.data.social_image.url
+    }
+
+    if (!attrs['og:image'] && doc.data.image) {
+      attrs['og:image'] = doc.data.image.url
     }
 
     if (!attrs['og:image']) {
@@ -323,5 +333,5 @@ function meta (state) {
     }
 
     return attrs
-  })
+  }
 }
