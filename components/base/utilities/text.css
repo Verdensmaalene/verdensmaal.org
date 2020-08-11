@@ -26,6 +26,10 @@
   text-align: right !important;
 }
 
+.u-textLeft {
+  text-align: left !important;
+}
+
 .u-textInherit {
   font-size: inherit !important;
   font-family: inherit !important;

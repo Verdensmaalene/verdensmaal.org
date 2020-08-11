@@ -19,11 +19,7 @@ function material (props) {
         </figure>
       ` : null}
       <div class="Material-body">
-        ${props.link ? html`
-          <div class="Material-action">
-            ${button({ ...props.link, class: 'u-sizeFull u-textCenter', primary: true, text: text`Explore` })}
-          </div>
-        ` : null}
+        ${link(props.link)}
         ${props.banner ? null : html`
           <h2 class="Material-title">${props.title}</h2>
           ${props.description}
@@ -70,6 +66,20 @@ function material (props) {
         </dl>
       </div>
     </article>
+  `
+}
+
+function link (props) {
+  if (!props) return null
+  var attrs = { ...props, class: 'u-sizeFull u-textCenter', primary: true }
+  if (props.class) attrs.class += ' ' + props.class
+  attrs.text = html`
+    <span class="Material-label">${props.text || text`Explore`}</span>
+  `
+  return html`
+    <div class="Material-action">
+      ${button(attrs)}
+    </div>
   `
 }
 

@@ -97,9 +97,16 @@ function materialView (state, emit) {
 
     return html`
       <main class="View-main">
-        <strong>TODO:</strong> This gray box will soon look cooler on this page
         ${material({
           banner: true,
+          link: {
+            href: resolve(doc.data.material),
+            class: 'u-posRelative',
+            text: html`
+              <span class="u-sizeFill u-textLeft">${doc.data.material.link_type === 'Media' ? text`Download material` : text`Go to material`}</span>
+              ${doc.data.material.link_type === 'Media' ? symbol.download({ cover: true }) : symbol.external({ cover: true })}
+            `
+          },
           image: doc.data.image.url ? {
             alt: doc.data.image.alt || asText(doc.data.title),
             size: '(min-width: 1000px) 400px, 10vw',
@@ -162,7 +169,7 @@ function materialView (state, emit) {
                   class: 'u-posRelative',
                   href: resolve(doc.data.material),
                   text: html`
-                    <span class="u-block u-spaceR2">${doc.data.material.link_type === 'Media' ? text`Download material` : text`Go to material`}</span>
+                    <span class="u-sizeFill u-textLeft u-spaceR2">${doc.data.material.link_type === 'Media' ? text`Download material` : text`Go to material`}</span>
                     ${doc.data.material.link_type === 'Media' ? symbol.download({ cover: true }) : symbol.external({ cover: true })}
                   `
                 })}
@@ -283,7 +290,7 @@ function related (slice, index) {
       return html`
         <div>
           <div class="Text">
-            ${index ? html`<span class="u-sibling"></span>` : null}
+            <span class="u-sibling"></span>
             <h3>${asText(slice.primary.heading)}</h3>
           </div>
           <ol>
