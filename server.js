@@ -16,11 +16,11 @@ var Prismic = require('prismic-javascript')
 var ical = require('./lib/ical')
 var chart = require('./lib/chart')
 var purge = require('./lib/purge')
+var award = require('./lib/award')
 var scrape = require('./lib/scrape')
 var zip = require('./lib/zip-target')
 var analytics = require('./lib/analytics')
 var subscribe = require('./lib/subscribe')
-var nomination = require('./lib/nomination')
 var submitEvent = require('./lib/submit-event')
 var imageproxy = require('./lib/cloudinary-proxy')
 var { asText, resolve } = require('./components/base')
@@ -36,19 +36,19 @@ app.use(post('/verdensmaalsprisen/:uid?', function (ctx, uid, next) {
   ctx.set('Cache-Control', 'no-cache, private, max-age=0')
   // store uid in params for downstream middleware
   ctx.state.params = { uid }
-  return nomination(ctx, next)
+  return award(ctx, next)
 }))
 
-// special cache headers for nomination page
+// special cache headers for award page
 app.use(get('/verdensmaalsprisen/:uid?', function (ctx, uid, next) {
   if (!ctx.accepts('html')) return next()
-  var cookies = ctx.cookies.get('nomination')
+  var cookies = ctx.cookies.get('award')
   try {
     var prev = JSON.parse(cookies ? decodeURIComponent(cookies) : null)
   } catch (err) {
     prev = null
   }
-  ctx.state.nomination = { error: null, fields: Object.assign({}, prev) }
+  ctx.state.award = { error: null, fields: Object.assign({}, prev) }
   ctx.set('Cache-Control', 'max-age=0')
   return next()
 }))

@@ -8,20 +8,22 @@ module.exports.loading = loading
 
 function intro (opts = {}) {
   var body = opts.body
-  if (typeof window === 'undefined') {
-    if (Array.isArray(body) || body[0] === '<') html`<div>${body}</div>`
-    else body = html`<p>${body}</p>`
-  } else if (Array.isArray(body) || body instanceof window.Element) {
-    body = html`<div>${body}</div>`
-  } else {
-    body = html`<p>${body}</p>`
+  if (body) {
+    if (typeof window === 'undefined') {
+      if (Array.isArray(body) || body[0] === '<') html`<div>${body}</div>`
+      else body = html`<p>${body}</p>`
+    } else if (Array.isArray(body) || body instanceof window.Element) {
+      body = html`<div>${body}</div>`
+    } else {
+      body = html`<p>${body}</p>`
+    }
   }
 
   return html`
     <div class="Intro ${opts.secondary ? 'Intro--secondary' : ''}">
       <h1 class="Intro-title">${opts.title}</h1>
       <div class="Intro-body">
-        ${body}
+        ${body || null}
       </div>
     </div>
   `
