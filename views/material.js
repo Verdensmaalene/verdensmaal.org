@@ -244,34 +244,6 @@ function materialView (state, emit) {
               `)
             ])}
           </div>
-          <div class="View-spaceLarge">
-            ${doc.data.partners_heading.length || doc.data.partners_description.length ? html`
-              <div class="Text">
-                ${doc.data.partners_heading.length ? html`
-                  <h2 class="Text-h1 u-spaceB1 u-textHyphens">${asText(doc.data.partners_heading)}</h2>
-                ` : null}
-                ${doc.data.partners_description.length ? asElement(doc.data.partners_description) : null}
-              </div>
-            ` : null}
-          </div>
-          ${grid({ size: { sm: '1of3', md: '1of4', lg: '1of6' } }, doc.data.partners.map(function (item) {
-            if (item.link.isBroken || (!item.link.id && !item.link.url)) return null
-
-            var link = { href: resolve(item.link) }
-            if (link.target === '_blank' || !isSameDomain(link.href)) {
-              link.target = '_blank'
-              link.rel = 'noopener noreferrer'
-            }
-
-            var image = item.link.data.image
-            return thumbnail({
-              link,
-              image: image.url ? Object.assign({
-                alt: image.alt,
-                src: `/media/fetch/w_150/${image.url}`
-              }, image.dimensions) : null
-            })
-          }))}
         </div>
       </main>
     `
