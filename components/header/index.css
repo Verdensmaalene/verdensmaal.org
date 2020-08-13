@@ -226,6 +226,11 @@
   font-size: 1.5rem;
 }
 
+.Header-icon {
+  margin: -0.1em 0.4em 0 0;
+  line-height: 0;
+}
+
 /**
  * Navigation toggle and our juicy vegan burger
  */

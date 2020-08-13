@@ -193,6 +193,9 @@ module.exports = class Header extends Component {
                       rel="${item.external ? 'noopener noreferrer' : ''}"
                       class="${className('Header-button Header-button--link', { 'is-current': selected ? item.selected : item.href.replace(/\/$/, '') === href })}">
                       <span class="Header-text">
+                        ${item.icon != null ? html`
+                          <span class="Header-icon">${item.icon}</span>
+                        ` : null}
                         ${item.title}
                         <span class="Header-symbol">${symbol(item.external ? 'external' : 'forward', { cover: true })}</span>
                       </span>

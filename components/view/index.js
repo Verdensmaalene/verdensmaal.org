@@ -188,10 +188,24 @@ function createView (view, meta, _config = {}) {
     }
 
     function link (item) {
-      var href = resolve(item.link)
+      var { title, link } = item
+      var href = resolve(link)
+
+      if (href === '/verdenstimen') {
+        var icon = html`
+          <svg width="14" height="24">
+            <g fill="none" fill-rule="evenodd">
+              <path stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" d="M1 20.7v-16L10.3 1v4l3-1.1v15l-3 1.2L8.5 23l-1-1.8-3 1.2zM4.5 22.3V6.8"/>
+              <path d="M4.4 7.8L2.7 6a.4.4 0 010-.5l7-2.7s.2 0 .3.2l1.3 1.9a.4.4 0 01-.1.5L4.7 7.8h-.3z" fill="currentColor"/>
+            </g>
+          </svg>
+        `
+      }
+
       return {
         href: href,
-        title: item.title,
+        icon: icon,
+        title: title,
         external: !isSameDomain(href)
       }
     }
