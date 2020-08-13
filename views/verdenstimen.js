@@ -312,7 +312,7 @@ function verdenstimen (state, emit) {
             <div class="u-posRelative" style="top: -${state.ui.scrollOffset}px" ${anchor(slice.primary.shortcut_name)}></div>
             <div class="Text">
               <h2 class="Text-h1 u-spaceB1 u-textHyphens">${asText(slice.primary.heading)}</h2>
-              ${slice.primary.text.length ? asElement(slice.primary.text) : null}
+              ${slice.primary.text.length ? asElement(slice.primary.text, resolve) : null}
             </div>
           </div>
         `
