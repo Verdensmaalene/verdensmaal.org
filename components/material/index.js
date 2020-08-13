@@ -63,6 +63,16 @@ function material (props) {
               `)}
             </div>
           ` : null}
+          ${props.partners ? html`
+            <div class="Material-section">
+              <dt class="Material-heading">${text`Produced by`}</dt>
+              ${props.partners.map((item) => html`
+                <dd class="Material-listItem">
+                  <a ${item.link} class="Material-link">${item.name}</a>
+                </dd>
+              `)}
+            </div>
+          ` : null}
         </dl>
       </div>
     </article>

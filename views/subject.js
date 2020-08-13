@@ -7,7 +7,7 @@ var { select } = require('../components/form')
 var subject = require('../components/subject')
 var material = require('../components/material')
 var breadcrumbs = require('../components/breadcrumbs')
-var { i18n, srcset, asText, resolve } = require('../components/base')
+var { i18n, srcset, asText, resolve, isSameDomain } = require('../components/base')
 
 var EDUCATIONAL_LEVELS = [
   'Indskoling',
@@ -302,6 +302,20 @@ function subjectView (state, emit) {
           link: {
             href: `/verdenstimen/materialer?level=${encodeURIComponent(label)}`
           }
+        }
+      }),
+      partners: doc.data.partners.map(function (item) {
+        if (item.link.isBroken || (!item.link.id && !item.link.url)) return null
+
+        var link = { href: resolve(item.link) }
+        if (link.target === '_blank' || !isSameDomain(link.href)) {
+          link.target = '_blank'
+          link.rel = 'noopener noreferrer'
+        }
+
+        return {
+          link: link,
+          name: asText(item.link.data.title)
         }
       })
     })

@@ -137,6 +137,20 @@ function materialView (state, emit) {
               label: label,
               link: { href: `/verdenstimen/${label.toLowerCase()}` }
             }
+          }),
+          partners: doc.data.partners.map(function (item) {
+            if (item.link.isBroken || (!item.link.id && !item.link.url)) return null
+
+            var link = { href: resolve(item.link) }
+            if (link.target === '_blank' || !isSameDomain(link.href)) {
+              link.target = '_blank'
+              link.rel = 'noopener noreferrer'
+            }
+
+            return {
+              link: link,
+              name: asText(item.link.data.title)
+            }
           })
         })}
         <div class="u-container">
