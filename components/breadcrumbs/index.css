@@ -14,6 +14,7 @@
 .Breadcrumbs-items {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .Breadcrumbs-item {
