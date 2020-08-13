@@ -317,7 +317,7 @@ function subjectView (state, emit) {
           link: link,
           name: asText(item.link.data.title)
         }
-      })
+      }).filter(Boolean)
     })
   }
 

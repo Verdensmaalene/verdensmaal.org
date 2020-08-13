@@ -25,7 +25,7 @@ function material (props) {
           ${props.description}
         `}
         <dl class="Material-footer">
-          ${props.goals ? html`
+          ${props.goals && props.goals.length ? html`
             <div class="Material-section">
               <dt class="Material-heading">${text`The goals`}</dt>
               ${props.goals.map((item) => html`
@@ -37,7 +37,7 @@ function material (props) {
               `)}
             </div>
           ` : null}
-          ${props.subjects ? html`
+          ${props.subjects && props.subjects.length ? html`
             <div class="Material-section">
               <dt class="Material-heading">${text`Subjects`}</dt>
               ${props.subjects.map((item) => html`
@@ -53,7 +53,7 @@ function material (props) {
               <dd class="u-spaceA0">${props.duration}</dd>
             </div>
           ` : null}
-          ${props.audiences ? html`
+          ${props.audiences && props.audiences.length ? html`
             <div class="Material-section">
               <dt class="Material-heading">${text`Audience`}</dt>
               ${props.audiences.map((item) => html`
@@ -63,7 +63,7 @@ function material (props) {
               `)}
             </div>
           ` : null}
-          ${props.partners ? html`
+          ${props.partners && props.partners.length ? html`
             <div class="Material-section">
               <dt class="Material-heading">${text`Produced by`}</dt>
               ${props.partners.map((item) => html`
