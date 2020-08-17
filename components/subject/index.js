@@ -10,6 +10,12 @@ function subject (props) {
   var attrs = { ...props.image }
   delete attrs.src
 
+  if (typeof props.title === 'string') {
+    var size = props.title.length > 15
+      ? 'xl'
+      : props.title.length > 8 ? 'lg' : ''
+  }
+
   return html`
     <div class="Subject">
       <div class="u-container">
@@ -20,7 +26,9 @@ function subject (props) {
             </div>
           ` : null}
           <div class="Subject-body">
-            <h1 class="Subject-title">${props.title}</h1>
+            <h1 class="Subject-title ${size ? `Subject-title--${size}` : ''}">
+              ${props.title}
+            </h1>
             ${props.description ? html`
               <p class="Subject-description">${props.description}</p>
             ` : null}

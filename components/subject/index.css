@@ -45,9 +45,23 @@
   text-transform: uppercase;
 }
 
+@media (max-width: 400px) {
+  .Subject-title--xl {
+    font-size: 2rem;
+  }
+}
+
 @media (min-width: 1000px) {
   .Subject-title {
     font-size: 10rem;
+  }
+
+  .Subject-title--lg {
+    font-size: 8rem;
+  }
+
+  .Subject-title--xl {
+    font-size: 5rem;
   }
 }
 
