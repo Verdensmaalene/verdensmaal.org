@@ -6,7 +6,7 @@
   flex-wrap: wrap;
   align-items: center;
   padding: 1.2rem;
-  background: rgba(var(--color-gray-light), 0.6);
+  background: rgba(var(--color-gray-light));
 }
 
 @media (min-width: 900px) {
@@ -18,16 +18,17 @@
 
 .Alert-heading {
   flex: 0 1 100%;
-  margin-bottom: 1rem;
-  font-size: 1.8rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.5rem;
   font-family: var(--heading-font-family);
-  line-height: var(--heading-line-height);
+  line-height: 1.1;
   word-spacing: var(--heading-word-spacing);
   text-transform: uppercase;
 }
 
 @media (min-width: 900px) {
   .Alert-heading {
+    font-size: 1.75rem; 
     flex: 0 1 auto;
     margin: 0 2rem 0 0;
   }
@@ -48,7 +49,7 @@
 
 .Alert-body {
   flex: 1 1 auto;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 @media (min-width: 900px) {

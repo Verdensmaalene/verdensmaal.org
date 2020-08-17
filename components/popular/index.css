@@ -85,6 +85,7 @@
   margin-bottom: 0.2em;
   font-size: 0.8rem;
   color: rgba(var(--color-text-muted));
+  color: rgb(var(--high-contrast-light, var(--color-text-muted)));
 }
 
 .Popular-title {
