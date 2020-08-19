@@ -31,6 +31,19 @@ var app = jalla('index.js', {
   serve: Boolean(process.env.HEROKU)
 })
 
+app.use(get('/verdenstimen', async function (ctx, next) {
+  if (!ctx.accepts('html') || !ctx.query.legacy) return next()
+  try {
+    var api = await Prismic.api(REPOSITORY, { req: ctx.req })
+    var uid = ctx.query.legacy.replace(/\//g, '-')
+    var page = await api.getByUID('page', uid)
+    if (page) ctx.redirect(resolve(page))
+    else return next()
+  } catch (err) {
+    return next()
+  }
+}))
+
 // voting platform
 app.use(post('/verdensmaalsprisen/:uid?', function (ctx, uid, next) {
   ctx.set('Cache-Control', 'no-cache, private, max-age=0')
