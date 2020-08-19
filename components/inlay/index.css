@@ -3,13 +3,11 @@
 /** @define Inlay */
 
 .Inlay {
-  margin-bottom: -18rem;
-  padding-bottom: 18rem;
+  margin-bottom: 5rem;
   background-color: rgb(var(--color-gray-light));
 }
 
 .Inlay-content {
   position: relative;
-  top: -3.5rem;
-  margin-bottom: -3.5rem;
+  margin-top: -3.5rem;
 }
