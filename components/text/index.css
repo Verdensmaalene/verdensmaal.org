@@ -323,6 +323,7 @@
   width: 100%;
   height: 100%;
   position: absolute;
+  z-index: 2;
   left: 0;
   top: 0;
   background-image: linear-gradient(rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0.95) 80%, rgba(255, 255, 255, 1) 88%);
