@@ -37,16 +37,18 @@ function subjectView (state, emit) {
       predicates.push(Predicates.at('my.material.audiences.label', value))
     }
 
-    let materials = state.query.goal ? state.docs.get([
-      Predicates.at('document.type', 'goal'),
-      Predicates.at('my.goal.number', +state.query.goal)
-    ], function (err, res) {
-      if (err) return []
-      if (!res) return null
-      var id = res.results[0].id
-      predicates.push(Predicates.at('my.material.goals.link', id))
-      return getMaterials(predicates)
-    }) : getMaterials(predicates)
+    let materials = getMaterials(predicates)
+
+    if (state.query.goal) {
+      materials = materials.filter(function (doc) {
+        if (doc.data.goals && doc.data.goals.length) {
+          doc.data.goals = doc.data.goals.filter((goal) => goal.link.id)
+        }
+        if (!doc.data.goals.length) return doc
+        var match = doc.data.goals.find((goal) => goal.link.data.number === +state.query.goal)
+        return match ? doc : false
+      })
+    }
 
     if (state.query.subject) {
       if (!subjects) {
@@ -150,14 +152,20 @@ function subjectView (state, emit) {
       var materials = ids.length ? getMaterials(predicates) : []
       if (materials) {
         materials = materials.filter(function (doc) {
-          if (state.query.goal) {
-            const goals = doc.data.goals.map((item) => item.link && item.link.data && item.link.data.number)
-            if (!goals.includes(+state.query.goal)) return false
-          }
           if (state.query.level) {
             const value = decodeURIComponent(state.query.level)
             const levels = doc.data.audiences.map((item) => item.label)
             if (!levels.includes(value)) return false
+          }
+          return true
+        }).filter(function (doc) {
+          if (state.query.goal) {
+            if (doc.data.goals && doc.data.goals.length) {
+              doc.data.goals = doc.data.goals.filter((goal) => goal.link.id)
+            }
+            if (!doc.data.goals.length) return doc
+            var match = doc.data.goals.find((goal) => goal.link.data.number === +state.query.goal)
+            return match ? doc : false
           }
           return true
         })

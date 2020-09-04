@@ -4,6 +4,7 @@ var { i18n } = require('../base')
 var text = i18n(require('./lang.json'))
 
 module.exports = logo
+module.exports.symbol = symbol
 
 function logo (opts = {}) {
   var title = opts.title ? opts.title : text`The Global Goals`

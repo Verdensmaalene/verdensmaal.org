@@ -1,6 +1,7 @@
 var html = require('choo/html')
 var button = require('../button')
 var { i18n, className } = require('../base')
+var { symbol } = require('../logo')
 
 var text = i18n(require('./lang.json'))
 
@@ -36,7 +37,12 @@ function material (props) {
                 </dd>
               `)}
             </div>
-          ` : null}
+          ` : html`
+            <div class="Material-section">
+              <dt class="Material-heading">${text`The goals`}</dt>
+              <div class="Material-allGoals">${symbol()} <span>${text`Alle mål`}</span></div>
+            </div>
+          `}
           ${props.subjects && props.subjects.length ? html`
             <div class="Material-section">
               <dt class="Material-heading">${text`Subjects`}</dt>

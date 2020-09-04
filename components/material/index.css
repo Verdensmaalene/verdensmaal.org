@@ -274,6 +274,17 @@
   text-transform: uppercase;
 }
 
+.Material-allGoals {
+  margin-top: 0.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.Material-allGoals svg {
+  width: 2rem;
+  height: 2rem;
+}
+
 .Material-goal--1:link { background-color: rgb(var(--color-goal-1)); }
 .Material-goal--2:link { background-color: rgb(var(--color-goal-2)); }
 .Material-goal--3:link { background-color: rgb(var(--color-goal-3)); }
