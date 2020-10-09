@@ -1,5 +1,6 @@
 var theme = require('../components/theme')
 var favicon = require('../components/favicon')
+var { srcset } = require('../components/base')
 
 module.exports = meta
 
@@ -22,6 +23,12 @@ function meta (state, emitter, app) {
       var value = tags[key]
         .replace(/"/g, '&quot;')
         .replace(/^\//, state.origin + '/')
+
+      if (key === 'og:image' && value && !value.includes(state.origin)) {
+        const url = value.replace(/\.(\w+)\?.+/, '.$1')
+        value = state.origin + srcset(url, [[1800, 'q_50,f_jpg']]).split(' ')[0]
+      }
+
       state.meta[key] = value
       if (typeof window === 'undefined') return
       var attribute = key.substr(0, 3) === 'og:' ? 'property' : 'name'
