@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "purge": "node -r dotenv/config -e \"require('./lib/purge')('../index', ['/sw.js'], console.log)\"",
-    "test": "standard && dependency-check package.json",
+    "test": "standard && dependency-check package.json --missing",
     "deploy": "npx now -T codeandconspire && npx now alias -T codeandconspire",
     "start": "node server.js",
     "build": "node build.js"
@@ -80,7 +80,8 @@
     "prismic-javascript": "^3.0.0",
     "prismic-richtext": "^1.0.3",
     "slugify": "^1.4.2",
-    "smoothscroll-polyfill": "^0.4.4"
+    "smoothscroll-polyfill": "^0.4.4",
+    "split-require": "^3.1.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
