@@ -147,6 +147,33 @@ function page (state, emit) {
                           `
                         })
                       }
+                      case 'grid': {
+                        const length = slice.items.length
+                        const cols = length % 2 === 0 && length < 5 ? 2 : 3
+
+                        return grid({
+                          size: { sm: '1of2', md: `1of${cols}` }
+                        }, slice.items.map(function (item) {
+                          var text = asText(item.text)
+                          var attrs = item.image.url ? Object.assign({
+                            alt: item.image.alt,
+                            srcset: srcset(item.image, [300, 500, 900, [1200, 'q_50']]),
+                            sizes: `(min-width: 1000px) ${cols === 3 ? '18rem' : '27rem'}, (min-width: 600px) ${cols === 3 ? '33vw' : '50vw'}, 50vw`
+                          }, item.image.dimensions) : null
+
+                          return html`
+                            <div class="Text ${slice.primary.boxed ? 'Text--box' : ''}">
+                              ${item.image.url ? html`
+                                <figure>
+                                  <img ${attrs} src="${srcset(item.image, [300]).split(' ')[0]}">
+                                  ${item.image.alt ? html`<figcaption class="Text-muted Text-small">${item.image.alt}</figcaption>` : null}
+                                </figure>
+                              ` : null}
+                              ${text ? asElement(item.text) : null}
+                            </div>
+                          `
+                        }))
+                      }
                       default: return null
                     }
                   }) : null}
