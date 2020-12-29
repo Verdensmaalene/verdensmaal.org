@@ -56,10 +56,10 @@ function page (state, emit) {
               <div class="u-col u-lg-size2of3">
                 <div>
                   ${doc.data.image.url ? html`
-                    <div class="View-space">
+                    <div class="View-space u-spaceB6">
                       <div class="Text">
                         <h1>${title}</h1>
-                        <p>${description}</p>
+                        <p class="Text-large u-textSemiBold">${description}</p>
                       </div>
                     </div>
                   ` : null}
