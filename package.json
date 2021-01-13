@@ -76,7 +76,7 @@
     "postcss-custom-properties": "^9.1.1",
     "postcss-focus-visible": "^4.0.0",
     "postcss-url": "^8.0.0",
-    "prismic-element": "^2.0.4",
+    "prismic-element": "^2.0.5",
     "prismic-javascript": "^3.0.0",
     "prismic-richtext": "^1.0.3",
     "slugify": "^1.4.2",
