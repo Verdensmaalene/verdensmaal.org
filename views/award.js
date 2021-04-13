@@ -154,6 +154,15 @@ function award (state, emit) {
                       onchange: onchange,
                       disabled: state.award.loading
                     })}
+                    ${form.input({
+                      label: 'Telefonnummer',
+                      value: fields['entry.872971700'] || '',
+                      id: 'entry.872971700',
+                      name: 'entry.872971700',
+                      type: 'tel',
+                      onchange: onchange,
+                      disabled: state.award.loading
+                    })}
                   </div>
                 `
               ])}
