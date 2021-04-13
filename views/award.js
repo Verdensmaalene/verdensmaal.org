@@ -206,20 +206,24 @@ function award (state, emit) {
                   </div>
                 `
               ])}
-              ${form.textarea({
-                rows: 10,
-                class: 'u-spaceB1',
-                label: 'Hvorfor skal din kandidat nomineres til prisen?',
-                value: fields['entry.1264591994'] || '',
-                id: 'entry.1264591994',
-                name: 'entry.1264591994',
-                required: true,
-                oninput: oninput,
-                onchange: onchange,
-                disabled: state.award.loading,
-                comment: 'Beskriv hvad personen har gjort, hvem målgruppen er og hvad effekten har været samt hvordan Verdensmålene har været med i arbejdet. (Max 300 ord)'
-              })}
-              ${counter.render(fields['entry.1264591994'])}
+              ${grid({ size: { md: '2of3' } }, [html`
+                <div>
+                  ${form.textarea({
+                    rows: 10,
+                    class: 'u-spaceB1',
+                    label: 'Hvorfor skal din kandidat nomineres til prisen?',
+                    value: fields['entry.1264591994'] || '',
+                    id: 'entry.1264591994',
+                    name: 'entry.1264591994',
+                    required: true,
+                    oninput: oninput,
+                    onchange: onchange,
+                    disabled: state.award.loading,
+                    comment: html`Beskriv hvad personen har gjort, hvem målgruppen er og hvad effekten har været samt hvordan Verdensmålene har været med i arbejdet. (Max 300 ord)`
+                  })}
+                  ${counter.render(fields['entry.1264591994'])}
+                </div>
+              `])}
               <div class="Text u-spaceT8 u-spaceB2">
                 <h2 class="Text-h3">Relevante links</h2>
                 <p>Indsæt meget gerne links til kandidatens hjemmeside, sociale medier eller f.eks. presseomtale af projektet/kandidaten.</p>
