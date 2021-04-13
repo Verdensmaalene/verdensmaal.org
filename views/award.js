@@ -219,7 +219,7 @@ function award (state, emit) {
                     oninput: oninput,
                     onchange: onchange,
                     disabled: state.award.loading,
-                    comment: html`Beskriv hvad personen har gjort, hvem målgruppen er og hvad effekten har været samt hvordan Verdensmålene har været med i arbejdet. (Max 300 ord)`
+                    comment: 'Beskriv hvad personen har gjort, hvem målgruppen er og hvad effekten har været samt hvordan Verdensmålene har været med i arbejdet. (Max 300 ord)'
                   })}
                   ${counter.render(fields['entry.1264591994'])}
                 </div>
