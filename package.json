@@ -11,7 +11,7 @@
     "build": "node build.js"
   },
   "engines": {
-    "node": ">=10"
+    "node": "^14.17.6"
   },
   "documentify": {
     "transform": [
