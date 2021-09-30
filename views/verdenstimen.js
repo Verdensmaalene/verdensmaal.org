@@ -130,19 +130,24 @@ function verdenstimen (state, emit) {
     var slices = doc.data.slices.map(fromSlice)
 
     var featured = []
-    if (doc.data.introduction.length) {
-      featured.push(grid.cell({
-        size: { lg: '2of3' }
-      }, panel(html`
-        <div class="Text">
-          <div class="Text-large">
-            <h2 class="Text-h1">${asText(doc.data.heading)}</h2>
-            ${asElement(doc.data.introduction, resolve, serialize)}
-          </div>
-        </div>
-      `)))
-    }
 
+    /**
+     * Add introduction block
+     */
+    featured.push(grid.cell({
+      size: { lg: '2of3' }
+    }, panel(html`
+      <div class="Text">
+        <div class="Text-large">
+          <h2 class="Text-h1">${asText(doc.data.heading)}</h2>
+          ${asElement(doc.data.introduction, resolve, serialize)}
+        </div>
+      </div>
+    `)))
+
+    /**
+     * Add featured subjects block
+     */
     featured.push(grid.cell({
       size: { lg: '1of3' }
     }, html`
@@ -175,6 +180,9 @@ function verdenstimen (state, emit) {
       </div>
     `))
 
+    /**
+     * Add featured materials (limit to 2)
+     */
     featured.push(...doc.data.featured_materials.map(function (item) {
       if (!item.material.id || item.material.isBroken) return null
 
@@ -200,13 +208,23 @@ function verdenstimen (state, emit) {
         link: { href: resolve(item.material) },
         duration: duration
       }))
-    }))
+    }).filter(Boolean).slice(0, 2))
 
+    /**
+     * Add latest published materials, exlcuding duplicates w/ featured
+     */
     featured.push(grid.cell({ size: { lg: '1of3' } }, state.docs.get(
-      Prismic.Predicates.at('document.type', 'material'), {
+      [
+        Prismic.Predicates.at('document.type', 'material'),
+        ...doc.data.featured_materials.map(function ({ material }) {
+          return Prismic.Predicates.not('document.id', material.id)
+        })
+      ],
+      {
         pageSize: 3,
-        orderings: '[my.material.date desc]'
-      }, function (err, res) {
+        orderings: '[document.first_publication_date desc]'
+      },
+      function (err, res) {
         if (err) return null
         if (!res) return material.loading()
         const items = res ? res.results : new Array(3).fill(null)
@@ -249,10 +267,17 @@ function verdenstimen (state, emit) {
       }
     )))
 
+    /**
+     * Add featured news
+     */
     const featuredNews = doc.data.featured_news
       .map((item) => item.article)
       .filter((link) => link.id && !link.isBroken)
       .slice(0, 3)
+
+    /**
+     * Fill news items to ensure three articles
+     */
     if (featuredNews.length < 3) {
       const opts = { pageSize: 3 - featuredNews.length }
       const predicate = Prismic.Predicates.at('document.tags', ['verdenstimen'])
