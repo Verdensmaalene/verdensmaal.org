@@ -348,14 +348,18 @@ function verdenstimen (state, emit) {
             ))
           ])}
         </div>
-        <div class="View-space u-container">
-          <div class="Text u-spaceB4">
-            <h2 class="Text-h1 u-spaceB1 u-textHyphens">${text`Latest news`}</h2>
+        <div class="View-space">
+          <div class="u-container">
+            <div class="Text u-spaceB4">
+              <h2 class="Text-h1 u-spaceB1 u-textHyphens">${text`Latest news`}</h2>
+            </div>
           </div>
-          ${grid(featuredNews.map(function (doc) {
-            var child = doc ? newsCard(doc) : card.loading()
-            return grid.cell({ size: { md: '1of2', lg: '1of3' } }, child)
-          }))}
+          <div class="u-md-container">
+            ${grid({ carousel: true }, featuredNews.map(function (doc) {
+              var child = doc ? newsCard(doc) : card.loading()
+              return grid.cell({ size: { md: '1of2', lg: '1of3' } }, child)
+            }))}
+          </div>
         </div>
         <div class="View-space u-container" id="all-subjects">
           <div class="Text u-spaceB4">
