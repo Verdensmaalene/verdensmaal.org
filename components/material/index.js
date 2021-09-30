@@ -13,7 +13,10 @@ function material (props) {
   delete img.src
 
   return html`
-    <article class="${className('Material', { 'Material--banner': props.banner })}">
+    <article class="${className('Material', {
+      'Material--banner': props.banner,
+      'Material--grow': !props.small
+    })}">
       ${props.image ? html`
         <figure class="Material-figure">
           <img ${img} class="Material-image" src="${props.image.src}">
@@ -37,7 +40,7 @@ function material (props) {
                 </dd>
               `)}
             </div>
-          ` : html`
+          ` : props.small ? null : html`
             <div class="Material-section">
               <dt class="Material-heading">${text`The goals`}</dt>
               <div class="Material-allGoals">${symbol()} <span>${text`Alle mål`}</span></div>

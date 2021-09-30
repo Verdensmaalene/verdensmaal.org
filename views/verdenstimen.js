@@ -3,7 +3,7 @@ var slugify = require('slugify')
 var parse = require('date-fns/parse')
 var subDays = require('date-fns/sub_days')
 var asElement = require('prismic-element')
-var { Predicates } = require('prismic-javascript')
+var Prismic = require('prismic-javascript')
 var Map = require('../components/map')
 var view = require('../components/view')
 var hero = require('../components/hero')
@@ -13,10 +13,12 @@ var card = require('../components/card')
 var Text = require('../components/text')
 var Chart = require('../components/chart')
 var embed = require('../components/embed')
+var panel = require('../components/panel')
 var inlay = require('../components/inlay')
 var event = require('../components/event')
 var button = require('../components/button')
 var Details = require('../components/details')
+var material = require('../components/material')
 var divide = require('../components/grid/divide')
 var thumbnail = require('../components/thumbnail')
 var { external } = require('../components/symbol')
@@ -29,6 +31,7 @@ var {
   asText,
   colors,
   resolve,
+  placeholder,
   isSameDomain
 } = require('../components/base')
 
@@ -52,12 +55,21 @@ module.exports = view(verdenstimen, meta, {
 })
 
 function verdenstimen (state, emit) {
-  return state.docs.getByUID('sector', 'verdenstimen', onresponse)
+  const opts = {
+    fetchLinks: [
+      'subject.image',
+      'subject.title',
+      'material.image',
+      'material.title',
+      'material.description'
+    ]
+  }
+  return state.docs.getSingle('verdenstimen', opts, onresponse)
 
   function onresponse (err, doc) {
     if (err) return null
 
-    var predicates = Predicates.at('document.type', 'subject')
+    var predicates = Prismic.Predicates.at('document.type', 'subject')
     var subjects = state.docs.get(predicates, function (err, response) {
       if (err || !response || !response.results_size) return null
       return response.results.map(function (doc) {
@@ -117,6 +129,146 @@ function verdenstimen (state, emit) {
     var shortcuts = data.slices.filter((slice) => slice.primary.shortcut_name)
     var slices = doc.data.slices.map(fromSlice)
 
+    var featured = []
+    if (doc.data.introduction.length) {
+      featured.push(grid.cell({
+        size: { lg: '2of3' }
+      }, panel(html`
+        <div class="Text">
+          <div class="Text-large">
+            <h2 class="Text-h1">${asText(doc.data.heading)}</h2>
+            ${asElement(doc.data.introduction, resolve, serialize)}
+          </div>
+        </div>
+      `)))
+    }
+
+    featured.push(grid.cell({
+      size: { lg: '1of3' }
+    }, html`
+      <div>
+        ${menu(doc.data.featured_subjects.map(function ({ subject }) {
+          if (!subject.id || subject.isBroken) return null
+
+          const { data: { image, title } } = subject
+          const label = asText(title)
+
+          return {
+            image: image ? {
+              alt: image.alt || label,
+              sizes: '48px',
+              width: 48,
+              height: 48 * (image.dimensions.height / image.dimensions.width),
+              srcset: srcset(image, [48, 100]),
+              src: srcset(image, [48]).split(' ')[0]
+            } : null,
+            label: label,
+            link: { href: resolve(subject) }
+          }
+        }), {
+          fill: true,
+          small: true,
+          title: text`Choose school subject`,
+          description: text`Find your teaching material`
+        })}
+        ${button({ href: '#all-subjects', text: text`Show all subjects`, class: 'u-spaceT2 u-fill', primary: true })}
+      </div>
+    `))
+
+    featured.push(...doc.data.featured_materials.map(function (item) {
+      if (!item.material.id || item.material.isBroken) return null
+
+      const { data: { image, title, description, duration } } = item.material
+
+      return grid.cell({
+        size: {
+          md: '1of2',
+          lg: '1of3'
+        }
+      }, material({
+        small: true,
+        image: {
+          alt: image.alt || asText(title),
+          size: '(min-width: 1000px) 400px, 10vw',
+          srcset: srcset(image, [400, 600, [800, 'q_50']], {
+            transforms: 'f_jpg,c_thumb'
+          }),
+          src: srcset(image, [400]).split(' ')[0]
+        },
+        title: asText(title),
+        description: asElement(description),
+        link: { href: resolve(item.material) },
+        duration: duration
+      }))
+    }))
+
+    featured.push(grid.cell({ size: { lg: '1of3' } }, state.docs.get(
+      Prismic.Predicates.at('document.type', 'material'), {
+        pageSize: 3,
+        orderings: '[my.material.date desc]'
+      }, function (err, res) {
+        if (err) return null
+        if (!res) return material.loading()
+        const items = res ? res.results : new Array(3).fill(null)
+
+        return panel(grid({
+          gutter: 'sm',
+          size: {
+            md: '1of3',
+            lg: '1of1'
+          }
+        }, items.map(function (doc) {
+          if (!doc) {
+            return panel.item({
+              title: placeholder(8),
+              media: html`<div class="u-aspect1-1 u-loading u-block"></div>`
+            })
+          }
+
+          const { data: { title, image } } = doc
+          return panel.item({
+            title: asText(title),
+            media: image.url ? html`
+              <img class="u-block u-sizeFull" sizes="(min-width: 1000px) 200px, (min-width: 800px) 150px, 96px" srcset="${srcset(image.url, [96, 192, 288, [384, 'q_50']], opts)}" alt="${image.alt || title}" src="${srcset(image.url, [134], opts).split(' ')[0]}">
+            ` : null,
+            link: {
+              text: text`Go to material`,
+              href: resolve(doc)
+            }
+          })
+        })), {
+          heading: text`Latest materials`,
+          utils: 'u-bgGrayLight',
+          footer: button({
+            text: text`Browse materials`,
+            href: '#all-subjects',
+            class: 'u-spaceT3',
+            primary: true
+          })
+        })
+      }
+    )))
+
+    const featuredNews = doc.data.featured_news
+      .map((item) => item.article)
+      .filter((link) => link.id && !link.isBroken)
+      .slice(0, 3)
+    if (featuredNews.length < 3) {
+      const opts = { pageSize: 3 - featuredNews.length }
+      const predicate = Prismic.Predicates.at('document.tags', ['verdenstimen'])
+      const news = state.docs.get(predicate, opts, function (err, response) {
+        if (err) return []
+        if (!response) return new Array(opts.pageSize).fill(null)
+        return response.results
+      })
+      featuredNews.push(...news)
+    }
+
+    featured.push(...featuredNews.map(function (doc) {
+      const child = doc ? newsCard(doc) : card.loading()
+      return grid.cell({ size: { md: '1of2', lg: '1of3' } }, child)
+    }))
+
     return html`
       <main class="View-main theme-verdenstimen">
         ${hero({
@@ -138,7 +290,12 @@ function verdenstimen (state, emit) {
           image,
           caption: data.image.copyright
         })}
-        ${inlay(html`
+        ${featured.length ? html`
+          <div class="View-spaceSmall u-container">
+            ${grid(featured)}
+          </div>
+        ` : null}
+        ${false ? inlay(html`
           <div class="u-container">
             ${grid({ gutter: 'xs' }, [
               grid.cell({ size: { md: '2of3' } }, subjects ? menu(subjects, {
@@ -167,7 +324,7 @@ function verdenstimen (state, emit) {
               `)
             ])}
           </div>
-        `)}
+        `) : null}
         ${shortcuts.length ? html`
           <div class="u-container">
             <div class="View-spaceSmall">
@@ -235,9 +392,9 @@ function verdenstimen (state, emit) {
 
           const type = slice.slice_type === 'events' ? 'event' : 'news'
           const predicates = [
-            Predicates.at('document.type', type),
-            Predicates.any('document.tags', doc.tags)
-          ].concat(ids.map((id) => Predicates.not('document.id', id)))
+            Prismic.Predicates.at('document.type', type),
+            Prismic.Predicates.any('document.tags', doc.tags)
+          ].concat(ids.map((id) => Prismic.Predicates.not('document.id', id)))
 
           const pageSize = 3
           const opts = { pageSize }
@@ -251,7 +408,7 @@ function verdenstimen (state, emit) {
               ('0' + yesterday.getDate()).substr(-2)
             ].join('-')
 
-            predicates.push(Predicates.dateAfter('my.event.end', date))
+            predicates.push(Prismic.Predicates.dateAfter('my.event.end', date))
             opts.orderings = '[my.event.start]'
           }
 
@@ -714,7 +871,7 @@ function camelCase (snake) {
 }
 
 function meta (state) {
-  return state.docs.getByUID('sector', 'verdenstimen', function (err, doc) {
+  return state.docs.getSingle('verdenstimen', function (err, doc) {
     if (err) return null
     if (!doc) return { title: text`LOADING_TEXT_SHORT` }
     return {

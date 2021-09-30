@@ -2,8 +2,8 @@
 @import "./theme";
 @import "./global";
 @import "./utilities/colors";
-@import "./utilities/layout";
 @import "./utilities/loading";
+@import "./utilities/layout";
 @import "./utilities/size";
 @import "./utilities/space";
 @import "./utilities/text";

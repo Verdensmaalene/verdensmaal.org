@@ -82,6 +82,7 @@ function resolve (doc) {
     case 'event': return `/events/${doc.uid}`
     case 'news_listing': return '/nyheder'
     case 'events_listing': return '/events'
+    case 'verdenstimen': return '/verdenstimen'
     case 'subject': return `/verdenstimen/${doc.uid}`
     case 'material': return `/verdenstimen/materiale/${doc.uid}`
     case 'Web':
