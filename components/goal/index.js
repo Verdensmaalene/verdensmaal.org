@@ -36,6 +36,14 @@ module.exports = class Goal extends Component {
     }
   }
 
+  static mini (number) {
+    return html`
+      <span class="Goal Goal--mini Goal--${number}">
+        ${number}
+      </span>
+    `
+  }
+
   background (num, opts) {
     if (typeof window === 'undefined') return null
 

@@ -31,10 +31,19 @@
   position: relative;
 }
 
+.Panel-item--reverse {
+  flex-direction: row-reverse;
+}
+
 .Panel-media {
   flex: 0 0 33%;
   min-width: 6.5rem;
   margin-right: 1.25rem;
+}
+
+.Panel-item--reverse .Panel-media {
+  margin-right: 0;
+  margin-left: 1.25rem;
 }
 
 .Panel-content {
@@ -56,6 +65,13 @@
   .Panel-title {
     font-size: 1.75rem;
   }
+}
+
+.Panel-subheading {
+  margin-bottom: 0.25rem;
+  font-size: 0.9375rem;
+  font-weight: bold;
+  line-height: 1;
 }
 
 .Panel-link {

@@ -123,6 +123,7 @@
 
 .Material-action {
   order: 99;
+  align-self: flex-start;
   margin-top: auto;
 }
 
@@ -249,20 +250,6 @@
  * Goal
  */
 
-.Material-goal {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin: 0 0.25rem 0.25rem 0;
-  font-size: 1.40625rem;
-  color: #fff;
-  font-family: var(--heading-font-family);
-  line-height: 1;
-  text-transform: uppercase;
-}
-
 .Material-allGoals {
   margin-top: 0.2rem;
   display: flex;
@@ -273,21 +260,3 @@
   width: 2rem;
   height: 2rem;
 }
-
-.Material-goal--1:link { background-color: rgb(var(--color-goal-1)); }
-.Material-goal--2:link { background-color: rgb(var(--color-goal-2)); }
-.Material-goal--3:link { background-color: rgb(var(--color-goal-3)); }
-.Material-goal--4:link { background-color: rgb(var(--color-goal-4)); }
-.Material-goal--5:link { background-color: rgb(var(--color-goal-5)); }
-.Material-goal--6:link { background-color: rgb(var(--color-goal-6)); }
-.Material-goal--7:link { background-color: rgb(var(--color-goal-7)); }
-.Material-goal--8:link { background-color: rgb(var(--color-goal-8)); }
-.Material-goal--9:link { background-color: rgb(var(--color-goal-9)); }
-.Material-goal--10:link { background-color: rgb(var(--color-goal-10)); }
-.Material-goal--11:link { background-color: rgb(var(--color-goal-11)); }
-.Material-goal--12:link { background-color: rgb(var(--color-goal-12)); }
-.Material-goal--13:link { background-color: rgb(var(--color-goal-13)); }
-.Material-goal--14:link { background-color: rgb(var(--color-goal-14)); }
-.Material-goal--15:link { background-color: rgb(var(--color-goal-15)); }
-.Material-goal--16:link { background-color: rgb(var(--color-goal-16)); }
-.Material-goal--17:link { background-color: rgb(var(--color-goal-17)); }

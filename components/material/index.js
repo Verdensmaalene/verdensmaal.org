@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var Goal = require('../goal')
 var button = require('../button')
 var { i18n, className } = require('../base')
 var { symbol } = require('../logo')
@@ -32,18 +33,22 @@ function material (props) {
           ${props.goals && props.goals.length ? html`
             <div class="Material-section">
               <dt class="Material-heading">${text`The goals`}</dt>
-              ${props.goals.map((item) => html`
-                <dd class="u-spaceA0 u-inline">
-                  <a ${item.link} class="Material-goal Material-goal--${item.number}" title="${text`Go to goal ${item.number}`}">
-                    ${item.number}
-                  </a>
-                </dd>
-              `)}
+              ${props.goals.map(function (item) {
+                const content = html`
+                  <span class="u-hiddenVisually">${text`Goal`}</span>
+                  ${Goal.mini(item.number)}
+                `
+                return html`
+                  <dd class="u-spaceA0 u-inline">
+                    ${item.link ? html`<a ${item.link}>${content}</a>` : content}
+                  </dd>
+                `
+              })}
             </div>
           ` : props.small ? null : html`
             <div class="Material-section">
               <dt class="Material-heading">${text`The goals`}</dt>
-              <div class="Material-allGoals">${symbol()} <span>${text`Alle mål`}</span></div>
+              <div class="Material-allGoals">${symbol()} <span>${text`All goals`}</span></div>
             </div>
           `}
           ${props.subjects && props.subjects.length ? html`
@@ -51,7 +56,7 @@ function material (props) {
               <dt class="Material-heading">${text`Subjects`}</dt>
               ${props.subjects.map((item) => html`
                 <dd class="Material-listItem">
-                  <a ${item.link} class="Material-link">${item.label}</a>
+                  ${item.link ? html`<a ${item.link} class="Material-link">${item.label}</a>` : item.label}
                 </dd>
               `)}
             </div>
@@ -67,7 +72,7 @@ function material (props) {
               <dt class="Material-heading">${text`Audience`}</dt>
               ${props.audiences.map((item) => html`
                 <dd class="Material-listItem">
-                  <a ${item.link} class="Material-link">${item.label}</a>
+                  ${item.link ? html`<a ${item.link} class="Material-link">${item.label}</a>` : item.label}
                 </dd>
               `)}
             </div>
@@ -104,7 +109,7 @@ function link (props) {
 
 function loading (opts = {}) {
   return html`
-    <article class="${className('Material', { 'Material--banner': opts.banner })}">
+    <article class="${className('Material', { 'Material--banner': opts.banner, 'Material--grow': !opts.small })}">
       <div class="Material-figure u-loading">
         <div class="Material-image"></div>
       </div>
