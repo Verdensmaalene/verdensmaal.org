@@ -94,6 +94,8 @@ function resolve (doc) {
       if (type === 'Web' || type === 'Media' || type === 'Any') {
         return doc.url.replace(/^https?:\/\/#/, '#')
       }
+      // handle archived sector page Verdenstimen
+      if (doc.id === 'XvH3FBAAACIA135o') return '/verdenstimen'
       // Just throw an error for unknown page types
       throw new Error('Document not recognized')
     }
