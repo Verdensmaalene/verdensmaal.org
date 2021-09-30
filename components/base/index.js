@@ -86,12 +86,15 @@ function resolve (doc) {
     case 'subject': return `/verdenstimen/${doc.uid}`
     case 'material': return `/verdenstimen/materiale/${doc.uid}`
     case 'Web':
-    case 'Media': return doc.url
+    case 'Media': return doc.url.replace(/^https?:\/\/#/, '#')
     default: {
       if (doc.type === 'page' && doc.uid === 'verdensmaalsprisen') return `/${doc.uid}`
       // handle links to web and media
       const type = doc.link_type
-      if (type === 'Web' || type === 'Media' || type === 'Any') return doc.url
+      if (type === 'Web' || type === 'Media' || type === 'Any') {
+        return doc.url.replace(/^https?:\/\/#/, '#')
+      }
+      // Just throw an error for unknown page types
       throw new Error('Document not recognized')
     }
   }
