@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var { forward } = require('../symbol')
 var { i18n, className } = require('../base')
 
 var text = i18n()
@@ -22,6 +23,7 @@ function menu (links, opts = {}) {
               ` : null}
               <a ${item.link} class="Menu-link">
                 <span class="Menu-label">${item.label}</span>
+                ${opts.withChevron ? html`<span class="Menu-chevron">${forward()}</span>` : null}
               </a>
             </li>
           `

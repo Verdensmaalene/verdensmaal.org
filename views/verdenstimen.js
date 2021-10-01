@@ -204,6 +204,7 @@ function verdenstimen (state, emit) {
                 }), {
                   fill: true,
                   small: true,
+                  withChevron: true,
                   title: text`Choose school subject`,
                   description: text`Find your teaching material`
                 })}
@@ -334,7 +335,7 @@ function verdenstimen (state, emit) {
                       </div>
                     `,
                     media: image.url ? html`
-                      <img class="u-block u-sizeFull" sizes="(min-width: 1000px) 200px, (min-width: 800px) 150px, 96px" srcset="${srcset(image.url, [96, 192, 288, [384, 'q_50']], opts)}" alt="${image.alt || title}" src="${srcset(image.url, [134], opts).split(' ')[0]}">
+                      <img class="u-block u-sizeFull" sizes="(min-width: 1000px) 200px, (min-width: 800px) 150px, 96px" srcset="${srcset(image.url, [96, 192, 288, [384, 'q_50']], { aspect: 3 / 4 })}" alt="${image.alt || title}" src="${srcset(image.url, [134], { aspect: 3 / 4 }).split(' ')[0]}">
                     ` : null,
                     link: {
                       text: text`Go to material`,
@@ -365,7 +366,7 @@ function verdenstimen (state, emit) {
           <div class="Text u-spaceB4">
             <h2 class="Text-h1 u-spaceB1 u-textHyphens">${text`All subjects`}</h2>
           </div>
-          ${grid({ gutter: 'xs' }, [
+          ${grid({ gutter: 'sm' }, [
             grid.cell({ size: { md: '2of3' } }, subjects
               ? menu(subjects.map(function (doc) {
                   if (doc.data.image.url) {

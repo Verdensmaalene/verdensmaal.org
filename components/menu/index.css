@@ -93,7 +93,9 @@
 }
 
 .Menu-link {
-  display: block;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
   padding: 0.75em 0;
   font-weight: bold;
   font-size: 1.25rem;
@@ -125,4 +127,16 @@
 
 .Menu-link:hover .Menu-label {
   transform: translateX(0.5rem);
+}
+
+.Menu-chevron {
+  display: block;
+  margin-left: auto;
+  font-size: 1rem;
+  transform: translateX(-0.5rem);
+  transition: transform 200ms var(--ease-out);
+}
+
+.Menu-link:hover .Menu-chevron {
+  transform: translateX(0);
 }
