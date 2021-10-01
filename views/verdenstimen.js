@@ -195,38 +195,43 @@ function verdenstimen (state, emit) {
               size: { lg: '1of3' }
             }, html`
               <div>
-                ${menu(doc.data.featured_subjects.map(function ({ subject }) {
-                  if (!subject.id || subject.isBroken) return null
+                ${panel([
+                  menu(doc.data.featured_subjects.map(function ({ subject }) {
+                    if (!subject.id || subject.isBroken) return null
 
-                  const { data: { image, title } } = subject
-                  const label = asText(title)
+                    const { data: { image, title } } = subject
+                    const label = asText(title)
 
-                  return {
-                    image: image ? {
-                      alt: image.alt || label,
-                      sizes: '48px',
-                      width: 48,
-                      height: 48 * (image.dimensions.height / image.dimensions.width),
-                      srcset: srcset(image, [48, 100]),
-                      src: srcset(image, [48]).split(' ')[0]
-                    } : null,
-                    label: label,
-                    link: { href: resolve(subject) }
-                  }
-                }), {
-                  fill: true,
-                  small: true,
-                  withChevron: true,
-                  title: text`Choose school subject`,
-                  description: text`Find your teaching material`
+                    return {
+                      image: image ? {
+                        alt: image.alt || label,
+                        sizes: '48px',
+                        width: 48,
+                        height: 48 * (image.dimensions.height / image.dimensions.width),
+                        srcset: srcset(image, [48, 100]),
+                        src: srcset(image, [48]).split(' ')[0]
+                      } : null,
+                      label: label,
+                      link: { href: resolve(subject) }
+                    }
+                  }), {
+                    fill: true,
+                    small: true,
+                    bright: true,
+                    withChevron: true,
+                    title: text`Choose school subject`,
+                    description: text`Find your teaching material`
+                  }),
+                  button({
+                    href: '#all-subjects',
+                    text: text`Show all subjects`,
+                    class: 'u-spaceT2 u-fill',
+                    onclick: scrollIntoView,
+                    primary: true
+                    })
+                ], {
+                  utils: 'u-bgTheme'
                 })}
-                ${button({
-                  href: '#all-subjects',
-                  text: text`Show all subjects`,
-                  class: 'u-spaceT2 u-fill',
-                  onclick: scrollIntoView,
-                  primary: true
-                  })}
               </div>
             `)
           ])}

@@ -64,7 +64,7 @@
   align-items: center;
   position: relative;
   break-inside: avoid-column;
-  border-bottom: 1px solid rgb(var(--color-gray-light));
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .Menu-image {
@@ -90,6 +90,10 @@
   height: auto;
   max-width: 100%;
   max-height: 100%;
+}
+
+.Menu--bright .Menu-img {
+  filter: brightness(100);
 }
 
 .Menu-link {
