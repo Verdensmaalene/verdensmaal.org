@@ -295,7 +295,6 @@ function verdenstimen (state, emit) {
                 var items = res ? res.results : new Array(3).fill(null)
 
                 return panel(grid({
-                  gutter: 'sm',
                   size: {
                     md: '1of3',
                     lg: '1of1'
