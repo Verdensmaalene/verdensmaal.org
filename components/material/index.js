@@ -45,7 +45,7 @@ function material (props) {
                 `
               })}
             </div>
-          ` : props.small ? null : html`
+          ` : html`
             <div class="Material-section">
               <dt class="Material-heading">${text`The goals`}</dt>
               <div class="Material-allGoals">${symbol()} <span>${text`All goals`}</span></div>

@@ -5,6 +5,7 @@ var subDays = require('date-fns/sub_days')
 var asElement = require('prismic-element')
 var Prismic = require('prismic-javascript')
 var Map = require('../components/map')
+var logo = require('../components/logo')
 var Goal = require('../components/goal')
 var view = require('../components/view')
 var hero = require('../components/hero')
@@ -348,7 +349,12 @@ function verdenstimen (state, emit) {
                         `,
                         ' '
                       ], [])
-                      : null,
+                      : html`
+                          <span class="u-flex u-alignCenter">
+                            <span class="u-spaceR1" style="font-size: 0.5rem;">${logo.symbol()}</span>
+                            ${text`All goals`}
+                          </span>
+                        `,
                     title: asText(title),
                     body: html`
                       <div class="Text Text--small">
