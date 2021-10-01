@@ -20,7 +20,7 @@ function material (props) {
     })}">
       ${props.image ? html`
         <figure class="Material-figure">
-          <img ${img} class="Material-image" src="${props.image.src}">
+          <img ${{ ...img, class: `Material-image ${img.class || ''}` }} src="${props.image.src}">
         </figure>
       ` : null}
       <div class="Material-body">
