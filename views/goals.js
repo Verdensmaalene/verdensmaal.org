@@ -35,7 +35,7 @@ class Goals extends View {
         if (err) throw err
         if (!doc) return { title: text`LOADING_TEXT_SHORT` }
         return {
-          title: asText(doc.data.name),
+          title: asText(doc.data.title),
           description: asText(doc.data.description),
           'og:image': website.data.default_social_image.url
         }
@@ -104,14 +104,12 @@ class Goals extends View {
               </aside>
             ` : null}
           </div>
-          <div class="u-container">
+          <section class="u-container">
             <div class="View-spaceLarge">
               ${doc ? intro({ title: asText(doc.data.title), body: asElement(doc.data.description) }) : intro.loading()}
             </div>
-            <section>
-              ${state.cache(Grid, id).render(goals, state.ui.gridLayout, slot)}
-            </section>
-          </div>
+            ${state.cache(Grid, id).render(goals, state.ui.gridLayout, slot)}
+          </section>
           <section>
             <div class="u-container">
               <div class="View-spaceLarge">
