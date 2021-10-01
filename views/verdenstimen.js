@@ -43,6 +43,15 @@ var EDUCATIONAL_LEVELS = [
   'Ungdomsuddannelse'
 ]
 
+var VERDENSTIMEN_TAGS = [
+  'verdenstimen',
+  'goal-4',
+  'undervisning',
+  'underviser',
+  'undervisere',
+  'skole'
+]
+
 var text = i18n()
 
 module.exports = view(verdenstimen, meta, {
@@ -128,8 +137,11 @@ function verdenstimen (state, emit) {
      */
     if (featuredNews.length < 3) {
       const opts = { pageSize: 3 - featuredNews.length }
-      const predicate = Prismic.Predicates.at('document.tags', ['verdenstimen'])
-      const news = state.docs.get(predicate, opts, function (err, response) {
+      const predicates = [
+        Prismic.Predicates.at('document.type', 'article'),
+        Prismic.Predicates.at('document.tags', VERDENSTIMEN_TAGS)
+      ]
+      const news = state.docs.get(predicates, opts, function (err, response) {
         if (err) return []
         if (!response) return new Array(opts.pageSize).fill(null)
         return response.results
