@@ -82,7 +82,9 @@ function createView (view, meta, _config = {}) {
       return html`
         <body class="View" id="view">
           <script type="application/ld+json">${raw(JSON.stringify(linkedData(state)))}</script>
-          ${doc ? getHeader() : null}
+          <div class="View-header ${config.header && config.header.static ? 'View-header--stuck View-header--appear' : ''}">
+            ${doc ? getHeader() : null}
+          </div>
           ${children}
           ${doc ? getFooter() : null}
           ${player.render(null)}
@@ -124,11 +126,7 @@ function createView (view, meta, _config = {}) {
           links[topscore[1]].selected = true
         }
 
-        return html`
-          <div class="View-header ${opts.static ? 'View-header--stuck View-header--appear' : ''}">
-            ${state.cache(Header, 'header').render(links, state.href, opts)}
-          </div>
-        `
+        return state.cache(Header, 'header').render(links, state.href, opts)
       }
 
       // format document as schema-compatible linked data table
