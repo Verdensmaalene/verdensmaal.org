@@ -138,8 +138,8 @@ function verdenstimen (state, emit) {
     if (featuredNews.length < 3) {
       const opts = { pageSize: 3 - featuredNews.length }
       const predicates = [
-        Prismic.Predicates.at('document.type', 'article'),
-        Prismic.Predicates.at('document.tags', VERDENSTIMEN_TAGS)
+        Prismic.Predicates.at('document.type', 'news'),
+        Prismic.Predicates.any('document.tags', VERDENSTIMEN_TAGS)
       ]
       const news = state.docs.get(predicates, opts, function (err, response) {
         if (err) return []
