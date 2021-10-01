@@ -27,7 +27,7 @@ function material (props) {
         ${link(props.link)}
         ${props.banner ? null : html`
           <h2 class="Material-title">${props.title}</h2>
-          ${props.description}
+          <div class="Material-description">${props.description}</div>
         `}
         <dl class="Material-footer">
           ${props.goals && props.goals.length ? html`
