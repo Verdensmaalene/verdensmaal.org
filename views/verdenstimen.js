@@ -316,7 +316,7 @@ function verdenstimen (state, emit) {
                     md: '1of3',
                     lg: '1of1'
                   }
-                }, items.map(function (doc) {
+                }, items.map(function (doc, index) {
                   if (!doc) {
                     return panel.item({
                       title: placeholder(8),
@@ -325,7 +325,15 @@ function verdenstimen (state, emit) {
                   }
 
                   var { data: { title, image, audiences, goals } } = doc
-                  return panel.item({
+                  return grid.cell({
+                    border: index < 2 ? {
+                      xs: ['right'],
+                      sm: ['right'],
+                      md: ['right'],
+                      lg: ['bottom'],
+                      xl: ['bottom']
+                    } : null
+                  }, panel.item({
                     reverse: true,
                     subheading: goals.length
                       ? goals.filter(function (item) {
@@ -357,7 +365,7 @@ function verdenstimen (state, emit) {
                       text: text`Go to material`,
                       href: resolve(doc)
                     }
-                  })
+                  }))
                 })), {
                   heading: text`Latest materials`
                 })
