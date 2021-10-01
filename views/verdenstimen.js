@@ -283,7 +283,7 @@ function verdenstimen (state, emit) {
                   subjects: subjects ? subjects.filter(function (subject) {
                     return subject.data.materials.some((item) => item.link.id === doc.id)
                   }).reduce(function (acc, subject, index, list) {
-                    if (index === 3) acc.push({ label: text`and ${list.length - 5} more…` })
+                    if (index === 3) acc.push({ label: text`and ${list.length - 5} more` })
                     else if (index < 3) acc.push({ label: asText(subject.data.title) })
                     return acc
                   }, []) : null,
