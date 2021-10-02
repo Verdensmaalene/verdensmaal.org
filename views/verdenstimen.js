@@ -326,6 +326,11 @@ function verdenstimen (state, emit) {
                   }
 
                   var { data: { title, image, audiences, goals } } = doc
+
+                  goals = goals.filter(function (item) {
+                    return item.link.id && !item.link.isBroken
+                  })
+
                   return grid.cell({
                     border: index < 2 ? {
                       xs: ['right'],
@@ -337,9 +342,7 @@ function verdenstimen (state, emit) {
                   }, panel.item({
                     reverse: true,
                     subheading: goals.length
-                      ? goals.filter(function (item) {
-                        return item.link.id && !item.link.isBroken
-                      }).reduce((acc, item) => [
+                      ? goals.reduce((acc, item) => [
                         ...acc,
                         html`
                           <span>
