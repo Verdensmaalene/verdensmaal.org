@@ -357,7 +357,7 @@ function subjectView (state, emit) {
 
 function meta (state) {
   if (state.params.subject === 'materialer') {
-    return state.docs.getByUID('sector', 'verdenstimen', function (err, doc) {
+    return state.docs.getSingle('verdenstimen', function (err, doc) {
       if (err) throw err
       var title = text`Materialer`
       if (!doc) return { title }

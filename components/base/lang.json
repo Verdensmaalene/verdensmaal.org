@@ -81,7 +81,6 @@
   "Find your teaching material": "Find dit undervisningsmateriale",
   "Choose school subject": "Vælg mellem skolefag",
   "Navigation": "Navigation",
-  "All goals": "Alle Verdensmål",
   "Choose goal": "Vælg mål",
   "Subjects": "Fag",
   "Duration": "Tidsforbrug",
@@ -91,7 +90,15 @@
   "More educational material": "Flere undervisningsmaterialer",
   "Materialer": "Materialer",
   "All school subjects": "Alle fag",
-  "Alle mål": "Alle mål",
+  "All goals": "Alle mål",
   "On this page you can find all materials suitable for %s. Use the filters bellow to narrow the search to specific goals or subjects.": "På denne side kan du finde alle materialer der passer til %s. Tilpas søgekriterier for at indsnævre søgningen til specifikke mål eller fag.",
-  "No materials found": "Ingen materialer fundet"
+  "No materials found": "Ingen materialer fundet",
+  "Show all subjects": "Se alle skolefag",
+  "Latest materials": "Seneste materialer",
+  "Browse materials": "Flere materialer",
+  "Goal": "Mål",
+  "and %s more": "og %s til",
+  "Explore materials": "Gå på opdagelse I forløb",
+  "Latest news": "Seneste nyheder",
+  "All subjects": "Alle skolefag"
 }

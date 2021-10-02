@@ -107,6 +107,7 @@ function materialView (state, emit) {
             `
           },
           image: doc.data.image.url ? {
+            class: 'js-bannerImage',
             alt: doc.data.image.alt || asText(doc.data.title),
             size: '(min-width: 1000px) 400px, 10vw',
             srcset: srcset(doc.data.image, [400, 600, [800, 'q_50']], {
@@ -203,7 +204,7 @@ function materialView (state, emit) {
                         icon: symbol('share', { circle: true, cover: true }),
                         color: 'theme',
                         onclick () {
-                          var img = document.querySelector('.js-banner img')
+                          var img = document.querySelector('.js-bannerImage')
                           share.render({
                             href: state.origin + state.href,
                             image: (img && img.currentSrc) || (state.origin + '/share.png'),

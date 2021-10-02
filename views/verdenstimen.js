@@ -3,8 +3,10 @@ var slugify = require('slugify')
 var parse = require('date-fns/parse')
 var subDays = require('date-fns/sub_days')
 var asElement = require('prismic-element')
-var { Predicates } = require('prismic-javascript')
+var Prismic = require('prismic-javascript')
 var Map = require('../components/map')
+var logo = require('../components/logo')
+var Goal = require('../components/goal')
 var view = require('../components/view')
 var hero = require('../components/hero')
 var menu = require('../components/menu')
@@ -13,10 +15,12 @@ var card = require('../components/card')
 var Text = require('../components/text')
 var Chart = require('../components/chart')
 var embed = require('../components/embed')
+var panel = require('../components/panel')
 var inlay = require('../components/inlay')
 var event = require('../components/event')
 var button = require('../components/button')
 var Details = require('../components/details')
+var material = require('../components/material')
 var divide = require('../components/grid/divide')
 var thumbnail = require('../components/thumbnail')
 var { external } = require('../components/symbol')
@@ -29,6 +33,7 @@ var {
   asText,
   colors,
   resolve,
+  placeholder,
   isSameDomain
 } = require('../components/base')
 
@@ -37,6 +42,15 @@ var EDUCATIONAL_LEVELS = [
   'Mellemtrin',
   'Udskoling',
   'Ungdomsuddannelse'
+]
+
+var VERDENSTIMEN_TAGS = [
+  'verdenstimen',
+  'goal-4',
+  'undervisning',
+  'underviser',
+  'undervisere',
+  'skole'
 ]
 
 var text = i18n()
@@ -52,33 +66,27 @@ module.exports = view(verdenstimen, meta, {
 })
 
 function verdenstimen (state, emit) {
-  return state.docs.getByUID('sector', 'verdenstimen', onresponse)
+  const opts = {
+    fetchLinks: [
+      'goal.number',
+      'subject.image',
+      'subject.title',
+      'material.image',
+      'material.title',
+      'material.audiences',
+      'material.description'
+    ]
+  }
+  return state.docs.getSingle('verdenstimen', opts, onresponse)
 
   function onresponse (err, doc) {
     if (err) return null
 
-    var predicates = Predicates.at('document.type', 'subject')
+    var predicates = Prismic.Predicates.at('document.type', 'subject')
     var subjects = state.docs.get(predicates, function (err, response) {
-      if (err || !response || !response.results_size) return null
-      return response.results.map(function (doc) {
-        if (doc.data.image.url) {
-          const { width, height } = doc.data.image.dimensions
-          var image = {
-            alt: doc.data.image.alt || asText(doc.data.title),
-            sizes: '48px',
-            width: 48,
-            height: 48 * (height / width),
-            srcset: srcset(doc.data.image, [48, 100]),
-            src: srcset(doc.data.image, [48]).split(' ')[0]
-          }
-        }
-
-        return {
-          image,
-          label: asText(doc.data.title),
-          link: { href: resolve(doc) }
-        }
-      }).sort((a, b) => a.label < b.label ? -1 : 1)
+      if (err) return []
+      if (!response) return null
+      return response.results
     })
 
     if (!doc) {
@@ -88,7 +96,7 @@ function verdenstimen (state, emit) {
           ${inlay(html`
             <div class="u-container">
               ${grid({ gutter: 'xs' }, [
-                grid.cell({ size: { md: '2of3' } }, subjects ? menu(subjects) : menu.loading()),
+                grid.cell({ size: { md: '2of3' } }, menu.loading()),
                 grid.cell({ size: { md: '1of3' } }, grid({}, [
                   menu.loading()
                 ]))
@@ -117,6 +125,31 @@ function verdenstimen (state, emit) {
     var shortcuts = data.slices.filter((slice) => slice.primary.shortcut_name)
     var slices = doc.data.slices.map(fromSlice)
 
+    /**
+     * Add featured news
+     */
+    var featuredNews = doc.data.featured_news
+      .map((item) => item.article)
+      .filter((link) => link.id && !link.isBroken)
+      .slice(0, 3)
+
+    /**
+     * Fill news items to ensure three articles
+     */
+    if (featuredNews.length < 3) {
+      const opts = { pageSize: 3 - featuredNews.length }
+      const predicates = [
+        Prismic.Predicates.at('document.type', 'news'),
+        Prismic.Predicates.any('document.tags', VERDENSTIMEN_TAGS)
+      ]
+      const news = state.docs.get(predicates, opts, function (err, response) {
+        if (err) return []
+        if (!response) return new Array(opts.pageSize).fill(null)
+        return response.results
+      })
+      featuredNews.push(...news)
+    }
+
     return html`
       <main class="View-main theme-verdenstimen">
         ${hero({
@@ -138,36 +171,284 @@ function verdenstimen (state, emit) {
           image,
           caption: data.image.copyright
         })}
-        ${inlay(html`
-          <div class="u-container">
-            ${grid({ gutter: 'xs' }, [
-              grid.cell({ size: { md: '2of3' } }, subjects ? menu(subjects, {
-                title: text`Choose school subject`,
-                description: text`Find your teaching material`
-              }) : menu.loading()),
-              grid.cell({ size: { md: '1of3' } }, html`
-                <div>
-                  ${menu(EDUCATIONAL_LEVELS.map(function (name) {
+        <div class="View-spaceSmall u-container">
+          ${grid([
+            grid.cell({
+              size: { lg: '2of3' }
+            }, panel(html`
+              <div>
+                <div class="Text">
+                  <div class="Text-large">
+                    <h2 class="Text-h1">${asText(doc.data.heading)}</h2>
+                    ${asElement(doc.data.introduction, resolve, serialize)}
+                  </div>
+                </div>
+                ${doc.data.button_text && (doc.data.button.url || doc.data.button.id) ? button({
+                  href: resolve(doc.data.button),
+                  text: doc.data.button_text,
+                  onclick: scrollIntoView,
+                  class: 'u-spaceT4',
+                  primary: true
+                }) : null}
+              </div>
+            `)),
+            grid.cell({
+              size: { lg: '1of3' }
+            }, html`
+              <div>
+                ${panel([
+                  menu(doc.data.featured_subjects.map(function ({ subject }) {
+                    if (!subject.id || subject.isBroken) return null
+
+                    const { data: { image, title } } = subject
+                    const label = asText(title)
+
                     return {
-                      image: {
-                        alt: name,
-                        src: `/${name.toLowerCase()}.svg`
-                      },
-                      label: name,
-                      link: {
-                        href: `${state.href}/materialer?level=${encodeURIComponent(name)}`
-                      }
+                      image: image ? {
+                        alt: image.alt || label,
+                        sizes: '48px',
+                        width: 48,
+                        height: 48 * (image.dimensions.height / image.dimensions.width),
+                        srcset: srcset(image, [48, 100]),
+                        src: srcset(image, [48]).split(' ')[0]
+                      } : null,
+                      label: label,
+                      link: { href: resolve(subject) }
                     }
                   }), {
+                    fill: true,
                     small: true,
-                    title: text`Choose educational level`,
+                    bright: true,
+                    withChevron: true,
+                    title: text`Choose school subject`,
                     description: text`Find your teaching material`
-                  })}
-                </div>
-              `)
-            ])}
+                  }),
+                  button({
+                    href: '#all-subjects',
+                    text: text`Show all subjects`,
+                    class: 'u-spaceT2 u-fill',
+                    onclick: scrollIntoView,
+                    primary: true
+                    })
+                ], {
+                  utils: 'u-bgTheme'
+                })}
+              </div>
+            `)
+          ])}
+        </div>
+        <div class="View-space u-container">
+          <div class="Text u-spaceB4">
+            <h2 class="Text-h1 u-spaceB1 u-textHyphens">${text`Explore materials`}</h2>
           </div>
-        `)}
+          ${grid([
+            ...doc.data.featured_materials.map(function (item) {
+              if (!item.material.id || item.material.isBroken) return null
+
+              var opts = { fetchLinks: ['goal.number'] }
+              return state.docs.getByID(item.material.id, opts, function (err, doc) {
+                if (err) return null
+
+                var opts = {
+                  size: {
+                    md: '1of2',
+                    lg: '1of3'
+                  }
+                }
+
+                if (!doc) return grid.cell(opts, material.loading())
+
+                var { data: { title, description, duration, goals } } = doc
+                var image = item.image
+                if (!image.url) image = doc.data.image
+
+                return grid.cell(opts, material({
+                  small: true,
+                  image: {
+                    alt: image.alt || asText(title),
+                    size: '(min-width: 1000px) 33vw, 100vw',
+                    srcset: srcset(image, [300, 500, 800], {
+                      transforms: 'f_jpg,c_thumb',
+                      aspect: 3 / 4
+                    }),
+                    src: srcset(image, [400]).split(' ')[0]
+                  },
+                  goals: goals.filter(function (item) {
+                    return item.link.id && !item.link.isBroken
+                  }).map(function (item) {
+                    return { number: item.link.data.number }
+                  }),
+                  audiences: doc.data.audiences.map(function ({ label }) {
+                    return { label: label }
+                  }),
+                  subjects: subjects ? subjects.filter(function (subject) {
+                    return subject.data.materials.some((item) => item.link.id === doc.id)
+                  }).reduce(function (acc, subject, index, list) {
+                    if (index === 3) acc.push({ label: text`and ${list.length - 5} more` })
+                    else if (index < 3) acc.push({ label: asText(subject.data.title) })
+                    return acc
+                  }, []) : null,
+                  title: asText(title),
+                  description: asText(description),
+                  link: { href: resolve(doc) },
+                  duration: duration
+                }))
+              })
+            }).filter(Boolean).slice(0, 2),
+            grid.cell({ size: { lg: '1of3' } }, state.docs.get(
+              [
+                Prismic.Predicates.at('document.type', 'material'),
+                ...doc.data.featured_materials.map(function ({ material }) {
+                  return Prismic.Predicates.not('document.id', material.id)
+                })
+              ],
+              {
+                pageSize: 3,
+                fetchLinks: ['goals.number'],
+                orderings: '[document.first_publication_date desc]'
+              },
+              function (err, res) {
+                if (err) return null
+                if (!res) return material.loading()
+                var items = res ? res.results : new Array(3).fill(null)
+
+                return panel(grid({
+                  size: {
+                    md: '1of3',
+                    lg: '1of1'
+                  }
+                }, items.map(function (doc, index) {
+                  if (!doc) {
+                    return panel.item({
+                      title: placeholder(8),
+                      media: html`<div class="u-aspect1-1 u-loading u-block"></div>`
+                    })
+                  }
+
+                  var { data: { title, image, audiences, goals } } = doc
+
+                  goals = goals.filter(function (item) {
+                    return item.link.id && !item.link.isBroken
+                  })
+
+                  return grid.cell({
+                    border: index < 2 ? {
+                      xs: ['right'],
+                      sm: ['right'],
+                      md: ['right'],
+                      lg: ['bottom'],
+                      xl: ['bottom']
+                    } : null
+                  }, panel.item({
+                    reverse: true,
+                    subheading: goals.length
+                      ? goals.reduce((acc, item) => [
+                        ...acc,
+                        html`
+                          <span>
+                            <span class="u-hiddenVisually">${text`Goal`}</span>
+                            ${Goal.mini(item.link.data.number)}
+                          </span>
+                        `,
+                        ' '
+                      ], [])
+                      : html`
+                          <span class="u-flex u-alignCenter">
+                            <span class="u-spaceR1" style="font-size: 0.5rem;">${logo.symbol()}</span>
+                            ${text`All goals`}
+                          </span>
+                        `,
+                    title: asText(title),
+                    body: html`
+                      <div class="Text Text--small">
+                        <p>
+                          <strong>${text`Duration`}:</strong> ${doc.data.duration}<br>
+                          <strong>${text`Audience`}:</strong> ${audiences.map((item) => item.label).join(', ')}
+                        </p>
+                      </div>
+                    `,
+                    media: image.url ? html`
+                      <img class="u-block u-sizeFull" sizes="(min-width: 1000px) 200px, (min-width: 800px) 150px, 96px" srcset="${srcset(image.url, [96, 192, 288, [384, 'q_50']], { aspect: 3 / 4 })}" alt="${image.alt || title}" src="${srcset(image.url, [134], { aspect: 3 / 4 }).split(' ')[0]}">
+                    ` : null,
+                    link: {
+                      text: text`Go to material`,
+                      href: resolve(doc)
+                    }
+                  }))
+                })), {
+                  heading: text`Latest materials`
+                })
+              }
+            ))
+          ])}
+        </div>
+        <div class="View-space">
+          <div class="u-container">
+            <div class="Text u-spaceB4">
+              <h2 class="Text-h1 u-spaceB1 u-textHyphens">${text`Latest news`}</h2>
+            </div>
+          </div>
+          <div class="u-md-container">
+            ${grid({ carousel: true }, featuredNews.map(function (doc) {
+              var child = doc ? newsCard(doc) : card.loading()
+              return grid.cell({ size: { md: '1of2', lg: '1of3' } }, child)
+            }))}
+          </div>
+        </div>
+        <div class="View-space u-container" id="all-subjects">
+          <div class="Text u-spaceB4">
+            <h2 class="Text-h1 u-spaceB1 u-textHyphens">${text`All subjects`}</h2>
+          </div>
+          ${grid({ gutter: 'sm' }, [
+            grid.cell({ size: { md: '2of3' } }, subjects
+              ? menu(subjects.map(function (doc) {
+                  if (doc.data.image.url) {
+                    const { width, height } = doc.data.image.dimensions
+                    var image = {
+                      alt: doc.data.image.alt || asText(doc.data.title),
+                      sizes: '48px',
+                      width: 48,
+                      height: 48 * (height / width),
+                      srcset: srcset(doc.data.image, [48, 100]),
+                      src: srcset(doc.data.image, [48]).split(' ')[0]
+                    }
+                  }
+
+                  return {
+                    image,
+                    label: asText(doc.data.title),
+                    link: { href: resolve(doc) }
+                  }
+                }).sort((a, b) => a.label < b.label ? -1 : 1), {
+                  fill: true,
+                  title: text`Choose school subject`,
+                  description: text`Find your teaching material`
+                })
+              : menu.loading()
+            ),
+            grid.cell({ size: { md: '1of3' } }, html`
+              <div>
+                ${menu(EDUCATIONAL_LEVELS.map(function (name) {
+                  return {
+                    image: {
+                      alt: name,
+                      src: `/${name.toLowerCase()}.svg`
+                    },
+                    label: name,
+                    link: {
+                      href: `${state.href}/materialer?level=${encodeURIComponent(name)}`
+                    }
+                  }
+                }), {
+                  fill: true,
+                  small: true,
+                  title: text`Choose educational level`,
+                  description: text`Find your teaching material`
+                })}
+              </div>
+            `)
+          ])}
+        </div>
         ${shortcuts.length ? html`
           <div class="u-container">
             <div class="View-spaceSmall">
@@ -188,7 +469,8 @@ function verdenstimen (state, emit) {
     `
 
     function scrollIntoView (event) {
-      var el = document.getElementById(event.target.hash.substr(1))
+      if (!this.hash) return
+      var el = document.querySelector(this.hash)
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' })
         event.preventDefault()
@@ -235,9 +517,9 @@ function verdenstimen (state, emit) {
 
           const type = slice.slice_type === 'events' ? 'event' : 'news'
           const predicates = [
-            Predicates.at('document.type', type),
-            Predicates.any('document.tags', doc.tags)
-          ].concat(ids.map((id) => Predicates.not('document.id', id)))
+            Prismic.Predicates.at('document.type', type),
+            Prismic.Predicates.any('document.tags', doc.tags)
+          ].concat(ids.map((id) => Prismic.Predicates.not('document.id', id)))
 
           const pageSize = 3
           const opts = { pageSize }
@@ -251,7 +533,7 @@ function verdenstimen (state, emit) {
               ('0' + yesterday.getDate()).substr(-2)
             ].join('-')
 
-            predicates.push(Predicates.dateAfter('my.event.end', date))
+            predicates.push(Prismic.Predicates.dateAfter('my.event.end', date))
             opts.orderings = '[my.event.start]'
           }
 
@@ -521,6 +803,7 @@ function verdenstimen (state, emit) {
             </div>
           `
         }
+        case 'scroll_anchor': return html`<div id="${slice.primary.id}"></div>`
         default: return null
       }
     }
@@ -714,7 +997,7 @@ function camelCase (snake) {
 }
 
 function meta (state) {
-  return state.docs.getByUID('sector', 'verdenstimen', function (err, doc) {
+  return state.docs.getSingle('verdenstimen', function (err, doc) {
     if (err) return null
     if (!doc) return { title: text`LOADING_TEXT_SHORT` }
     return {

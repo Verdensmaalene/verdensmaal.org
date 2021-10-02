@@ -25,6 +25,17 @@
   will-change: transform;
 }
 
+.Goal--mini {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 1.40625rem;
+  font-family: var(--heading-font-family);
+  line-height: 1;
+}
+
 .Goal.is-hidden {
   visibility: hidden;
   transition: none;

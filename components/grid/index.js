@@ -1,6 +1,8 @@
 var html = require('choo/html')
 var { className } = require('../base')
 
+var SIZES = ['xs', 'sm', 'md', 'lg', 'xl']
+
 module.exports = grid
 module.exports.cell = cell
 
@@ -43,6 +45,13 @@ function grid (opts, children) {
       const delay = (typeof appear === 'number' ? appear : index) * 100
       attrs.class += ' Grid-cell--appear'
       attrs.style = `animation-delay: ${delay}ms`
+    }
+
+    if (props.border) {
+      for (const size of SIZES) {
+        if (!props.border[size]) continue
+        attrs.class += ` ${props.border[size].map((side) => `Grid-cell--${size}-${side}`).join(' ')}`
+      }
     }
 
     if (opts.ordered) return html`<li ${attrs}>${children}</li>`

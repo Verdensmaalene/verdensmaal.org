@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var { forward } = require('../symbol')
 var { i18n, className } = require('../base')
 
 var text = i18n()
@@ -8,7 +9,7 @@ module.exports.loading = loading
 
 function menu (links, opts = {}) {
   return html`
-    <nav class="${className('Menu', { 'Menu--small': opts.small, 'Menu--fill': opts.fill })}">
+    <nav class="${className('Menu', { 'Menu--small': opts.small, 'Menu--fill': opts.fill, 'Menu--bright': opts.bright })}">
       ${opts.title ? html`<h2 class="Menu-title">${opts.title}</h2>` : null}
       ${opts.description ? html`<p class="Menu-description">${opts.description}</p>` : null}
       <ol class="Menu-list">
@@ -22,6 +23,7 @@ function menu (links, opts = {}) {
               ` : null}
               <a ${item.link} class="Menu-link">
                 <span class="Menu-label">${item.label}</span>
+                ${opts.withChevron ? html`<span class="Menu-chevron">${forward()}</span>` : null}
               </a>
             </li>
           `

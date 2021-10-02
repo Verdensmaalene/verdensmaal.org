@@ -1,7 +1,7 @@
 var html = require('choo/html')
 var { Elements } = require('prismic-richtext')
 var bookmark = require('../bookmark')
-var { srcset } = require('../base')
+var { srcset, resolve } = require('../base')
 var embed = require('../embed')
 
 module.exports = serialize
@@ -45,6 +45,23 @@ function serialize (type, node, content, children) {
           ${node.copyright ? html`<figcaption><small class="Text-muted">${node.copyright}</small></figcaption>` : null}
         </figure>
       `
+    }
+    case Elements.hyperlink: {
+      var attrs = { href: resolve(node.data) }
+      if (node.data.target && node.data.target === '_blank') {
+        attrs.target = '_blank'
+        attrs.rel = 'noopener noreferrer'
+      }
+      if (attrs.href.startsWith('#')) {
+        attrs.onclick = function scrollIntoView (event) {
+          var target = document.querySelector(this.hash)
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            event.preventDefault()
+          }
+        }
+      }
+      return html`<a ${attrs}>${children}</a>`
     }
     default: return null
   }

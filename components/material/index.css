@@ -3,21 +3,26 @@
 /** @define Material */
 .Material {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: flex-start;
   position: relative;
   background: rgb(var(--color-gray-light));
 }
 
+.Material--grow {
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
 @media (min-width: 800px) {
-  .Material {
+  .Material--grow {
     flex-wrap: nowrap;
     padding: 2rem;
   }
 }
 
 @media (min-width: 1200px) {
-  .Material {
+  .Material--grow {
     padding: 3rem;
   }
 }
@@ -38,13 +43,13 @@
 }
 
 @media (min-width: 800px) {
-  .Material-figure {
+  .Material--grow .Material-figure {
     width: calc(100% * 1 / 3);
     margin-right: 2rem;
     margin-right: 3rem;
   }
 
-  .Material-figure::before {
+  .Material--grow .Material-figure::before {
     padding-top: 80%;
   }
 
@@ -84,7 +89,7 @@
 }
 
 @media (min-width: 800px) {
-  .Material-body {
+  .Material--grow .Material-body {
     display: block;
     padding: 0;
   }
@@ -106,10 +111,17 @@
 }
 
 @media (min-width: 1200px) {
-  .Material-title {
+  .Material--grow .Material-title {
     font-size: 3rem;
     line-height: 1.05;
   }
+}
+
+.Material:not(.Material--grow) .Material-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
 /**
@@ -118,6 +130,15 @@
 
 .Material-action {
   order: 99;
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+@media (min-width: 800px) {
+  .Material--grow .Material-action {
+    float: right;
+    margin: 0 0 1.5rem 1.5rem;
+  }
 }
 
 .Material--banner .Material-action {
@@ -127,11 +148,6 @@
 }
 
 @media (min-width: 800px) {
-  .Material-action {
-    float: right;
-    margin: 0 0 1.5rem 1.5rem;
-  }
-
   .Material--banner .Material-action {
     margin-top: 2rem;
   }
@@ -167,7 +183,7 @@
 }
 
 @media (min-width: 800px) {
-  .Material-footer {
+  .Material--grow .Material-footer {
     padding-top: 1.25rem;
     border-top: 1px solid rgba(var(--color-gray), 0.25);
     margin-bottom: -0.625rem;
@@ -190,17 +206,17 @@
   margin-bottom: 0.625rem;
 }
 
+@media (min-width: 1200px) {
+  .Material--grow .Material-section {
+    width: 25%;
+  }
+}
+
 @media (min-width: 800px) {
   .Material--banner .Material-section {
     width: 100%;
     border: 0;
     margin-bottom: 1.25rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  .Material-section {
-    width: 25%;
   }
 }
 
@@ -218,7 +234,7 @@
 }
 
 @media (min-width: 1200px) {
-  .Material-heading {
+  .Material--grow .Material-heading {
     margin-bottom: 0.625rem;
     font-size: 1.1875rem;
   }
@@ -241,20 +257,6 @@
  * Goal
  */
 
-.Material-goal {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin: 0 0.25rem 0.25rem 0;
-  font-size: 1.40625rem;
-  color: #fff;
-  font-family: var(--heading-font-family);
-  line-height: 1;
-  text-transform: uppercase;
-}
-
 .Material-allGoals {
   margin-top: 0.2rem;
   display: flex;
@@ -266,20 +268,7 @@
   height: 2rem;
 }
 
-.Material-goal--1:link { background-color: rgb(var(--color-goal-1)); }
-.Material-goal--2:link { background-color: rgb(var(--color-goal-2)); }
-.Material-goal--3:link { background-color: rgb(var(--color-goal-3)); }
-.Material-goal--4:link { background-color: rgb(var(--color-goal-4)); }
-.Material-goal--5:link { background-color: rgb(var(--color-goal-5)); }
-.Material-goal--6:link { background-color: rgb(var(--color-goal-6)); }
-.Material-goal--7:link { background-color: rgb(var(--color-goal-7)); }
-.Material-goal--8:link { background-color: rgb(var(--color-goal-8)); }
-.Material-goal--9:link { background-color: rgb(var(--color-goal-9)); }
-.Material-goal--10:link { background-color: rgb(var(--color-goal-10)); }
-.Material-goal--11:link { background-color: rgb(var(--color-goal-11)); }
-.Material-goal--12:link { background-color: rgb(var(--color-goal-12)); }
-.Material-goal--13:link { background-color: rgb(var(--color-goal-13)); }
-.Material-goal--14:link { background-color: rgb(var(--color-goal-14)); }
-.Material-goal--15:link { background-color: rgb(var(--color-goal-15)); }
-.Material-goal--16:link { background-color: rgb(var(--color-goal-16)); }
-.Material-goal--17:link { background-color: rgb(var(--color-goal-17)); }
+.Material:not(.Material--grow) .Material-allGoals svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}

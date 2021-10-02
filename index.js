@@ -1,7 +1,7 @@
 var splitRequire = require('split-require')
-var lazy = require('choo-lazy-view')
 var choo = require('choo')
 
+var SELECTOR = 'body'
 var REPOSITORY = 'https://verdensmaalene.cdn.prismic.io/api/v2'
 
 var app = choo()
@@ -11,7 +11,6 @@ if (process.env.NODE_ENV === 'development' && typeof window !== 'undefined') {
   app.use(require('choo-service-worker/clear')())
 }
 
-app.use(lazy)
 app.use(require('choo-service-worker')('/sw.js'))
 app.use(require('./stores/prefetch'))
 app.use(require('./stores/prismic')({
@@ -43,12 +42,50 @@ app.route('/verdenstimen/:subject/:uid', lazy(() => splitRequire('./views/materi
 app.route('/*', require('./views/catchall'))
 
 try {
-  module.exports = app.mount('body')
+  module.exports = app.mount(SELECTOR)
   // remove parse guard added in header
   window.onerror = null
 } catch (err) {
   if (typeof window !== 'undefined') {
     document.documentElement.removeAttribute('scripting-enabled')
     document.documentElement.setAttribute('scripting-initial-only', '')
+  }
+}
+
+/**
+ * This is a subset of cho-lazy-view due to incompatabilities with node 16
+ * @param {Function} load Asynchronous view loading function
+ * @returns {Function}
+ */
+function lazy (load) {
+  let promise
+  let view
+
+  return function proxy (state, emit) {
+    if (view) return view(state, emit)
+
+    if (!promise) {
+      promise = load().then(function (_view) {
+        // asynchronously render view to account for nested prefetches
+        if (typeof window === 'undefined') _view(state, emit)
+        else emit('render')
+        view = _view
+        return _view
+      })
+      emit('prefetch', promise)
+    } else {
+      promise.then(function () {
+        emit('render')
+      })
+    }
+
+    // assuming app has been provided initialState by server side render
+    if (typeof window === 'undefined') {
+      // eslint-disable-next-line no-new-wrappers
+      const str = new String()
+      str.__encoded = true
+      return str
+    }
+    return document.querySelector(SELECTOR)
   }
 }

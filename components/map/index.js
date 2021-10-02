@@ -6,6 +6,7 @@ var popup = require('./popup')
 var mapboxgl = null
 var CLUSTER_THRESHOLD = 12
 var ACCESS_TOKEN = 'pk.eyJ1IjoidmVyZGVuc21hYWxlbmUiLCJhIjoiY2psNm1pYW5wMno3NTNwcWpwY3RhbWZvNyJ9.j7N5jTy1QGekjHKLpx8TvQ'
+var STYLES_HREF = 'https://api.tiles.mapbox.com/mapbox-gl-js/v1.13.1/mapbox-gl.css'
 
 var DEBUG = process.env.NODE_ENV === 'development'
 if (typeof window !== 'undefined') {
@@ -59,9 +60,8 @@ module.exports = class Map extends Component {
     var self = this
     var onerror = this.throw.bind(this)
     var styles = new Promise(function (resolve, reject) {
-      var version = process.env.npm_package_dependencies_mapbox_gl
       document.head.appendChild(html`
-        <link onload=${resolve} onerror=${reject} rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox-gl-js/v${version.replace(/^[^\d]/, '')}/mapbox-gl.css" />
+        <link onload=${resolve} onerror=${reject} rel="stylesheet" href="${STYLES_HREF}" />
       `)
     })
 
