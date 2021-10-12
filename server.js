@@ -273,7 +273,7 @@ app.use(get('/api/geoip', function (ctx, next) {
 }))
 
 // randomize layout
-app.use(get('/', function (ctx, next) {
+app.use(get(/\/(?:maalene)?$/, function (ctx, next) {
   if (!ctx.accepts('html')) return next()
   var layout = parseInt(ctx.query.layout, 10)
   if (!layout || isNaN(layout)) layout = Math.ceil(Math.random() * 9)
@@ -371,7 +371,7 @@ function queried () {
     })
 
     for (let i = 0, len = LAYOUTS.length; i < len; i++) {
-      urls.push(`/?layout=${i + 1}`)
+      urls.push(`/?layout=${i + 1}`, `/maalene?layout=${i + 1}`)
     }
 
     return urls

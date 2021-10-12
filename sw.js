@@ -3,6 +3,8 @@
 var CACHE_KEY = getCacheKey()
 var IS_DEV = process.env.NODE_ENV === 'development'
 var ASSETS = ['/'].concat(process.env.ASSET_LIST).filter(Boolean)
+var GRID_PAGES = /\/(maalene)?$/
+var LAYOUT_QUERY = /layout=\d+/
 
 self.addEventListener('install', function oninstall (event) {
   event.waitUntil(
@@ -29,7 +31,7 @@ self.addEventListener('fetch', function onfetch (event) {
   var isSameOrigin = self.location.origin === url.origin
 
   // proxy requests for start page with a random layout query
-  if (url.pathname === '/' && !/layout=\d+/.test(url.search)) {
+  if (GRID_PAGES.test(url.pathname) && !LAYOUT_QUERY.test(url.search)) {
     req = addLayout(req, url, Math.ceil(Math.random() * 9))
   }
 
