@@ -67,7 +67,7 @@
     "metascraper-url": "^5.24.7",
     "nanolru": "^1.0.0",
     "nanoraf": "^3.1.0",
-    "node-fetch": "^2.6.5",
+    "node-fetch": "^3.1.1",
     "normalize.css": "^8.0.1",
     "postcss-custom-properties": "^12.0.0",
     "postcss-focus-visible": "^6.0.1",
