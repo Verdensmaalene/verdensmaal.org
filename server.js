@@ -348,7 +348,7 @@ if (process.env.HEROKU && app.env === 'production') {
   queried().then(function (urls) {
     purge(app.entry, ['/sw.js', '/api/popular', ...urls], function (err) {
       if (err) app.emit('error', err)
-      else app.listen(process.env.PORT || 8080)
+      app.listen(process.env.PORT || 8080)
     })
   })
 } else {
