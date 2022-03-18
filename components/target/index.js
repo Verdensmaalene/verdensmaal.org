@@ -122,8 +122,8 @@ module.exports = class Target extends Component {
                 ${asText(opts.danske_indikatorer)}
               </div>
               <div>
-                <span>${asText(opts.fn_indikatorer_titel)}</span>
-                ${asText(opts.fn_indikatorer)}
+                <span>${asText(opts.fns_indikatorer_titel)}</span>
+                ${asText(opts.fns_indikatorer)}
               </div>
             </div>
           </div>
