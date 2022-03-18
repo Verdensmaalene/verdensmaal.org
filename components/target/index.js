@@ -115,6 +115,8 @@ module.exports = class Target extends Component {
           </div>
           <div class="Target-body">
             ${opts.body}
+            ${opts.danske_indikatorer}
+            ${console.log('WAHWAH', opts.danske_indikatorer)}
           </div>
           ${this.local.collapsed ? html`
             <span area-hidden="true" class="Target-fade"><span>${text`Show more`}</span></span>
