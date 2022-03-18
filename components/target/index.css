@@ -149,6 +149,16 @@
     padding-right: 1rem;
     margin-bottom: -0.3rem;
   }
+  .Target-body .show-more-text{
+    margin-top: 10px;
+  }
+  .Target-body .goal{
+    margin-bottom: 10px;
+  }
+  .Target-body .goal span{
+    display: block;
+    font-weight: bold;
+  }
 
   .Target:hover,
   .Target:target,

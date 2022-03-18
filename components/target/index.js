@@ -117,11 +117,11 @@ module.exports = class Target extends Component {
             ${opts.body}
 
             <div class="show-more-text">
-              <div>
+              <div class="goal">
                 <span>${asText(opts.danske_indikatorer_titel)}</span>
                 ${asText(opts.danske_indikatorer)}
               </div>
-              <div>
+              <div class="goal">
                 <span>${asText(opts.fns_indikatorer_titel)}</span>
                 ${asText(opts.fns_indikatorer)}
               </div>
@@ -138,7 +138,6 @@ module.exports = class Target extends Component {
     `
 
     function onshare (event) {
-      console.log('onOtherOverlay', share)
       share.render({
         href: opts.href + `#${text`target`}-${opts.id}`,
         image: opts.icon.url,
@@ -150,7 +149,6 @@ module.exports = class Target extends Component {
     }
 
     function onOtherOverlay (event) {
-      console.log('onOtherOverlay', overlay)
       overlay.render({
         href: opts.href + `#${text`target`}-${opts.id}`,
         image: opts.icon.url,
