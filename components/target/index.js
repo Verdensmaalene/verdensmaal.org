@@ -97,10 +97,9 @@ module.exports = class Target extends Component {
 
               ${opts.href ? html`
               <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick="${onOtherOverlay}" title="${text`Danish goals`}">
-                ${symbol('verdenstime', { circle: true })}
+                ${symbol('indicators', { circle: true })}
               </a>
             ` : null}
-
 
               ${opts.href ? html`
                 <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick="${onshare}" title="${text`Share`}">
