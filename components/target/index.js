@@ -117,8 +117,14 @@ module.exports = class Target extends Component {
             ${opts.body}
 
             <div class="show-more-text">
-              ${asText(opts.danske_indikatorer)}
-              ${asText(opts.fn_indikatorer)}
+              <div>
+                <span>${asText(opts.danske_indikatorer_titel)}</span>
+                ${asText(opts.danske_indikatorer)}
+              </div>
+              <div>
+                <span>${asText(opts.fn_indikatorer_titel)}</span>
+                ${asText(opts.fn_indikatorer)}
+              </div>
             </div>
           </div>
           ${this.local.collapsed ? html`
