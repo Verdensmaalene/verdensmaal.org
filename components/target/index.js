@@ -95,7 +95,7 @@ module.exports = class Target extends Component {
             </h3>
             <div class="Target-actions">
 
-              ${opts.href ? html`
+            ${opts.danske_indikatorer.length || opts.fns_indikatorer.length ? html`
               <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick="${onOtherOverlay}" title="${text`Danish goals`}">
                 ${symbol('indicators', { circle: true })}
               </a>
@@ -115,17 +115,21 @@ module.exports = class Target extends Component {
           </div>
           <div class="Target-body">
             ${opts.body}
-
+            ${opts.danske_indikatorer.length || opts.fns_indikatorer.length ? html`
             <div class="show-more-text">
+              ${opts.danske_indikatorer.length ? html`
               <div class="goal">
                 <span>${asText(opts.danske_indikatorer_titel)}</span>
                 ${asText(opts.danske_indikatorer)}
               </div>
+              ` : null}
+              ${opts.fns_indikatorer.length ? html`
               <div class="goal">
                 <span>${asText(opts.fns_indikatorer_titel)}</span>
                 ${asText(opts.fns_indikatorer)}
               </div>
-            </div>
+              ` : null}
+            </div>` : null}
           </div>
           ${this.local.collapsed ? html`
             <span area-hidden="true" class="Target-fade"><span>${text`Show more`}</span></span>
