@@ -93,6 +93,14 @@ module.exports = class Target extends Component {
               <span class="u-hiddenVisually">${text`Target`} ${opts.id} – </span> ${opts.title}
             </h3>
             <div class="Target-actions">
+
+              ${opts.href ? html`
+              <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick="${onshare}" title="${text`Danish goals`}">
+                ${symbol('verdenstime', { circle: true })}
+              </a>
+            ` : null}
+
+
               ${opts.href ? html`
                 <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick="${onshare}" title="${text`Share`}">
                   <span class="u-hiddenVisually">${text`Share`}</span>
