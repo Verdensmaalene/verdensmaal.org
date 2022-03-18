@@ -42,14 +42,12 @@
 
 .expandAllButton {
   background: rgb(var(--color-gray-light));
-  padding: 4px 12px;
+  padding: 0.5rem 1.6rem;
   margin-bottom: 12px;
   border-radius: 42px;
   position: relative;
   top: auto;
   right: auto;
-  font-weight: bold;
-  font-size: 0.8rem;
 }
 
 .expandAllButton:hover {
