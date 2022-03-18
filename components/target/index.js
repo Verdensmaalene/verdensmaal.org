@@ -143,8 +143,8 @@ module.exports = class Target extends Component {
       overlay.render({
         href: opts.href + `#${text`target`}-${opts.id}`,
         image: opts.icon.url,
-        title: 'opts.title',
-        description: 'opts.description'
+        title: opts.title,
+        description: opts.description
       })
       event.preventDefault()
       event.stopPropagation()

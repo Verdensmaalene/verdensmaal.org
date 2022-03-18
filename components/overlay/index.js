@@ -54,13 +54,22 @@ class Overlay extends Component {
       }, '')
 
     return html`
-      <div class="Overlay" id="share" tabindex="0">
+      <div class="Overlay" id="overlay" tabindex="0">
         <div class="Overlay-container">
           <div class="Overlay-body">
             <h2 class="Overlay-heading">${text`Headline`}</h2>
             <div>lkdfgjldfkjglkdfjgldfgj</div>
           </div>
-          <button class="Share-close js-close" onclick="${close}">
+          <div class="Overlay-preview">
+            ${props.image ? html`
+              <img class="Overlay-thumbnail" src="${props.image}" width="64" height="64" />
+            ` : null}
+            <div class="Overlay-meta">
+              <h2 class="Overlay-title">${props.title}</h2>
+              ${description ? html`<p class="Overlay-description">${description}…</p>` : null}
+            </div>
+          </div>
+          <button class="Overlay-close js-close" onclick="${close}">
             <span class="u-hiddenVisually">${text`Close`}</span>
           </button>
         </div>
