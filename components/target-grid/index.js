@@ -15,6 +15,9 @@ module.exports = class TargetGrid extends Component {
   createElement (goal, targets) {
     return html`
       <section class="TargetGrid">
+        <button class="expandAllButton">
+          Expand all
+        </button>
         <div class="TargetGrid-container">
           ${targets.map((data) => html`
             <div class="TargetGrid-cell">
