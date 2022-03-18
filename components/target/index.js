@@ -2,6 +2,7 @@ var html = require('choo/html')
 var nanoraf = require('nanoraf')
 var Component = require('choo/component')
 var share = require('../share')
+var overlay = require('../overlay')
 var symbol = require('../symbol')
 var { i18n, vw } = require('../base')
 
@@ -95,7 +96,7 @@ module.exports = class Target extends Component {
             <div class="Target-actions">
 
               ${opts.href ? html`
-              <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick="${onshare}" title="${text`Danish goals`}">
+              <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick="${onOtherOverlay}" title="${text`Danish goals`}">
                 ${symbol('verdenstime', { circle: true })}
               </a>
             ` : null}
@@ -127,11 +128,24 @@ module.exports = class Target extends Component {
     `
 
     function onshare (event) {
+      console.log('onOtherOverlay', share)
       share.render({
         href: opts.href + `#${text`target`}-${opts.id}`,
         image: opts.icon.url,
         title: opts.title,
         description: opts.description
+      })
+      event.preventDefault()
+      event.stopPropagation()
+    }
+
+    function onOtherOverlay (event) {
+      console.log('onOtherOverlay', overlay)
+      overlay.render({
+        href: opts.href + `#${text`target`}-${opts.id}`,
+        image: opts.icon.url,
+        title: 'opts.title',
+        description: 'opts.description'
       })
       event.preventDefault()
       event.stopPropagation()
