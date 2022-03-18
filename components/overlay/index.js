@@ -57,8 +57,14 @@ class Overlay extends Component {
       <div class="Overlay" id="overlay" tabindex="0">
         <div class="Overlay-container">
           <div class="Overlay-body">
-            <h2 class="Overlay-heading">${text`Headline`}</h2>
-            <div>lkdfgjldfkjglkdfjgldfgj</div>
+            <div>
+                <h2 class="Overlay-heading">${props.danskeHeadline}</h2>
+                <div class="dk">${props.danske}</div>
+            </div>
+            <div>
+                <h2 class="Overlay-heading">${props.fnHeadline}</h2>
+                <div class="fn">${props.fn}</div>
+            </div>
           </div>
           <div class="Overlay-preview">
             ${props.image ? html`

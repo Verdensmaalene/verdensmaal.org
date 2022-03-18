@@ -4,7 +4,7 @@ var Component = require('choo/component')
 var share = require('../share')
 var overlay = require('../overlay')
 var symbol = require('../symbol')
-var { i18n, vw } = require('../base')
+var { i18n, vw, asText } = require('../base')
 
 var text = i18n(require('./lang.json'))
 
@@ -115,8 +115,11 @@ module.exports = class Target extends Component {
           </div>
           <div class="Target-body">
             ${opts.body}
-            ${opts.danske_indikatorer}
-            ${console.log('WAHWAH', opts.danske_indikatorer)}
+
+            <div class="show-more-text">
+              ${asText(opts.danske_indikatorer)}
+              ${asText(opts.fn_indikatorer)}
+            </div>
           </div>
           ${this.local.collapsed ? html`
             <span area-hidden="true" class="Target-fade"><span>${text`Show more`}</span></span>
@@ -146,7 +149,11 @@ module.exports = class Target extends Component {
         href: opts.href + `#${text`target`}-${opts.id}`,
         image: opts.icon.url,
         title: opts.title,
-        description: opts.description
+        description: opts.description,
+        danskeHeadline: asText(opts.danske_indikatorer_titel),
+        danske: asText(opts.danske_indikatorer),
+        fnHeadline: asText(opts.fns_indikatorer_titel), 
+        fn: asText(opts.fns_indikatorer), 
       })
       event.preventDefault()
       event.stopPropagation()
