@@ -40,6 +40,10 @@
   }
 }
 
+.Target-button.hidden, .Target-fade.hidden{
+  display: none;
+}
+
 .expandAllButton {
   background: rgb(var(--color-gray-light));
   padding: 0.5rem 1.6rem;
@@ -48,8 +52,9 @@
   position: relative;
   top: auto;
   right: auto;
+  cursor: pointer;
 }
 
 .expandAllButton:hover {
-  --current-background: 200, 200, 200;
+  background: rgb(200, 200, 200);
 }

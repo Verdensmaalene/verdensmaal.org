@@ -67,7 +67,7 @@ module.exports = class Target extends Component {
     }
 
     return html`
-      <div class="Target ${this.local.collapsed ? 'is-collapsed' : ''}" id="${text`target`}-${opts.id}">
+      <div class="Target ${this.local.collapsed ? 'is-collapsed' : ''}  ${opts.danske_indikatorer.length || opts.fns_indikatorer.length ? 'has-goals' : ''}" id="${text`target`}-${opts.id}">
         ${opts.icon ? html`
           <div class="Target-figure ${color} ${bg} js-figure">
             <figure class="u-sizeFill">

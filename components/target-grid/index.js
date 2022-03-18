@@ -12,11 +12,12 @@ module.exports = class TargetGrid extends Component {
     return true
   }
 
+
   createElement (goal, targets) {
     return html`
       <section class="TargetGrid">
-        <button class="expandAllButton">
-          Expand all
+        <button class="expandAllButton" onclick="${expandAll}">
+          Vis alle
         </button>
         <div class="TargetGrid-container">
           ${targets.map((data) => html`
@@ -25,7 +26,19 @@ module.exports = class TargetGrid extends Component {
             </div>
           `)}
         </div>
-      </section>
+      </section> 
     `
+    function expandAll(ev){
+      ev.target.classList.toggle('expand')
+      
+      ev.target.innerText = ev.target.classList.contains('expand') ? 'Skjul alle' : 'Vis alle'
+      const allItems = document.querySelectorAll('.has-goals')
+      allItems.forEach(item => {
+        item.classList.toggle('is-collapsed');
+        item.querySelector('.Target-button').classList.toggle('hidden')
+        item.querySelector('.Target-fade').classList.toggle('hidden')
+        
+      })
+    }
   }
 }
