@@ -6,6 +6,7 @@ var asElement = require('prismic-element')
 var flag = require('../flag')
 var error = require('./error')
 var share = require('../share')
+var overlay = require('../overlay')
 var Header = require('../header')
 var Footer = require('../footer')
 var player = require('../embed/player')
@@ -89,6 +90,7 @@ function createView (view, meta, _config = {}) {
           ${doc ? getFooter() : null}
           ${player.render(null)}
           ${share.render(null)}
+          ${overlay.render(null)}
           ${state.cache(PrismicToolbar, 'prismic-toolbar').placeholder(state.href)}
         </body>
       `
