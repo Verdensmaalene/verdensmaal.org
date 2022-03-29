@@ -90,16 +90,12 @@ module.exports = class Target extends Component {
         ` : null}
         <div class="Target-content js-content">
           <div class="Target-heading">
-            <h3 class="Target-title u-textHeading">
-              <span class="u-hiddenVisually">${text`Target`} ${opts.id} – </span> ${opts.title}
-            </h3>
             <div class="Target-actions">
-
-            ${opts.danske_indikatorer.length || opts.fns_indikatorer.length ? html`
-              <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick="${onOtherOverlay}" title="${text`Danish goals`}">
-                ${symbol('indicators', { circle: true })}
-              </a>
-            ` : null}
+              ${opts.danske_indikatorer.length || opts.fns_indikatorer.length ? html`
+                <a class="Target-action Target-rounded" href="${opts.href}#${text`target`}-${opts.id}" onclick="${onOtherOverlay}" title="${text`Danish goals`}">
+                ${text`ButtonText`}
+                </a>
+              ` : null}
 
               ${opts.href ? html`
                 <a class="Target-action" href="${opts.href}#${text`target`}-${opts.id}" onclick="${onshare}" title="${text`Share`}">
@@ -112,6 +108,9 @@ module.exports = class Target extends Component {
                 ${symbol('download', { circle: true })}
               </a>
             </div>
+            <h3 class="Target-title u-textHeading">
+              <span class="u-hiddenVisually">${text`Target`} ${opts.id} – </span> ${opts.title}
+            </h3>
           </div>
           <div class="Target-body">
             ${opts.body}

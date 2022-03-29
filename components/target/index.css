@@ -67,12 +67,14 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    flex-direction: column;
   }
 }
 
 .Target-actions {
   flex: 0 0 auto;
   display: flex;
+  align-self: end;
   position: absolute;
   z-index: 3;
   top: 0.6rem;
@@ -302,6 +304,18 @@
   left: 0;
   outline: 0;
   z-index: 2;
+}
+
+.Target-rounded{
+  border-radius: 25px;
+  background-color: rgb(var(--high-contrast-dark, var(--current-background)));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+}
+.Target-rounded:hover{
+  background-color: rgb(var(--current-background, 200, 200, 200));
 }
 
 :root:not([scripting-enabled]) .Target:target .Target-fade {
