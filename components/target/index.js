@@ -157,6 +157,7 @@ module.exports = class Target extends Component {
         image: opts.icon.url,
         title: opts.title,
         description: opts.description,
+        caption: `${text`Target`} ${opts.id}`,
         danskeHeadline: asText(opts.danske_indikatorer_titel),
         danske: asText(opts.danske_indikatorer),
         fnHeadline: asText(opts.fns_indikatorer_titel), 

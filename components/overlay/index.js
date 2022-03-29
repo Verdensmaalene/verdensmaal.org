@@ -69,7 +69,7 @@ class Overlay extends Component {
           <div class="Overlay-preview">
             ${props.image ? html`
               <figure class="Overlay-badge">
-                <figcaption class="Overlay-caption u-textHeading">Delmål 1.1</figcaption>
+                <figcaption class="Overlay-caption u-textHeading">${props.caption}</figcaption>
                 <img class="Overlay-thumbnail" src="${props.image}" width="64" height="64" />
               </figure>
             ` : null}
