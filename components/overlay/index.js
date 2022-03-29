@@ -86,7 +86,7 @@ class Overlay extends Component {
         <div>
 
         <div class="Share-body">
-          <h2 class="Share-heading">${text`Choose how to share`}</h2>
+          <h2 class="Overlay-heading">${text`Choose how to share`}</h2>
             <ul class="Share-options">
               <li class="Share-option">
                 <a target="_blank" rel="noopener noreferrer" href="${process.env.FACEBOOK_ID ? `https://www.facebook.com/dialog/share?app_id=${process.env.FACEBOOK_ID}&display=page&href=${uri}&redirect_uri=${uri}` : `https://www.facebook.com/sharer.php?u=${uri}`}" class="Share-link">

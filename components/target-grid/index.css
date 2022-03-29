@@ -53,8 +53,15 @@
   top: auto;
   right: auto;
   cursor: pointer;
+  display: none;
 }
 
 .expandAllButton:hover {
   background: rgb(200, 200, 200);
+}
+
+@media (min-width: 600px) {
+  .expandAllButton {
+    display: block;
+  }
 }

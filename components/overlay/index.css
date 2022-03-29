@@ -95,7 +95,7 @@
 
 .overlay-grid .column {
   text-align: left;
-  padding: 2.5rem 0;
+  padding: 2.5rem 0 0;
 }
 
 @media (min-width: 1000px) and (min-height: 480px) {
@@ -131,8 +131,8 @@
 
 .Overlay-heading {
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 30px;
+  top: 32px;
   font-size: 1.5rem;
   text-transform: uppercase;
   font-family: var(--heading-font-family);

@@ -136,6 +136,18 @@
     margin-bottom: 0.5rem;
   }
 }
+.Target-body .show-more-text{
+  margin-top: 20px;
+  background: rgb(var(--color-gray-light));
+  padding: 20px;
+}
+.Target-body .goal {
+  margin-bottom: 20px;
+}
+.Target-body .goal span{
+  display: block;
+  font-weight: bold;
+}
 
 @media (min-width: 600px) {
   .Target {
@@ -150,18 +162,6 @@
   .Target-body {
     padding-right: 1rem;
     margin-bottom: -0.3rem;
-  }
-  .Target-body .show-more-text{
-    margin-top: 20px;
-    background: rgb(var(--color-gray-light));
-    padding: 20px;
-  }
-  .Target-body .goal {
-    margin-bottom: 20px;
-  }
-  .Target-body .goal span{
-    display: block;
-    font-weight: bold;
   }
 
   .Target:hover,
@@ -312,10 +312,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 20px;
+  padding: 5px 10px;
 }
 .Target-rounded:hover{
   background-color: rgb(var(--current-background, 200, 200, 200));
+}
+
+@media (min-width: 600px) {
+  .Target-rounded{
+    padding: 10px 20px;
+    
+  }
 }
 
 :root:not([scripting-enabled]) .Target:target .Target-fade {
