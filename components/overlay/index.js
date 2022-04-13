@@ -1,7 +1,7 @@
 var html = require('choo/html')
 var Component = require('choo/component')
 var { mail } = require('../symbol')
-var { i18n } = require('../base')
+var { i18n, asText } = require('../base')
 
 var text = i18n(require('./lang.json'))
 var URL_ID = `input-${(new Date() % 9e6).toString(36)}`
@@ -48,10 +48,13 @@ class Overlay extends Component {
     var href = props.href.replace(/\/$/, '')
     var uri = encodeURIComponent(href)
     var close = () => this.render(null)
-    var description = props.description && props.description.split(' ')
-      .reduce(function (short, word) {
-        return short + (short.length < 110 ? (' ' + word) : '')
-      }, '')
+    var description = props.description
+    
+    var description = props.description 
+    // && props.description.innerHTML.split(' ')
+    //   .reduce(function (short, word) {
+    //     return short + (short.length < 110 ? (' ' + word) : '')
+    //   }, '')
 
     return html`
       <div class="Overlay" id="overlay" tabindex="0">
@@ -75,7 +78,6 @@ class Overlay extends Component {
             ` : null}
             <div class="Overlay-meta">
               <h2 class="Overlay-title">${props.title}</h2>
-              ${description ? html`<p class="Overlay-description">${description}…</p>` : null}
             </div>
           </div>
           <button class="Overlay-close js-close" onclick="${close}">

@@ -17,7 +17,7 @@ module.exports = class TargetGrid extends Component {
     return html`
       <section class="TargetGrid">
         <button class="expandAllButton" onclick="${expandAll}">
-          Vis alle
+        Vis alle indikatorer
         </button>
         <div class="TargetGrid-container">
           ${targets.map((data) => html`
@@ -31,7 +31,7 @@ module.exports = class TargetGrid extends Component {
     function expandAll(ev){
       ev.target.classList.toggle('expand')
       
-      ev.target.innerText = ev.target.classList.contains('expand') ? 'Skjul alle' : 'Vis alle'
+      ev.target.innerText = ev.target.classList.contains('expand') ? 'Skjul alle indikatorer' : 'Vis alle indikatorer'
       const allItems = document.querySelectorAll('.has-goals')
       allItems.forEach(item => {
         item.classList.toggle('is-collapsed');
