@@ -214,7 +214,7 @@ function asBookmark (err, doc) {
   return html`
     <div class="Text View-spaceSmall">
       ${bookmark({
-        image: doc.data.image.url,
+        image: doc.data.image?.url,
         url: resolve(doc),
         date: doc.type === 'news' ? doc.first_publication_date : null,
         title: asText(doc.data.title),

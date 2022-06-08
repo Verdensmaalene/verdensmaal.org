@@ -109,7 +109,7 @@ function materialView (state, emit) {
           image: doc.data.image.url ? {
             class: 'js-bannerImage',
             alt: doc.data.image.alt || asText(doc.data.title),
-            size: '(min-width: 1000px) 400px, 10vw',
+            sizes: '(min-width: 1000px) 400px, 10vw',
             srcset: srcset(doc.data.image, [400, 600, [800, 'q_50']], {
               transforms: 'f_jpg,c_thumb'
             }),
