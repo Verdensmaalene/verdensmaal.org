@@ -62,11 +62,11 @@ class Overlay extends Component {
           <div class="Overlay-body overlay-grid">
             <div class="column">
                 <h2 class="Overlay-heading">${props.danskeHeadline}</h2>
-                <div class="body">${props.danske}</div>
+                <div class="">${props.danske}</div>
             </div>
             <div class="column">
                 <h2 class="Overlay-heading">${props.fnHeadline}</h2>
-                <div class="body">${props.fn}</div>
+                <div class="">${props.fn}</div>
             </div>
           </div>
           <div class="Overlay-preview">
