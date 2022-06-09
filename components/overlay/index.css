@@ -17,6 +17,7 @@
   top: 0;
   z-index: 30;
   user-select: none;
+  overflow-y: auto;
   background-color: rgb(var(--default-background-color));
 }
 
