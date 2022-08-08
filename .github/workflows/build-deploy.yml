@@ -49,8 +49,8 @@ jobs:
             CLOUDFLARE_EMAIL=${{ secrets.CLOUDFLARE_EMAIL }}
             ANALYTICS_VIEW_ID=${{ secrets.ANALYTICS_VIEW_ID }}
           tags: |
-            ghcr.io/heavyy/${{ github.event.repository.name }}/${{ steps.get_branch.outputs.branch }}:latest
-            ghcr.io/heavyy/${{ github.event.repository.name }}/${{ steps.get_branch.outputs.branch }}:${{ env.SHORT_SHA }}
+            ghcr.io/Verdensmaalene/${{ github.event.repository.name }}/${{ steps.get_branch.outputs.branch }}:latest
+            ghcr.io/Verdensmaalene/${{ github.event.repository.name }}/${{ steps.get_branch.outputs.branch }}:${{ env.SHORT_SHA }}
           push: true
 
       - name: Image digest
