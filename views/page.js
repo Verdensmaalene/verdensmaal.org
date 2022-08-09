@@ -1,4 +1,5 @@
 var html = require('choo/html')
+var raw = require('choo/html/raw')
 var asElement = require('prismic-element')
 var view = require('../components/view')
 var grid = require('../components/grid')
@@ -67,6 +68,8 @@ function page (state, emit) {
                     ${body}
                   </div>
                   ${doc.data.content ? doc.data.content.map(function (slice) {
+                    console.log(slice);
+                    
                     switch (slice.slice_type) {
                       case 'text': {
                         if (!slice.primary.text.length) return null
@@ -173,6 +176,15 @@ function page (state, emit) {
                             </div>
                           `
                         }))
+                      }
+                      case 'embed': {
+                        const { text } = slice.primary.embed_content[0] || null
+                        if (!text) return null
+                        return html`
+                          <div class="EmbedContent View-spaceSmall">
+                            ${text ? raw(text) : null}
+                          </div>
+                        `
                       }
                       default: return null
                     }

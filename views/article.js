@@ -115,6 +115,16 @@ function article (state, emit) {
                           return state.docs.getByID(link.id, asBookmark)
                         }
                       }
+
+                      case 'embed': {
+                        const { text } = slice.primary.embed_content[0] || null
+                        if (!text) return null
+                        return html`
+                          <div class="EmbedContent View-spaceSmall">
+                            ${text ? raw(text) : null}
+                          </div>
+                        `
+                      }
                       default: return null
                     }
                   }) : null}
