@@ -97,6 +97,9 @@ function resolve (doc) {
       // handle archived sector page Verdenstimen
       if (doc.id === 'XvH3FBAAACIA135o') return '/verdenstimen'
       // Just throw an error for unknown page types
+      if(type === 'Document') {
+        return '#'
+      }
       throw new Error('Document not recognized')
     }
   }
