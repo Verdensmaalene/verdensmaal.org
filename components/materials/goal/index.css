@@ -45,15 +45,14 @@
   justify-content: center;
   height: auto;
   min-height: auto;
+  aspect-ratio: 4 / 3;
   
 }
 .MaterialGoal-number h2{
-    padding-top: 3rem;
-    padding-bottom: 3rem;
     margin: 0;
     display: flex;
     justify-content: center;
-    font-size: 11.5rem;
+    font-size: 11rem;
 }
 
 @media (min-width: 800px) {
