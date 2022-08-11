@@ -23,6 +23,7 @@ var Details = require('../components/details')
 var material = require('../components/material')
 var page = require('../components/page')
 var partner = require('../components/partner')
+var subject = require('../components/materials/subject')
 var divide = require('../components/grid/divide')
 var thumbnail = require('../components/thumbnail')
 var { external } = require('../components/symbol')
@@ -337,6 +338,34 @@ function verdenstimen (state, emit) {
 
                         case 'partner':
                           return grid.cell(opts, partner({
+                            small: true,
+                            image: {
+                              alt: image.alt || asText(title),
+                              sizes: '(min-width: 1000px) 33vw, 100vw',
+                              srcset: srcset(image, [300, 500, 800], {
+                                transforms: 'f_jpg,c_thumb',
+                                aspect: 3 / 4
+                              }),
+                              src: srcset(image, [400]).split(' ')[0]
+                            },
+                            goals: null,
+                            audiences: null,
+                            subjects: subjects ? subjects.filter(function (subject) {
+                              return subject.data.materials.some((item) => item.link.id === doc.id)
+                            }).reduce(function (acc, subject, index, list) {
+                              if (index === 3) acc.push({ label: text`and ${list.length - 5} more` })
+                              else if (index < 3) acc.push({ label: asText(subject.data.title) })
+                              return acc
+                            }, []) : null,
+                            title: asText(title),
+                            description: asText(description),
+                            link: { href: resolve(doc) },
+                            duration: duration
+                          }))
+                          break;
+
+                        case 'subject':
+                          return grid.cell(opts, subject({
                             small: true,
                             image: {
                               alt: image.alt || asText(title),
