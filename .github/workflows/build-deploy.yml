@@ -37,6 +37,8 @@ jobs:
       - name: Build image and push to GitHub Container Registry
         uses: docker/build-push-action@v3
         with:
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           platforms: linux/arm64
           context: ./
           build-args: |
