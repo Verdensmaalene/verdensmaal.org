@@ -37,7 +37,7 @@ jobs:
       - name: Build image and push to GitHub Container Registry
         uses: docker/build-push-action@v3
         with:
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/arm64
           context: ./
           build-args: |
             PRISMIC_SECRET=${{ secrets.PRISMIC_SECRET }}
