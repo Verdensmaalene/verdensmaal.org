@@ -21,6 +21,7 @@ var event = require('../components/event')
 var button = require('../components/button')
 var Details = require('../components/details')
 var material = require('../components/material')
+var page = require('../components/page')
 var divide = require('../components/grid/divide')
 var thumbnail = require('../components/thumbnail')
 var { external } = require('../components/symbol')
@@ -77,6 +78,8 @@ function verdenstimen (state, emit) {
       'material.description'
     ]
   }
+  console.log('Verdenstimen');
+  
   return state.docs.getSingle('verdenstimen', opts, onresponse)
 
   function onresponse (err, doc) {
@@ -246,55 +249,100 @@ function verdenstimen (state, emit) {
               if (!item.material.id || item.material.isBroken) return null
 
               var opts = { fetchLinks: ['goal.number'] }
-              return state.docs.getByID(item.material.id, opts, function (err, doc) {
-                if (err) return null
 
-                var opts = {
-                  size: {
-                    md: '1of2',
-                    lg: '1of3'
-                  }
-                }
+              // Add resolver
+              console.log({ item });
+              
+                  
+                  return state.docs.getByID(item.material.id, opts, function (err, doc) {
+                    if (err) return null
 
-                if (!doc) return grid.cell(opts, material.loading())
+                    var opts = {
+                      size: {
+                        md: '1of2',
+                        lg: '1of3'
+                      }
+                    }
 
-                var { data: { title, description, duration, goals } } = doc
-                var image = item.image
-                if (!image.url) image = doc.data.image
+                    if (!doc) return grid.cell(opts, material.loading())
 
-                return grid.cell(opts, material({
-                  small: true,
-                  image: {
-                    alt: image.alt || asText(title),
-                    sizes: '(min-width: 1000px) 33vw, 100vw',
-                    srcset: srcset(image, [300, 500, 800], {
-                      transforms: 'f_jpg,c_thumb',
-                      aspect: 3 / 4
-                    }),
-                    src: srcset(image, [400]).split(' ')[0]
-                  },
-                  goals: goals.filter(function (item) {
-                    return item.link.id && !item.link.isBroken
-                  }).map(function (item) {
-                    return { number: item.link.data.number }
-                  }),
-                  audiences: doc.data.audiences.map(function ({ label }) {
-                    return { label: label }
-                  }),
-                  subjects: subjects ? subjects.filter(function (subject) {
-                    return subject.data.materials.some((item) => item.link.id === doc.id)
-                  }).reduce(function (acc, subject, index, list) {
-                    if (index === 3) acc.push({ label: text`and ${list.length - 5} more` })
-                    else if (index < 3) acc.push({ label: asText(subject.data.title) })
-                    return acc
-                  }, []) : null,
-                  title: asText(title),
-                  description: asText(description),
-                  link: { href: resolve(doc) },
-                  duration: duration
-                }))
-              })
-            }).filter(Boolean).slice(0, 2),
+                    var { data: { title, description, duration, goals } } = doc
+                    var image = item.image
+                    if (!image.url) image = doc.data.image
+
+                    switch (item.material.type) {
+                      case 'material':
+                      
+                        return grid.cell(opts, material({
+                          small: true,
+                          image: {
+                            alt: image.alt || asText(title),
+                            sizes: '(min-width: 1000px) 33vw, 100vw',
+                            srcset: srcset(image, [300, 500, 800], {
+                              transforms: 'f_jpg,c_thumb',
+                              aspect: 3 / 4
+                            }),
+                            src: srcset(image, [400]).split(' ')[0]
+                          },
+                          goals: goals.filter(function (item) {
+                            return item.link.id && !item.link.isBroken
+                          }).map(function (item) {
+                            return { number: item.link.data.number }
+                          }),
+                          audiences: doc.data.audiences.map(function ({ label }) {
+                            return { label: label }
+                          }),
+                          subjects: subjects ? subjects.filter(function (subject) {
+                            return subject.data.materials.some((item) => item.link.id === doc.id)
+                          }).reduce(function (acc, subject, index, list) {
+                            if (index === 3) acc.push({ label: text`and ${list.length - 5} more` })
+                            else if (index < 3) acc.push({ label: asText(subject.data.title) })
+                            return acc
+                          }, []) : null,
+                          title: asText(title),
+                          description: asText(description),
+                          link: { href: resolve(doc) },
+                          duration: duration
+                        }))
+                        break;
+
+                        case 'page':
+                          return grid.cell(opts, page({
+                            small: true,
+                            image: {
+                              alt: image.alt || asText(title),
+                              sizes: '(min-width: 1000px) 33vw, 100vw',
+                              srcset: srcset(image, [300, 500, 800], {
+                                transforms: 'f_jpg,c_thumb',
+                                aspect: 3 / 4
+                              }),
+                              src: srcset(image, [400]).split(' ')[0]
+                            },
+                            goals: null,
+                            audiences: null,
+                            subjects: subjects ? subjects.filter(function (subject) {
+                              return subject.data.materials.some((item) => item.link.id === doc.id)
+                            }).reduce(function (acc, subject, index, list) {
+                              if (index === 3) acc.push({ label: text`and ${list.length - 5} more` })
+                              else if (index < 3) acc.push({ label: asText(subject.data.title) })
+                              return acc
+                            }, []) : null,
+                            title: asText(title),
+                            description: asText(description),
+                            link: { href: resolve(doc) },
+                            duration: duration
+                          }))
+                          break
+
+                        default:
+                          console.log('other type', item.material.type);
+                          
+                          break;
+                      }
+                  })
+
+              
+            }).filter(Boolean).slice(0, 3),
             grid.cell({ size: { lg: '1of3' } }, state.docs.get(
               [
                 Prismic.Predicates.at('document.type', 'material'),
