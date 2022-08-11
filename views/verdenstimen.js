@@ -21,8 +21,8 @@ var event = require('../components/event')
 var button = require('../components/button')
 var Details = require('../components/details')
 var material = require('../components/material')
-var page = require('../components/page')
-var partner = require('../components/partner')
+var page = require('../components/materials/page')
+var partner = require('../components/materials/partner')
 var subject = require('../components/materials/subject')
 var materialGoal = require('../components/materials/goal')
 var divide = require('../components/grid/divide')
@@ -253,10 +253,9 @@ function verdenstimen (state, emit) {
 
               var opts = { fetchLinks: ['goal.number'] }
 
-              // Add resolver
-              console.log({ item });
               
-                  
+              // console.log({ item });
+    
                   return state.docs.getByID(item.material.id, opts, function (err, doc) {
                     if (err) return null
 
@@ -272,7 +271,8 @@ function verdenstimen (state, emit) {
                     var { data: { title, description, duration, goals } } = doc
                     var image = item.image
                     if (!image.url) image = doc.data.image
-
+                    
+                    // Add resolver
                     switch (item.material.type) {
                       case 'material':
                       
@@ -394,8 +394,6 @@ function verdenstimen (state, emit) {
                             break;
 
                             case 'goal':
-                              console.log('goal');
-                              
                               return grid.cell(opts, materialGoal({
                                 small: true,
                                 number: item.material.data.number,
@@ -407,14 +405,13 @@ function verdenstimen (state, emit) {
                               break;
 
                         default:
-                          console.log('other type', item.material.type);
-                          
+                          // console.log('other type', item.material.type);
                           break;
                       }
                   })
 
               
-            }).filter(Boolean).slice(0, 3),
+            }).filter(Boolean).slice(0, 2),
             grid.cell({ size: { lg: '1of3' } }, state.docs.get(
               [
                 Prismic.Predicates.at('document.type', 'material'),

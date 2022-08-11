@@ -1,8 +1,8 @@
 var html = require('choo/html')
-var Goal = require('../goal')
-var button = require('../button')
-var { i18n, className } = require('../base')
-var { symbol } = require('../logo')
+var Goal = require('../../goal')
+var button = require('../../button')
+var { i18n, className } = require('../../base')
+var { symbol } = require('../../logo')
 
 var text = i18n(require('./lang.json'))
 
