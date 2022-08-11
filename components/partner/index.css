@@ -1,0 +1,274 @@
+@import "../base";
+
+/** @define Partner */
+.Partner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  background: rgb(var(--color-gray-light));
+}
+
+.Partner--grow {
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+@media (min-width: 800px) {
+  .Partner--grow {
+    flex-wrap: nowrap;
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Partner--grow {
+    padding: 3rem;
+  }
+}
+
+.Partner--banner {
+  padding: 0;
+  align-items: stretch;
+}
+
+/**
+ * Image
+ */
+
+.Partner-figure {
+  flex: 0 0 auto;
+  width: 100%;
+  position: relative;
+}
+
+@media (min-width: 800px) {
+  .Partner--grow .Partner-figure {
+    width: calc(100% * 1 / 3);
+    margin-right: 2rem;
+    margin-right: 3rem;
+  }
+
+  .Partner--grow .Partner-figure::before {
+    padding-top: 80%;
+  }
+
+  .Partner--banner .Partner-figure {
+    width: 70%;
+    margin-right: 0;
+  }
+}
+
+.Partner-image {
+  width: 100%;
+}
+
+.Partner--banner .Partner-image {
+  position: static;
+  object-fit: cover;
+}
+
+@media (min-width: 800px) {
+  .Partner--banner .Partner-image {
+    position: absolute;
+    object-fit: contain;
+    height: 100%;
+    background: #1a1a1a;
+  }
+}
+
+/**
+ * Body
+ */
+
+.Partner-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+}
+
+@media (min-width: 800px) {
+  .Partner--grow .Partner-body {
+    display: block;
+    padding: 0;
+  }
+}
+
+.Partner--banner .Partner-body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+}
+
+.Partner-title {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
+  text-transform: uppercase;
+}
+
+@media (min-width: 1200px) {
+  .Partner--grow .Partner-title {
+    font-size: 3rem;
+    line-height: 1.05;
+  }
+}
+
+.Partner:not(.Partner--grow) .Partner-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/**
+ * Link
+ */
+
+.Partner-action {
+  order: 99;
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+@media (min-width: 800px) {
+  .Partner--grow .Partner-action {
+    float: right;
+    margin: 0 0 1.5rem 1.5rem;
+  }
+}
+
+.Partner--banner .Partner-action {
+  float: none;
+  width: 100%;
+  margin: 1.25rem 0 0;
+}
+
+@media (min-width: 800px) {
+  .Partner--banner .Partner-action {
+    margin-top: 2rem;
+  }
+}
+
+.Partner-label {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .Partner--banner .Partner-label {
+    padding: 0.4rem 0 0.2rem;
+    font-size: 2rem;
+  }
+}
+
+/**
+ * Footer
+ */
+
+.Partner-footer {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1.25rem -0.625rem 0.625rem -0.625rem;
+  font-size: 0.75rem;
+}
+
+.Partner--banner .Partner-footer {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@media (min-width: 800px) {
+  .Partner--grow .Partner-footer {
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(var(--color-gray), 0.25);
+    margin-bottom: -0.625rem;
+    font-size: 0.875rem;
+  }
+
+  .Partner--banner .Partner-footer {
+    order: -1;
+    flex-direction: column;
+    padding: 0;
+    border: 0;
+    margin: 0;
+  }
+}
+
+.Partner-section {
+  width: 50%;
+  border: 0px solid transparent;
+  border-width: 0 0.625rem;
+  margin-bottom: 0.625rem;
+}
+
+@media (min-width: 1200px) {
+  .Partner--grow .Partner-section {
+    width: 25%;
+  }
+}
+
+@media (min-width: 800px) {
+  .Partner--banner .Partner-section {
+    width: 100%;
+    border: 0;
+    margin-bottom: 1.25rem;
+  }
+}
+
+.Partner-heading {
+  display: block;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 1200px) {
+  .Partner--banner .Partner-heading {
+    margin-bottom: 0;
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Partner--grow .Partner-heading {
+    margin-bottom: 0.625rem;
+    font-size: 1.1875rem;
+  }
+}
+
+.Partner-listItem {
+  display: inline-block;
+  margin: 0 0.25em 0 0;
+}
+
+.Partner-listItem:not(:last-child)::after {
+  content: ",";
+}
+
+.Partner-link:hover {
+  text-decoration: underline;
+}
+
+/**
+ * Goal
+ */
+
+.Partner-allGoals {
+  margin-top: 0.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.Partner-allGoals svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.Partner:not(.Partner--grow) .Partner-allGoals svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
