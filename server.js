@@ -1,5 +1,7 @@
 if (!process.env.HEROKU) require('dotenv/config')
 
+var fetch = require('node-fetch')
+
 var REPOSITORY = 'https://verdensmaalene.cdn.prismic.io/api/v2'
 var LAYOUTS = [
   [1, 6], [3, 8], [17, 7], [13, 2], [9, 16], [10, 11], [1, 12], [15, 5], [14, 4]
@@ -140,9 +142,16 @@ app.use(get('/robots.txt', function (ctx, next) {
 }))
 
 // add webhook for prismic updates
-app.use(post('/api/prismic-hook', compose([body(), function (ctx) {
+app.use(post('/api/prismic-hook', compose([body(), async function (ctx) {
   var secret = ctx.request.body && ctx.request.body.secret
   ctx.assert(secret === process.env.PRISMIC_SECRET, 403, 'Secret mismatch')
+
+  try {
+    await fetch('https://fqk0ujgvp0.execute-api.eu-central-1.amazonaws.com/default/httpInvalidateCache?ref=uHeadless&cfid=ELFUKIK5V2D3B')
+  } catch (err) {
+    console.log(err)
+  }
+
   return new Promise(function (resolve, reject) {
     queried().then(function (urls) {
       purge(app.entry, ['/api/popular', ...urls], function (err, response) {
