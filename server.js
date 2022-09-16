@@ -146,13 +146,7 @@ app.use(post('/api/prismic-hook', compose([body(), async function (ctx) {
   var secret = ctx.request.body && ctx.request.body.secret
   ctx.assert(secret === process.env.PRISMIC_SECRET, 403, 'Secret mismatch')
 
-  try {
-    await fetch('https://fqk0ujgvp0.execute-api.eu-central-1.amazonaws.com/default/httpInvalidateCache?ref=uHeadless&cfid=ELFUKIK5V2D3B')
-  } catch (err) {
-    console.log(err)
-  }
-
-  return new Promise(function (resolve, reject) {
+  const res = await new Promise(function (resolve, reject) {
     queried().then(function (urls) {
       purge(app.entry, ['/api/popular', ...urls], function (err, response) {
         if (err) return reject(err)
@@ -162,6 +156,14 @@ app.use(post('/api/prismic-hook', compose([body(), async function (ctx) {
       })
     })
   })
+
+  try {
+    await fetch('https://fqk0ujgvp0.execute-api.eu-central-1.amazonaws.com/default/httpInvalidateCache?ref=uHeadless&cfid=ELFUKIK5V2D3B')
+  } catch (err) {
+    console.log(err)
+  }
+
+  return res
 }])))
 
 // set preview cookie
