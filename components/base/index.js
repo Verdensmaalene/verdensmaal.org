@@ -96,6 +96,11 @@ function resolve (doc) {
       }
       // handle archived sector page Verdenstimen
       if (doc.id === 'XvH3FBAAACIA135o') return '/verdenstimen'
+
+      // Insted of breaking return a hash link.
+      if(type === 'Document') {
+        return '#'
+      }
       // Just throw an error for unknown page types
       throw new Error('Document not recognized')
     }
