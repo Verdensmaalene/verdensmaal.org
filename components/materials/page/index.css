@@ -1,0 +1,274 @@
+@import "../../base";
+
+/** @define Page */
+.Page {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  background: rgb(var(--color-gray-light));
+}
+
+.Page--grow {
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+@media (min-width: 800px) {
+  .Page--grow {
+    flex-wrap: nowrap;
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Page--grow {
+    padding: 3rem;
+  }
+}
+
+.Page--banner {
+  padding: 0;
+  align-items: stretch;
+}
+
+/**
+ * Image
+ */
+
+.Page-figure {
+  flex: 0 0 auto;
+  width: 100%;
+  position: relative;
+}
+
+@media (min-width: 800px) {
+  .Page--grow .Page-figure {
+    width: calc(100% * 1 / 3);
+    margin-right: 2rem;
+    margin-right: 3rem;
+  }
+
+  .Page--grow .Page-figure::before {
+    padding-top: 80%;
+  }
+
+  .Page--banner .Page-figure {
+    width: 70%;
+    margin-right: 0;
+  }
+}
+
+.Page-image {
+  width: 100%;
+}
+
+.Page--banner .Page-image {
+  position: static;
+  object-fit: cover;
+}
+
+@media (min-width: 800px) {
+  .Page--banner .Page-image {
+    position: absolute;
+    object-fit: contain;
+    height: 100%;
+    background: #1a1a1a;
+  }
+}
+
+/**
+ * Body
+ */
+
+.Page-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+}
+
+@media (min-width: 800px) {
+  .Page--grow .Page-body {
+    display: block;
+    padding: 0;
+  }
+}
+
+.Page--banner .Page-body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+}
+
+.Page-title {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
+  text-transform: uppercase;
+}
+
+@media (min-width: 1200px) {
+  .Page--grow .Page-title {
+    font-size: 3rem;
+    line-height: 1.05;
+  }
+}
+
+.Page:not(.Page--grow) .Page-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/**
+ * Link
+ */
+
+.Page-action {
+  order: 99;
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+@media (min-width: 800px) {
+  .Page--grow .Page-action {
+    float: right;
+    margin: 0 0 1.5rem 1.5rem;
+  }
+}
+
+.Page--banner .Page-action {
+  float: none;
+  width: 100%;
+  margin: 1.25rem 0 0;
+}
+
+@media (min-width: 800px) {
+  .Page--banner .Page-action {
+    margin-top: 2rem;
+  }
+}
+
+.Page-label {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .Page--banner .Page-label {
+    padding: 0.4rem 0 0.2rem;
+    font-size: 2rem;
+  }
+}
+
+/**
+ * Footer
+ */
+
+.Page-footer {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1.25rem -0.625rem 0.625rem -0.625rem;
+  font-size: 0.75rem;
+}
+
+.Page--banner .Page-footer {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@media (min-width: 800px) {
+  .Page--grow .Page-footer {
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(var(--color-gray), 0.25);
+    margin-bottom: -0.625rem;
+    font-size: 0.875rem;
+  }
+
+  .Page--banner .Page-footer {
+    order: -1;
+    flex-direction: column;
+    padding: 0;
+    border: 0;
+    margin: 0;
+  }
+}
+
+.Page-section {
+  width: 50%;
+  border: 0px solid transparent;
+  border-width: 0 0.625rem;
+  margin-bottom: 0.625rem;
+}
+
+@media (min-width: 1200px) {
+  .Page--grow .Page-section {
+    width: 25%;
+  }
+}
+
+@media (min-width: 800px) {
+  .Page--banner .Page-section {
+    width: 100%;
+    border: 0;
+    margin-bottom: 1.25rem;
+  }
+}
+
+.Page-heading {
+  display: block;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 1200px) {
+  .Page--banner .Page-heading {
+    margin-bottom: 0;
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .Page--grow .Page-heading {
+    margin-bottom: 0.625rem;
+    font-size: 1.1875rem;
+  }
+}
+
+.Page-listItem {
+  display: inline-block;
+  margin: 0 0.25em 0 0;
+}
+
+.Page-listItem:not(:last-child)::after {
+  content: ",";
+}
+
+.Page-link:hover {
+  text-decoration: underline;
+}
+
+/**
+ * Goal
+ */
+
+.Page-allGoals {
+  margin-top: 0.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.Page-allGoals svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.Page:not(.Page--grow) .Page-allGoals svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
