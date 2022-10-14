@@ -6,6 +6,7 @@ on:
       - staging
 jobs:
   build:
+    runs-on: buildjet-2vcpu-ubuntu-2204-arm
     name: Build
     runs-on: ubuntu-latest
     steps:
