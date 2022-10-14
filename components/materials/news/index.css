@@ -1,0 +1,287 @@
+@import "../../base";
+
+/** @define MaterialNews */
+.MaterialNews {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  background: rgb(var(--color-gray-light));
+}
+
+.MaterialNews--grow {
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+@media (min-width: 800px) {
+  .MaterialNews--grow {
+    flex-wrap: nowrap;
+    padding: 2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .MaterialNews--grow {
+    padding: 3rem;
+  }
+}
+
+.MaterialNews--banner {
+  padding: 0;
+  align-items: stretch;
+}
+
+/**
+ * Image
+ */
+
+.MaterialNews-number {
+  flex: 0 0 auto;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  min-height: auto;
+  aspect-ratio: 4 / 3;
+  
+}
+.MaterialNews-number h2{
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    font-size: 11rem;
+}
+
+@media (min-width: 800px) {
+  .MaterialNews--grow .MaterialNews-figure {
+    width: calc(100% * 1 / 3);
+    margin-right: 2rem;
+    margin-right: 3rem;
+  }
+
+  .MaterialNews--grow .MaterialNews-figure::before {
+    padding-top: 80%;
+  }
+
+  .MaterialNews--banner .MaterialNews-figure {
+    width: 70%;
+    margin-right: 0;
+  }
+}
+
+.MaterialNews-image {
+  width: 100%;
+}
+
+.MaterialNews--banner .MaterialNews-image {
+  position: static;
+  object-fit: cover;
+}
+
+@media (min-width: 800px) {
+  .MaterialNews--banner .MaterialNews-image {
+    position: absolute;
+    object-fit: contain;
+    height: 100%;
+    background: #1a1a1a;
+  }
+}
+
+/**
+ * Body
+ */
+
+.MaterialNews-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+}
+
+@media (min-width: 800px) {
+  .MaterialNews--grow .MaterialNews-body {
+    display: block;
+    padding: 0;
+  }
+}
+
+.MaterialNews--banner .MaterialNews-body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+}
+
+.MaterialNews-title {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-family: var(--heading-font-family);
+  line-height: var(--heading-line-height);
+  word-spacing: var(--heading-word-spacing);
+  text-transform: uppercase;
+}
+
+@media (min-width: 1200px) {
+  .MaterialNews--grow .MaterialNews-title {
+    font-size: 3rem;
+    line-height: 1.05;
+  }
+}
+
+.MaterialNews:not(.MaterialNews--grow) .MaterialNews-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/**
+ * Link
+ */
+
+.MaterialNews-action {
+  order: 99;
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+@media (min-width: 800px) {
+  .MaterialNews--grow .MaterialNews-action {
+    float: right;
+    margin: 0 0 1.5rem 1.5rem;
+  }
+}
+
+.MaterialNews--banner .MaterialNews-action {
+  float: none;
+  width: 100%;
+  margin: 1.25rem 0 0;
+}
+
+@media (min-width: 800px) {
+  .MaterialNews--banner .MaterialNews-action {
+    margin-top: 2rem;
+  }
+}
+
+.MaterialNews-label {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .MaterialNews--banner .MaterialNews-label {
+    padding: 0.4rem 0 0.2rem;
+    font-size: 2rem;
+  }
+}
+
+/**
+ * Footer
+ */
+
+.MaterialNews-footer {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1.25rem -0.625rem 0.625rem -0.625rem;
+  font-size: 0.75rem;
+}
+
+.MaterialNews--banner .MaterialNews-footer {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+@media (min-width: 800px) {
+  .MaterialNews--grow .MaterialNews-footer {
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(var(--color-gray), 0.25);
+    margin-bottom: -0.625rem;
+    font-size: 0.875rem;
+  }
+
+  .MaterialNews--banner .MaterialNews-footer {
+    order: -1;
+    flex-direction: column;
+    padding: 0;
+    border: 0;
+    margin: 0;
+  }
+}
+
+.MaterialNews-section {
+  width: 50%;
+  border: 0px solid transparent;
+  border-width: 0 0.625rem;
+  margin-bottom: 0.625rem;
+}
+
+@media (min-width: 1200px) {
+  .MaterialNews--grow .MaterialNews-section {
+    width: 25%;
+  }
+}
+
+@media (min-width: 800px) {
+  .MaterialNews--banner .MaterialNews-section {
+    width: 100%;
+    border: 0;
+    margin-bottom: 1.25rem;
+  }
+}
+
+.MaterialNews-heading {
+  display: block;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 1200px) {
+  .MaterialNews--banner .MaterialNews-heading {
+    margin-bottom: 0;
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .MaterialNews--grow .MaterialNews-heading {
+    margin-bottom: 0.625rem;
+    font-size: 1.1875rem;
+  }
+}
+
+.MaterialNews-listItem {
+  display: inline-block;
+  margin: 0 0.25em 0 0;
+}
+
+.MaterialNews-listItem:not(:last-child)::after {
+  content: ",";
+}
+
+.MaterialNews-link:hover {
+  text-decoration: underline;
+}
+
+/**
+ * News
+ */
+
+.MaterialNews-allNewss {
+  margin-top: 0.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.MaterialNews-allNewss svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.MaterialNews:not(.MaterialNews--grow) .MaterialNews-allNewss svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
