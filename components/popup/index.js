@@ -18,7 +18,7 @@ module.exports = class Popup extends Component {
       let now = new Date().getDate().toString()
 
       // In seconds
-      let PopupDelay = 30
+      let PopupDelay = 1
 
       // Check if current date is present and if it has passed the expirydate.
       if (localStorage.getItem('hideNewsletterPopup') && now >= localStorage.getItem('hideNewsletterPopup').key) {
