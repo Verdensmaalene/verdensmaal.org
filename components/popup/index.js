@@ -18,7 +18,7 @@ module.exports = class Popup extends Component {
       let now = new Date().getDate().toString()
 
       // In seconds
-      let PopupDelay = 1
+      let PopupDelay = 30
 
       // Check if current date is present and if it has passed the expirydate.
       if (localStorage.getItem('hideNewsletterPopup') && now >= localStorage.getItem('hideNewsletterPopup').key) {
@@ -79,34 +79,35 @@ module.exports = class Popup extends Component {
         </form>
       </div>
     `
+
+
+    function closePopup () {
+      console.log('Popup closed, timestamp added.. Tik tok')
+
+      // Create date
+      var d = new Date()
+      var expireDate = d.setDate(d.getDate() + 90)
+
+      // Setkey and remove popup
+      localStorage.setItem('hideNewsletterPopup', expireDate)
+      document.querySelector('#Popup-newsletter').classList.remove('show')
+    }
+
+    function onsubmit (event) {
+      if (!event.target.checkValidity()) {
+        event.target.reportValidity()
+      } else {
+        var form = event.currentTarget
+        var data = new window.FormData(form)
+        var button = form.querySelector('.js-submit')
+        button.disabled = true
+        self.emit('subscribe', data)
+
+        localStorage.setItem('hideNewsletterPopup', 'user_signed_up')
+        document.querySelector('#Popup-newsletter').classList.remove('show')
+      }
+
+      event.preventDefault()
+    }
   }
-}
-
-function closePopup () {
-  console.log('Popup closed, timestamp added.. Tik tok')
-
-  // Create date
-  var d = new Date()
-  var expireDate = d.setDate(d.getDate() + 90)
-
-  // Setkey and remove popup
-  localStorage.setItem('hideNewsletterPopup', expireDate)
-  document.querySelector('#Popup-newsletter').classList.remove('show')
-}
-
-function onsubmit (event) {
-  if (!event.target.checkValidity()) {
-    event.target.reportValidity()
-  } else {
-    var form = event.currentTarget
-    var data = new window.FormData(form)
-    var button = form.querySelector('.js-submit')
-    button.disabled = true
-    self.emit('subscribe', data)
-
-    localStorage.setItem('hideNewsletterPopup', 'user_signed_up')
-    document.querySelector('#Popup-newsletter').classList.remove('show')
-  }
-
-  event.preventDefault()
 }
