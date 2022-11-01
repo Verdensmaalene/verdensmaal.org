@@ -10,7 +10,7 @@ var overlay = require('../overlay')
 var Header = require('../header')
 var Footer = require('../footer')
 var player = require('../embed/player')
-var Popup = require('../popup')
+// var Popup = require('../popup')
 var PrismicToolbar = require('../prismic-toolbar')
 var { i18n, isSameDomain, asText, resolve } = require('../base')
 
@@ -88,7 +88,6 @@ function createView (view, meta, _config = {}) {
             ${doc ? getHeader() : null}
           </div>
           ${children}
-          ${doc ? getPopup() : null}
           ${doc ? getFooter() : null}
           ${player.render(null)}
           ${share.render(null)}
