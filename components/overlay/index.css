@@ -316,7 +316,7 @@
   justify-content: center;
   margin-bottom: 10px;
   color: #fff;
-  background: rgb(var(--color-theme));
+  /* background: rgb(var(--color-theme)); */
   padding: 7px 0px;
 }
 
