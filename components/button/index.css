@@ -58,6 +58,23 @@
 }
 
 /**
+ * Secondary button
+ */
+.Button--secondary {
+  background:#fff;
+  color: #000;
+}
+
+.Button--secondary:not([disabled]) {
+  cursor: pointer;
+}
+
+.Button--secondary:not([disabled]):hover {
+  background: #fff;
+  color: rgba(0,0,0, .5);
+}
+
+/**
  * Button covering offset parent
  */
 

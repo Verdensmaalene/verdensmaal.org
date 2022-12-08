@@ -10,6 +10,7 @@ var overlay = require('../overlay')
 var Header = require('../header')
 var Footer = require('../footer')
 var player = require('../embed/player')
+var Popup = require('../popup')
 var PrismicToolbar = require('../prismic-toolbar')
 var { i18n, isSameDomain, asText, resolve } = require('../base')
 
@@ -157,8 +158,17 @@ function createView (view, meta, _config = {}) {
           }
         }
 
+        var opts_popup = doc && {
+          newsletter: {
+            heading: asText(doc.data.newsletter_label),
+            body: asElement(doc.data.newsletter_body, resolve),
+            note: asElement(doc.data.newsletter_note, resolve)
+          }
+        }
+
         return html`
           <div class="View-footer">
+            ${state.cache(Popup, 'popup').render(opts_popup)}
             ${state.cache(Footer, 'footer').render(opts)}
           </div>
         `
