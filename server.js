@@ -142,20 +142,9 @@ app.use(get('/robots.txt', function (ctx, next) {
 }))
 
 // add webhook for prismic updates
-app.use(post('/api/prismic-hook', compose([body(), async function (ctx) {
+app.use(post('/api/prismic-hook', compose([body(), async function (ctx, next) {
   var secret = ctx.request.body && ctx.request.body.secret
   ctx.assert(secret === process.env.PRISMIC_SECRET, 403, 'Secret mismatch')
-
-  const res = await new Promise(function (resolve, reject) {
-    queried().then(function (urls) {
-      purge(app.entry, ['/api/popular', ...urls], function (err, response) {
-        if (err) return reject(err)
-        ctx.type = 'application/json'
-        ctx.body = {}
-        resolve()
-      })
-    })
-  })
 
   try {
     await fetch('https://fqk0ujgvp0.execute-api.eu-central-1.amazonaws.com/default/httpInvalidateCache?ref=uHeadless&cfid=ELFUKIK5V2D3B')
@@ -163,7 +152,14 @@ app.use(post('/api/prismic-hook', compose([body(), async function (ctx) {
     console.log(err)
   }
 
-  return res
+  console.log('Cloudfront cache purge completed')
+
+  ctx.type = 'application/json'
+  ctx.body = JSON.stringify({
+    'message': 'completed'
+  })
+
+  return next()
 }])))
 
 // set preview cookie
