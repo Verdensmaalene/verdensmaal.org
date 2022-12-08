@@ -55,7 +55,6 @@ class Overlay extends Component {
     //   .reduce(function (short, word) {
     //     return short + (short.length < 110 ? (' ' + word) : '')
     //   }, '')
-
     return html`
       <div class="Overlay" id="overlay" tabindex="0">
         <div class="Overlay-container">
@@ -72,7 +71,7 @@ class Overlay extends Component {
           <div class="Overlay-preview">
             ${props.image ? html`
               <figure class="Overlay-badge">
-                <figcaption class="Overlay-caption u-textHeading">${props.caption}</figcaption>
+                <figcaption class="Overlay-caption u-textHeading Theme--${props.goal}">${props.caption}</figcaption>
                 <img class="Overlay-thumbnail" src="${props.image}" width="64" height="64" />
               </figure>
             ` : null}
