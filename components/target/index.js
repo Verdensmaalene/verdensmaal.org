@@ -162,6 +162,7 @@ module.exports = class Target extends Component {
         danske: asText(opts.danske_indikatorer),
         fnHeadline: asText(opts.fns_indikatorer_titel), 
         fn: asText(opts.fns_indikatorer), 
+        goal: opts.goal,
       })
       event.preventDefault()
       event.stopPropagation()
