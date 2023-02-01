@@ -351,7 +351,7 @@ app.use(function (ctx, next) {
   return next()
 })
 
-if (process.env.HEROKU && app.env === 'production') {
+if (app.env === 'production') {
   queried().then(function (urls) {
     purge(app.entry, ['/sw.js', '/api/popular', ...urls], function (err) {
       if (err) app.emit('error', err)
