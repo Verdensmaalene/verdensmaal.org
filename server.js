@@ -28,7 +28,7 @@ var imageproxy = require('./lib/cloudinary-proxy')
 var { asText, resolve } = require('./components/base')
 
 var app = jalla('index.js', {
-  sw: 'sw.js',
+  // sw: 'sw.js',
   skip: [require.resolve('mapbox-gl')],
   serve: Boolean(process.env.HEROKU)
 })
