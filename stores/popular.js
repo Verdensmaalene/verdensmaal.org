@@ -14,8 +14,8 @@ function popular (state, emitter) {
     state.popular.loading = true
     var res = analytics().then(function (data) {
       return Prismic.getApi(REPOSITORY, { req: state.req }).then(function (api) {
-        var docs = data.slice(0, 5).map(function ([href]) {
-          var parts = href.split('/')
+        var docs = data.slice(0, 5).map((item) => {
+          var parts = item.url.split('/')
           return api.getByUID('news', parts[parts.length - 1]).catch(() => null)
         })
         return Promise.all(docs)
