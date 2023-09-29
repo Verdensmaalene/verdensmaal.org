@@ -44,6 +44,15 @@ function award (state, emit) {
       return item.link.id && !item.link.isBroken
     })
 
+    if (typeof window !== 'undefined') {
+      if(categories.length === 1){
+        var value = asText(categories[0].link.data.title)
+        var name = 'entry.57699070'
+        emit('award:set', name, value)
+      }
+    }
+
+
     return html`
       <main class="View-main">
         <div class="View-spaceLarge">
@@ -59,6 +68,7 @@ function award (state, emit) {
         </div>
       </main>
     `
+    
 
     function onchange (event) {
       emit('award:set', event.target.name, event.target.value)
@@ -87,6 +97,7 @@ function award (state, emit) {
           href: resolve(categories[0].link)
         })
         case 'nomination': {
+          
           return html`
             <form action="${state.href}" method="POST" class="Form" onsubmit=${onsubmit} novalidate>
               ${error ? html`
@@ -99,10 +110,11 @@ function award (state, emit) {
                   </div>
                 </div>
               ` : null}
-              <div class="Text u-spaceB4">
+              <div class="Text u-spaceB4 ${categories.length > 1 ? null : 'hidden-area'}">
                 <h2 class="Text-h3">Vælg en kategori</h2>
                 <p>Hvilken pris har din kandidat gjort sig fortjent til? *</p>
               </div>
+              <div class="${categories.length <= 1 ? 'hidden-area' : null}">
               ${grid({ size: { lg: '1of3' } }, categories.map(function ({ link }, index) {
                 var value = asText(link.data.title)
                 return form.choice({
@@ -117,6 +129,7 @@ function award (state, emit) {
                   description: asText(link.data.description)
                 }, onchange)
               }))}
+              </div>
               <div class="Text u-spaceT8 u-spaceB4">
                 <h2 class="Text-h3">Fortæl os om dig selv</h2>
               </div>

@@ -249,3 +249,9 @@
   border-top: 2px solid #fff;
   font-weight: 500;
 }
+
+.Form .hidden-area{
+  display: none;
+  visibility: hidden;
+  height: 0;
+}
