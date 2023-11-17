@@ -246,7 +246,7 @@ function materialView (state, emit) {
                       },
                       label: name,
                       link: {
-                        href: `/verdenstimen/${name.toLowerCase()}`
+                        href: `/verdenstimen/materialer?level=${encodeURIComponent(name)}`
                       }
                     }
                   }), {

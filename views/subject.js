@@ -330,7 +330,7 @@ function subjectView (state, emit) {
   }
 
   function getMaterials (predicates) {
-    return state.docs.get(predicates, function (err, res) {
+    return state.docs.get(predicates, {pageSize: 100}, function (err, res) {
       if (err) throw err
       if (!res) return null
       return res.results
