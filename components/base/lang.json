@@ -103,5 +103,13 @@
   "All subjects": "Alle skolefag",
   "Danish goals": "Danish goals",
   "ButtonText": "ButtonText",
-  "Explore": "Explore"
+  "Explore": "Explore",
+  "Foo": "Foo",
+  "Bar": "Bar",
+  "Filtrer": "Filtrer",
+  "%s": "%s",
+  "Vælg tags": "Vælg tags",
+  "Alle tags": "Alle tags",
+  "Tags": "Tags",
+  "Ryd": "Ryd"
 }

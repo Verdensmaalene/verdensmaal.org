@@ -14,6 +14,7 @@ var calendar = require('../components/calendar')
 var EventForm = require('../components/event-form')
 var serialize = require('../components/text/serialize')
 var { i18n, srcset, asText, timestamp, resolve } = require('../components/base')
+var EventFilter = require('../components/event-filter')
 
 var text = i18n()
 
@@ -63,6 +64,20 @@ function events (state, emit) {
     })
   })
 
+  function sortTags(a, b) {
+    // Extract the numeric part from each string
+    let numA = parseInt(a.match(/\d+/)?.[0]);
+    let numB = parseInt(b.match(/\d+/)?.[0]);
+
+    // If both strings contain numbers, compare them as numbers
+    if (!isNaN(numA) && !isNaN(numB)) {
+      return numA - numB;
+    }
+    
+    // If one of the strings doesn't contain a number, sort alphabetically
+    return a.localeCompare(b);
+  }
+
   // render page content
   // obj -> Element
   function content (doc, upcoming, past) {
@@ -86,12 +101,41 @@ function events (state, emit) {
       label: text`Submit event`
     }].filter(Boolean)
 
+    var upcomingTags = []
+    var pastTags = []
+
+    if (upcoming && upcoming.results_size) {
+      upcomingTags = Array.from(new Set(upcoming.results.map(event => event.tags).reduce((a, b) => a.concat(b), []))).sort(sortTags)
+    }
+
+    if (past && past.results_size) {
+      pastTags = Array.from(new Set(past.results.map(event => event.tags).reduce((a, b) => a.concat(b), []))).sort(sortTags)
+    }
+
+    const self = this
+
     return html`
-      <div>
+      <div>        
         <div class="View-spaceSmall">
           ${state.cache(Map, 'events-map').render(locations, bounds)}
         </div>
-        ${doc ? state.cache(Tabs, 'events-tabs', 'events-grid-panel').render(tabs, panel, onselect) : null}
+
+        ${state.cache(EventFilter, 'event-filters').render({ upcoming: upcomingTags, past: pastTags }, (selected) => {
+          emit('render')
+        })}
+
+        ${doc ? state.cache(Tabs, 'events-tabs', 'events-grid-panel').render(tabs, panel, (tab) => {
+          var prev  = state['event-filters'].activeCategory
+          state['event-filters'].activeCategory = tab === 'past-events-list-panel' ? 'past' : 'upcoming';
+
+          if (prev !== state['event-filters'].activeCategory) {
+            state['event-filters'].selected.tags = []
+          }
+          
+          emit('render')
+
+          onselect(tab)
+        }) : null}
       </div>
     `
 
@@ -104,12 +148,20 @@ function events (state, emit) {
     // render tab panel by id
     // str -> Element
     function panel (id) {
+      var filters = state['event-filters'].selected.tags || []
+
       switch (id) {
         case 'events-grid-panel': {
           var cells = []
+
           if (!upcoming) for (let i = 0; i < 6; i++) cells.push(card.loading())
           else if (!upcoming.results_size) return empty()
-          else cells = upcoming.results.map(asCard)
+          else cells = upcoming.results.filter(item => {
+            if (filters.length === 0) return true
+
+            return item.tags.some(tag => filters.includes(tag))
+          }).map(asCard)
+          
           return html`
             <div class="View-spaceSmall">
               ${grid({ size: { md: '1of2', lg: '1of3' }, appear: state.ui.clock['event-tab-selected'] }, cells)}
@@ -121,7 +173,11 @@ function events (state, emit) {
           else if (!upcoming.results_size) return empty()
           return html`
             <div class="View-spaceSmall">
-              ${calendar(upcoming.results.map(asCalendar), { appear: state.ui.clock['event-tab-selected'] })}
+              ${calendar(upcoming.results.filter(item => {
+                if (filters.length === 0) return true
+    
+                return item.tags.some(tag => filters.includes(tag))
+              }).map(asCalendar), { appear: state.ui.clock['event-tab-selected'] })}
             </div>
           `
         }
@@ -130,7 +186,11 @@ function events (state, emit) {
           else if (!past.results_size) return empty()
           return html`
             <div class="View-spaceSmall">
-              ${calendar(past.results.map(asCalendar), { appear: state.ui.clock['event-tab-selected'] })}
+              ${calendar(past.results.filter(item => {
+                if (filters.length === 0) return true
+    
+                return item.tags.some(tag => filters.includes(tag))
+              }).map(asCalendar), { appear: state.ui.clock['event-tab-selected'] })}
             </div>
           `
         }

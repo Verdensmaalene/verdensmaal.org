@@ -8,7 +8,8 @@
     "test": "standard && dependency-check package.json --missing",
     "deploy": "npx now -T codeandconspire && npx now alias -T codeandconspire",
     "start": "node server.js",
-    "build": "node build.js"
+    "build": "node build.js",
+    "watch": "nodemon --exec \"yarn build && yarn start\" --ignore dist/ -e js,css,html"
   },
   "documentify": {
     "transform": [

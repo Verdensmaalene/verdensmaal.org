@@ -1,0 +1,64 @@
+@import "../base";
+
+/** @define Event */
+.Events-Filter-Tags {
+  
+}
+
+.Events-Filter-Actions {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+@media (max-width: 900px) {
+  .Events-Filter-Actions {
+    margin-bottom: 15px;
+  }
+}
+
+.Events-Filter-Actions button,
+.Events-Filter-Modal-Inner button {
+  cursor: pointer;
+}
+
+.Events-Filter-Modal-Outer {
+  position: relative;
+  width: 100%;
+  padding: 0 30px;
+}
+
+.Events-Filter-Modal-Inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 40px 20px;
+  background: #fff;
+  z-index: 2;
+  filter: drop-shadow(0px 21px 12px #00000055);
+}
+
+.Events-Filter-Modal-Section-Content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.Events-Filter-Modal-Section-Content *:not(:last-child) {
+  margin-right: 20px;
+}
+
+.Events-Filter-Modal-Section-Content * {
+  margin-bottom: 15px;
+}
+
+@media (max-width: 900px) {
+  .Events-Filter-Modal-Section-Content * {
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    padding: 3px 10px;
+  }
+}
