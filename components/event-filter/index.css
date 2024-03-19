@@ -29,11 +29,16 @@
 
 .Events-Filter-Modal-Inner {
   width: 100%;
-  padding: 40px 20px;
+  padding: 40px 0;
   background: #fff;
   z-index: 2;
-  filter: drop-shadow(0px 21px 12px #00000055);
-  margin-bottom: 60px;
+  /* filter: drop-shadow(0px 21px 12px #00000055); */
+  margin-bottom: 30px;
+}
+
+.Events-Filter-Modal-Section h3 {
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .Events-Filter-Modal-Section-Content {
@@ -50,6 +55,12 @@
 
 .Events-Filter-Modal-Section-Content * {
   margin-bottom: 15px;
+}
+
+.Events-Filter-Modal-Section-Content * {
+  font-size: 1rem;
+  line-height: 1.6rem;
+  padding: 5px 10px;
 }
 
 @media (max-width: 900px) {

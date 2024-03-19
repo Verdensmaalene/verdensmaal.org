@@ -78,7 +78,9 @@ class EventFilter extends Component {
     
     var btn = element.querySelector('button#filter-open')
     
-    btn.addEventListener('click', this.onOpen.bind(this))
+    if (btn) {
+      btn.addEventListener('click', this.onOpen.bind(this))
+    }
 
     const clearBtn = element.querySelector('button#filter-clear')
 
@@ -102,15 +104,10 @@ class EventFilter extends Component {
 
     return html`
       <div class="Events-Filter">
-        <div class="Events-Filter-Actions">
-          ${button({ id: 'filter-clear', style: this.local.selected.tags.length ? '' : 'visibility: hidden; pointer-events: none;', text: text`Ryd` })}
-          ${button({ id: 'filter-open', primary: true, text: text`${this.local.open ? 'Gem' : 'Vælg region' + (this.local.selected.tags.length ? ` (${this.local.selected.tags.length})` : '')}` })}
-        </div>
-
-        <div style="${ this.local.open ? '' : 'display:none; pointer-events:none;' }" class="Events-Filter-Modal-Outer">
+        <div class="Events-Filter-Modal-Outer">
           <div class="Events-Filter-Modal-Inner">
             <div class="Events-Filter-Modal-Section">
-              <h3>${text`Vælg tags`}</h3>
+              <h3>${text`Vælg region`}</h3>
               ${Object.entries(this.local.categories).map(([key, tags]) => html`
                 <div style="${this.local.activeCategory !== key ? 'display: none;' : ''}" class="Events-Filter-Modal-Section-Content">
                   ${ tags.map(tag => button({ 'data-value': tag, primary: this.local.selected.tags.includes(tag), text: tag }))}
