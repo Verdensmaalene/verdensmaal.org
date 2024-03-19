@@ -116,10 +116,6 @@ function events (state, emit) {
 
     return html`
       <div>        
-        <div class="View-spaceSmall">
-          ${state.cache(Map, 'events-map').render(locations, bounds)}
-        </div>
-
         ${state.cache(EventFilter, 'event-filters').render({ upcoming: upcomingTags, past: pastTags }, (selected) => {
           emit('render')
         })}
