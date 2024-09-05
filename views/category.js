@@ -92,6 +92,69 @@ function category (state, emit) {
             </div>
           </div>
         ` : null}
+
+          <div class="u-container">
+            ${doc.data.content ? doc.data.content.map(function (slice) {
+              switch (slice.slice_type) {
+                case 'text': {
+                  if (!slice.primary.text.length) return null
+                  return html`
+                    <div class="Text View-spaceSmall">
+                      ${asElement(slice.primary.text, resolve, serialize)}
+                    </div>
+                  `
+                }
+                case 'image': {
+                  const { url, copyright, alt, dimensions } = slice.primary.image
+                  if (!url) return null
+                  const attrs = Object.assign({
+                    alt: alt || '',
+                    sizes: '(min-width: 1000px) 66vw, 100vw',
+                    srcset: srcset(url, [300, 600, 900, 1200, [1800, 'q_60'], [2200, 'q_40']])
+                  }, dimensions)
+                  return html`
+                    <figure class="Text View-spaceSmall u-sizeFull">
+                      <img ${attrs} src="${srcset(url, [900]).split(' ')[0]}">
+                      ${copyright || alt ? html`
+                        <figcaption class="Text">
+                          <small class="Text-muted">${copyright || alt}</small>
+                        </figcaption>
+                      ` : null}
+                    </figure>
+                  `
+                }
+                case 'facts_box': {
+                  if (!slice.primary.text.length) return null
+                  return html`
+                    <aside class="Text Text--box View-spaceSmall">
+                      ${asElement(slice.primary.text, resolve, serialize)}
+                    </aside>
+                  `
+                }
+                case 'featured_link': {
+                  const { link } = slice.primary
+                  if (!link.id || link.isBroken) return null
+                  if (link.uid) {
+                    return state.docs.getByUID(link.type, link.uid, asBookmark)
+                  } else {
+                    return state.docs.getByID(link.id, asBookmark)
+                  }
+                }
+
+                case 'embed': {
+                  const { text } = slice.primary.embed_content[0] || null
+                  if (!text) return null
+                  return html`
+                    <div class="EmbedContent View-spaceSmall">
+                      ${text ? raw(text) : null}
+                    </div>
+                  `
+                }
+                default: return null
+              }
+            }) : null}
+          </div>
+
         ${state.award.error ? html`
           <div class="u-container u-spaceB6">
             <div class="Form-error">
