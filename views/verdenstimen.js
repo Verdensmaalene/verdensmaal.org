@@ -142,19 +142,19 @@ function verdenstimen (state, emit) {
     /**
      * Fill news items to ensure three articles
      */
-    if (featuredNews.length < 3) {
-      const opts = { pageSize: 3 - featuredNews.length }
-      const predicates = [
-        Prismic.Predicates.at('document.type', 'news'),
-        Prismic.Predicates.any('document.tags', VERDENSTIMEN_TAGS)
-      ]
-      const news = state.docs.get(predicates, opts, function (err, response) {
-        if (err) return []
-        if (!response) return new Array(opts.pageSize).fill(null)
-        return response.results
-      })
-      featuredNews.push(...news)
-    }
+    // if (featuredNews.length < 3) {
+    //   const opts = { pageSize: 3 - featuredNews.length }
+    //   const predicates = [
+    //     Prismic.Predicates.at('document.type', 'news'),
+    //     Prismic.Predicates.any('document.tags', VERDENSTIMEN_TAGS)
+    //   ]
+    //   const news = state.docs.get(predicates, opts, function (err, response) {
+    //     if (err) return []
+    //     if (!response) return new Array(opts.pageSize).fill(null)
+    //     return response.results
+    //   })
+    //   featuredNews.push(...news)
+    // }
 
     return html`
       <main class="View-main theme-verdenstimen">
@@ -519,7 +519,8 @@ function verdenstimen (state, emit) {
             ))
           ])}
         </div>
-        <div class="View-space">
+
+        ${featuredNews.length ? html`<div class="View-space">
           <div class="u-container">
             <div class="Text u-spaceB4">
               <h2 class="Text-h1 u-spaceB1 u-textHyphens">${text`Latest news`}</h2>
@@ -531,7 +532,8 @@ function verdenstimen (state, emit) {
               return grid.cell({ size: { md: '1of2', lg: '1of3' } }, child)
             }))}
           </div>
-        </div>
+        </div>` : null}
+        
         <div class="View-space u-container" id="all-subjects">
           <div class="Text u-spaceB4">
             <h2 class="Text-h1 u-spaceB1 u-textHyphens">${text`All subjects`}</h2>
