@@ -134,7 +134,7 @@ function verdenstimen (state, emit) {
     /**
      * Add featured news
      */
-    var featuredNews = doc.data.featured_news
+    var featuredNews = (doc.data?.featured_news || [])
       .map((item) => item.article)
       .filter((link) => link.id && !link.isBroken)
       .slice(0, 3)
