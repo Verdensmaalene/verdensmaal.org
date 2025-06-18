@@ -110,10 +110,10 @@ function materialView (state, emit) {
             class: 'js-bannerImage',
             alt: doc.data.image.alt || asText(doc.data.title),
             sizes: '(min-width: 1000px) 400px, 10vw',
-            srcset: srcset(doc.data.image, [400, 600, [800, 'q_50']], {
+            srcset: srcset(doc.data.image, [1800, [2400, 'q_60'], [3000, 'q_40']], {
               transforms: 'f_jpg,c_thumb'
             }),
-            src: srcset(doc.data.image, [400]).split(' ')[0]
+            src: srcset(doc.data.image, [1440]).split(' ')[0]
           } : null,
           goals: goals ? goals.map(function (item) {
             if (!item) return false
