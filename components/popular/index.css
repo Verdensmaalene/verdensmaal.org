@@ -66,6 +66,7 @@
   flex: 0 0 90px;
   height: auto;
   margin-right: 1.5rem;
+  width: 30px;
 }
 
 @media (max-width: 400px), (min-width: 600px) and (max-width: 800px), (min-width: 1000px) and (max-width: 1200px) {
